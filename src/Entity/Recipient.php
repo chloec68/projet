@@ -16,6 +16,10 @@ class Recipient
     #[ORM\Column(length: 255)]
     private ?string $recipientEmail = null;
 
+    #[ORM\ManyToOne(inversedBy: 'recipients')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Newsletter $newsletter = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -29,6 +33,18 @@ class Recipient
     public function setRecipientEmail(string $recipientEmail): static
     {
         $this->recipientEmail = $recipientEmail;
+
+        return $this;
+    }
+
+    public function getNewsletter(): ?Newsletter
+    {
+        return $this->newsletter;
+    }
+
+    public function setNewsletter(?Newsletter $newsletter): static
+    {
+        $this->newsletter = $newsletter;
 
         return $this;
     }
