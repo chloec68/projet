@@ -29,6 +29,9 @@ class Bill
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $billDate = null;
 
+    #[ORM\OneToOne(mappedBy: 'bill', cascade: ['persist', 'remove'])]
+    private ?Order $appOrder = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -90,6 +93,28 @@ class Bill
     public function setBillDate(\DateTimeInterface $billDate): static
     {
         $this->billDate = $billDate;
+
+        return $this;
+    }
+
+    public function getAppOrder(): ?Order
+    {
+        return $this->appOrder;
+    }
+
+    public function setAppOrder(?Order $appOrder): static
+    {
+        // unset the owning side of the relation if necessary
+        if ($appOrder === null && $this->appOrder !== null) {
+            $this->appOrder->setBill(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($appOrder !== null && $appOrder->getBill() !== $this) {
+            $appOrder->setBill($this);
+        }
+
+        $this->appOrder = $appOrder;
 
         return $this;
     }
