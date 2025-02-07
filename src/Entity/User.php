@@ -42,7 +42,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var Collection<int, PRODUCT>
      */
-    #[ORM\ManyToMany(targetEntity: PRODUCT::class, inversedBy: 'users')]
+    #[ORM\ManyToMany(targetEntity: Product::class, inversedBy: 'users')]
     private Collection $products;
 
     /**
