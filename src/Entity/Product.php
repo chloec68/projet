@@ -31,7 +31,7 @@ class Product
     #[ORM\Column(length: 10, nullable: true)]
     private ?string $productVolume = null;
 
-    #[ORM\Column(length: 50, nullable:true)]
+    #[ORM\Column(length: 50, nullable: true)]
     private ?string $productColor = null;
 
     #[ORM\Column]
