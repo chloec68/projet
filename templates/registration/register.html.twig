@@ -8,25 +8,26 @@
     {% endfor %}
 
         <section class="registration-page">
+            
             <section class="login-section">
-                <h3>J'ai déjà un compte</h3>
-                <a href="{{ path('app_login') }}">Connexion</a>
+                <h2 id="login">J'ai déjà un compte</h2>
+                <a href="{{ path('app_login') }}"><button class="register-login-btn">Connexion</button></a>
             </section>
 
+            <div class="vertical-line"></div>
+
             <section class="registration-section">
-                <h1>Register</h1>
-                <div class="registration-form__container">
-                    {{ form_errors(registrationForm) }}
+                <h2 id="registration">S'inscrire</h2>
+                        {{ form_errors(registrationForm) }}
 
-                    {{ form_start(registrationForm) }}
-                        {{ form_row(registrationForm.email, {'attr': {'class': 'custom-input'}}) }}
-                        {{ form_row(registrationForm.plainPassword, {
-                            label: 'Password', 'attr':{'class':'custom-input'}}) }}
-                        {{ form_row(registrationForm.agreeTerms) }}
+                        {{ form_start(registrationForm,{'attr': {'class': 'registration-form'}}) }}
+                            {{ form_row(registrationForm.email) }}
+                            {{ form_row(registrationForm.plainPassword, {
+                                label: 'Password'}) }}
+                            {{ form_row(registrationForm.agreeTerms) }}
 
-                        <button type="submit" class="btn">Register</button>
-                    {{ form_end(registrationForm) }}
-                </div>
+                            <button type="submit" class="register-login-btn">Créer un compte</button>
+                        {{ form_end(registrationForm) }}
             </section>
 
         </section>
