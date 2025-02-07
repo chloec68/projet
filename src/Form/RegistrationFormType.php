@@ -4,16 +4,17 @@ namespace App\Form;
 
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
+use Karser\Recaptcha3Bundle\Form\Recaptcha3Type;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Karser\Recaptcha3Bundle\Validator\Constraints\Recaptcha3;
-use Karser\Recaptcha3Bundle\Form\Recaptcha3Type;
 
 class RegistrationFormType extends AbstractType
 {
@@ -26,7 +27,12 @@ class RegistrationFormType extends AbstractType
             // 'script_nonce_csp' => $nonceCSP, //optionnel //The script_nonce_csp parameter is optional. You must use the same nonce as in your Content-Security Policy header.
             'locale' => 'fr',
         ])
-            ->add('email')
+            ->add('email', EmailType::class, [
+                'attr'=> [
+                    'placeholder'=>'Email',
+                    'class'=>'custom-input'
+                ]
+            ])
             ->add('agreeTerms', CheckboxType::class, [
                 'mapped' => false,
                 'constraints' => [
@@ -41,14 +47,19 @@ class RegistrationFormType extends AbstractType
                 'mapped' => false,
                 'attr' => ['autocomplete' => 'new-password'],
                 'type' => PasswordType::class,
-                'invalid_message' => 'The password fields must match.',
+                'invalid_message' => 'Le mot de passe doit être le même',
                 'required' => true,
-                'options'=> ['attr' => ['class' => 'custom-input']],
-                'first_options'  => ['label' => 'Password'],
-                'second_options' => ['label' => 'Repeat Password'],
+                'first_options'  => [
+                    'label' => 'Mot de passe',
+                    'attr'=>['class' => 'custom-input','placeholder'=>'Mot de passe']
+                ],
+                'second_options' => [
+                    'label' => 'Confirmer le mot de passe',
+                    'attr'=>['class' => 'custom-input','placeholder'=>'Confirmer le mot de passe']
+                ],
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'Please enter a password',
+                        'message' => 'Veuillez saisir un mot de passe',
                     ]),
                     // new Regex([
                     //     'pattern' => '/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{12,}$/',
