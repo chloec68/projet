@@ -10,14 +10,14 @@
         <section class="registration-page">
             
             <section class="login-section">
-                <h2 id="login">J'ai déjà un compte</h2>
-                <a href="{{ path('app_login') }}"><button class="register-login-btn">Connexion</button></a>
+                <h2 class="login-section-title title">J'ai déjà un compte</h2>
+                <a href="{{ path('app_login') }}"><button class="register-login-btn btn">Connexion</button></a>
             </section>
 
             <div class="vertical-line"></div>
 
             <section class="registration-section">
-                <h2 id="registration">S'inscrire</h2>
+                <h1 class="registration-section-title title">S'inscrire</h1>
                         {{ form_errors(registrationForm) }}
 
                         {{ form_start(registrationForm,{'attr': {'class': 'registration-form'}}) }}
@@ -26,8 +26,9 @@
                                 label: 'Password'}) }}
                             {{ form_row(registrationForm.agreeTerms) }}
 
-                            <button type="submit" class="register-login-btn">Créer un compte</button>
+                            <button type="submit" class="register-login-btn btn">Créer un compte</button>
                         {{ form_end(registrationForm) }}
+
             </section>
 
         </section>
