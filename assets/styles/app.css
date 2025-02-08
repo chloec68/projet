@@ -28,6 +28,24 @@ body {
     padding-bottom:500px;
 }
 
+.title{
+    font-family:"Anton SC", serif;
+}
+
+label{
+    font-family: "Bebas Neue", serif;
+    display:block;
+    font-size:1.5em;
+    margin:1.5rem 0 1.5rem 0;
+}
+
+.btn:hover{
+    cursor: pointer;
+}
+
+.checkbox{
+    display: flex;
+}
 /* **************************************************************** BASE ************************************************************ */
 /* *************************HEADER************************* */
 
@@ -127,6 +145,7 @@ footer small{
 .registration-page{
     display:flex;
     padding:3rem;
+    width:100%;
 }
 
 .registration-section{
@@ -138,25 +157,17 @@ footer small{
     flex-grow:1;
 }
 
-#login,#registration{
-    margin-bottom:2rem;
-    font-family:"Anton SC", serif;
-}
-
-#registration{
+.registration-section-title{
     font-size:2em;
 }
 
-#login{
+.login-section-title{
     font-size:1.5em;
-
 }
 
 .custom-input {
-    width: 50%;
     height:3.5em;
-    padding: 10px;
-    margin : 1em auto 1em auto;
+    padding: 1rem;
     background-color: var(--background);
     border-radius: 5px;
     font-size: 1em;
@@ -164,15 +175,13 @@ footer small{
     box-shadow: var(--light-grey) 0px 3px 5px 0px inset;
 }
 
-.registration-form label{
-    display:block;
-    font-family: "Bebas Neue", serif;
-    font-size:1.5em;
+.custom-input-register{
+    width: 60%;
 }
 
 .vertical-line{
-    border-left: 1px solid var(--light-grey); /* Creates the vertical line */
-    height: 60vh; /* Defines the height of the line */
+    border-left: 1px solid var(--light-grey); 
+    height: 60vh; 
 }
 
 .register-login-btn{
@@ -186,13 +195,49 @@ footer small{
     letter-spacing: 1px;
     border-radius:5px;
     border:none;
-    margin:2em 0 0 2em;
-}
-
-.register-login-btn:hover{
-    cursor: pointer;
+    margin:2em auto 0 auto;
 }
 
 .registration-terms{
     margin:2em;
+}
+
+/* **************************************************************** LOGIN ************************************************************ */
+.login-page{
+    display: flex;
+    padding:6rem;
+    width:100%;
+    justify-content: center;
+}
+
+#login__login-section, #login__register-section{
+    display: flex;
+    flex-direction: column;
+    padding:3rem;
+    margin:1.5rem;
+}
+
+#login__register-section{
+    border-left:var(--light-grey) solid 1px;
+}
+
+#login__login-section{
+    flex-grow:2;
+}
+
+#login__register-section{
+    flex-grow:1;
+    align-items: center;
+}
+
+.login-title{
+    font-size:2em;
+    text-align: center;
+}
+
+.login-form{
+    display: flex;
+    margin: auto;
+    width:100%;
+    flex-direction: column;
 }

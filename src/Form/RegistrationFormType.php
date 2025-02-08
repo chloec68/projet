@@ -30,7 +30,7 @@ class RegistrationFormType extends AbstractType
             ->add('email', EmailType::class, [
                 'attr'=> [
                     'placeholder'=>'Email',
-                    'class'=>'custom-input'
+                    'class'=>'custom-input custom-input-register'
                 ]
             ])
             ->add('agreeTerms', CheckboxType::class, [
@@ -51,11 +51,11 @@ class RegistrationFormType extends AbstractType
                 'required' => true,
                 'first_options'  => [
                     'label' => 'Mot de passe',
-                    'attr'=>['class' => 'custom-input','placeholder'=>'Mot de passe']
+                    'attr'=>['class' => 'custom-input custom-input-register','placeholder'=>'Mot de passe']
                 ],
                 'second_options' => [
                     'label' => 'Confirmer le mot de passe',
-                    'attr'=>['class' => 'custom-input','placeholder'=>'Confirmer le mot de passe']
+                    'attr'=>['class' => 'custom-input custom-input-register','placeholder'=>'Confirmer le mot de passe']
                 ],
                 'constraints' => [
                     new NotBlank([
