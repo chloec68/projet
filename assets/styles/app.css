@@ -52,26 +52,43 @@ label{
 .header__wrapper{
     width:100%;
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     background-color: var(--black);
-    padding:1.5em;
+    padding:2em;
 }
 
-.header__container{
+.header__container-right{
     display: flex;
     gap:4em;
+    align-items: end;
+    padding:0 5rem 1rem 0; 
 }
 
-.header__container i{
+.header__container-right i{
     color:var(--white);
     font-size:1.5em;
 }
 
+.header__container-left{
+    display: flex;
+    align-items:center;
+    gap:1rem;
+}
+
+#logo{
+    width:25%;
+}
+
+#logo-text{
+    font-family: "Bebas Neue", serif;
+    color:var(--white);
+    font-size:2em;
+}
 /* *************************NAVBAR************************* */
 
 .nav__container{
     width:80%; 
-    margin:5rem auto;
+    margin:5rem auto 5rem auto;
     background-color: var(--black);
     padding:10px;
     display: flex;
@@ -241,3 +258,6 @@ footer small{
     width:100%;
     flex-direction: column;
 }
+
+
+/* **************************************************************** LOGIN ************************************************************ */

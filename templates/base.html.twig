@@ -23,9 +23,11 @@
         <header>
             {% block header%}
                 <div class="header__wrapper">
-                    <img id="logo">
-                    <span id="brand"> </span>
-                    <div class="header__container">
+                    <div class="header__container-left">
+                    <img id="logo" src="/logo/logo-seul.webp">
+                    <span id="logo-text">Brasserie indépendante</span>
+                    </div>
+                    <div class="header__container-right">
                         <i class="fa-solid fa-basket-shopping"></i>
                         <a href=" {{ path('app_register') }} "><i class="fa-solid fa-user"></i></a>
                         {% if app.user %}
@@ -87,7 +89,7 @@
                     </div>
                     <div class="footer__wrapper-container">
                         <span id="about">a propos</span>
-                        <span>Cgv</span>
+                        <span>CGV</span>
                         <span>Mentions légales</span>
                         <span>Politique de confidentialité</span>
                     </div>
