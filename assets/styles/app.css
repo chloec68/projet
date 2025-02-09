@@ -46,6 +46,16 @@ label{
 .checkbox{
     display: flex;
 }
+
+h1{
+    font-family: "Bebas Neue", serif;
+    font-size: 2.5em;
+}
+
+h3{
+    font-size:1.5em;
+    font-family: "Bebas Neue", serif;
+}
 /* **************************************************************** BASE ************************************************************ */
 /* *************************HEADER************************* */
 
@@ -157,7 +167,73 @@ footer small{
 }
 
 
-/* **************************************************************** REGISTER ************************************************************ */
+/* **************************************************************** HOME PAGE ************************************************************ */
+#home-wrapper h1,#home-wrapper h3{
+    text-align: center;
+}
+
+#icone-doubleArrowRight{
+    width:3em;
+}
+
+#permanent-section,#ephemeral-section{
+    margin:5rem;
+}
+
+.seeAll-link__container{
+    display: flex;
+    flex-direction: column;
+
+}
+/* ************************* PARALLAX ************************* */
+.parallax{
+    background-attachment: fixed; /* Fixe l'image pendant le scroll */
+    background-size: cover; /* L'image prendra 100% de l'espace, quitte à la crop */
+    background-position:bottom; /* Centre la position de l'image */
+    background-repeat: no-repeat; /* Empêche l'image de se répéter en fonction de la taille d'écran */
+    background-image: url("/img/beer-199650.webp");
+    min-height: 40vh; /* On fixe une grande hauteur pour voir plus facilement le scroll */
+}
+
+.parallax p{
+    color:var(--white);
+    font-size:1.3em;
+    font-weight: 200;
+    width:45%;
+    font-family: "Roboto Condensed", serif;
+    padding:3rem;
+}
+
+/* ************************* SWIPER ************************* */
+
+.swiper {
+    width: 100%;
+    height: 40vh;
+    margin: 20px auto;
+  }
+
+   .swiper-slide {
+    text-align: center;
+    font-size: 18px;
+    background: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .swiper-slide img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .swiper-button-next,.swiper-button-prev{
+    color:var(--white);
+  }
+
+
+/* **************************************************************** REGISTER PAGE ************************************************************ */
 
 .registration-page{
     display:flex;
@@ -172,14 +248,6 @@ footer small{
 
 .login-section{
     flex-grow:1;
-}
-
-.registration-section-title{
-    font-size:2em;
-}
-
-.login-section-title{
-    font-size:1.5em;
 }
 
 .custom-input {
@@ -219,7 +287,7 @@ footer small{
     margin:2em;
 }
 
-/* **************************************************************** LOGIN ************************************************************ */
+/* **************************************************************** LOGIN PAGE ************************************************************ */
 .login-page{
     display: flex;
     padding:6rem;
@@ -248,7 +316,6 @@ footer small{
 }
 
 .login-title{
-    font-size:2em;
     text-align: center;
 }
 
@@ -260,4 +327,3 @@ footer small{
 }
 
 
-/* **************************************************************** LOGIN ************************************************************ */

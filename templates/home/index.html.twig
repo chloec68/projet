@@ -4,33 +4,59 @@
 
 {% block body %}
 
+<div id="home-wrapper">
 
-<div class="parallax"><p>Brasserie locale et artisanale, La brasserie Sainte Cru est née à Sainte-Croix-en-Plaine en 2012. Installée à Colmar depuis 2013, nous brassons désormais une <strong>gamme permanente disponible toute l’année</strong> et une <strong>gamme éphémère renouvelée chaque mois</strong>, disponible jusqu’à épuisement du stock</p></div>
+    <div class="parallax"><p>Brasserie locale et artisanale, La brasserie Sainte Cru est née à Sainte-Croix-en-Plaine en 2012. Installée à Colmar depuis 2013, nous brassons désormais une <strong>gamme permanente disponible toute l’année</strong> et une <strong>gamme éphémère renouvelée chaque mois</strong>, disponible jusqu’à épuisement du stock</p></div>
 
+    <section id="permanent-section">
+        <h1 id="permanent-title">les permanentes</h1>
+        <h3>disponibles toute l'année</h3>
 
+    <!-- Slider main container -->
+        <div class="swiper mySwiper">
+            <!-- Additional required wrapper -->
+            <div class="swiper-wrapper">
+            <!-- Slides -->
+            <div class="swiper-slide"><img src="/img/beerCan.webp" alt=""></div>
+            <div class="swiper-slide"><img src="/img/colorful.webp" alt=""></div>
+            <div class="swiper-slide"><img src="/img/beerCan.webp" alt=""></div>
+            <div class="swiper-slide"><img src="/img/colorful.webp" alt=""></div>
+            <div class="swiper-slide"><img src="/img/beerCan.webp" alt=""></div>
+            <div class="swiper-slide"><img src="/img/colorful.webp" alt=""></div>
+            </div>  
 
-<style>
+            <!-- If we need navigation buttons -->
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-button-next"></div>
+        </div>
 
+        <a href=""></a><div class="seeAll-link__container"><p>tout voir</p><img id="icone-doubleArrowRight" src="/icones/doubleArrowRight.svg" alt=""></div></a>
 
-    .parallax{
-        background-attachment: fixed; /* Fixe l'image pendant le scroll */
-        background-size: cover; /* L'image prendra 100% de l'espace, quitte à la crop */
-        background-position:bottom; /* Centre la position de l'image */
-        background-repeat: no-repeat; /* Empêche l'image de se répéter en fonction de la taille d'écran */
-        background-image: url("/img/beer-199650.webp");
-        min-height: 40vh; /* On fixe une grande hauteur pour voir plus facilement le scroll */
-    }
+    </section>
 
-    .parallax p{
-        color:var(--white);
-        font-size:1.3em;
-        font-weight: 200;
-        width:45%;
-        font-family: "Roboto Condensed", serif;
-        padding:3rem;
-    }
+    <section id="ephemeral-section">
+        <h1 id="ephemeral-title">les éphémères</h1>
+        <h3>disponibles jusqu’à épuisement du stock</h3>
 
+    <!-- Slider main container -->
+        <div class="swiper mySwiper">
+            <!-- Additional required wrapper -->
+            <div class="swiper-wrapper">
+            <!-- Slides -->
+            <div class="swiper-slide"><img src="/img/beerCan.webp" alt=""></div>
+            <div class="swiper-slide"><img src="/img/colorful.webp" alt=""></div>
+            <div class="swiper-slide"><img src="/img/beerCan.webp" alt=""></div>
+            <div class="swiper-slide"><img src="/img/colorful.webp" alt=""></div>
+            <div class="swiper-slide"><img src="/img/beerCan.webp" alt=""></div>
+            <div class="swiper-slide"><img src="/img/colorful.webp" alt=""></div>
+            </div>  
 
-</style>
+            <!-- If we need navigation buttons -->
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-button-next"></div>
 
+        </div>
+    </section>
+
+</div>
 {% endblock %}
