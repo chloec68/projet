@@ -1,4 +1,4 @@
-import './bootstrap.js';
+// import './bootstrap.js';
 /*
  * Welcome to your app's main JavaScript file!
  *
@@ -11,12 +11,17 @@ import './styles/app.css';
 // SWIPER
 
   var swiper = new Swiper(".mySwiper", {
+    observer: true,
+    observeParents: true,
     slidesPerView: 3,
-    centeredSlides: true,
     spaceBetween: 10,
+    centeredSlides: true,
+    grabCursor:true,
     loop:true,
+    speed:600,
     navigation: {
       nextEl: ".swiper-button-next",
       prevEl: ".swiper-button-prev",
     },
   });
+
