@@ -7,4 +7,16 @@ import './bootstrap.js';
  */
 import './styles/app.css';
 
-console.log('This log comes from assets/app.js - welcome to AssetMapper! 🎉');
+
+// SWIPER
+
+  var swiper = new Swiper(".mySwiper", {
+    slidesPerView: 3,
+    centeredSlides: true,
+    spaceBetween: 10,
+    loop:true,
+    navigation: {
+      nextEl: ".swiper-button-next",
+      prevEl: ".swiper-button-prev",
+    },
+  });
