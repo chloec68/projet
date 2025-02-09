@@ -48,6 +48,8 @@ Dans le formbuilder, symfony ajoute un champ 'hidden' contenant le jeton
 
 5- Confirmation mot de passe 
 
-6- THROTTLING (limitation du débit)
+// LOGIN
+
+6- LOGIN THROTTLING (limitation du débit)
 Protection contre attaque DoS (Denial of service) + attaques par force brut 
 => limitation de la fréquences des requêtes d'un client pour éviter la surcharge du serveur ou abus automatisés
