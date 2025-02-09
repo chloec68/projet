@@ -1,0 +1,53 @@
+I- mise en place de l'authentification 
+II- mise en place de la sécurité 
+A- authentification par mot de passe
+
+// REGISTER
+
+1- REGEX 
+Utilisation d'une expression régulière pour valider le format de mot de passe choisis par l'utilisateur;
+Conformément aux recommandations de la CNIL, les mots de passe doivent être composés d'au minimum 12 caractères comprenant des majuscules, des minuscules,
+des chiffres de caractères spéciaux à choisir dans une listee d'au moins 37 caractères spéciaux possibles ; 
+
+2- HACHAGE/CRYPTAGE
+Utilisation de la fonction de hachage par défaut de symfony : bcrypt ; algorithme de hachage dit 'fort' (par opposition à sha1,sha256,md5..)
+Création d'une empreinte numérique - le mot de passe n'est pas stocké en clair dans la BDD: 
+- préfixe qui indique la version de l'algorithme utilisé 
+- le cost (coût) 
+- le salt : chaîne de caractères aléatoire ajoutée avant le mdp hâché 
+- le mdp hâché 
+optionnel : + pepper
+
+rappel : php, fonction native => password_hach(password clair,alorithme,options:salt,cost...)
+$hash = password_hash($password,PASSWORD_DEFAULT); 
+=> empreinte numérique qui change aléatoirement à chaque refresh + empreinte numérique différente à mdp identique 
+
+rappel : le hachage, contrairement au chiffrement (réversible avec utilisation d'une clé de déchiffrement/déchiffrage?), n'est pas réversible 
+
+3- reCAPTCHA v3(Completely Autmoated Public Turing test to tell Computers and Humans Apart)
+test automatisé conçu pour distinguer les utilisateurs humains des robots (programmes automatiques).
+L'objectif principal d'un CAPTCHA est de protéger un site web ou une application contre les abus automatisés,
+tels que les inscriptions ou connexions massives, les soumissions de formulaires malveillants, ou encore les attaques par force brute
+(robot tente de deviner mdp de manière répétée/automatisée).
+
+Pas d'interaction directe de l'utilisateur. Ce type de CAPTCHA utilise des modèles d'intelligence artificielle pour analyser
+les actions de l'utilisateur sur la page (mouvement de la souris, clics, etc.) et attribuer un score de "probabilité d'humanité" à l'utilisateur.
+
+
+4- Jeton CRSF/ TOKEN/ CSRF protection 
+Utilisation de la protection Cross-Site Request Forgery présente par défaut dans les formulaires symfony, qui permet de parer à la Cross-Site Request Forgery (CSRF)
+=> une attaque qui incite un utilisateur à effectuer une action non souhaitée sur un site où il est authentifié.
+Par exemple, un attaquant peut forcer un utilisateur connecté à un site bancaire à transférer de l'argent vers le compte de l'attaquant,
+sans que l'utilisateur en ait connaissance, simplement en cliquant sur un lien ou en chargeant une page malveillante.
+fonctionnement : un identifiant unique (jeton CSRF) est généré côté serveur et inclus dans le formulaire HTML envoyé à l'utilisateur ; 
+le jeton est renvoyé avec la requête HTTP lors de la soumission du form par l'utilisateur 
+Le serveur compare le jeton inclus dans la requête et celui envoyé pa rle client 
+En l'absence de correspondance, la requête est rejetée ; 
+
+Dans le formbuilder, symfony ajoute un champ 'hidden' contenant le jeton
+
+5- Confirmation mot de passe 
+
+6- THROTTLING (limitation du débit)
+Protection contre attaque DoS (Denial of service) + attaques par force brut 
+=> limitation de la fréquences des requêtes d'un client pour éviter la surcharge du serveur ou abus automatisés
