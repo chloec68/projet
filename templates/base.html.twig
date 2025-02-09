@@ -16,10 +16,9 @@
         {% endblock %}
 
         {% block javascripts %}
-        {# SWIPER #}
-            {% block importmap %}{{ importmap('app') }} <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>{% endblock %}
+        <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js" defer></script>
+            {% block importmap %}{{ importmap('app') }} {% endblock %}
         {% endblock %}
-
 
     </head>
    
@@ -101,6 +100,6 @@
                 <small>La vente de boissons alcoliques est interdite aux mineurs de moins de 16 ans  -  L'abus d'alcool est dangereux pour la santé</small>
             </footer>    
             {% endblock %}
-        
+
     </body>
 </html>
