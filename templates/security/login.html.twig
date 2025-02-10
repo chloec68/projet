@@ -15,8 +15,11 @@
                     Vous êtes connecté en tant que {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Se déconnecter</a>
                 </div>
             {% endif %}
-
-            <h1 class="login-title title">Connectez-vous à votre compte</h1>
+            {% if app.user %}
+            <h2 class="login-title title">Vous êtes déjà connecté(e)</h2>
+            {% else %}
+            <h2 class="login-title title">Connectez-vous à votre compte</h2>
+            {% endif %}
             <label for="inputEmail">Email</label>
             <input class="custom-input" type="email" name="email" placeholder="Email" required autofocus>
             <label for="inputPassword">Mot de passe</label>
@@ -33,7 +36,7 @@
     </section>
 
     <section id="login__register-section">
-        <h2 class="title">Je n'ai pas de compte</h2>
+        <h3 class="title">Je n'ai pas de compte</h3>
         <a href=" {{ path('app_register') }}"><button class="register-login-btn btn" type="submit">Créer un compte</button></a>
     </section>
 </section>

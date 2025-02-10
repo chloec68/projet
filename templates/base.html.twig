@@ -23,19 +23,23 @@
     </head>
    
     <body>
+
+     
         
         <header id="header">
             {% block header%}
                 <div class="header__wrapper">
                     <div class="header__container-left">
                     <img id="logo" src="/logo/logo-seul.webp">
-                    <span id="logo-text">Brasserie indépendante</span>
+                    <h1 id="logo-text">Brasserie indépendante</h1>
                     </div>
                     <div class="header__container-right">
                         <i class="fa-solid fa-basket-shopping"></i>
-                        <a href=" {{ path('app_register') }} "><i class="fa-solid fa-user"></i></a>
                         {% if app.user %}
+                        <a href=""><i class="fa-solid fa-user"></i>{{ app.user.userIdentifier }}</a>
                         <a href=" {{ path('app_logout') }}">Déconnexion</i></a>
+                        {% else %}
+                        <a href=" {{ path('app_register') }} "><i class="fa-solid fa-user"></i></a>
                         {% endif %}
                     </div>
                 </div>

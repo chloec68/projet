@@ -10,14 +10,14 @@
         <section class="registration-page">
             
             <section class="login-section">
-                <h2 class="login-section-title title">J'ai déjà un compte</h2>
+                <h3 class="login-section-title title">J'ai déjà un compte</h3>
                 <a href="{{ path('app_login') }}"><button class="register-login-btn btn">Connexion</button></a>
             </section>
 
             <div class="vertical-line"></div>
 
             <section class="registration-section">
-                <h1 class="registration-section-title title">S'inscrire</h1>
+                <h2 class="registration-section-title title">S'inscrire</h2>
                         {{ form_errors(registrationForm) }}
 
                         {{ form_start(registrationForm,{'attr': {'class': 'registration-form'}}) }}
