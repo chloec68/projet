@@ -6,38 +6,38 @@
 
 {% block body %}
 
-<form id="type-form" action=" {{ path('app_beers-by-type') }} " method="get">
+<form class="type-form" action=" {{ path('app_beers-by-type') }} " method="get">
     <div class="radio-buttons__wrapper">
         <div class="radio-button__container">
             <input type="radio" name="type" id="type" value="1">
             <label for="type">pale ale</label>
         </div>
         <div class="radio-button__container">
-            <input type="radio" name="type" id="type" value="3">
+            <input type="radio" name="type" id="type" value="3" {% if type == 3 %}checked{% endif %}>
             <label for="type">ipa</label>
         </div>
         <div class="radio-button__container">
-            <input type="radio" name="type" id="type" value="4">
+            <input type="radio" name="type" id="type" value="4" {% if type == 4 %}checked{% endif %}>
             <label for="type">ddh</label>
         </div>
         <div class="radio-button__container">
-            <input type="radio" name="type" id="type" value="5">
+            <input type="radio" name="type" id="type" value="5" {% if type == 5 %}checked{% endif %}>
             <label for="type">neipa</label>
         </div>
         <div class="radio-button__container">
-            <input type="radio" name="type" id="type" value="6">
+            <input type="radio" name="type" id="type" value="6" {% if type == 6 %}checked{% endif %}>
             <label for="type">ambrée</label>
         </div>
         <div class="radio-button__container">
-            <input type="radio" name="type" id="type" value="7">
+            <input type="radio" name="type" id="type" value="7" {% if type == 7 %}checked{% endif %}>
             <label for="type">witbier</label>
         </div>
         <div class="radio-button__container">
-            <input type="radio" name="type" id="type" value="8">
+            <input type="radio" name="type" id="type" value="8" {% if type == 8 %}checked{% endif %}>
             <label for="type">blanche</label>
         </div>
         <div class="radio-button__container">
-            <input type="radio" name="type" id="type" value="9">
+            <input type="radio" name="type" id="type" value="9" {% if type == 9 %}checked{% endif %}>
             <label for="type">pilsner</label>
         </div>
     </div>
@@ -55,15 +55,13 @@
         margin:auto;
     }
 
-    .type-form label{
-        margin:0;
-    }
-
     .radio-buttons__wrapper{
         display: flex;
-        flex-direction: column;
+        flex-direction: row;
         flex-wrap: wrap;
-
+        font-size:1.3em;
+        row-gap:2rem;
+        column-gap:1rem;
     }
 
     .radio-button__container{
