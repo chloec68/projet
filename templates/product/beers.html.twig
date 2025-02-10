@@ -6,68 +6,176 @@
 
 {% block body %}
 
-<form class="type-form" action=" {{ path('app_beers-by-type') }} " method="get">
-    <div class="radio-buttons__wrapper">
-        <div class="radio-button__container">
-            <input type="radio" name="type" id="type" value="1">
-            <label for="type">pale ale</label>
-        </div>
-        <div class="radio-button__container">
-            <input type="radio" name="type" id="type" value="3" {% if type == 3 %}checked{% endif %}>
-            <label for="type">ipa</label>
-        </div>
-        <div class="radio-button__container">
-            <input type="radio" name="type" id="type" value="4" {% if type == 4 %}checked{% endif %}>
-            <label for="type">ddh</label>
-        </div>
-        <div class="radio-button__container">
-            <input type="radio" name="type" id="type" value="5" {% if type == 5 %}checked{% endif %}>
-            <label for="type">neipa</label>
-        </div>
-        <div class="radio-button__container">
-            <input type="radio" name="type" id="type" value="6" {% if type == 6 %}checked{% endif %}>
-            <label for="type">ambrée</label>
-        </div>
-        <div class="radio-button__container">
-            <input type="radio" name="type" id="type" value="7" {% if type == 7 %}checked{% endif %}>
-            <label for="type">witbier</label>
-        </div>
-        <div class="radio-button__container">
-            <input type="radio" name="type" id="type" value="8" {% if type == 8 %}checked{% endif %}>
-            <label for="type">blanche</label>
-        </div>
-        <div class="radio-button__container">
-            <input type="radio" name="type" id="type" value="9" {% if type == 9 %}checked{% endif %}>
-            <label for="type">pilsner</label>
-        </div>
+<div class="products__page-wrapper">
+<section class="products__sidebar">
+<div class="sidebar-container">
+    <h3>Filtrer par type: </h3>
+    <form class="type-form" action=" {{ path('app_beers-by-type') }} " method="get">
+        {# <div class="type-buttons__wrapper"> #}
+            <div class="radio-button__container">
+                <input type="radio" name="type" id="type" value="1">
+                <label for="type">pale ale</label>
+            </div>
+            <div class="radio-button__container">
+                <input type="radio" name="type" id="type" value="3" {% if type == 3 %}checked{% endif %}>
+                <label for="type">ipa</label>
+            </div>
+            <div class="radio-button__container">
+                <input type="radio" name="type" id="type" value="4" {% if type == 4 %}checked{% endif %}>
+                <label for="type">ddh</label>
+            </div>
+            <div class="radio-button__container">
+                <input type="radio" name="type" id="type" value="5" {% if type == 5 %}checked{% endif %}>
+                <label for="type">neipa</label>
+            </div>
+            <div class="radio-button__container">
+                <input type="radio" name="type" id="type" value="6" {% if type == 6 %}checked{% endif %}>
+                <label for="type">ambrée</label>
+            </div>
+            <div class="radio-button__container">
+                <input type="radio" name="type" id="type" value="7" {% if type == 7 %}checked{% endif %}>
+                <label for="type">witbier</label>
+            </div>
+            <div class="radio-button__container">
+                <input type="radio" name="type" id="type" value="8" {% if type == 8 %}checked{% endif %}>
+                <label for="type">blanche</label>
+            </div>
+            <div class="radio-button__container">
+                <input type="radio" name="type" id="type" value="9" {% if type == 9 %}checked{% endif %}>
+                <label for="type">pilsner</label>
+            </div>
+        {# </div> #}
+        <button class="btn" type="submit">Filtrer</button>
+    </form>
+</div>
+</section>
+<section class="products__container">
+{% for product in products %}
+<div class="product-card">
+     <!-- Swiper -->
+  <div class="swiper mySwiperProducts">
+    <div class="swiper-wrapper">
+      <div class="swiper-slide"> <img src="/img/beerNoBackground.png" alt=""> </div>
+      <div class="swiper-slide"><img src="/img/beerNoBackground.png" alt=""></div>
     </div>
-<button type="submit">Chercher</button>
-</form>
+    <div class="swiper-pagination"></div>
+  </div>
 
-    {% for product in products %}
-        <p>{{product.productName}} {{product.productPrice}}</p>
-    {% endfor %}
+    <h3 class="centered">{{product.productName}}</h3> 
+    <p class="centered">{{product.type.typeName}} | {{product.productAlcoholLevel}} | {{product.productVolume}}</p>
+    <p class="centered">{{product.productPrice}}</p>
+    <div><button>-</button>qte<button>+</button></div>
+    <button class="btn basket-btn" type="submit">Ajouter au panier</button>
+</div>
+{% endfor %}
+</section>
+</div>
+
 
 
     <style>
-    .type-form{
-        width:40%;
-        margin:auto;
+        .products__page-wrapper{
+            display: flex;
+            padding:0 3rem 0 3rem;
+        }
+    {# SWIPER #}
+    .swiper {
+        width: 90%;
+        height: 30%;
+      }
+    .swiper-slide {
+        text-align: center;
+        font-size: 18px;
+        background: #171414;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+  
+      .swiper-slide img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+ {# PRODUCT CARDS #}
+    .products__container{
+        display: flex;
+        flex-wrap: wrap;
+        width:75%;
+        gap:2rem;
+        padding:1rem;
+        justify-content: center;
     }
 
-    .radio-buttons__wrapper{
-        display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
+    .product-card{
+        width:25%;
+        height: fit-content;
+        padding:0.2rem;
+        border: solid 1px rgb(228, 228, 228);
+        box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 20px;
         font-size:1.3em;
-        row-gap:2rem;
-        column-gap:1rem;
+        border-radius: 1px;
+        overflow: hidden;
+    }
+
+    .product-card p{
+        margin:1rem;
+    }
+
+    .centered{
+        text-align: center;
+    }
+
+    .basket-btn{
+        width:80%;
+        margin: auto;
+        display: block;
+        background-color: var(--black);
+        padding:0.3rem;
+        color:var(--white);
+        border:none;
+        border-radius: 5px;
+        font-family: 'Bebas Neue','serif';
+        font-size:1.3em;
+    }
+
+        {# SIDEBAR #}
+  
+    .products__sidebar{
+        display: flex;
+        width:20%;
+        border-right:1px solid var(--black);
+    }
+    .sidebar-container{
+        padding-right:2rem;
+    }
+
+    .type-form{
+        width:100%;
+        margin:1rem 0 0 0;
+        font-size:1.1em;
     }
 
     .radio-button__container{
-        margin:0;
+        width: 100%;
         display: flex;
-        gap:0.5rem;
+        column-gap:1.3rem;
+        font-size:1.2em;
+        margin:0.5rem 0 0.5rem 0;
     }
+
+    .type-form button{
+        width:100%;
+        padding:0.3rem;
+        background-color: var(--black);
+        color:var(--white);
+        font-size:1.5em;
+        border-radius: 5px;
+        font-family:'Bebas Neue','serif';
+    }
+
+   
+  
     </style>
 {% endblock %}

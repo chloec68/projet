@@ -26,6 +26,14 @@ import './styles/app.css';
   });
 
 
+  var swiper = new Swiper(".mySwiperProducts", {
+    pagination: {
+      el: ".swiper-pagination",
+      dynamicBullets: true,
+    },
+  });
+
+
   // SCROLL UP BUTTON
 
   function buttonVisibility() {
