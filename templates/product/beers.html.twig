@@ -6,16 +6,70 @@
 
 {% block body %}
 
-<form action=" {{ path('app_beers-by-type') }} " method="get">
-<div>
-    <input type="radio" name="type" id="ipa" value="3">
-    <label for="ipa">ipa</label>
-</div>
-
+<form id="type-form" action=" {{ path('app_beers-by-type') }} " method="get">
+    <div class="radio-buttons__wrapper">
+        <div class="radio-button__container">
+            <input type="radio" name="type" id="type" value="1">
+            <label for="type">pale ale</label>
+        </div>
+        <div class="radio-button__container">
+            <input type="radio" name="type" id="type" value="3">
+            <label for="type">ipa</label>
+        </div>
+        <div class="radio-button__container">
+            <input type="radio" name="type" id="type" value="4">
+            <label for="type">ddh</label>
+        </div>
+        <div class="radio-button__container">
+            <input type="radio" name="type" id="type" value="5">
+            <label for="type">neipa</label>
+        </div>
+        <div class="radio-button__container">
+            <input type="radio" name="type" id="type" value="6">
+            <label for="type">ambrée</label>
+        </div>
+        <div class="radio-button__container">
+            <input type="radio" name="type" id="type" value="7">
+            <label for="type">witbier</label>
+        </div>
+        <div class="radio-button__container">
+            <input type="radio" name="type" id="type" value="8">
+            <label for="type">blanche</label>
+        </div>
+        <div class="radio-button__container">
+            <input type="radio" name="type" id="type" value="9">
+            <label for="type">pilsner</label>
+        </div>
+    </div>
 <button type="submit">Chercher</button>
 </form>
 
     {% for product in products %}
         <p>{{product.productName}} {{product.productPrice}}</p>
     {% endfor %}
+
+
+    <style>
+    .type-form{
+        width:40%;
+        margin:auto;
+    }
+
+    .type-form label{
+        margin:0;
+    }
+
+    .radio-buttons__wrapper{
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+
+    }
+
+    .radio-button__container{
+        margin:0;
+        display: flex;
+        gap:0.5rem;
+    }
+    </style>
 {% endblock %}

@@ -26,17 +26,7 @@ body {
     position:relative;
     min-height: 100vh;
     padding-bottom:500px;
-}
-
-.title{
-    font-family:"Anton SC", serif;
-}
-
-label{
     font-family: "Bebas Neue", serif;
-    display:block;
-    font-size:1.5em;
-    margin:1.5rem 0 1.5rem 0;
 }
 
 .btn:hover{
@@ -50,24 +40,25 @@ label{
 }
 
 h1{
-    font-family: "Bebas Neue", serif;
-    font-size: 2.5em;
+    font-size: 2.8em;
+}
+
+h2{
+   font-size:2.5em; 
 }
 
 h3{
     font-size:1.5em;
-    font-family: "Bebas Neue", serif;
+}
+
+.title{
+    font-family:"Anton SC", serif;
+}
+
+a{
+    text-decoration: none;
 }
 /* **************************************************************** BASE ************************************************************ */
-
-#to-top{
-    position: fixed;
-    bottom: 20px;
-    right: 30px;
-    padding: 10px;
-    border-radius: 50%;
-    z-index:99;
-}
 
 /* *************************HEADER************************* */
 
@@ -89,6 +80,16 @@ h3{
 .header__container-right i{
     color:var(--white);
     font-size:1.5em;
+    margin-right:1rem;
+}
+
+.header__container-right a:visited{
+    color:var(--white);
+}
+
+.header__container-right a:hover{
+    text-decoration: underline;
+    text-underline-offset:0.3em;
 }
 
 .header__container-left{
@@ -102,7 +103,6 @@ h3{
 }
 
 #logo-text{
-    font-family: "Bebas Neue", serif;
     color:var(--white);
     font-size:2em;
 }
@@ -208,8 +208,19 @@ footer small{
 }
 
 /* **************************************************************** HOME PAGE ************************************************************ */
-#home-wrapper h1,#home-wrapper h3{
+#home-wrapper h2,#home-wrapper h3{
     text-align: center;
+}
+
+#top-button{
+    position: fixed;
+    bottom: 20px;
+    right: 30px;
+    /* padding: 10px; */
+    z-index:99;
+    border:none;
+    border-radius: 100%;
+    margin:0;
 }
 
 #icone-doubleArrowRight{
@@ -221,14 +232,12 @@ footer small{
 }
 
 .seeAll-link{
-    text-align: center;
     display: flex;
     align-items: center;
     width: fit-content;
     margin: auto;
     text-transform: uppercase;
     text-decoration: none;
-    font-family:"Bebas Neue", serif;
     font-size: 1.8em;
     color:var(--black);
 }
@@ -334,6 +343,12 @@ footer small{
 
 .registration-terms{
     margin:2em;
+}
+
+.registration-form label,.login-form label{
+    display:block;
+    font-size:1.5em;
+    margin:1.5rem 0 1.5rem 0;
 }
 
 /* **************************************************************** LOGIN PAGE ************************************************************ */
