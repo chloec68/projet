@@ -27,16 +27,7 @@ import './styles/app.css';
 
 
   // SCROLL UP BUTTON
-//   document.addEventListener('scroll',function(){
-//     if(window.scrollY > 300){
-//     document.getElementById('top-button').style.display = 'block';
-//    }else{
-//      document.getElementById('top-button').style.display = 'none';
-//  }})
 
-
-
-  // Fonction qui gère l'affichage du bouton
   function buttonVisibility() {
     if (window.scrollY > 300) {
       document.getElementById('top-button').style.display = 'block';
@@ -45,7 +36,6 @@ import './styles/app.css';
     }
   }
 
-  // Écouteur d'événement scroll
   document.addEventListener('scroll', buttonVisibility);
 
   // Vérifier l'état au moment du chargement de la page

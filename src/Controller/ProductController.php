@@ -2,20 +2,52 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Repository\ProductRepository;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 final class ProductController extends AbstractController
 {
-    // DISPLAY ALL PRODUCTS 
-    #[Route('/product', name: 'app_product')]
-    public function index(): Response
-    {
-        return $this->render('product/index.html.twig', [
-            'controller_name' => 'ProductController',
+    // DISPLAY ALL BEERS 
+    // #[Route('/product/beers', name: 'app_beers')]
+    // public function allBeers(ProductRepository $productRepository): Response
+    // {   
+    //     $products = $productRepository->findBeers([],['productName'=>'ASC']);
+    //     return $this->render('product/beers.html.twig', [
+    //         'products'=>$products
+    //     ]);
+    // }
+
+    // DISPLAY ALL GOODIES
+    #[Route('/product/goodies', name: 'app_goodies')]
+    public function allGoodies(ProductRepository $productRepository): Response
+    {   
+        $products = $productRepository->findGoodies([],['productName'=>'ASC']);
+        return $this->render('product/goodies.html.twig', [
+            'products'=>$products
         ]);
     }
+
+    // DISPLAY BEERS BY TYPE 
+    #[Route('/product/beers', name: 'app_beers')]
+    #[Route('/product/beers/type', name:'app_beers-by-type')]
+    public function beersByType(ProductRepository $productRepository, Request $request):Response
+    {   
+        $type = $request->query->get('type');
+        if($type){
+            $products = $productRepository->findBeersByType($type);
+        }else{
+            $products = $productRepository->findBeers([],['productName'=>'ASC']);
+        }
+        return $this->render('product/beers.html.twig',[
+            'products'=>$products,
+            'type'=>$type
+        ]);
+    }
+
 
     // DISPLAY A SPECIFIC PRODUCT
     #[Route('/product/{id}/display', name: 'display_product')]
