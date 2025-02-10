@@ -47,8 +47,8 @@
                 <div class="nav__container">
                     <a class="nav__container-a" href=" {{ path('app_home') }}">Accueil</a>
                     <a class="nav__container-a">taproom</a>
-                    <a class="nav__container-a" href=" {{ path('app_product') }}">nos bières</a>
-                    <a class="nav__container-a">goodies</a>
+                    <a class="nav__container-a" href=" {{ path('app_beers') }}">nos bières</a>
+                    <a class="nav__container-a" href=" {{ path('app_goodies')}}">goodies</a>
                     <a class="nav__container-a">la brasserie</a>
                 </div>
             {% endblock %}
@@ -66,7 +66,9 @@
             <div class="alert alert-success" role="alert">{{ message }}</div>
             {% endfor %}
 
-           {% block body %}   {% endblock %}     
+
+
+           {% block body %}{% endblock %}     
 
            
            

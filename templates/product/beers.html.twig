@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ProductController!{% endblock %}
+
+
+
+{% block body %}
+
+<form action=" {{ path('app_beers-by-type') }} " method="get">
+<div>
+    <input type="radio" name="type" id="ipa" value="3">
+    <label for="ipa">ipa</label>
+</div>
+
+<button type="submit">Chercher</button>
+</form>
+
+    {% for product in products %}
+        <p>{{product.productName}} {{product.productPrice}}</p>
+    {% endfor %}
+{% endblock %}
