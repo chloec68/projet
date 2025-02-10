@@ -59,6 +59,16 @@ h3{
     font-family: "Bebas Neue", serif;
 }
 /* **************************************************************** BASE ************************************************************ */
+
+#to-top{
+    position: fixed;
+    bottom: 20px;
+    right: 30px;
+    padding: 10px;
+    border-radius: 50%;
+    z-index:99;
+}
+
 /* *************************HEADER************************* */
 
 .header__wrapper{
