@@ -31,23 +31,40 @@ final class ProductController extends AbstractController
         ]);
     }
 
-    // DISPLAY BEERS BY TYPE 
+    // DISPLAY ALL BEERS + BEERS BY TYPE + BEERS BY COLOR + BEER BY NAME (SEARCH BAR)
     #[Route('/product/beers', name: 'app_beers')]
     #[Route('/product/beers/type', name:'app_beers-by-type')]
-    public function beersByType(ProductRepository $productRepository, Request $request):Response
+    #[Route('/product/beers/color', name:'app_beers-by-color')]
+    #[Route('/product/beers/search', name:'app_beers_search')]
+    public function findBeers(ProductRepository $productRepository, Request $request):Response
     {   
-        $type = $request->query->get('type');
+        $type = $request->request->all();
+        // $type = $request->query->get('type');
+      
+        $color = $request->request->all();
+        // $color = $request->query->get('color');
+
+        // $name = $request->request->all();
+        $name = $request->query->get('name');
+        $products="";
+        $product="";
+
         if($type){
             $products = $productRepository->findBeersByType($type);
+        }else if($color){
+            $products = $productRepository->findBeersByColor($color);
+        }else if($name){
+            $product = $productRepository->findOneByName($name);
         }else{
             $products = $productRepository->findBeers([],['productName'=>'ASC']);
         }
         return $this->render('product/beers.html.twig',[
             'products'=>$products,
-            'type'=>$type
+            'type'=>$type,
+            'product'=>$product
+            // 'color'=>$color
         ]);
     }
-
 
     // DISPLAY A SPECIFIC PRODUCT
     #[Route('/product/{id}/display', name: 'display_product')]

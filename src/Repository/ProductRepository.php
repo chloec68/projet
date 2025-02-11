@@ -50,6 +50,49 @@ class ProductRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    // FIND ALL BEERS OF A CERTAIN COLOR 
+        // DQL => SELECT p FROM App\Entity\Beer p WHERE p.color = :color
+    public function findBeersByColor($color):array
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.category = :idCategory')
+            ->andWhere('p.productColor = :productColor')
+            ->setParameter('idCategory', '1')
+            ->setParameter('productColor', $color)
+            ->orderBy('p.productName','ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+
+       
+         public function findOneByName($name): ?Product
+       {
+           return $this->createQueryBuilder('p')
+                ->andWhere('p.category = :idCategory')
+                ->andWhere('p.productName LIKE :productName')
+                ->setParameter('idCategory', '1')
+                ->setParameter('productName', $name)
+                ->getQuery()
+                ->getOneOrNullResult()
+           ;
+       }
+
+        // 'SELECT * FROM product WHERE product_name LIKE "%'.$name.'%" 
+    //    public function findOneByName($name): ?Product
+    //    {
+    //        return $this->createQueryBuilder('p')
+    //             ->andWhere('p.category = :idCategory')
+    //             ->andWhere('p.productName LIKE :productName')
+    //             ->setParameter('idCategory', '1')
+    //             ->setParameter('productName', '%'.$name.'%')
+    //             ->getQuery()
+    //             ->getOneOrNullResult()
+    //        ;
+    //    }
+
+
+
     //    /**
     //     * @return Product[] Returns an array of Product objects
     //     */

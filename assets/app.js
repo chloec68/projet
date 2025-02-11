@@ -8,6 +8,7 @@
 import './styles/app.css';
 
 
+
 // SWIPER
 
   var swiper = new Swiper(".mySwiper", {
@@ -35,16 +36,14 @@ import './styles/app.css';
 
 
   // SCROLL UP BUTTON
-
   function buttonVisibility() {
-    if (window.scrollY > 300) {
-      document.getElementById('top-button').style.display = 'block';
+    let button = document.querySelector(".top-button");
+    if(button && window.scrollY > 300) {
+      button.style.display = "block";
     } else {
-      document.getElementById('top-button').style.display = 'none';
+      button.style.display = "none";
     }
   }
-
   document.addEventListener('scroll', buttonVisibility);
 
-  // Vérifier l'état au moment du chargement de la page
-  window.addEventListener('load', buttonVisibility);
+
