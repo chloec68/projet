@@ -4,6 +4,7 @@
         <meta charset="UTF-8">
         <title>{% block title %}Welcome{% endblock %}</title>
         <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
+        {# <link rel="stylesheet" href="assets/libs/nouislider/nouislider.min.css"> #}
         {% block stylesheets %}
         {% endblock %}
 
@@ -11,8 +12,7 @@
         {# FONT AWESOME CDN #}
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
         {# SWIPER CDN #}
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
-/>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
         {% endblock %}
 
         {% block javascripts %}
@@ -80,7 +80,7 @@
             <footer>
                 <div class="newsletter__container">
                     <p>m'inscrire à la newsletter</p>
-                    <input type="text" placeholder="mon-adresse@email.com">
+                    <input type="text" placeholder="mon-adresse@email.com" id="newsletterRecipient">
                     <button class="btn">m'inscrire</button>
                 </div>
                 <div class="footer__wrapper-main-container">

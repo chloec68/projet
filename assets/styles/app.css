@@ -212,7 +212,8 @@ footer small{
     text-align: center;
 }
 
-#top-button{
+.top-button{
+    display: none;
     position: fixed;
     bottom: 20px;
     right: 30px;
@@ -391,12 +392,110 @@ footer small{
 }
 
 
+/* **************************************************************** PRODUCTS/BEERS ************************************************************ */
+.products__page-wrapper{
+    display: flex;
+    padding:0 3rem 0 3rem;
+ 
+}
+/* ************************* SWIPER ************************* */
+.swiper {
+width: 90%;
+height: 30%;
+}
+.swiper-slide {
+text-align: center;
+font-size: 18px;
+background: #171414;
+display: flex;
+justify-content: center;
+align-items: center;
+height: auto;
+}
 
+.swiper-slide img {
+display: block;
+width: 100%;
+height: 100%;
+object-fit: cover;
+}
+/* ************************* PRODUCT CARD ************************* */
+.products__container{
+display: flex;
+flex-wrap: wrap;
+width:80%;
+gap:2rem;
+justify-content: center;
+}
 
+.product-card{
+width:25%;
+height: fit-content;
+padding:0.2rem;
+border: solid 1px rgb(228, 228, 228);
+box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 20px;
+font-size:1.3em;
+border-radius: 1px;
+overflow: hidden;
+}
 
+.product-card p{
+margin:0.8rem;
+}
 
+.centered{
+text-align: center;
+}
 
+.basket-btn{
+width:80%;
+margin: 2rem auto auto auto;
+display: block;
+background-color: var(--black);
+padding:0.3rem;
+color:var(--white);
+border:none;
+border-radius: 5px;
+font-family: 'Bebas Neue','serif';
+font-size:1.3em;
+}
 
+/* ************************* SIDEBAR ************************* */
 
+.products__sidebar{
+display: block;
+position: sticky;
+top:2rem;
+width:18%;
+border-right:1px solid var(--black);
+height: fit-content;
+}
 
+.sidebar-container{
+padding-right:2rem;
+margin-bottom:2rem;
+}
 
+.type-form{
+width:100%;
+margin:1rem 0 0 0;
+}
+
+.radio-button__container{
+width: 100%;
+display: flex;
+column-gap:1rem;
+font-size:1.2em;
+margin:0.3rem 0 0.3rem 0;
+}
+
+.filter-btn{
+margin-top:1rem;
+width:100%;
+padding:0.3rem;
+background-color: var(--black);
+color:var(--white);
+font-size:1.3em;
+border-radius: 5px;
+font-family:'Bebas Neue','serif';
+}
