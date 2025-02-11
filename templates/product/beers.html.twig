@@ -7,101 +7,42 @@
 {% block body %}
 <button class="top-button"><a href="#header"><img src="/icones/scroll-up.png" alt=""></a></button>
 <div class="products__page-wrapper">
-    {# <section class="products__sidebar">
-        <div class="sidebar-container">
-            <h3>par type : </h3>
-            <form class="type-form" action=" {{ path('app_beers-by-type') }} " method="get">
-                <div class="radio-button__container">
-                    <input type="radio" name="type" id="typePaleAle" value="1">
-                    <label for="typePaleAle">pale ale</label>
-                </div>
-                <div class="radio-button__container">
-                    <input type="radio" name="type" id="typeIpa" value="3" {% if type == 3 %}checked{% endif %}>
-                    <label for="typeIpa">ipa</label>
-                </div>
-                <div class="radio-button__container">
-                    <input type="radio" name="type" id="typeDdh" value="4" {% if type == 4 %}checked{% endif %}>
-                    <label for="typeDdh">ddh</label>
-                </div>
-                <div class="radio-button__container">
-                    <input type="radio" name="type" id="typeNeipa" value="5" {% if type == 5 %}checked{% endif %}>
-                    <label for="typeNeipa">neipa</label>
-                </div>
-                <div class="radio-button__container">
-                    <input type="radio" name="type" id="typeAmbree" value="6" {% if type == 6 %}checked{% endif %}>
-                    <label for="typeAmbree">ambrée</label>
-                </div>
-                <div class="radio-button__container">
-                    <input type="radio" name="type" id="typeWitbier" value="7" {% if type == 7 %}checked{% endif %}>
-                    <label for="typeWitbier">witbier</label>
-                </div>
-                <div class="radio-button__container">
-                    <input type="radio" name="type" id="typeBlanche" value="8" {% if type == 8 %}checked{% endif %}>
-                    <label for="typeBlanche">blanche</label>
-                </div>
-                <div class="radio-button__container">
-                    <input type="radio" name="type" id="typePilsner" value="9" {% if type == 9 %}checked{% endif %}>
-                    <label for="typePilsner">pilsner</label>
-                </div>
-                <button class="btn filter-btn" type="submit">Filtrer</button>
-            </form>
-        </div>
-
-        <div class="sidebar-container">
-            <h3>par couleur : </h3>
-            <form class="type-form" action=" {{ path('app_beers-by-color') }} " method="get">
-                    <div class="radio-button__container">
-                        <input type="radio" name="color" id="blonde" value="blonde">
-                        <label for="blonde">Blonde</label>
-                    </div>
-                    <div class="radio-button__container">
-                        <input type="radio" name="color" id="blanche" value="blanche" {% if type == 3 %}checked{% endif %}>
-                        <label for="blanche">blanche</label>
-                    </div>
-                    <div class="radio-button__container">
-                        <input type="radio" name="color" id="ambrée" value="ambrée" {% if type == 4 %}checked{% endif %}>
-                        <label for="ambrée">ambrée</label>
-                    </div>
-                    <div class="radio-button__container">
-                        <input type="radio" name="color" id="rousse" value="rousse" {% if type == 5 %}checked{% endif %}>
-                        <label for="rousse">rousse</label>
-                    </div>
-                    <div class="radio-button__container">
-                        <input type="radio" name="color" id="red" value="red" {% if type == 6 %}checked{% endif %}>
-                        <label for="red">red</label>
-                    </div>
-                    <div class="radio-button__container">
-                        <input type="radio" name="color" id="black" value="black" {% if type == 7 %}checked{% endif %}>
-                        <label for="typeWitbier">black</label>
-                    </div>
-                <button class="btn filter-btn" type="submit">Filtrer</button>
-            </form>
-        </div>
-
-        <div class="sidebar-container">
-
-        <form method="get" action="{{ path('app_beers_search') }}">
-        <h3> Par nom : </h3>
-        <input type="text" name="name" id="name"></input>
-        <button class="btn filter-btn" type="submit">Chercher</button>
-        </div>
-
-        <a class="reset-button" href=" {{ path('app_beers') }} ">Reset</a>
-        
-    </section> #}
 
     <section class="products__sidebar">
+        {{ form_start(form,{'attr': {'class': 'search-form'}}) }}
         <div class="sidebar-container">
-            {{ form_start(form) }}
+            <h3> Par nom : </h3>
+            {{ form_row(form.name) }}
+        </div>   
+        <div class="sidebar-container">
+            <h3>par couleur : </h3>
 
-            {{ form_end(form) }}
+            <div class="radio-button__container">
+                {% for choice in form.color %}
+                <div class="radio-button-group">
+                    {{ form_widget(choice, {'attr': {'class': 'search-input'}}) }}
+                    {{ form_label(choice, null, {'label_attr': {'class': 'search-label'}}) }}
+                </div>
+            {% endfor %}
+            </div>
         </div>
+        <div class="sidebar-container">
+            <h3>par type : </h3>
+            <div class="radio-button__container">
+                {% for choice in form.type %}
+                <div class="radio-button-group">
+                    {{ form_widget(choice, {'attr': {'class': 'search-input'}}) }}
+                    {{ form_label(choice, null, {'label_attr': {'class': 'search-label'}}) }}
+                </div>
+            {% endfor %}
+            </div>
+            {{ form_end(form) }}
+        </div> 
+
+        <a class="reset-button" href=" {{ path('app_beers') }} ">Reset</a>
     </section>
 
     <section class="products__container">
-
-    
-    {% if products %}
         {% for product in products %}
             <div class="product-card">
                 <!-- Swiper -->
@@ -120,25 +61,10 @@
                 <button class="btn basket-btn" type="submit">Ajouter au panier</button>
             </div>
         {% endfor %}
-    {% elseif product %}
-                <div class="product-card">
-            <!-- Swiper -->
-        <div class="swiper mySwiperProducts">
-            <div class="swiper-wrapper">
-            <div class="swiper-slide"> <img src="/img/beerNoBackground.png" alt=""> </div>
-            <div class="swiper-slide"><img src="/img/beerNoBackground.png" alt=""></div>
-            </div>
-            <div class="swiper-pagination"></div>
-        </div>
-
-            <h3 class="centered">{{product.productName}}</h3> 
-            <p class="centered">{{product.type.typeName}} | {{product.productAlcoholLevel}} | {{product.productVolume}}</p>
-            <p class="centered">{{product.productPrice}}</p>
-            <div><button>-</button>qte<button>+</button></div>
-            <button class="btn basket-btn" type="submit">Ajouter au panier</button>
-        </div>
-    {% endif %}
     </section>
 </div>
 
 {% endblock %}
+
+
+
