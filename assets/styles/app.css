@@ -499,3 +499,10 @@ font-size:1.3em;
 border-radius: 5px;
 font-family:'Bebas Neue','serif';
 }
+
+.reset-button{
+    display:block;
+    width: fit-content;
+    margin: auto;
+    font-size:1.5em;
+}
