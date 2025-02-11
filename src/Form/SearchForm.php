@@ -28,7 +28,7 @@ class SearchForm extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            // 'data_class' => Product::class,
+            'data_class' => SearchData::class,
             'method' => 'GET', // pour que l'utilisateur puisse partager ses recherches 
             'csrf_protection' => false // "pour ne pas avoir de problème de cross-scripting"
         ]);
