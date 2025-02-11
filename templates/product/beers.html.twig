@@ -7,10 +7,10 @@
 {% block body %}
 <button class="top-button"><a href="#header"><img src="/icones/scroll-up.png" alt=""></a></button>
 <div class="products__page-wrapper">
-    <section class="products__sidebar">
+    {# <section class="products__sidebar">
         <div class="sidebar-container">
             <h3>par type : </h3>
-            <form class="type-form" action=" {{ path('app_beers-by-type') }} " method="post">
+            <form class="type-form" action=" {{ path('app_beers-by-type') }} " method="get">
                 <div class="radio-button__container">
                     <input type="radio" name="type" id="typePaleAle" value="1">
                     <label for="typePaleAle">pale ale</label>
@@ -49,7 +49,7 @@
 
         <div class="sidebar-container">
             <h3>par couleur : </h3>
-            <form class="type-form" action=" {{ path('app_beers-by-color') }} " method="post">
+            <form class="type-form" action=" {{ path('app_beers-by-color') }} " method="get">
                     <div class="radio-button__container">
                         <input type="radio" name="color" id="blonde" value="blonde">
                         <label for="blonde">Blonde</label>
@@ -79,15 +79,23 @@
         </div>
 
         <div class="sidebar-container">
-        {# <input type='number' min="1"></input>
-        <input type='number' min="1"></input> #}
 
         <form method="get" action="{{ path('app_beers_search') }}">
         <h3> Par nom : </h3>
         <input type="text" name="name" id="name"></input>
         <button class="btn filter-btn" type="submit">Chercher</button>
         </div>
+
+        <a class="reset-button" href=" {{ path('app_beers') }} ">Reset</a>
         
+    </section> #}
+
+    <section class="products__sidebar">
+        <div class="sidebar-container">
+            {{ form_start(form) }}
+
+            {{ form_end(form) }}
+        </div>
     </section>
 
     <section class="products__container">
