@@ -224,10 +224,11 @@ class Product
         return $this->type;
     }
 
-    // public function getTypeName()
+    // public function getTypeId()
     // {
-    //     return $this->type->getTypeName();
+    //     return $this->type->getTypeId();
     // }
+ 
 
     public function setType(?Type $type): static
     {
