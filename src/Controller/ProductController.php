@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Product;
+use App\Model\SearchData;
 use App\Form\SearchForm;
 use App\Repository\ProductRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -32,16 +33,22 @@ final class ProductController extends AbstractController
             'products'=>$products
         ]);
     }
-
+    // DISPLAY ALL BEERS + SEARCH
     #[Route('/product/beers', name: 'app_beers')]
     #[Route('/product/beers/search', name:'app_beers_search')]
-    public function allBeers(ProductRepository $productRepository): Response
+    public function allBeers(ProductRepository $productRepository, Request $request): Response
     {   
-
-        $data = new Product();
-        $form = $this->createForm(SearchForm::class,$data);
-
+        // Default query for all products (beers)
         $products = $productRepository->findBeers([],['productName'=>'ASC']);
+
+        $searchData = new SearchData();
+        $form = $this->createForm(SearchForm::class,$searchData);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()){
+            $products = $productRepository->searchProduct($searchData);
+        }
+
         return $this->render('product/beers.html.twig', [
             'products'=>$products,
             'form'=>$form

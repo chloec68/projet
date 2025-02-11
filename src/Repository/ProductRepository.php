@@ -3,8 +3,9 @@
 namespace App\Repository;
 
 use App\Entity\Product;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use App\Model\SearchData;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @extends ServiceEntityRepository<Product>
@@ -36,49 +37,88 @@ class ProductRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    //FIND ALL BEERS OF A CERTAIN TYPE
-        // DQL => SELECT p FROM App\Entity\Beer p WHERE p.category = :idCategory AND p.type = :type
-    public function findBeersByType($type):array
+
+    public function searchProduct(SearchData $searchData):array
     {
-        return $this->createQueryBuilder('p')
-            ->andWhere('p.category = :idCategory')
-            ->andWhere('p.type = :type')
-            ->setParameter('idCategory', '1')
-            ->setParameter('type', $type)
+        $type = $searchData->getType();    
+        $color = $searchData->getColor();  
+        $name = $searchData->getName();   
+
+        $result = $this->createQueryBuilder('p')
+            ->andWhere('p.category = :idCategory')   
+            ->setParameter('idCategory', '1');
+
+        if (!empty($type)){
+            $result = $result
+                ->andWhere('p.type = :type')
+                ->setParameter('type', $type);
+        }
+
+        if(!empty($color)){
+            $result = $result
+                ->andWhere('p.productColor = :productColor')
+                ->setParameter('productColor', $color);
+        }
+
+        if(!empty($name)){
+            $result = $result
+                ->andWhere('p.productName LIKE :productName')
+                ->setParameter('productName', '%' . $name . '%');
+        }
+
+        $result = $result
             ->orderBy('p.productName','ASC')
             ->getQuery()
             ->getResult();
+        
+        return $result;
+        
     }
+
+
+
+
+    //FIND ALL BEERS OF A CERTAIN TYPE
+        // DQL => SELECT p FROM App\Entity\Beer p WHERE p.category = :idCategory AND p.type = :type
+    // public function findBeersByType($type):array
+    // {
+    //     return $this->createQueryBuilder('p')
+    //         ->andWhere('p.category = :idCategory')
+    //         ->andWhere('p.type = :type')
+    //         ->setParameter('idCategory', '1')
+    //         ->setParameter('type', $type)
+    //         ->orderBy('p.productName','ASC')
+    //         ->getQuery()
+    //         ->getResult();
+    // }
 
     // FIND ALL BEERS OF A CERTAIN COLOR 
         // DQL => SELECT p FROM App\Entity\Beer p WHERE p.color = :color
-    public function findBeersByColor($color):array
-    {
-        return $this->createQueryBuilder('p')
-            ->andWhere('p.category = :idCategory')
-            ->andWhere('p.productColor = :productColor')
-            ->setParameter('idCategory', '1')
-            ->setParameter('productColor', $color)
-            ->orderBy('p.productName','ASC')
-            ->getQuery()
-            ->getResult();
-    }
-
-
+    // public function findBeersByColor($color):array
+    // {
+    //     return $this->createQueryBuilder('p')
+    //         ->andWhere('p.category = :idCategory')
+    //         ->andWhere('p.productColor = :productColor')
+    //         ->setParameter('idCategory', '1')
+    //         ->setParameter('productColor', $color)
+    //         ->orderBy('p.productName','ASC')
+    //         ->getQuery()
+    //         ->getResult();
+    // }
        
-         public function findOneByName($name): ?Product
-       {
-           return $this->createQueryBuilder('p')
-                ->andWhere('p.category = :idCategory')
-                ->andWhere('p.productName LIKE :productName')
-                ->setParameter('idCategory', '1')
-                ->setParameter('productName', $name)
-                ->getQuery()
-                ->getOneOrNullResult()
-           ;
-       }
+    //      public function findOneByName($name): ?Product
+    //    {
+    //        return $this->createQueryBuilder('p')
+    //             ->andWhere('p.category = :idCategory')
+    //             ->andWhere('p.productName LIKE :productName')
+    //             ->setParameter('idCategory', '1')
+    //             ->setParameter('productName', $name)
+    //             ->getQuery()
+    //             ->getOneOrNullResult()
+    //        ;
+    //    }
 
-        // 'SELECT * FROM product WHERE product_name LIKE "%'.$name.'%" 
+        //DQL => 'SELECT * FROM product WHERE product_name LIKE "%'.$name.'%" 
     //    public function findOneByName($name): ?Product
     //    {
     //        return $this->createQueryBuilder('p')
