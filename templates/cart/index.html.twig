@@ -10,17 +10,15 @@
     <div class="main-container">
         <section class="detail-section">
             {% for item in data %}
-                <ul>
+                <table>
+                <tbody>
                     {% for picture in item.product.pictures %}
-                       <img class="product-pic" src="{{picture.pictureName}}" alt="">
+                    <td><img class="product-pic" src="{{picture.pictureName}}" alt=""></td>
                     {% endfor %}
-                    <div class='description-container'>
-                        <li>{{item.product.productName}} - {{item.product.type.typeName}}</li>
-                    </div>
-                        <li>{{item.product.productVolume}}</li>
-
-                    <li>{{item.product.productPrice}} €</li>
-                    <li>
+                    <td>{{item.product.productName}} - {{item.product.type.typeName}}</td>
+                    <td>{{item.product.productVolume}}</td>
+                    <td>{{item.product.productPrice}} €</td>
+                    <td>
                         <div class="wrapper">
                             <div class="quantity">
                                 <button class="minus" aria-label="Decrease">&minus;</button>
@@ -28,15 +26,17 @@
                                 <button class="plus" aria-label="Increase">&plus;</button>
                             </div>
                         </div>
-                    </li>
-                    <li class="trash-icone"><i class="fa-solid fa-trash"></i></li>
-                    {# RECUPERER SOUS-TOTAL #}
-                </ul>
+                        <td>{{item.subtotal}} €</td>
+                    </td>
+                   
+                    <td class="trash-icone"><i class="fa-solid fa-trash"></i></td>
+                    </tbody>
+                </table>
             {% endfor %}   
         </section>
         {# RECUPERER NB ARTICLES #}
         <section class="recap-section">
-            <p class="nbArticles">n articles</p>
+            <p class="nbItems">{{nbItems}} articles</p>
             <div class="price-container">
                 <p>total ttc:</p><p>{{ total }}€</p>
             </div>
@@ -46,127 +46,5 @@
     </div>
 </div>
 
-
-
-
-
-
-   <style>
-
-/* QUANTITY INPUT */
-.wrapper {
-  display: flex;
-}
-
-.quantity {
-  display: flex;
-  border: 1px solid var(--light-grey);
-  border-radius: 4px;
-  overflow: hidden;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.quantity button {
-  background-color: var(--light-grey);
-  color: var(--black);
-  border: none;
-  cursor: pointer;
-  font-size: 1.2em;
-  width: 1.2em;
-  height: auto;
-  text-align: center;
-  transition: background-color 0.2s;
-}
-
-.quantity button:hover {
-  background-color: var(--blue);
-}
-
-.input-box {
-  width: 3em;
-  text-align: center;
-  border: none;
-  padding: 6px;
-  outline: none;
-}
-
-/* Hide the number input spin buttons */
-.input-box::-webkit-inner-spin-button,
-.input-box::-webkit-outer-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-
-.input-box[type="number"] {
-  -moz-appearance: textfield;
-}
-
-
-   /* CART DETAIL SECTION */
-   .cart-page-wrapper{
-    padding:6rem 12rem 6rem 12rem;
-   }
-
-   .cart-page-wrapper h1{
-    text-align:center;
-   }
-
-   .main-container{
-    display:flex;
-    gap:5rem;
-   }
-
-   .detail-section{
-    flex-grow:2;
-   }
-
-    ul{
-    display:flex;
-    align-items:center;
-    justify-content:space-around;
-    width:100%;
-    gap:2rem;
-    list-style-type: none;
-    border-bottom:1px var(--light-grey) solid;
-   }
-
-   li{
-    padding:3rem 1.5rem 3rem 1.5rem;
-    font-family:'Roboto Condensed','serif';
-    font-size: 1.1em;
-   }
-
-   .product-pic{
-    width:5%;
-   }
-
-    /* RECAP SECTION */
-
-   .recap-section{
-    flex-grow:1;
-    min-width:25%;
-   }
-
-   .nbArticles{
-    text-align:center;
-    font-family:'Roboto Condensed','serif';
-   }
-
-   .price-container{
-    display:flex;
-    font-size:1.3em;
-    flex-direction:row;
-    justify-content:space-around;
-    font-family:'Bebas Neue','serif';
-   }
-
-   .grey-paragraph{
-    color:var(--dark-grey);
-    font-family:'Roboto Condensed','serif';
-    text-align:center;
-    margin:1rem;
-   }
-
-   </style>
 
 {% endblock %}

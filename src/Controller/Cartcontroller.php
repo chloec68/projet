@@ -8,39 +8,46 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 
-#[Route('/cart', name:'cart_')]
 class CartController extends AbstractController 
 {   
 
-    #[Route('/', name:'index')]
+    #[Route('/cart', name:'index')]
     public function index(SessionInterface $session, ProductRepository $productRepository)
     {
         $cart = $session->get('cart',[]);
 
         $data=[];
         $total=0;
+        $subtotal=0;
+        $nbItems=0;
+  
 
         foreach($cart as $id=>$quantity){
             $product = $productRepository->find($id);
-
+            
             $data[] = [
                 'product' => $product,
-                'quantity' => $quantity
+                'quantity' => $quantity,
+                'subtotal' => $subtotal = $product->getProductPrice() * $quantity
             ];
             $total += $product->getProductPrice() * $quantity;
+            $nbItems += $quantity ; 
         }
 
         // dd($data);
         // dd($total);
+        // dd($cart);
 
         return $this->render('cart/index.html.twig',[       
             'data'=>$data,
             compact('data'),
-            'total'=>$total
+            'total'=>$total,
+            'subtotal'=>$subtotal,
+            'nbItems'=>$nbItems
             ]);
     }
 
-    #[Route('/add/{id}', name:'add')]
+    #[Route('cart/add/{id}', name:'add')]
     public function add(Product $product, SessionInterface $session)
     {   
         //on récupère l'id du produit 
@@ -66,6 +73,11 @@ class CartController extends AbstractController
        'id'=>$id
        ]);
     }
+
+    // #[Route('/cart/qty-up/{id}')]
+    // public function upQuantity(){
+
+    // }
 }
 
 
