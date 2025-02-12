@@ -5,10 +5,20 @@
 
 
 {% block body %}
+
+<h1>Votre panier</h1>
+<div>
+
 {% for item in data %}
+<div>
     <p>{{item.product.productName}}</p>
+    <p>{{item.product.type.typeName}}</p>
     <p>{{item.product.productPrice}}</p>
+    <p>{{item.product.productVolume}}</p>
     <p>{{item.quantity}}</p>
-{% endfor %}
     <p>{{ total }}</p>
+</div>
+{% endfor %}
+   
+   </div>
 {% endblock %}
