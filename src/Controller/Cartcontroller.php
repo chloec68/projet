@@ -4,6 +4,7 @@ namespace App\Controller;
 use App\Entity\Product;
 use App\Repository\ProductRepository;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -68,10 +69,7 @@ class CartController extends AbstractController
 
     //    dd($session);
 
-       return $this->render('cart/index.html.twig',[       
-       'cart'=>$cart,
-       'id'=>$id
-       ]);
+        return new JsonResponse(['status' => 'success', 'message' => 'Produit ajouté au panier']);
     }
 
     // #[Route('/cart/qty-up/{id}')]
