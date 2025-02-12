@@ -5,20 +5,230 @@
 
 
 {% block body %}
+<div class="cart-page-wrapper">
+    <h1>Votre panier</h1>
+    <div class="main-container">
+        <section class="detail-section">
+            {% for item in data %}
+                <ul>
+                    {% for picture in item.product.pictures %}
+                       <img class="product-pic" src="{{picture.pictureName}}" alt="">
+                    {% endfor %}
+                    <div class='description-container'>
+                        <li>{{item.product.productName}} - {{item.product.type.typeName}}</li>
+                    </div>
+                        <li>{{item.product.productVolume}}</li>
 
-<h1>Votre panier</h1>
-<div>
-
-{% for item in data %}
-<div>
-    <p>{{item.product.productName}}</p>
-    <p>{{item.product.type.typeName}}</p>
-    <p>{{item.product.productPrice}}</p>
-    <p>{{item.product.productVolume}}</p>
-    <p>{{item.quantity}}</p>
-    <p>{{ total }}</p>
+                    <li>{{item.product.productPrice}} €</li>
+                    <li>{{item.quantity}}</li>
+                    <li class="trash-icone"><i class="fa-solid fa-trash"></i></li>
+                    {# RECUPERER SOUS-TOTAL #}
+                </ul>
+            {% endfor %}   
+        </section>
+        {# RECUPERER NB ARTICLES #}
+        <section class="recap-section">
+            <p class="nbArticles">n articles</p>
+            <div class="price-container">
+                <p>total ttc:</p><p>{{ total }}€</p>
+            </div>
+            <button class="btn basket-btn">Payer</button>
+            <p class="grey-paragraph">Paiement 100% sécurisé</p>
+        </section>
+    </div>
 </div>
-{% endfor %}
-   
-   </div>
+
+
+
+
+		<div class="wrapper">
+  <div class="quantity">
+    <button class="minus" aria-label="Decrease">&minus;</button>
+    <input type="number" class="input-box" value="1" min="1" max="10">
+    <button class="plus" aria-label="Increase">&plus;</button>
+  </div>
+ </div>
+
+   <style>
+
+
+.wrapper {
+  display: flex;
+}
+
+.quantity {
+  display: flex;
+  border: 2px solid #3498db;
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.quantity button {
+  background-color: #3498db;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  font-size: 20px;
+  width: 30px;
+  height: auto;
+  text-align: center;
+  transition: background-color 0.2s;
+}
+
+.quantity button:hover {
+  background-color: #2980b9;
+}
+
+.input-box {
+  width: 40px;
+  text-align: center;
+  border: none;
+  padding: 8px 10px;
+  font-size: 16px;
+  outline: none;
+}
+
+/* Hide the number input spin buttons */
+.input-box::-webkit-inner-spin-button,
+.input-box::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.input-box[type="number"] {
+  -moz-appearance: textfield;
+}
+
+
+
+
+
+   /* CART DETAIL SECTION */
+   .cart-page-wrapper{
+    padding:6rem 12rem 6rem 12rem;
+   }
+
+   .cart-page-wrapper h1{
+    text-align:center;
+   }
+
+   .main-container{
+    display:flex;
+    gap:5rem;
+   }
+
+   .detail-section{
+    flex-grow:2;
+   }
+
+    ul{
+    display:flex;
+    align-items:center;
+    justify-content:space-around;
+    width:100%;
+    gap:2rem;
+    list-style-type: none;
+    border-bottom:1px var(--light-grey) solid;
+   }
+
+   li{
+    padding:3rem 1.5rem 3rem 1.5rem;
+    font-family:'Roboto Condensed','serif';
+   }
+
+   .product-pic{
+    width:5%;
+   }
+
+    /* RECAP SECTION */
+
+   .recap-section{
+    flex-grow:1;
+    min-width:25%;
+   }
+
+   .nbArticles{
+    text-align:center;
+    font-family:'Roboto Condensed','serif';
+   }
+
+   .price-container{
+    display:flex;
+    font-size:1.3em;
+    flex-direction:row;
+    justify-content:space-around;
+    font-family:'Bebas Neue','serif';
+   }
+
+   .grey-paragraph{
+    color:var(--dark-grey);
+    font-family:'Roboto Condensed','serif';
+    text-align:center;
+    margin:1rem;
+   }
+
+
+
+    /* .description-container{
+        display:flex;
+        gap:0rem;
+    } */
+  
+   </style>
+
+
+
+   <script>
+(function () {
+  const quantityContainer = document.querySelector(".quantity");
+  const minusBtn = quantityContainer.querySelector(".minus");
+  const plusBtn = quantityContainer.querySelector(".plus");
+  const inputBox = quantityContainer.querySelector(".input-box");
+
+  updateButtonStates();
+
+  quantityContainer.addEventListener("click", handleButtonClick);
+  inputBox.addEventListener("input", handleQuantityChange);
+
+  function updateButtonStates() {
+    const value = parseInt(inputBox.value);
+    minusBtn.disabled = value <= 1;
+    plusBtn.disabled = value >= parseInt(inputBox.max);
+  }
+
+  function handleButtonClick(event) {
+    if (event.target.classList.contains("minus")) {
+      decreaseValue();
+    } else if (event.target.classList.contains("plus")) {
+      increaseValue();
+    }
+  }
+
+  function decreaseValue() {
+    let value = parseInt(inputBox.value);
+    value = isNaN(value) ? 1 : Math.max(value - 1, 1);
+    inputBox.value = value;
+    updateButtonStates();
+    handleQuantityChange();
+  }
+
+  function increaseValue() {
+    let value = parseInt(inputBox.value);
+    value = isNaN(value) ? 1 : Math.min(value + 1, parseInt(inputBox.max));
+    inputBox.value = value;
+    updateButtonStates();
+    handleQuantityChange();
+  }
+
+  function handleQuantityChange() {
+    let value = parseInt(inputBox.value);
+    value = isNaN(value) ? 1 : value;
+
+    // Execute your code here based on the updated quantity value
+    console.log("Quantity changed:", value);
+  }
+})();
+
+   </script>
 {% endblock %}
