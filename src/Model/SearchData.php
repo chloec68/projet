@@ -5,7 +5,7 @@ namespace App\Model;
 class SearchData
 {
     private ?string $name = null;
-    private ?string $type = null;
+    private $type = null;
     private ?string $color = null;
 
     // Getters and Setters
@@ -20,12 +20,12 @@ class SearchData
         return $this;
     }
 
-    public function getType(): ?string
+    public function getType()
     {
         return $this->type;
     }
 
-    public function setType(?string $type): self
+    public function setType( $type): self
     {
         $this->type = $type;
         return $this;
