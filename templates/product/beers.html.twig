@@ -48,8 +48,9 @@
                 <!-- Swiper -->
             <div class="swiper mySwiperProducts">
                 <div class="swiper-wrapper">
-                <div class="swiper-slide"> <img src="/img/beerNoBackground.png" alt=""> </div>
-                <div class="swiper-slide"><img src="/img/beerNoBackground.png" alt=""></div>
+                    {% for picture in product.pictures %}
+                    <div class="swiper-slide"> <img src="{{ picture.pictureName }}" alt=""> </div>
+                    {% endfor %}
                 </div>
                 <div class="swiper-pagination"></div>
             </div>
@@ -65,6 +66,9 @@
         {% endfor %}
     </section>
 </div>
+
+
+
 
 {% endblock %}
 

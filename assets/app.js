@@ -38,12 +38,13 @@ import './styles/app.css';
   // SCROLL UP BUTTON
   function buttonVisibility() {
     let button = document.querySelector(".top-button");
-    if(button && window.scrollY > 300) {
+    if(button){
+     if(window.scrollY > 300) {
       button.style.display = "block";
-    } else {
-      button.style.display = "none";
+      } else {
+        button.style.display = "none";
+      }
     }
   }
   document.addEventListener('scroll', buttonVisibility);
-
 
