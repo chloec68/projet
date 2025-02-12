@@ -13,7 +13,9 @@
                 <table>
                 <tbody>
                     {% for picture in item.product.pictures %}
+                        {% if loop.first %}
                     <td><img class="product-pic" src="{{picture.pictureName}}" alt=""></td>
+                        {% endif %}
                     {% endfor %}
                     <td>{{item.product.productName}} - {{item.product.type.typeName}}</td>
                     <td>{{item.product.productVolume}}</td>
