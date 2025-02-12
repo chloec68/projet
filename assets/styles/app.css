@@ -506,3 +506,117 @@ font-family:'Bebas Neue','serif';
     margin: auto;
     font-size:1.5em;
 }
+
+/* **************************************************************** CART ************************************************************ */
+
+/* ************************* QUANTITY INPUT ************************* */
+.wrapper {
+  display: flex;
+}
+
+.quantity {
+  display: flex;
+  border: 1px solid var(--light-grey);
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.quantity button {
+  background-color: var(--light-grey);
+  color: var(--black);
+  border: none;
+  cursor: pointer;
+  font-size: 1.2em;
+  width: 1.2em;
+  height: auto;
+  text-align: center;
+  transition: background-color 0.2s;
+}
+
+.quantity button:hover {
+  background-color: var(--blue);
+}
+
+.input-box {
+  width: 3em;
+  text-align: center;
+  border: none;
+  padding: 6px;
+  outline: none;
+}
+
+/* Hide the number input spin buttons */
+.input-box::-webkit-inner-spin-button,
+.input-box::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.input-box[type="number"] {
+  -moz-appearance: textfield;
+}
+
+/* ************************* CART DETAIL SECTION ************************* */
+
+   .cart-page-wrapper{
+    padding:6rem 12rem 6rem 12rem;
+   }
+
+   .cart-page-wrapper h1{
+    text-align:center;
+   }
+
+   .main-container{
+    display:flex;
+    gap:5rem;
+   }
+
+   .detail-section{
+    flex-grow:2;
+   }
+
+    table{
+    width:100%;
+    border-bottom:1px var(--light-grey) solid;
+   }
+
+   td{
+    padding:3rem 1.5rem 3rem 1.5rem;
+    font-family:'Roboto Condensed','serif';
+    font-size: 1.1em;
+    width:15%;
+   }
+
+   .product-pic{
+    width:50px;
+   }
+
+/* ************************* RECAP SECTION ************************* */
+
+   .recap-section{
+    flex-grow:1;
+    min-width:25%;
+   }
+
+   .nbItems{
+    text-align:center;
+    font-family:'Roboto Condensed','serif';
+   }
+
+   .price-container{
+    display:flex;
+    font-size:1.3em;
+    flex-direction:row;
+    justify-content:space-around;
+    font-family:'Bebas Neue','serif';
+   }
+
+   .grey-paragraph{
+    color:var(--dark-grey);
+    font-family:'Roboto Condensed','serif';
+    text-align:center;
+    margin:1rem;
+   }
+
+
