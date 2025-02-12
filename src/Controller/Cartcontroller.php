@@ -4,7 +4,7 @@ namespace App\Controller;
 use App\Entity\Product;
 use App\Repository\ProductRepository;
 use Symfony\Component\Routing\Attribute\Route;
-use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -48,7 +48,7 @@ class CartController extends AbstractController
             ]);
     }
 
-    #[Route('cart/add/{id}', name:'add')]
+    #[Route('cart/add/{id}', name:'cart_add')]
     public function add(Product $product, SessionInterface $session)
     {   
         //on récupère l'id du produit 
@@ -69,20 +69,6 @@ class CartController extends AbstractController
 
     //    dd($session);
 
-        return new JsonResponse(['status' => 'success', 'message' => 'Produit ajouté au panier']);
+        return new RedirectResponse($_SERVER['HTTP_REFERER']);
     }
-
-    // #[Route('/cart/qty-up/{id}')]
-    // public function upQuantity(){
-
-    // }
 }
-
-
-
-//renderView
-//#[template]
-//renderBlock
-//renderBlockView
-
-
