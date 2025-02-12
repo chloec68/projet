@@ -20,7 +20,15 @@
                         <li>{{item.product.productVolume}}</li>
 
                     <li>{{item.product.productPrice}} €</li>
-                    <li>{{item.quantity}}</li>
+                    <li>
+                        <div class="wrapper">
+                            <div class="quantity">
+                                <button class="minus" aria-label="Decrease">&minus;</button>
+                                <input type="number" class="input-box" value="{{item.quantity}}" min="1" max="10">
+                                <button class="plus" aria-label="Increase">&plus;</button>
+                            </div>
+                        </div>
+                    </li>
                     <li class="trash-icone"><i class="fa-solid fa-trash"></i></li>
                     {# RECUPERER SOUS-TOTAL #}
                 </ul>
@@ -41,51 +49,44 @@
 
 
 
-		<div class="wrapper">
-  <div class="quantity">
-    <button class="minus" aria-label="Decrease">&minus;</button>
-    <input type="number" class="input-box" value="1" min="1" max="10">
-    <button class="plus" aria-label="Increase">&plus;</button>
-  </div>
- </div>
+
 
    <style>
 
-
+/* QUANTITY INPUT */
 .wrapper {
   display: flex;
 }
 
 .quantity {
   display: flex;
-  border: 2px solid #3498db;
+  border: 1px solid var(--light-grey);
   border-radius: 4px;
   overflow: hidden;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .quantity button {
-  background-color: #3498db;
-  color: #fff;
+  background-color: var(--light-grey);
+  color: var(--black);
   border: none;
   cursor: pointer;
-  font-size: 20px;
-  width: 30px;
+  font-size: 1.2em;
+  width: 1.2em;
   height: auto;
   text-align: center;
   transition: background-color 0.2s;
 }
 
 .quantity button:hover {
-  background-color: #2980b9;
+  background-color: var(--blue);
 }
 
 .input-box {
-  width: 40px;
+  width: 3em;
   text-align: center;
   border: none;
-  padding: 8px 10px;
-  font-size: 16px;
+  padding: 6px;
   outline: none;
 }
 
@@ -99,9 +100,6 @@
 .input-box[type="number"] {
   -moz-appearance: textfield;
 }
-
-
-
 
 
    /* CART DETAIL SECTION */
@@ -135,6 +133,7 @@
    li{
     padding:3rem 1.5rem 3rem 1.5rem;
     font-family:'Roboto Condensed','serif';
+    font-size: 1.1em;
    }
 
    .product-pic{
@@ -168,67 +167,6 @@
     margin:1rem;
    }
 
-
-
-    /* .description-container{
-        display:flex;
-        gap:0rem;
-    } */
-  
    </style>
 
-
-
-   <script>
-(function () {
-  const quantityContainer = document.querySelector(".quantity");
-  const minusBtn = quantityContainer.querySelector(".minus");
-  const plusBtn = quantityContainer.querySelector(".plus");
-  const inputBox = quantityContainer.querySelector(".input-box");
-
-  updateButtonStates();
-
-  quantityContainer.addEventListener("click", handleButtonClick);
-  inputBox.addEventListener("input", handleQuantityChange);
-
-  function updateButtonStates() {
-    const value = parseInt(inputBox.value);
-    minusBtn.disabled = value <= 1;
-    plusBtn.disabled = value >= parseInt(inputBox.max);
-  }
-
-  function handleButtonClick(event) {
-    if (event.target.classList.contains("minus")) {
-      decreaseValue();
-    } else if (event.target.classList.contains("plus")) {
-      increaseValue();
-    }
-  }
-
-  function decreaseValue() {
-    let value = parseInt(inputBox.value);
-    value = isNaN(value) ? 1 : Math.max(value - 1, 1);
-    inputBox.value = value;
-    updateButtonStates();
-    handleQuantityChange();
-  }
-
-  function increaseValue() {
-    let value = parseInt(inputBox.value);
-    value = isNaN(value) ? 1 : Math.min(value + 1, parseInt(inputBox.max));
-    inputBox.value = value;
-    updateButtonStates();
-    handleQuantityChange();
-  }
-
-  function handleQuantityChange() {
-    let value = parseInt(inputBox.value);
-    value = isNaN(value) ? 1 : value;
-
-    // Execute your code here based on the updated quantity value
-    console.log("Quantity changed:", value);
-  }
-})();
-
-   </script>
 {% endblock %}
