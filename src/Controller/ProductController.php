@@ -14,16 +14,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 final class ProductController extends AbstractController
 {
-    // DISPLAY ALL BEERS 
-    // #[Route('/product/beers', name: 'app_beers')]
-    // public function allBeers(ProductRepository $productRepository): Response
-    // {   
-    //     $products = $productRepository->findBeers([],['productName'=>'ASC']);
-    //     return $this->render('product/beers.html.twig', [
-    //         'products'=>$products
-    //     ]);
-    // }
-
+   
     // DISPLAY ALL GOODIES
     #[Route('/product/goodies', name: 'app_goodies')]
     public function allGoodies(ProductRepository $productRepository): Response
@@ -33,6 +24,8 @@ final class ProductController extends AbstractController
             'products'=>$products
         ]);
     }
+
+    
     // DISPLAY ALL BEERS + SEARCH
     #[Route('/product/beers', name: 'app_beers')]
     #[Route('/product/beers/search', name:'app_beers_search')]
@@ -46,6 +39,7 @@ final class ProductController extends AbstractController
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()){
+
             $products = $productRepository->searchProduct($searchData);
         }
 
@@ -55,36 +49,11 @@ final class ProductController extends AbstractController
         ]);
     }
 
-    // DISPLAY ALL BEERS + BEERS BY TYPE + BEERS BY COLOR + BEER BY NAME (SEARCH BAR)
-    // #[Route('/product/beers', name: 'app_beers')]
-    // #[Route('/product/beers/type', name:'app_beers-by-type')]
-    // #[Route('/product/beers/color', name:'app_beers-by-color')]
-    // #[Route('/product/beers/search', name:'app_beers_search')]
-    // public function findBeers(ProductRepository $productRepository, Request $request):Response
-    // {   
- 
-    //     $type = $request->query->get('type');
-    //     $color = $request->query->get('color');
-    //     $name = $request->query->get('name');
-    //     $products="";
-    //     $product="";
 
-    //     if($type){
-    //         $products = $productRepository->findBeersByType($type);
-    //     }else if($color){
-    //         $products = $productRepository->findBeersByColor($color);
-    //     }else if($name){
-    //         $product = $productRepository->findOneByName($name);
-    //     }else{
-    //         $products = $productRepository->findBeers([],['productName'=>'ASC']);
-    //     }
-    //     return $this->render('product/beers.html.twig',[
-    //         'products'=>$products,
-    //         'type'=>$type,
-    //         'product'=>$product
-    //         // 'color'=>$color
-    //     ]);
-    // }
+
+
+
+
 
     // DISPLAY A SPECIFIC PRODUCT
     #[Route('/product/{id}/display', name: 'display_product')]
