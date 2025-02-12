@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Cart{% endblock %}
+
+
+
+{% block body %}
+{% for item in data %}
+    <p>{{item.product.productName}}</p>
+    <p>{{item.product.productPrice}}</p>
+    <p>{{item.quantity}}</p>
+{% endfor %}
+    <p>{{ total }}</p>
+{% endblock %}

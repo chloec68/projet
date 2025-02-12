@@ -58,7 +58,7 @@
                 <p class="centered">{{product.type.typeName}} | {{product.productAlcoholLevel}} | {{product.productVolume}}</p>
                 <p class="centered">{{product.productPrice}}</p>
                 <div><button>-</button>qte<button>+</button></div>
-                <button class="btn basket-btn" type="submit">Ajouter au panier</button>
+                <a href="{{ path('cart_add',{id:product.id}) }}"><button class="btn basket-btn" type="submit">Ajouter au panier</button></a>
             </div>
 
       
