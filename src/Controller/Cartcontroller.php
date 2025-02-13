@@ -22,26 +22,23 @@ class CartController extends AbstractController
         $subtotal=0;
         $nbItems=0;
   
-
         foreach($cart as $id=>$quantity){
             $product = $productRepository->find($id);
-            
-            $data[] = [
-                'product' => $product,
-                'quantity' => $quantity,
-                'subtotal' => $subtotal = $product->getProductPrice() * $quantity
-            ];
-            $total += $product->getProductPrice() * $quantity;
-            $nbItems += $quantity ; 
-        }
 
-        // dd($data);
-        // dd($total);
-        // dd($cart);
+            if ($product !== null){
+                $data[] = [
+                    'product' => $product,
+                    'quantity' => $quantity,
+                    'subtotal' => $subtotal = $product->getProductPrice() * $quantity
+                ];
+                $total += $product->getProductPrice() * $quantity;
+                $nbItems += $quantity ; 
+            }
+        }
 
         return $this->render('cart/index.html.twig',[       
             'data'=>$data,
-            compact('data'),
+
             'total'=>$total,
             'subtotal'=>$subtotal,
             'nbItems'=>$nbItems
