@@ -10,31 +10,32 @@
 
     <div class="parallax"><p>Brasserie locale et artisanale, La brasserie Sainte Cru est née à Sainte-Croix-en-Plaine en 2012. Installée à Colmar depuis 2013, nous brassons désormais une <strong>gamme permanente disponible toute l’année</strong> et une <strong>gamme éphémère renouvelée chaque mois</strong>, disponible jusqu’à épuisement du stock</p></div>
 
-    <section id="permanent-section">
-        <h2 id="permanent-title">les permanentes</h2>
-        <h3>disponibles toute l'année</h3>
+        <section id="permanent-section">
+            <h2 id="permanent-title">les permanentes</h2>
+            <h3>disponibles toute l'année</h3>
 
-    <!-- Slider main container -->
-        <div class="swiper mySwiper">
-            <!-- Additional required wrapper -->
-            <div class="swiper-wrapper">
-            <!-- Slides -->
-            <div class="swiper-slide"><img src="/img/beerCan.webp" alt=""></div>
-            <div class="swiper-slide"><img src="/img/colorful.webp" alt=""></div>
-            <div class="swiper-slide"><img src="/img/beerCan.webp" alt=""></div>
-            <div class="swiper-slide"><img src="/img/colorful.webp" alt=""></div>
-            <div class="swiper-slide"><img src="/img/beerCan.webp" alt=""></div>
-            <div class="swiper-slide"><img src="/img/colorful.webp" alt=""></div>
-            </div>  
+        <!-- Slider main container -->
+            <div class="swiper mySwiper">
+                <!-- Additional required wrapper -->
+                <div class="swiper-wrapper">
+                <!-- Slides -->
+                {% for product in permanent %}
+                    {% for picture in product.pictures %}
+                        {% if loop.first %}
+                            <div class="swiper-slide"><img src="{{picture.pictureName}}" alt=""></div>
+                        {% endif %}
+                    {% endfor %}            
+                {% endfor %}
+                </div>  
 
-            <!-- If we need navigation buttons -->
-            <div class="swiper-button-prev"></div>
-            <div class="swiper-button-next"></div>
-        </div>
+                <!-- If we need navigation buttons -->
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-button-next"></div>
+            </div>
 
-        <div> <a href="{{ path('app_beers') }}" class="seeAll-link">tout voir<img id="icone-doubleArrowRight" src="/icones/doubleArrowRight.svg" alt=""></a></div>
+            <div> <a href="{{ path('app_beers') }}" class="seeAll-link">tout voir<img id="icone-doubleArrowRight" src="/icones/doubleArrowRight.svg" alt=""></a></div>
 
-    </section>
+        </section>
 
     <section id="ephemeral-section">
         <h2 id="ephemeral-title">les éphémères</h2>
@@ -45,12 +46,14 @@
             <!-- Additional required wrapper -->
             <div class="swiper-wrapper">
             <!-- Slides -->
-            <div class="swiper-slide"><img src="/img/beerCan.webp" alt=""></div>
-            <div class="swiper-slide"><img src="/img/colorful.webp" alt=""></div>
-            <div class="swiper-slide"><img src="/img/beerCan.webp" alt=""></div>
-            <div class="swiper-slide"><img src="/img/colorful.webp" alt=""></div>
-            <div class="swiper-slide"><img src="/img/beerCan.webp" alt=""></div>
-            <div class="swiper-slide"><img src="/img/colorful.webp" alt=""></div>
+            {% for product in ephemeral %}
+                {% for picture in product.pictures %}
+                    {% if loop.first %}
+                        <div class="swiper-slide"><img src="{{picture.pictureName}}" alt=""></div>
+                    {% endif %}
+                {% endfor %}            
+            {% endfor %}
+        </div>  
             </div>  
 
             <!-- If we need navigation buttons -->

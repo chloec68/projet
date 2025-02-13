@@ -7,6 +7,7 @@ class SearchData
     private ?string $name = null;
     private $type = null;
     private ?string $color = null;
+    private $isPermanent = null;
 
     // Getters and Setters
     public function getName(): ?string
@@ -39,6 +40,17 @@ class SearchData
     public function setColor(?string $color): self
     {
         $this->color = $color;
+        return $this;
+    }
+
+    public function getIsPermanent()
+    {
+        return $this->isPermanent;
+    }
+
+    public function setIsPermanent($isPermanent): self
+    {
+        $this->isPermanent = $isPermanent;
         return $this;
     }
 }

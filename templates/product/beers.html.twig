@@ -16,7 +16,6 @@
         </div>   
         <div class="sidebar-container">
             <h3>par couleur : </h3>
-
             <div class="radio-button__container">
                 {% for choice in form.color %}
                 <div class="radio-button-group">
@@ -36,8 +35,20 @@
                 </div>
             {% endfor %}
             </div>
-            {{ form_end(form) }}
         </div> 
+            <div class="sidebar-container">
+                <h3>Gamme : </h3>
+                <div class="radio-button__container">
+                    {% for choice in form.isPermanent %}
+                    <div class="radio-button-group">
+                        {{ form_widget(choice, {'attr': {'class': 'search-input'}}) }}
+                        {{ form_label(choice, null, {'label_attr': {'class': 'search-label'}}) }}
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {{ form_end(form) }}
+        
 
         <a class="reset-button" href=" {{ path('app_beers') }} ">Reset</a>
     </section>

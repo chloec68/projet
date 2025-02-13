@@ -60,7 +60,20 @@ final class ProductController extends AbstractController
         ]);
     }
 
+    // DISPLAY PERMANENT BEERS
+    // #[Route('/product/beers/permanent', name: 'app_beers_permanent')]
+    // public function displayPermanent(ProductRepository $productRepository): Response
+    // {
+    //     $permanent = $productRepository->findByRange(true);
 
+    //     dump('reached');
+    //     dd($permanent);
+    //     dd($permanent);
+
+    //     return $this->render('home/index.html.twig', [
+    //         'permanent' => $permanent
+    //     ]);
+    // }
 
 
 

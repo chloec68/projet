@@ -52,6 +52,18 @@ class SearchForm extends AbstractType
                 ],
             ])
 
+            ->add('isPermanent', ChoiceType::class, [
+                'label' => false,
+                'required' => false,
+                'placeholder' => false,
+                'expanded' => true, //sinon on obtient une liste déroulante
+                'multiple' => false, 
+                'choices' => [
+                    'Permanente' => 'permanent',
+                    'Ephémère' => 'ephemere'
+                ],
+            ])
+
             ->add('chercher', SubmitType::class, [
                 'attr'=>[
                     'class' => 'search-btn btn'
