@@ -508,7 +508,23 @@ font-family:'Bebas Neue','serif';
 }
 
 /* **************************************************************** CART ************************************************************ */
+.cart-page-wrapper{
+    padding:6rem;
+}
 
+.cart-page-wrapper h1{
+    text-align:center;
+}
+
+.emptyCart{
+    width:fit-content;
+    padding:1rem;
+    margin:2rem auto 2rem auto;
+    font-family: 'Roboto Condensed';
+    font-size:1.5em;
+    border:1px solid var(--blue);
+    border-radius:5px;
+}
 /* ************************* QUANTITY INPUT ************************* */
 .wrapper {
   display: flex;
@@ -559,13 +575,7 @@ font-family:'Bebas Neue','serif';
 
 /* ************************* CART DETAIL SECTION ************************* */
 
-   .cart-page-wrapper{
-    padding:6rem;
-   }
-
-   .cart-page-wrapper h1{
-    text-align:center;
-   }
+ 
 
    .main-container{
     display:flex;
@@ -602,6 +612,7 @@ font-family:'Bebas Neue','serif';
    .nbItems{
     text-align:center;
     font-family:'Roboto Condensed','serif';
+    margin:1.5rem;
    }
 
    .price-container{

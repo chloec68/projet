@@ -12,7 +12,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class CartController extends AbstractController 
 {   
 
-    #[Route('/cart', name:'index')]
+    #[Route('/cart', name:'app_cart')]
     public function index(SessionInterface $session, ProductRepository $productRepository)
     {
         $cart = $session->get('cart',[]);
@@ -48,7 +48,7 @@ class CartController extends AbstractController
             ]);
     }
 
-    #[Route('cart/add/{id}', name:'cart_add')]
+    #[Route('cart/add/{id}', name:'app_cart-add')]
     public function add(Product $product, SessionInterface $session)
     {   
         //on récupère l'id du produit 
