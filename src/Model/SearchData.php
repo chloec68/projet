@@ -43,7 +43,7 @@ class SearchData
         return $this;
     }
 
-    public function getIsPermanent(): bool
+    public function getIsPermanent(): ?bool
     {
         return $this->isPermanent;
     }
