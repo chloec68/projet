@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Bières{% endblock %}
+
+{% block body %}
+
+<div class="detail-product-wrapper">
+
+    <section class="swiper-section">
+        <div class="swiper mySwiperProducts">
+            <div class="swiper-wrapper">
+                {% for picture in product.pictures %}
+                <div class="swiper-slide"> <div class="swiper-image-container"><img src="{{ picture.pictureName }}" alt=""> </div></div>
+                {% endfor %}
+            </div>
+            <div class="swiper-pagination"></div>
+        </div>
+    </section>
+
+    <section class="product">
+        <p>{{product.productName}}</p>
+        <p>{{product.productPrice}}</p>
+        <p>{{product.productDescription}}</p>
+        <p>{{product.productAlcoholLevel}}</p>
+        <p>{{product.productVolume}}</p>
+        <p>{{product.productColor}}</p>
+        <p>{{product.type.typeName}}</p>
+    </section>
+</div>
+{% endblock %}

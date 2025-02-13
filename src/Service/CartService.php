@@ -6,11 +6,43 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class CartService
 {
-    private $session; 
+    private $session;
+    
+    private $product;
 
-    public function __construct(SessionInterface $session)
+    public function __construct(SessionInterface $session, ProductRepository $product)
     {
         $this->session = $session;
+
+        $this->product = $product;
+    }
+
+    public function displayCart()
+    {
+            $cart = $this->$session->get('cart',[]);
+    
+            $data=[];
+            $total=0;
+            $subtotal=0;
+            $nbItems=0;
+      
+            foreach($cart as $id=>$quantity){
+                $this->product = $productRepository->find($id);
+                
+                $data[] = [
+                    'product' => $product,
+                    'quantity' => $quantity,
+                    'subtotal' => $subtotal = $product->getProductPrice() * $quantity
+                ];
+                $total += $product->getProductPrice() * $quantity;
+                $nbItems += $quantity ; 
+            }
+    
+            // dd($data);
+            // dd($total);
+            // dd($cart);
+    
+            return $cart;
     }
 
     public function addToCart($id)
