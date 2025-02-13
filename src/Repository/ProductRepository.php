@@ -81,7 +81,7 @@ class ProductRepository extends ServiceEntityRepository
         return $result;
         
     }
-    // FIND PERMANENT BEERS
+    // FIND PERMANENT/EPHEMERAL BEERS
        public function findByRange($isPermanent): array
        {
            return $this->createQueryBuilder('p')
@@ -90,7 +90,6 @@ class ProductRepository extends ServiceEntityRepository
                 ->setParameter('idCategory', '1')
                 ->setParameter('isPermanent', $isPermanent)
                 ->orderBy('p.productName', 'ASC')
-                ->setMaxResults(10)
                 ->getQuery()
                 ->getResult();
        }

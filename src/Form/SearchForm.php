@@ -59,8 +59,8 @@ class SearchForm extends AbstractType
                 'expanded' => true, //sinon on obtient une liste déroulante
                 'multiple' => false, 
                 'choices' => [
-                    'Permanente' => 'permanent',
-                    'Ephémère' => 'ephemere'
+                    'Permanente' => true,
+                    'Ephémère' => false,
                 ],
             ])
 
