@@ -69,6 +69,9 @@ class Product
     #[ORM\OneToMany(targetEntity: Picture::class, mappedBy: 'product')]
     private Collection $pictures;
 
+    #[ORM\Column(nullable: true)]
+    private ?bool $isPermanent = null;
+
     public function __construct()
     {
         $this->users = new ArrayCollection();
@@ -300,5 +303,17 @@ class Product
     public function __toString(): string
     {
         return $this->getProductName();
+    }
+
+    public function isPermanent(): ?bool
+    {
+        return $this->isPermanent;
+    }
+
+    public function setIsPermanent(?bool $isPermanent): static
+    {
+        $this->isPermanent = $isPermanent;
+
+        return $this;
     }
 }

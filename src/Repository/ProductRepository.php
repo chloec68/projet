@@ -37,12 +37,13 @@ class ProductRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-
+    //SEARCH BAR
     public function searchProduct(SearchData $searchData):array
     {
         $type = $searchData->getType();    
         $color = $searchData->getColor();  
-        $name = $searchData->getName();   
+        $name = $searchData->getName();
+        $isPermanent = $searchData->getIsPermanent();   
 
         $result = $this->createQueryBuilder('p')
             ->andWhere('p.category = :idCategory')   
@@ -66,6 +67,12 @@ class ProductRepository extends ServiceEntityRepository
                 ->setParameter('productName', '%' . $name . '%');
         }
 
+        if(!empty($isPermanent)){
+            $result = $result
+            ->andWhere('p.isPermanent = :isPermanent')
+            ->setParameter('isPermanent', $isPermanent);
+        }
+
         $result = $result
             ->orderBy('p.productName','ASC')
             ->getQuery()
@@ -74,7 +81,19 @@ class ProductRepository extends ServiceEntityRepository
         return $result;
         
     }
-
+    // FIND PERMANENT BEERS
+       public function findByRange($isPermanent): array
+       {
+           return $this->createQueryBuilder('p')
+                ->andWhere('p.category = :idCategory')
+                ->andWhere('p.isPermanent = :isPermanent')
+                ->setParameter('idCategory', '1')
+                ->setParameter('isPermanent', $isPermanent)
+                ->orderBy('p.productName', 'ASC')
+                ->setMaxResults(10)
+                ->getQuery()
+                ->getResult();
+       }
 
 
 

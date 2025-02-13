@@ -454,20 +454,25 @@ footer small{
 .products__sidebar{
     display: block;
     position: sticky;
-    top:2rem;
+    top:0;
     width:18%;
     border-right:1px solid var(--black);
     height: fit-content;
+    padding-right:2rem;
 }
 
 .sidebar-container{
-    padding-right:2rem;
-    margin-bottom:2rem;
+    margin-bottom:0.8rem;
 }
 
 .search-form{
     width:100%;
     margin:1rem 0 0 0;
+}
+
+.search-label{
+    font-family:'roboto';
+    font-size:0.8em;
 }
 
 .radio-button__container{
@@ -479,21 +484,24 @@ footer small{
 }
 
 .search-btn{
-    margin-top:1rem;
+    margin: 1rem auto 1rem auto;
     width:100%;
     padding:0.3rem;
     background-color: var(--black);
     color:var(--white);
-    font-size:1.3em;
+    font-size:1.5em;
     border-radius: 5px;
     font-family:'Bebas Neue','serif';
 }
 
 .reset-button{
+    margin:auto;
     display:block;
     width: fit-content;
-    margin: auto;
     font-size:1.5em;
+    border:var(--black) 1px solid;
+    border-radius:5px;
+    padding:0.3rem;
 }
 
 /* **************************************************************** CART ************************************************************ */
