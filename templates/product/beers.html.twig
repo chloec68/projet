@@ -46,26 +46,32 @@
         {% for product in products %}
             <div class="product-card">
                 <!-- Swiper -->
-            <div class="swiper mySwiperProducts">
-                <div class="swiper-wrapper">
+            {# <div class="swiper mySwiperProducts"> #}
+                {# <div class="swiper-wrapper"> #}
                     {% for picture in product.pictures %}
-                    <div class="swiper-slide"> <img src="{{ picture.pictureName }}" alt=""> </div>
+                        {% if loop.first %}
+                        <a href="{{ path('detail_product',{id:product.id}) }}"><div class="picture-container"> <img src="{{ picture.pictureName }}" alt=""> </div></a>
+                        {% endif %}
                     {% endfor %}
-                </div>
-                <div class="swiper-pagination"></div>
-            </div>
+                {# </div> #}
+                {# <div class="swiper-pagination"></div> #}
+            {# </div> #}
 
                 <h3 class="centered">{{product.productName}}</h3> 
                 <p class="centered">{{product.type.typeName}} | {{product.productAlcoholLevel}} | {{product.productVolume}}</p>
                 <p class="centered">{{product.productPrice}}</p>
-                <div><button>-</button>qte<button>+</button></div>
+                <div class="wrapper">
+                    <div class="quantity">
+                        <button class="minus" aria-label="Decrease">&minus;</button>
+                        <input type="number" class="input-box" value="" min="1" max="10">
+                        <button class="plus" aria-label="Increase">&plus;</button>
+                    </div>
+                </div>
                 <a href="{{ path('app_cart-add',{id:product.id}) }}"><button class="btn basket-btn" type="submit">Ajouter au panier</button></a>
             </div>
         {% endfor %}
     </section>
 </div>
-
-
 
 
 {% endblock %}

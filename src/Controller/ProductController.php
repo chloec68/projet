@@ -50,17 +50,19 @@ final class ProductController extends AbstractController
     }
 
 
-
-
-
-
-
     // DISPLAY A SPECIFIC PRODUCT
-    #[Route('/product/{id}/display', name: 'display_product')]
-    public function displayProduct(Product $product, EntityManagerInterface $entityManager):Response
-    {
-
+    #[Route('/product/{id}/detail', name: 'detail_product')]
+    public function detailProduct(Product $product, ProductRepository $productRepository):Response
+    {   
+ 
+        return $this->render('/product/detail-product.html.twig',[
+            'product'=>$product
+        ]);
     }
+
+
+
+
 
     // ADD A PRODUCT (ADMIN)
     #[Route('/product/new', name:'new_product')]

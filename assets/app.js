@@ -28,6 +28,7 @@ import './styles/app.css';
 
 
   var swiper = new Swiper(".mySwiperProducts", {
+    grabCursor:true,
     pagination: {
       el: ".swiper-pagination",
       dynamicBullets: true,

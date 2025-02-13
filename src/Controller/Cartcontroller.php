@@ -71,4 +71,40 @@ class CartController extends AbstractController
 
         return new RedirectResponse($_SERVER['HTTP_REFERER']);
     }
+
+    #[Route('cart/empty', name:'app_cart-empty')]
+    public function emptyCart(SessionInterface $session)
+    {
+        $cart = $session->get('cart',[]); 
+        if($cart){
+            $session->unset('cart',$cart);
+        }else{
+            $message = "Le panier est déjà vide";
+        }
+
+        return $this->render('cart/index.html.twig',[
+            "message" => $message
+        ]);
+    }
+
+    #[Route('cart/remove/{id}', name:'app_cart-remove')]
+    public function removeProduct(SessionInterface $session,Product $product)
+    {
+        $cart = $session->get('cart',[]);
+        $id = $product->getId();
+
+        if(!empty($cart[$id])){
+            if($cart[$id] > 1){
+                $cart[$id]--;
+            }else{
+                unset($cart[$id]);
+            }
+        }else{
+            $cart[$id] = 1;
+        }
+
+        $session->set('cart',$cart);
+
+        return new RedirectResponse($_SERVER['HTTP_REFERER']);
+    }
 }
