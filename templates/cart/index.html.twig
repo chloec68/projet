@@ -8,45 +8,50 @@
 <div class="cart-page-wrapper">
     <h1>Votre panier</h1>
     <div class="main-container">
-        <section class="detail-section">
-            {% for item in data %}
-                <table>
-                <tbody>
-                    {% for picture in item.product.pictures %}
-                        {% if loop.first %}
-                    <td><img class="product-pic" src="{{picture.pictureName}}" alt=""></td>
-                        {% endif %}
-                    {% endfor %}
-                    <td>{{item.product.productName}} - {{item.product.type.typeName}}</td>
-                    <td>{{item.product.productVolume}}</td>
-                    <td>{{item.product.productPrice}} €</td>
-                    <td>
-                        <div class="wrapper">
-                            <div class="quantity">
-                                <button class="minus" aria-label="Decrease">&minus;</button>
-                                <input type="number" class="input-box" value="{{item.quantity}}" min="1" max="10">
-                                <button class="plus" aria-label="Increase">&plus;</button>
+        {% if data %}
+            <section class="detail-section">
+                {% for item in data %}
+                    <table>
+                    <tbody>
+                        {% for picture in item.product.pictures %}
+                            {% if loop.first %}
+                        <td><img class="product-pic" src="{{picture.pictureName}}" alt=""></td>
+                            {% endif %}
+                        {% endfor %}
+                        <td>{{item.product.productName}} - {{item.product.type.typeName}}</td>
+                        <td>{{item.product.productVolume}}</td>
+                        <td>{{item.product.productPrice}} €</td>
+                        <td>
+                            <div class="wrapper">
+                                <div class="quantity">
+                                    <button class="minus" aria-label="Decrease">&minus;</button>
+                                    <input type="number" class="input-box" value="{{item.quantity}}" min="1" max="10">
+                                    <button class="plus" aria-label="Increase">&plus;</button>
+                                </div>
                             </div>
-                        </div>
-                        <td>{{item.subtotal}} €</td>
-                    </td>
-                   
-                    <td class="trash-icone"><i class="fa-solid fa-trash"></i></td>
-                    </tbody>
-                </table>
-            {% endfor %}   
-        </section>
-        {# RECUPERER NB ARTICLES #}
-        <section class="recap-section">
-            <p class="nbItems">{{nbItems}} articles</p>
-            <div class="price-container">
-                <p>total ttc:</p><p>{{ total }}€</p>
-            </div>
-            <button class="btn basket-btn">Payer</button>
-            <p class="grey-paragraph">Paiement 100% sécurisé</p>
-        </section>
+                            <td>{{item.subtotal}} €</td>
+                        </td>
+                        <td class="trash-icone"><i class="fa-solid fa-trash"></i></td>
+                        </tbody>
+                    </table>
+                {% endfor %} 
+            </section>
+            <section class="recap-section">
+                {% if nbItems > 1 %}
+                    <p class="nbItems">{{nbItems}} articles</p>
+                {% else %}
+                    <p class="nbItems">{{nbItems}} article</p>
+                {% endif %}
+               
+                <div class="price-container">
+                    <p>total ttc:</p><p>{{ total }}€</p>
+                </div>
+                <button class="btn basket-btn">Payer</button>
+                <p class="grey-paragraph">Paiement 100% sécurisé</p>
+            </section>
+        {% else %}
+            <div class="emptyCart"><p>Le panier est vide</p></div>
+        {% endif %}  
     </div>
 </div>
-
-
 {% endblock %}
