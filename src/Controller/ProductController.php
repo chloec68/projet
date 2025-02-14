@@ -37,9 +37,12 @@ final class ProductController extends AbstractController
         $form = $this->createForm(SearchForm::class,$searchData);
         $form->handleRequest($request);
 
+       
+
         if($form->isSubmitted() && $form->isValid()){
             $searchData->setCategory(1);
             $products = $productRepository->searchProduct($searchData);
+                 dd($products);
         }
 
         return $this->render('product/beers.html.twig', [
