@@ -3,28 +3,210 @@
 {% block title %}Bières{% endblock %}
 
 {% block body %}
+    
+<main class="detail-product-main">
 
-<div class="detail-product-wrapper">
+<h1 class="centered">{{product.productName}}</h1>
 
-    <section class="swiper-section">
-        <div class="swiper mySwiperProducts">
-            <div class="swiper-wrapper">
-                {% for picture in product.pictures %}
-                <div class="swiper-slide"> <div class="swiper-image-container"><img src="{{ picture.pictureName }}" alt=""> </div></div>
-                {% endfor %}
+{% if product.productStock > 10 %}
+    <div class="stock-status available">En stock</div>
+{% else %}
+    <div class="stock-status unavailable">Indisponible</div>
+{% endif %}
+
+    <div class="sections-wrapper">
+        <section class="detail-product-section">
+            
+            <p class="description centered">{{product.productDescription}}</p>
+            <div class="caracteristics-container">
+            <div class="flex"><p>Taux d'alcool</p><p class="bold">{{product.productAlcoholLevel}}</p></div>
+            <div class="flex"><p>Volume</p><p class="bold">{{product.productVolume}}</p></div>
+            <div class="flex"><p>Couleur</p><p class="bold">{{product.productColor}}</p></div>
+            <div class="flex"><p>Type</p><p class="bold">{{product.type.typeName}}</p></div>
             </div>
-            <div class="swiper-pagination"></div>
-        </div>
-    </section>
 
-    <section class="detail-product-section">
-        <p>{{product.productName}}</p>
-        <p>{{product.productPrice}}</p>
-        <p>{{product.productDescription}}</p>
-        <p>{{product.productAlcoholLevel}}</p>
-        <p>{{product.productVolume}}</p>
-        <p>{{product.productColor}}</p>
-        <p>{{product.type.typeName}}</p>
-    </section>
+        </section>
+
+        <section class="bezier-section">
+            <div class="flip">
+                <div class="front" style="background-image:url(/img/beerNoBackground.png)"> IMAGE FACE 
+                <h1> TEXTE SI TEXTE </h1>
+                </div>
+
+                <div class="back" style="background-image:url(/img/beerNoBackground.png)">IMAGE BACK
+                <p>TEXTE SI TEXTE</p>
+            </div>
+        </section>
+
+        <section class="pricing-card-section">
+            <div class="tag"><p>{{product.productPrice}} €</p></div>
+            <button class="btn basket-btn">Ajouter au panier<button>
+        </section>
+    </div>
+</main>
+
+
+<style>
+.detail-product-main{
+    padding:3rem;
+}
+
+.sections-wrapper{
+    display:flex;
+    gap:3rem;
+    width:100%;
+    margin:auto;
+    justify-content:center;
+}
+
+.stock-status{
+    border:2px solid var(--green);
+    width:fit-content;
+    padding:0.5rem;
+    border-radius:6px;
+    margin:1rem auto 1rem auto;
+}
+
+.available{
+    color:var(--green);
+}
+
+.unavailable{
+    color:var(--red);
+}
+
+.detail-product-section{
+    background-image: url(/img/hopDark.webp);
+    background-size:cover;
+    background-repeat:no-repeat;
+    background-position-x:center;
+    
+    border-radius:6px; 
+    width:fit-content;
+    padding:2rem;
+    height: fit-content;
+
+    color:var(--white);
+    font-size:1.2em;
+    font-family:'Nunito';
+
+    height:30%;
+    width:30%;
+}
+
+.description{
+    width:80%;
+    margin:auto;
+}
+
+.caracteristics-container{
+    display:block;
+}
+
+.flex{
+    display: flex;
+    justify-content:space-between;
+    margin:1rem;
+}
+
+.bold{
+    font-weight:bold;
+}
+
+.pricing-card-section{
+    border:2px solid var(--green);
+    width:30%;
+    border-radius:6px;
+ 
+}
+
+.tag{
+    width:fit-content;
+    padding:1rem;
+    background-color:var(--green);
+    color:white;
+    font-size:2em;
+    border-bottom-left-radius:6px;
+    border-bottom-right-radius:6px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+    position:relative;
+    left:65%;
+}
+
+    
+
+
+
+
+
+
+
+
+
+
+
+.flip {
+    position: relative;
+    position: relative;
+    display: inline-block;
+    margin-right: 2px;
+    margin-bottom: 1em;
+    width: 30rem;
+}
+.flip > .front,.flip > .back {
+    display: block;
+    transition-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transition-duration: 0.5s;
+    transition-property: transform, opacity;
+}
+.flip > .front {
+    transform: rotateY(0deg);
+}
+.flip > .back {
+    position: absolute;
+    opacity: 0;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    transform: rotateY(-180deg);
+}
+.flip:hover > .front {
+  transform: rotateY(180deg);
+}
+.flip:hover > .back {
+  opacity: 1;
+  transform: rotateY(0deg);
+}
+
+.flip > .front,
+.flip > .back {
+  display: block;
+  color: white;
+  width: inherit;
+  background-size: cover !important;
+  background-position: center !important;
+  height: 50rem;
+  padding: 1em 2em;
+  background: var(--light-grey);
+  border-radius: 10px;
+}
+.flip > .front p,
+.flip > .back p {
+  font-size: 0.9125rem;
+  color: #999;
+}
+
+</style>
+
+
+
+
+
+
+
+
+
+
 </div>
 {% endblock %}
