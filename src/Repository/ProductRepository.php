@@ -44,10 +44,11 @@ class ProductRepository extends ServiceEntityRepository
         $color = $searchData->getColor();  
         $name = $searchData->getName();
         $isPermanent = $searchData->getIsPermanent();   
+        $category = $searchData->getCategory();
 
         $result = $this->createQueryBuilder('p')
             ->andWhere('p.category = :idCategory')   
-            ->setParameter('idCategory', '1');
+            ->setParameter('idCategory', $category);
 
         if (!empty($type)){
             $result = $result
@@ -69,8 +70,8 @@ class ProductRepository extends ServiceEntityRepository
 
         if(!empty($isPermanent)){
             $result = $result
-            ->andWhere('p.isPermanent = :isPermanent')
-            ->setParameter('isPermanent', $isPermanent);
+                ->andWhere('p.isPermanent = :isPermanent')
+                ->setParameter('isPermanent', $isPermanent);
         }
 
         $result = $result
@@ -81,14 +82,15 @@ class ProductRepository extends ServiceEntityRepository
         return $result;
         
     }
-    // FIND PERMANENT/EPHEMERAL BEERS
-       public function findByRange($isPermanent): array
+
+    // FIND PERMANENT/EPHEMERAL BEERS (DISPLAY ON HOME PAGE + METHOD USED IN HOME CONTROLLER)
+       public function findByPermanency($permanency,$category): array
        {
            return $this->createQueryBuilder('p')
                 ->andWhere('p.category = :idCategory')
                 ->andWhere('p.isPermanent = :isPermanent')
-                ->setParameter('idCategory', '1')
-                ->setParameter('isPermanent', $isPermanent)
+                ->setParameter('idCategory', $category)
+                ->setParameter('isPermanent', $permanency)
                 ->orderBy('p.productName', 'ASC')
                 ->getQuery()
                 ->getResult();

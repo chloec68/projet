@@ -66,7 +66,7 @@ class CartController extends AbstractController
 
     //    dd($session);
 
-        return new RedirectResponse($_SERVER['HTTP_REFERER']);
+        return $this->redirectToRoute('app_cart');
     }
 
     #[Route('cart/empty', name:'app_cart-empty')]
@@ -102,6 +102,6 @@ class CartController extends AbstractController
 
         $session->set('cart',$cart);
 
-        return new RedirectResponse($_SERVER['HTTP_REFERER']);
+        return $this->redirectToRoute('app_cart');
     }
 }
