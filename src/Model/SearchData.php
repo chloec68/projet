@@ -8,6 +8,7 @@ class SearchData
     private $type = null;
     private ?string $color = null;
     private ?bool $isPermanent = null;
+    private ?int $category = null;
 
     // Getters and Setters
     public function getName(): ?string
@@ -48,9 +49,20 @@ class SearchData
         return $this->isPermanent;
     }
 
-    public function setIsPermanent($isPermanent): self
+    public function setIsPermanent(?bool $isPermanent): self
     {
         $this->isPermanent = $isPermanent;
+        return $this;
+    }
+
+    public function getCategory(): int
+    {
+        return $this->category;
+    }
+
+    public function setCategory($category): self
+    {
+        $this->category = $category;
         return $this;
     }
 }

@@ -33,13 +33,12 @@ final class ProductController extends AbstractController
     {   
         // Default query for all products (beers)
         $products = $productRepository->findBeers([],['productName'=>'ASC']);
-
         $searchData = new SearchData();
         $form = $this->createForm(SearchForm::class,$searchData);
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()){
-
+            $searchData->setCategory(1);
             $products = $productRepository->searchProduct($searchData);
         }
 
