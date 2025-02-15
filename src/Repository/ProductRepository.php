@@ -70,8 +70,8 @@ class ProductRepository extends ServiceEntityRepository
 
         if(isset($isPermanent) ){
             $result = $result
-                ->andWhere('p.isPermanent = 0');
-                // ->setParameter('isPermanent', $isPermanent);
+                ->andWhere('p.isPermanent = :isPermanent')
+                ->setParameter('isPermanent', $isPermanent);
         }
 
         $result = $result

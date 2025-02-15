@@ -29,18 +29,36 @@
 
         <section class="bezier-section">
             <div class="flip">
-                <div class="front" style="background-image:url(/img/beerNoBackground.png)"> IMAGE FACE 
-                <h1> TEXTE SI TEXTE </h1>
+                <div class="front" style="background-image:url(/img/beerNoBackground.png)"> <p>Bière {{product.productColor}}</p>
+                <h2>{{product.productName}}</h2>
                 </div>
 
-                <div class="back" style="background-image:url(/img/beerNoBackground.png)">IMAGE BACK
-                <p>TEXTE SI TEXTE</p>
+                <div class="back" style="background-image:url(/img/beerNoBackground.png)">
+                <p>{{product.productAlcoholLevel}}</p><p>{{product.productVolume}}</p>
             </div>
         </section>
 
         <section class="pricing-card-section">
-            <div class="tag"><p>{{product.productPrice}} €</p></div>
-            <button class="btn basket-btn">Ajouter au panier<button>
+            <div class="price-tag"><p>{{product.productPrice}} €</p></div>
+            
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <div class="qty-container">
+                            <button class="qty-btn-minus btn-rounded" type="button"><i class="fa fa-chevron-left"></i></button>
+                            <input type="text" name="qty" value="0" class="input-qty input-rounded"/>
+                            <button class="qty-btn-plus btn-rounded" type="button"><i class="fa fa-chevron-right"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+            <button class="basket-btn-green btn">Ajouter au panier</button>
+
+            <div class="tags-cloud">
+                <a href="">{{product.productColor}}</a>
+                <a href="">{{product.type.typeName}}</a>
+                <a href="">{{product.productVolume}}</a>
+                <a href="">{{product.category.categoryName}}</a>
+            </div>
         </section>
     </div>
 </main>
@@ -53,6 +71,7 @@
 
 .sections-wrapper{
     display:flex;
+    align-items: center;
     gap:3rem;
     width:100%;
     margin:auto;
@@ -81,7 +100,7 @@
     background-repeat:no-repeat;
     background-position-x:center;
     
-    border-radius:6px; 
+    border-radius:55px; 
     width:fit-content;
     padding:2rem;
     height: fit-content;
@@ -116,11 +135,13 @@
 .pricing-card-section{
     border:2px solid var(--green);
     width:30%;
-    border-radius:6px;
+    height: fit-content;
+    padding-bottom:1rem;
+    border-radius:55px;
  
 }
 
-.tag{
+.price-tag{
     width:fit-content;
     padding:1rem;
     background-color:var(--green);
@@ -130,20 +151,83 @@
     border-bottom-right-radius:6px;
     box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
     position:relative;
-    left:65%;
+    left:60%;
 }
 
+.tags-cloud{
+    display: flex;
+    gap:2rem;
+    width:100%;
+    justify-content: center;
+}
+
+.tags-cloud a{
+    border:1px var(--light-grey) solid;
+    background-color: var(--light-grey);
+    border-radius:15px;
+    padding:0.25rem;
+    color:var(--black);
+    font-family:'Nunito';
+}
+
+.basket-btn-green{
+    width:fit-content;
+    margin:2rem auto 3rem auto;
+    display: block;
+    padding:0.5rem;
+    border-radius:20px;
+    border:var(--green) solid 1px;
+    background-color: var(--black);
+    color:var(--white);
+    font-size:1.3em;
+    font-family:'bebas neue','serif';
+}
+
+.basket-btn-green:hover{
+    background-color:var(--green);
+}
+
+  /*---------------------------*/
     
+.qty-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap:0.5rem;
+    margin:5rem auto 1rem auto;
+  }
+  .qty-container .input-qty{
+    text-align: center;
+    padding: 6px 10px;
+    border: 1px solid #d4d4d4;
+    max-width: 80px;
+  }
+  .qty-container .qty-btn-minus,
+  .qty-container .qty-btn-plus{
+    border: 1px solid var(--green);
+    padding: 5px;
+    font-size: 0.8em;
+    height: 30px;
+    width: 30px;
+    transition: 0.3s;
+    color:var(--white);
+  }
+  .qty-container .qty-btn-plus{
+    margin-left: -1px;
+  }
+  .qty-container .qty-btn-minus{
+    margin-right: -1px;
+  }
+  
+  .btn-rounded{
+    border-radius: 50%;
+    background-color: var(--green);
+  }
+  .input-rounded{
+    border-radius: 50px;
+  }
 
-
-
-
-
-
-
-
-
-
+  /*---------------------------*/
 
 .flip {
     position: relative;
@@ -151,7 +235,7 @@
     display: inline-block;
     margin-right: 2px;
     margin-bottom: 1em;
-    width: 30rem;
+    width: 20rem; /* SI HAUTEUR DE L'IMAGE, LARGEUR ICI*/
 }
 .flip > .front,.flip > .back {
     display: block;
@@ -182,13 +266,13 @@
 .flip > .front,
 .flip > .back {
   display: block;
-  color: white;
+  color: var(--black);;
   width: inherit;
   background-size: cover !important;
   background-position: center !important;
-  height: 50rem;
+  height: 30rem; /* HAUTEUR DE L'IMAGE*/
   padding: 1em 2em;
-  background: var(--light-grey);
+  background: var(--white);
   border-radius: 10px;
 }
 .flip > .front p,
