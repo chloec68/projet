@@ -6,6 +6,7 @@
     
 <main class="detail-product-main">
 
+    
 <h1 class="centered">{{product.productName}}</h1>
 
 {% if product.productStock > 10 %}
@@ -30,7 +31,7 @@
         <section class="bezier-section">
             <div class="flip">
                 <div class="front" style="background-image:url(/img/beerNoBackground.png)"> <p>Bière {{product.productColor}}</p>
-                <h2>{{product.productName}}</h2>
+                {# <h2>{{product.productName}}</h2> #}
                 </div>
 
                 <div class="back" style="background-image:url(/img/beerNoBackground.png)">
@@ -235,7 +236,7 @@
     display: inline-block;
     margin-right: 2px;
     margin-bottom: 1em;
-    width: 20rem; /* SI HAUTEUR DE L'IMAGE, LARGEUR ICI*/
+    width: 30rem; /* SI HAUTEUR DE L'IMAGE, LARGEUR ICI*/
 }
 .flip > .front,.flip > .back {
     display: block;
@@ -270,7 +271,7 @@
   width: inherit;
   background-size: cover !important;
   background-position: center !important;
-  height: 30rem; /* HAUTEUR DE L'IMAGE*/
+  height: 50rem; /* HAUTEUR DE L'IMAGE*/
   padding: 1em 2em;
   background: var(--white);
   border-radius: 10px;
