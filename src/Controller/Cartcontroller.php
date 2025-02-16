@@ -107,7 +107,7 @@ class CartController extends AbstractController
 
 
 
-
+    // ADD ITEM FROM BASKET 
 
     #[Route('/cart/addAjax', name:'app_cart-addAjax')]
     public function addAjax(Request $request, SessionInterface $session)
@@ -140,6 +140,8 @@ class CartController extends AbstractController
 
         return new JsonResponse(['nbItems'=>$nbItems]);
     }
+
+    // REMOVE ITEM FROM BASKET 
 
     #[Route('/cart/removeAjax', name:'app_cart-removeAjax')]
     public function removeAjax(Request $request, SessionInterface $session)

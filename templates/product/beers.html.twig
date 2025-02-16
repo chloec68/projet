@@ -68,12 +68,12 @@
                 <p class="centered">{{product.productPrice}}</p>
                 <div class="wrapper">
                     <div class="quantity">
-                        <button class="minus remove-from-cart" data-product="{{product.id}}" data-quantity="1" aria-label="Decrease">&minus;</button>
+                        <button class="minus decrement" data-product="{{product.id}}" aria-label="Decrease">&minus;</button>
                         <input type="number" class="input-box" value="0" min="1" max="10" data-product="{{ product.id }}">
-                        <button class="plus add-to-cart" data-product="{{product.id}}" data-quantity="1" aria-label="Increase">&plus;</button>
+                        <button class="plus increment" data-product="{{product.id}}" aria-label="Increase">&plus;</button>
                     </div>
                 </div>
-                <a href="{{ path('app_cart-add',{id:product.id}) }}"><button class="btn basket-btn" type="submit">Ajouter au panier</button></a>
+               <button class="btn basket-btn add-to-cart" data-product="{{product.id}}" type="submit">Ajouter au panier</button>
             </div>
         {% endfor %}
     </section>
