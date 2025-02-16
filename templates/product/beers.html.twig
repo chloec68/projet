@@ -5,6 +5,7 @@
 
 
 {% block body %}
+
 <button class="top-button"><a href="#header"><img src="/icones/scroll-up.png" alt=""></a></button>
 <div class="products__page-wrapper">
 
@@ -56,26 +57,20 @@
     <section class="products__container">
         {% for product in products %}
             <div class="product-card">
-                <!-- Swiper -->
-            {# <div class="swiper mySwiperProducts"> #}
-                {# <div class="swiper-wrapper"> #}
-                    {% for picture in product.pictures %}
-                        {% if loop.first %}
-                        <a href="{{ path('detail_product',{id:product.id}) }}"><div class="picture-container"> <img src="{{ picture.pictureName }}" alt=""> </div></a>
-                        {% endif %}
-                    {% endfor %}
-                {# </div> #}
-                {# <div class="swiper-pagination"></div> #}
-            {# </div> #}
+                {% for picture in product.pictures %}
+                    {% if loop.first %}
+                    <a href="{{ path('detail_product',{id:product.id}) }}"><div class="picture-container"> <img src="{{ picture.pictureName }}" alt=""> </div></a>
+                    {% endif %}
+                {% endfor %}
 
                 <h3 class="centered">{{product.productName}}</h3> 
                 <p class="centered">{{product.type.typeName}} | {{product.productAlcoholLevel}} | {{product.productVolume}}</p>
                 <p class="centered">{{product.productPrice}}</p>
                 <div class="wrapper">
                     <div class="quantity">
-                        <button class="minus" aria-label="Decrease">&minus;</button>
-                        <input type="number" class="input-box" value="" min="1" max="10">
-                        <button class="plus" aria-label="Increase">&plus;</button>
+                        <button class="minus remove-from-cart" data-product="{{product.id}}" data-quantity="1" aria-label="Decrease">&minus;</button>
+                        <input type="number" class="input-box" value="0" min="1" max="10" data-product="{{ product.id }}">
+                        <button class="plus add-to-cart" data-product="{{product.id}}" data-quantity="1" aria-label="Increase">&plus;</button>
                     </div>
                 </div>
                 <a href="{{ path('app_cart-add',{id:product.id}) }}"><button class="btn basket-btn" type="submit">Ajouter au panier</button></a>
@@ -83,7 +78,6 @@
         {% endfor %}
     </section>
 </div>
-
 
 {% endblock %}
 
