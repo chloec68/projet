@@ -121,6 +121,11 @@ a{
     color:var(--white);
     font-size:2em;
 }
+
+#nbItems{
+    color:var(--white);
+    font-family:"roboto condensed";
+}
 /* *************************NAVBAR************************* */
 
 .nav__container{

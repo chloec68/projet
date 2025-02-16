@@ -3,7 +3,9 @@ namespace App\Controller;
 
 use App\Entity\Product;
 use App\Repository\ProductRepository;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -96,12 +98,70 @@ class CartController extends AbstractController
             }else{
                 unset($cart[$id]);
             }
-        }else{
-            $cart[$id] = 1;
         }
 
         $session->set('cart',$cart);
 
         return $this->redirectToRoute('app_cart');
+    }
+
+
+
+
+
+    #[Route('/cart/addAjax', name:'app_cart-addAjax')]
+    public function addAjax(Request $request, SessionInterface $session)
+    {
+        //json_decode() => fonction native PHP qui récupère une chaîne encodée JSON et la convertit en valeur PHP
+        // paramètre 'true' => les objets JSON sont retournés comme tableaux associatifs
+            // {
+            //     "productId":1,
+            //     "quantity":2
+            // }
+            // devient 
+            // ["productId" => 1,
+            // "quantity" => 2]
+        // paramètre 'false' => les objets JSON sont retournés comme des objets 
+        $data = json_decode($request->getContent(),true);
+
+        $product = $data['product'];
+        $quantity = $data['quantity']; 
+        $cart = $session->get('cart',[]);
+
+        if(empty($cart[$product])){
+            $cart[$product] = $quantity;
+        }else{
+            $cart[$product] += $quantity; 
+        }
+
+        $session->set('cart',$cart);
+
+        $nbItems = array_sum($cart); // array_sum() => native PHP function that returns the sum of values in an array
+
+        return new JsonResponse(['nbItems'=>$nbItems]);
+    }
+
+    #[Route('/cart/removeAjax', name:'app_cart-removeAjax')]
+    public function removeAjax(Request $request, SessionInterface $session)
+    { 
+        $data = json_decode($request->getContent(),true);
+
+        $product = $data['product'];
+        $quantity = $data['quantity']; 
+        $cart = $session->get('cart',[]);
+
+        if(isset($cart[$product])){
+            if($cart[$product] >1){
+                $cart[$product] --;
+            }else{
+                unset ($cart[$product]); 
+            }
+            $session->set('cart',$cart);
+            $nbItems = array_sum($cart);
+
+            return new JsonResponse(['nbItems'=>$nbItems]);
+        }else{
+            return new JsonResponse(['error' => 'Produit non trouvé dans le panier'], 400);
+        }
     }
 }
