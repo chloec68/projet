@@ -50,10 +50,77 @@ import './styles/app.css';
   document.addEventListener('scroll', buttonVisibility);
 
 
+//*************************************************************** PRODUCT/BEERS  */
+
+// INCREMENT QUANTITY 
+
+let incrementButtons = document.querySelectorAll('.increment');
+incrementButtons.forEach(button => {
+  button.addEventListener('click', function(){
+    let product = button.getAttribute('data-product');
+    let input = document.querySelector(`input[data-product="${product}"]`);
+    let currentQuantity = parseInt(input.value);
+    input.value = currentQuantity + 1 ; 
+  });
+}); 
+
+// DECREMENT QUANTITY
+let decrementButtons = document.querySelectorAll('.decrement');
+
+decrementButtons.forEach(button => {
+  button.addEventListener('click', function(){
+    let product = button.getAttribute('data-product');
+    let input = document.querySelector(`input[data-product="${product}"]`);
+    let currentQuantity = parseInt(input.value);
+    if(currentQuantity >1) {
+      input.value = currentQuantity -1;
+    }
+  });
+});
+
+// ADD TO CART 
+let addToCartButtons = document.querySelectorAll(".add-to-cart");
+  addToCartButtons.forEach(button => {
+  button.addEventListener('click', function(){
+    let product = button.getAttribute('data-product');
+    let quantity = document.querySelector(`input[data-product="${product}"]`).value;
+
+    if(parseInt(quantity) >0){
+
+      fetch('/cart/addAjax',{
+        method : 'POST',
+        headers :{
+            'Content-Type':'application/json'
+        } ,
+        body: JSON.stringify({
+        product:product,
+        quantity:quantity
+        })
+      })
+
+      .then(response => response.json())
+    
+        .then(data => {
+            if(data.nbItems == 1){
+                document.getElementById('nbItems').textContent = data.nbItems + " article";
+                alert('produit ajouté au panier');
+            }else{
+                document.getElementById('nbItems').textContent = data.nbItems + " articles";
+                alert('produit ajouté au panier');
+            }
+          })
+        .catch(error => {
+          console.error('Erreur',error);
+        });
+      }
+    })
+  })
+
+  //*************************************************************** CART  */
 
   // ADD ITEM TO CART + UPDATE TOTAL ITEMS 
 
-// let addButtons = document.querySelectorAll(".add-to-cart");
+// let addButtons = document.querySelectorAll(".add");
 
 // addButtons.forEach(button => {
 //   button.addEventListener('click', function(){
@@ -153,77 +220,3 @@ import './styles/app.css';
 //       });
 //   });
 // });
-
-
-
-// INCREMENT QUANTITY 
-
-let incrementButtons = document.querySelectorAll('.increment');
-incrementButtons.forEach(button => {
-  button.addEventListener('click', function(){
-    let product = button.getAttribute('data-product');
-    let input = document.querySelector(`input[data-product="${product}"]`);
-    let currentQuantity = parseInt(input.value);
-   input.value = currentQuantity + 1 ; 
-  });
-}); 
-
-// DECREMENT QUANTITY
-let decrementButtons = document.querySelectorAll('.decrement');
-
-decrementButtons.forEach(button => {
-  button.addEventListener('click', function(){
-    let product = button.getAttribute('data-product');
-    let input = document.querySelector(`input[data-product="${product}"]`);
-    let currentQuantity = parseInt(input.value);
-    if(currentQuantity >1) {
-      input.value = currentQuantity -1;
-    }
-  });
-});
-
-// ADD TO CART 
-
-
-let addToCartButtons = document.querySelectorAll(".add-to-cart");
-  addToCartButtons.forEach(button => {
-  button.addEventListener('click', function(){
-    let product = button.getAttribute('data-product');
-    let quantity = document.querySelector(`input[data-product="${product}"]`).value;
-
-    if(parseInt(quantity) >0){
-
-      fetch('/cart/addAjax',{
-        method : 'POST',
-        headers :{
-            'Content-Type':'application/json'
-        } ,
-        body: JSON.stringify({
-        product:product,
-        quantity:quantity
-        })
-      })
-
-      .then(response =>
-        { return response.text();
-        })
-    
-        .then(text => {
-          try {
-              const data = JSON.parse(text);  // Essaie de parser la réponse en JSON
-                if(data.nbItems == 1){
-                    document.getElementById('nbItems').textContent = data.nbItems + " article";
-                }else{
-                    document.getElementById('nbItems').textContent = data.nbItems + " articles";
-                }
-          }catch (error) {
-              console.error('Erreur de parsing JSON:', error);
-          }
-        })
-
-        .catch(error => {
-          console.error('Erreur',error);
-        });
-      }
-    })
-  })
