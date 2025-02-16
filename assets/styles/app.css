@@ -489,6 +489,12 @@ footer small{
     margin:1rem 0 0 0;
 }
 
+#name{
+    border-radius: 50px;
+    border:2px solid var(--light-grey);
+    padding:0.5rem;
+}
+
 .search-label{
     font-family: "Nunito", serif;
     font-size:0.8em;
