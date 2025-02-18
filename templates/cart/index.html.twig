@@ -11,7 +11,7 @@
         {% if data %}
             <section class="detail-section">
                 {% for item in data %}
-                    <table>
+                    <table class="cart-item" cart-item="{{item.product.id}}" >
                     <tbody>
                         {% for picture in item.product.pictures %}
                             {% if loop.first %}
@@ -20,31 +20,32 @@
                         {% endfor %}
                         <td>{{item.product.productName}} - {{item.product.type.typeName}}</td>
                         <td>{{item.product.productVolume}}</td>
-                        <td>{{item.product.productPrice}} €</td>
+                        <td class="product-price">{{item.product.productPrice}} €</td>
                         <td>
                             <div class="wrapper">
                                 <div class="quantity">
-                                    <a href="{{ path('app_cart-remove',{id:item.product.id}) }}"><button class="minus" aria-label="Decrease">&minus;</button></a>
-                                    <input type="number" class="input-box" value="{{item.quantity}}" min="1" max="10">
-                                    <a href="{{ path('app_cart-add',{id:item.product.id}) }}"><button class="plus" aria-label="Increase">&plus;</button></a>
+                                    <button class="minus cart-decrement" cart-product="{{item.product.id}}" aria-label="Decrease">&minus;</button>
+                                    <input type="number" class="input-box" value="{{item.quantity}}" min="0" cart-product="{{ item.product.id }}">
+                                    <button class="plus cart-increment" cart-product="{{item.product.id}}" aria-label="Increase">&plus;</button>
                                 </div>
                             </div>
-                            <td>{{item.subtotal}} €</td>
+                            <td class="sub-total">{{item.subtotal}} €</td>
                         </td>
-                        <td class="trash-icone"><i class="fa-solid fa-trash"></i></td>
+                        <td class="trash-icone remove-item" cart-product="{{item.product.id}}"><i class="fa-solid fa-trash"></i></td>
                         </tbody>
                     </table>
                 {% endfor %} 
             </section>
             <section class="recap-section">
+                
                 {% if nbItems > 1 %}
-                    <p class="nbItems centered">{{nbItems}} articles</p>
+                <p class="nbItems centered">{{nbItems}} articles</p>
                 {% else %}
-                    <p class="nbItems centered">{{nbItems}} article</p>
+                <p class="nbItems centered">{{nbItems}} article</p>
                 {% endif %}
                
                 <div class="price-container">
-                    <p>total ttc:</p><p>{{ total }}€</p>
+                    <p>total ttc:</p><p class="total-price">{{total}} €</p>
                 </div>
                 <button class="btn basket-btn">Payer</button>
                 <p class="grey-paragraph centered">Paiement 100% sécurisé</p>
@@ -55,3 +56,6 @@
     </div>
 </div>
 {% endblock %}
+
+
+
