@@ -18,13 +18,28 @@ final class HomeController extends AbstractController
 
         $ephemeral = $productRepository->findByPermanency(false,1);
 
+        // $cart = $session->get('cart',[]);
+
+        // $nbItems = array_sum($cart);
+
         return $this->render('home/index.html.twig', [
             'controller_name' => 'HomeController',
             'permanent' => $permanent,
             'ephemeral' => $ephemeral,
+            // 'nbItems' => $nbItems
         ]);
     }
 
+    #[Route('/home', name: 'app_home')]
+    public function base(SessionInterface $session)
+    {
+        $cart = $session->get('cart',[]);
 
+        $nbItems = array_sum($cart);
+
+        return $this->render('base.html.twig', [
+            'nbItems' => $nbItems
+        ]);
+    }
 
 }

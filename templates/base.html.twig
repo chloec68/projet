@@ -34,7 +34,7 @@
                     <h1 id="logo-text">Brasserie indépendante</h1>
                     </div>
                     <div class="header__container-right">
-                        <a href="{{ path('app_cart') }}"><i class="fa-solid fa-basket-shopping"></i><span type="number" class="nbItems"></span></a>
+                        <a href="{{ path('app_cart') }}"><i class="fa-solid fa-basket-shopping"></i><span type="number" class="nbItems"> {% if nbItems <= 1 %} {{nbItems}} article {% else %} {{nbItems}} articles {% endif %}</span></a>
                         {% if app.user %}
                         <a href=""><i class="fa-solid fa-user"></i>{{ app.user.userIdentifier }}</a>
                         <a href=" {{ path('app_logout') }}">Déconnexion</i></a>

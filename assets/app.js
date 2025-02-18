@@ -49,6 +49,9 @@ import './styles/app.css';
   }
   document.addEventListener('scroll', buttonVisibility);
 
+// ************************************************************** CART *********************************************************************** 
+
+// PAGE PRODUCTS 
 
 // INCREMENT QUANTITY (PRODUCTS)
 
@@ -59,13 +62,26 @@ incrementButtons.forEach(button => {
     let input = document.querySelector(`input[data-product="${product}"]`);
     let currentQuantity = parseInt(input.value);
     input.value = currentQuantity + 1 ; 
-
-        updateCartTotal();
-        updateCartSubTotals();
+    updatePriceTotal();
+    updateCartSubTotals();
   });
 }); 
 
-// INCREMENT QUANTITY + ADD TO CART (CART)
+// ADD TO CART (PRODUCTS)
+let addToCartButtons = document.querySelectorAll(".add-to-cart");
+addToCartButtons.forEach(button => {
+  button.addEventListener('click', function() {
+    let product = button.getAttribute('data-product');
+    let quantity = document.querySelector(`input[data-product="${product}"]`).value;
+
+    if (parseInt(quantity) > 0) {
+      updateCart(product, quantity);
+    }
+  });
+});
+
+
+// INCREMENT QUANTITY (CART)
 
 let incrementButtonsCart = document.querySelectorAll('.cart-increment');
 incrementButtonsCart.forEach(button => {
@@ -75,13 +91,14 @@ incrementButtonsCart.forEach(button => {
     let currentQuantity = parseInt(input.value);
     input.value = currentQuantity + 1 ; 
 
-        updateCartTotal();
-        updateCartSubTotals();
-        addToCart(product, 1);
+    updatePriceTotal();
+    updateCartSubTotals();
+    updateCart(product, 1);
+
   });
 }); 
 
-// DECREMENT QUANTITY
+// DECREMENT QUANTITY (CART)
 let decrementButtons = document.querySelectorAll('.cart-decrement');
 
 decrementButtons.forEach(button => {
@@ -91,58 +108,19 @@ decrementButtons.forEach(button => {
     let currentQuantity = parseInt(input.value);
     if(currentQuantity > 0) {
       input.value = currentQuantity -1;
-      updateCartTotals()
+      updatePriceTotal()
       updateCartSubTotals()
+      updateCart(product, -1);
     }
   });
 });
 
-// ADD TO CART FROM PRODUCTS PAGE VIA ADD TO CART BUTTON
-let addToCartButtons = document.querySelectorAll(".add-to-cart");
-addToCartButtons.forEach(button => {
-  button.addEventListener('click', function() {
-    let product = button.getAttribute('data-product');
-    let quantity = document.querySelector(`input[data-product="${product}"]`).value;
+// UPDATE CART (CART)
+function updateCart(product,quantity){
 
-    if (parseInt(quantity) > 0) {
-      addToCart(product, quantity);
-    }
-  });
-});
+  let nbItemsElements = document.querySelectorAll('.nbItems')
 
-// UPDATE CART TOTALS (NB ITEMS + TOTAL PRICE)
-function updateCartTotal(){
-
-  let totalPrice = 0; 
-  let cartItems = document.querySelectorAll('.cart-item');
-  cartItems.forEach(item => {
-    let input = item.querySelector('input[cart-product]');
-    let quantity = parseInt(input.value);
-    let price = parseFloat(item.querySelector('.product-price').textContent);
-    totalPrice += price*quantity;
-    document.querySelector('.total-price').textContent = totalPrice.toFixed(2) + " €";
-  })
-}
-
-// UPDATE CART SUBTOTALS (NB ITEMS + TOTAL PRICE)
-function updateCartSubTotals(){
-  let cartItems = document.querySelectorAll('.cart-item');
-  let subTotal = 0; 
-  cartItems.forEach(item => {
-    let quantity = item.querySelector('input[type="number"].input-box').value;
-    let itemPriceElement = item.querySelector('.product-price');
-    let itemPrice = parseFloat(itemPriceElement.textContent);
-    subTotal = itemPrice * quantity 
-    let subTotalElement = item.querySelector('.sub-total');
-    subTotalElement.textContent = subTotal.toFixed(2) + " €";
-  })
-}
-
-
-// ADD TO CART 
-function addToCart(product,quantity){
-
-  fetch('/cart/add/{id}',{
+  fetch('/cart/update/{id}',{
     method : 'POST',
     headers :{
         'Content-Type':'application/json'
@@ -156,21 +134,51 @@ function addToCart(product,quantity){
   .then(response => response.json())
 
     .then(data => {
+      nbItemsElements.forEach(nbItemsElement => {
         if(data.nbItems == 1){
-            document.querySelector('.nbItems').textContent = data.nbItems + " article";
-            alert('produit ajouté au panier');
+              nbItemsElement.textContent = data.nbItems + " article";
         }else{
-            document.querySelector('.nbItems').textContent = data.nbItems + " articles";
-            alert('produit ajouté au panier');
+          nbItemsElement.textContent = data.nbItems + " articles";
         }
       })
+    })
+
     .catch(error => {
       console.error('Erreur',error);
     });
   }
 
 
- // DELETE ITEM FROM CART 
+// UPDATE TOTAL (CART)
+function updatePriceTotal(){
+
+  let totalPrice = 0; 
+  let cartItems = document.querySelectorAll('.cart-item');
+    cartItems.forEach(item => {
+      let input = item.querySelector('input[cart-product]');
+      let quantity = parseInt(input.value);
+      let price = parseFloat(item.querySelector('.product-price').textContent);
+      totalPrice += price*quantity;
+      document.querySelector('.total-price').textContent = totalPrice.toFixed(2) + " €";
+  })
+}
+
+
+// UPDATE SUBTOTALS (CART)
+function updateCartSubTotals(){
+  let cartItems = document.querySelectorAll('.cart-item');
+  let subTotal = 0; 
+  cartItems.forEach(item => {
+    let quantity = item.querySelector('input[type="number"].input-box').value;
+    let itemPriceElement = item.querySelector('.product-price');
+    let itemPrice = parseFloat(itemPriceElement.textContent);
+    subTotal = itemPrice * quantity 
+    let subTotalElement = item.querySelector('.sub-total');
+    subTotalElement.textContent = subTotal.toFixed(2) + " €";
+  })
+}
+
+ // DELETE ITEM (CART)
 
   let removeItemButton = document.querySelectorAll('.remove-item');
 
@@ -185,7 +193,7 @@ function addToCart(product,quantity){
           'Content-Type':'application/json',
         },
       })
-      .then(response=>response.json())
+      .then(response => response.json())
       .then(data => {
         if(data.success){
           let productTable = document.querySelector(`table[cart-item="${product}"]`);
@@ -193,7 +201,7 @@ function addToCart(product,quantity){
             productTable.remove();
           }
         }else{
-          console.error('erreur lors de la suppression'); // à modifier ultérieurement !!!!!!!!!!!!!!!
+          console.error('erreur lors de la suppression');
         }
       })
       .catch(error => console.error('Erreur:', error));

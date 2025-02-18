@@ -50,7 +50,7 @@ class CartController extends AbstractController
 
        // ADD ITEM TO CART  
 
-       #[Route('/cart/add/{id}', name:'app_cart-add')]
+       #[Route('/cart/update/{id}', name:'app_cart-add')]
        public function add(Request $request, SessionInterface $session)
        {
            $data = json_decode($request->getContent(),true);
@@ -89,6 +89,5 @@ class CartController extends AbstractController
         
     return new JsonResponse(['success' => true, 'nbItems'=>$nbItems]);
     }
-    
 
 }
