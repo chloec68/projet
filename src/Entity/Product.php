@@ -72,6 +72,9 @@ class Product
     #[ORM\Column(nullable: true)]
     private ?bool $isPermanent = null;
 
+    #[ORM\Column(length: 10, nullable: true)]
+    private ?string $productGender = null;
+
     public function __construct()
     {
         $this->users = new ArrayCollection();
@@ -313,6 +316,18 @@ class Product
     public function setIsPermanent(?bool $isPermanent): static
     {
         $this->isPermanent = $isPermanent;
+
+        return $this;
+    }
+
+    public function getProductGender(): ?string
+    {
+        return $this->productGender;
+    }
+
+    public function setProductGender(?string $productGender): static
+    {
+        $this->productGender = $productGender;
 
         return $this;
     }

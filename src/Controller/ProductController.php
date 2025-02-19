@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Product;
-use App\Model\SearchData;
-use App\Form\SearchForm;
+use App\Form\SearchFormBeers;
+use App\Model\SearchDataBeers;
+use App\Form\SearchFormGoodies;
+use App\Model\SearchDataGoodies;
 use App\Repository\ProductRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,13 +17,22 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 final class ProductController extends AbstractController
 {
    
-    // DISPLAY ALL GOODIES
+    // DISPLAY ALL GOODIES + SEARCH
     #[Route('/product/goodies', name: 'app_goodies')]
-    public function allGoodies(ProductRepository $productRepository): Response
+    public function allGoodies(ProductRepository $productRepository, Request $request): Response
     {   
         $products = $productRepository->findGoodies([],['productName'=>'ASC']);
+        $searchData = new SearchDataGoodies();
+        $form = $this->createForm(SearchFormGoodies::class,$searchData);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()){
+            $searchData->setCategory(2);
+            $products = $productRepository->searchProduct($searchData);
+        }
         return $this->render('product/goodies.html.twig', [
-            'products'=>$products
+            'products'=>$products,
+            'form'=>$form
         ]);
     }
 
@@ -33,8 +44,8 @@ final class ProductController extends AbstractController
     {   
         // Default query for all products (beers)
         $products = $productRepository->findBeers([],['productName'=>'ASC']);
-        $searchData = new SearchData();
-        $form = $this->createForm(SearchForm::class,$searchData);
+        $searchData = new SearchDataBeers();
+        $form = $this->createForm(SearchFormBeers::class,$searchData);
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()){

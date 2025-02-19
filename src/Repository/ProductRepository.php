@@ -3,7 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Product;
-use App\Model\SearchData;
+use App\Model\SearchDataBeers;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
@@ -38,7 +38,7 @@ class ProductRepository extends ServiceEntityRepository
     }
 
     //SEARCH BAR
-    public function searchProduct(SearchData $searchData):array
+    public function searchProduct(SearchDataBeers $searchData):array
     {
         $type = $searchData->getType();    
         $color = $searchData->getColor();  
