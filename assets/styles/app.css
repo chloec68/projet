@@ -8,7 +8,10 @@
 :root{
     --white:#FCFCFC;
     --blue:#2E5BFF;
-    --black:#191919;
+    /* --black:#191919; */
+    /* --main:#2b2e2b; */
+    --main:#2b2c2e;
+    --black:#2b2c2e;
     --light-grey:#D9D9D9;
     --dark-grey:#7E8286;
     --red:#6D1919;
@@ -73,17 +76,17 @@ a{
     width:100%;
     display: flex;
     justify-content: space-between;
-    background-color: var(--black);
-    padding:2em;
+    background-color: var(--main);
+    padding:1em 0 0.5em 2em;
 }
 
-.header__wrapper{
+/* .header__wrapper{
     background-image: url('/img/sgelt2.webp');
     background-repeat: no-repeat;
     background-size:142px;
     background-position-x: 506px;
     background-position-y:70px;
-}
+} */
 
 .header__container-right{
     display: flex;
@@ -114,7 +117,7 @@ a{
 }
 
 #logo{
-    width:25%;
+    width:10%;
 }
 
 #logo-text{
@@ -131,7 +134,7 @@ a{
 .nav__container{
     width:80%; 
     margin:5rem auto 5rem auto;
-    background-color: var(--black);
+    background-color: var(--main);
     padding:10px;
     display: flex;
     justify-content: space-around;
@@ -150,6 +153,7 @@ a{
     text-decoration: underline;
     text-decoration-color: var(--green);
     text-underline-offset:0.3em;
+    color:var(--green);
 }
 
 
@@ -286,9 +290,12 @@ footer small{
     color:var(--white);
     font-size:1.3em;
     font-weight: 200;
-    width:40%;
+    width:50%;
+    margin:auto;
     font-family: "Roboto Condensed", serif;
     padding:3rem;
+    line-height: 2em;
+    text-align: center;
 }
 
 /* ************************* SWIPER ************************* */
@@ -372,6 +379,11 @@ footer small{
 
 .registration-terms{
     margin:2em;
+}
+
+.terms-container{
+    display: flex;
+    gap:0.5rem;
 }
 
 .registration-form label,.login-form label{

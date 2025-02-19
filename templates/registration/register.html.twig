@@ -24,21 +24,15 @@
                             {{ form_row(registrationForm.email) }}
                             {{ form_row(registrationForm.plainPassword, {
                                 label: 'Password'}) }}
-                            {{ form_row(registrationForm.agreeTerms) }}
-
+                            <div class="terms-container">
+                            {{ form_label(registrationForm.agreeTerms) }}
+                            {{ form_widget(registrationForm.agreeTerms) }}
+                            </div>
                             <button type="submit" class="register-login-btn btn">Créer un compte</button>
                         {{ form_end(registrationForm) }}
 
             </section>
 
         </section>
-
-
-
-
-   
-
-
-
 
 {% endblock %}
