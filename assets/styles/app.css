@@ -244,7 +244,7 @@ footer small{
 }
 
 #icone-doubleArrowRight{
-    width:2.5em;
+    width:2em;
 }
 
 #permanent-section,#ephemeral-section{
@@ -264,6 +264,11 @@ footer small{
     text-decoration: none;
     font-size: 1.8em;
     color:var(--black);
+}
+
+.seeAll-link:hover{
+    text-decoration: underline;
+    text-decoration-color: var(--green) ;
 }
 
 /* ************************* PARALLAX ************************* */
@@ -435,8 +440,8 @@ footer small{
     width:30%;
     height: fit-content;
     padding:0.2rem;
-    border: solid 1px rgb(228, 228, 228);
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 20px;
+    border: solid 1px rgb(240, 239, 239);
+    box-shadow: rgba(110, 110, 110, 0.24) 0px 3px 20px;
     font-size:1.3em;
     border-radius: 1px;
     overflow: hidden;

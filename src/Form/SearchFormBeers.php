@@ -3,7 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Type;
-use App\Model\SearchData;
+use App\Model\SearchDataBeers;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -12,7 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
-class SearchForm extends AbstractType
+class SearchFormBeers extends AbstractType
 {
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
@@ -75,7 +75,7 @@ class SearchForm extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => SearchData::class,
+            'data_class' => SearchDataBeers::class,
             'method' => 'GET', // pour que l'utilisateur puisse partager ses recherches 
             'csrf_protection' => false // "pour ne pas avoir de problème de cross-scripting"
         ]);

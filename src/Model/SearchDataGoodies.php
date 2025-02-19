@@ -2,13 +2,13 @@
 
 namespace App\Model;
 
-class SearchData
+class SearchDataGoodies
 {
     private ?string $name = null;
-    private $type = null;
+    private ?string $productGender = null;
     private ?string $color = null;
-    private ?bool $isPermanent = null;
     private ?int $category = null;
+    private ?App\Entity\Size $size = null;
 
     // Getters and Setters
     public function getName(): ?string
@@ -22,14 +22,14 @@ class SearchData
         return $this;
     }
 
-    public function getType()
+    public function getProductGender()
     {
-        return $this->type;
+        return $this->productGender;
     }
 
-    public function setType( $type): self
+    public function setProductGender($productGender): self
     {
-        $this->type = $type;
+        $this->productGender = $productGender;
         return $this;
     }
 
@@ -44,14 +44,14 @@ class SearchData
         return $this;
     }
 
-    public function getIsPermanent(): ?bool
+    public function getSize()
     {
-        return $this->isPermanent;
+        return $this->size;
     }
 
-    public function setIsPermanent(?bool $isPermanent): self
+    public function setSize($size): self
     {
-        $this->isPermanent = $isPermanent;
+        $this->size = $size;
         return $this;
     }
 

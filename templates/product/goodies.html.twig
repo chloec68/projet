@@ -1,12 +1,70 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello ProductController!{% endblock %}
-
-
+{% block title %}GOODIES{% endblock %}
 
 {% block body %}
 
-    {% for product in products %}
-        <p>{{product.productName}} {{product.productPrice}}</p>
-    {% endfor %}
+<button class="top-button"><a href="#header"><img src="/icones/scroll-up.png" alt=""></a></button>
+<div class="products__page-wrapper">
+
+    <section class="products__sidebar">
+        {{ form_start(form,{'attr': {'class': 'search-form'}}) }}
+        <div class="sidebar-container">
+            <h3> Par taille : </h3>
+            {{ form_row(form.name) }}
+        </div>   
+        <div class="sidebar-container">
+            <h3> Par couleur : </h3>
+            <div class="radio-button__container">
+                {% for choice in form.color %}
+                <div class="radio-button-group">
+                    {{ form_widget(choice, {'attr': {'class': 'search-input'}}) }}
+                    {{ form_label(choice, null, {'label_attr': {'class': 'search-label'}}) }}
+                </div>
+            {% endfor %}
+            </div>
+        </div> 
+            {{ form_end(form) }}
+        
+
+        <a class="reset-button" href=" {{ path('app_goodies') }} ">Reset</a>
+    </section>
+
+    <section class="products__container">
+        {% for product in products %}
+            <div class="product-card">
+                {% for picture in product.pictures %}
+                    {% if loop.first %}
+                    <a href="{{ path('detail_product',{id:product.id}) }}"><div class="picture-container"> <img src="{{ picture.pictureName }}" alt=""> </div></a>
+                    {% endif %}
+                {% endfor %}
+
+                <h3 class="centered">{{product.productName}}</h3> 
+                {# <p class="centered">{{product.type.typeName}} | {{product.productAlcoholLevel}} | {{product.productVolume}}</p> #}
+                <p class="centered">{{product.productPrice}}</p>
+                <div class="wrapper">
+                    <div class="quantity">
+                        <button class="minus decrement" data-product="{{product.id}}" aria-label="Decrease">&minus;</button>
+                        <input type="number" class="input-box" value="1" min="0" data-product="{{ product.id }}">
+                        <button class="plus increment" data-product="{{product.id}}" aria-label="Increase">&plus;</button>
+                    </div>
+                </div>
+               <button class="btn basket-btn add-to-cart" data-product="{{product.id}}" type="submit">Ajouter au panier</button>
+            </div>
+        {% endfor %}
+    </section>
+</div>
+
 {% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+

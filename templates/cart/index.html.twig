@@ -18,7 +18,7 @@
                         <td><img class="product-pic" src="{{picture.pictureName}}" alt=""></td>
                             {% endif %}
                         {% endfor %}
-                        <td>{{item.product.productName}} - {{item.product.type.typeName}}</td>
+                        <td>{{item.product.productName}} - {% if item.product.type is not null %}{{item.product.type.typeName}}{% endif %}</td>
                         <td>{{item.product.productVolume}}</td>
                         <td class="product-price">{{item.product.productPrice}} €</td>
                         <td>
