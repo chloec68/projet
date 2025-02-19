@@ -68,7 +68,7 @@ class SearchForm extends AbstractType
                 'attr'=>[
                     'class' => 'search-btn btn'
                 ]
-                ]);
+            ]);
 
     }
 

@@ -1,0 +1,105 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Identifiez-vous{% endblock %}
+
+{% block body %}
+   
+        <section class="identification-page">
+            
+            <h2>Etape 1: Identifiez-vous</h2>
+
+            <div class="horizontal-line"></div>
+
+                {{ form_errors(identificationForm) }}
+
+                {{ form_start(identificationForm,{'attr': {'class': 'identification-form'}}) }}
+                    <div class="groups-wrapper">
+                        <div class="identificationForm-group">
+                            {{form_label(identificationForm, 'Prénom',{'label_attr':{'class':'id-label'}})}}
+                            {{form_widget(identificationForm.orderUserFirstName) }}
+                        </div>
+                        <div class="identificationForm-group">
+                            {{form_label(identificationForm, 'Nom',{'label_attr':{'class':'id-label'}})}}
+                            {{form_widget(identificationForm.orderUserLastName) }}
+                        </div>
+                    </div>
+                    <div class="identificationForm-group">
+                        {{form_label(identificationForm, 'Email',{'label_attr':{'class':'id-label'}})}}
+                        {{form_widget(identificationForm.orderEmail) }}
+                    </div>
+                    <div class="groups-wrapper">
+                        <div class="agreeTerms-group">
+                            {{form_label(identificationForm, 'Je certifie avoir 18 ans',{'label_attr':{'class':'id-label'}}) }}
+                            {{form_widget(identificationForm.agreeTerms) }}
+                        </div>
+                        <p>Un justificatif d'identité vous sera demandé lors du retrait</p>
+                    </div>
+                    
+                    
+                {{ form_end(identificationForm) }}
+
+        </section>
+
+        <style>
+        .identification-page{
+            padding:3rem 12rem 12rem 12rem;
+        }
+        .identification-form{
+            display:block;
+            margin:auto;
+            width:60%;
+        }
+        .groups-wrapper{
+            display:flex;
+            gap:2rem;
+            justify-content:space-between;
+        }
+    
+        .id-label{
+            width:100%;
+            font-size:1.5em;
+            margin:1rem auto 1rem auto;
+        }
+
+        .identificationForm-group{
+            display:flex;
+            flex-direction:column;
+            width:100%;
+        }
+
+        .agreeTerms-group{
+            margin : 6rem auto 6rem auto;
+        }
+
+        .horizontal-line{
+            border:1px solid var(--light-grey);
+            margin-bottom:3rem;
+        }
+        .identification-btn{
+            display:block;
+            width:50%;
+            margin: 1rem auto 1rem auto;
+            width:60%;
+            padding:0.3rem;
+            background-color: var(--black);
+            color:var(--white);
+            font-size:1.5em;
+            border-radius: 5px;
+            border:none;
+            font-family:'Bebas Neue','serif';
+        }
+
+        .identification-page p{
+            text-align:center;
+            width:fit-content;
+            padding:0.3rem;
+            background-color:var(--blue);
+            color:var(--white);
+            font-family:'nunito';
+            font-size:1.3em;
+            border-radius:2px;
+            margin:auto;
+        }
+        </style>
+
+{% endblock %}
