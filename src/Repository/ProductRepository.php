@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Product;
 use App\Model\SearchDataBeers;
+use App\Model\SearchDataGoodies;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
@@ -37,8 +38,8 @@ class ProductRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    //SEARCH BAR
-    public function searchProduct(SearchDataBeers $searchData):array
+    //SEARCH BAR (BEERS)
+    public function searchProductBeer(SearchDataBeers $searchData):array
     {
         $type = $searchData->getType();    
         $color = $searchData->getColor();  
@@ -95,7 +96,53 @@ class ProductRepository extends ServiceEntityRepository
                 ->getQuery()
                 ->getResult();
        }
+    
+       //SEARCH BAR (GOODIES)
+       public function searchProductGoodie(SearchDataGoodies $searchData):array
+       {
+           $productGender = $searchData->getProductGender();    
+           $color = $searchData->getColor();  
+           $name = $searchData->getName();
+           $size = $searchData->getSize();   
+           $category = $searchData->getCategory();
+   
+           $result = $this->createQueryBuilder('p')
+               ->andWhere('p.category = :idCategory')   
+               ->setParameter('idCategory', $category);
+   
+           if (!empty($productGender)){
+               $result = $result
+                   ->andWhere('p.productGender = :productGender')
+                   ->setParameter('productGender', $productGender);
+           }
+   
+           if(!empty($color)){
+               $result = $result
+                   ->andWhere('p.productColor = :productColor')
+                   ->setParameter('productColor', $color);
+           }
+   
+           if(!empty($name)){
+               $result = $result
+                   ->andWhere('p.productName LIKE :productName')
+                   ->setParameter('productName', '%' . $name . '%');
+           }
 
+           if(!empty($size)){
+            $result = $result
+                ->andWhere('p.size = :size')
+                ->setParameter('size', $size);
+        }
+   
+           $result = $result
+               ->orderBy('p.productName','ASC')
+               ->getQuery()
+               ->getResult();
+           
+           return $result;
+           
+       }
+   
 
 
     //FIND ALL BEERS OF A CERTAIN TYPE

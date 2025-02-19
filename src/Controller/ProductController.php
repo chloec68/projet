@@ -28,7 +28,7 @@ final class ProductController extends AbstractController
 
         if($form->isSubmitted() && $form->isValid()){
             $searchData->setCategory(2);
-            $products = $productRepository->searchProduct($searchData);
+            $products = $productRepository->searchProductGoodie($searchData);
         }
         return $this->render('product/goodies.html.twig', [
             'products'=>$products,
@@ -50,7 +50,7 @@ final class ProductController extends AbstractController
 
         if($form->isSubmitted() && $form->isValid()){
             $searchData->setCategory(1);
-            $products = $productRepository->searchProduct($searchData);
+            $products = $productRepository->searchProductBeer($searchData);
                 //  dd($products);
         }
 
