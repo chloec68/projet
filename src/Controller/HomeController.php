@@ -30,16 +30,4 @@ final class HomeController extends AbstractController
         ]);
     }
 
-    #[Route('/home', name: 'app_home')]
-    public function base(SessionInterface $session)
-    {
-        $cart = $session->get('cart',[]);
-
-        $nbItems = array_sum($cart);
-
-        return $this->render('base.html.twig', [
-            'nbItems' => $nbItems
-        ]);
-    }
-
 }
