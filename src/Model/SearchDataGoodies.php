@@ -8,7 +8,7 @@ class SearchDataGoodies
     private ?string $productGender = null;
     private ?string $color = null;
     private ?int $category = null;
-    private ?App\Entity\Size $size = null;
+    private $size = null;
 
     // Getters and Setters
     public function getName(): ?string

@@ -10,13 +10,35 @@
     <section class="products__sidebar">
         {{ form_start(form,{'attr': {'class': 'search-form'}}) }}
         <div class="sidebar-container">
-            <h3> Par taille : </h3>
+            <h3> Par article : </h3>
             {{ form_row(form.name) }}
         </div>   
         <div class="sidebar-container">
             <h3> Par couleur : </h3>
             <div class="radio-button__container">
                 {% for choice in form.color %}
+                <div class="radio-button-group">
+                    {{ form_widget(choice, {'attr': {'class': 'search-input'}}) }}
+                    {{ form_label(choice, null, {'label_attr': {'class': 'search-label'}}) }}
+                </div>
+            {% endfor %}
+            </div>
+        </div> 
+        <div class="sidebar-container">
+            <h3> Par genre : </h3>
+            <div class="radio-button__container">
+                {% for choice in form.productGender %}
+                <div class="radio-button-group">
+                    {{ form_widget(choice, {'attr': {'class': 'search-input'}}) }}
+                    {{ form_label(choice, null, {'label_attr': {'class': 'search-label'}}) }}
+                </div>
+            {% endfor %}
+            </div>
+        </div> 
+        <div class="sidebar-container">
+            <h3>par taille: </h3>
+            <div class="radio-button__container">
+                {% for choice in form.size %}
                 <div class="radio-button-group">
                     {{ form_widget(choice, {'attr': {'class': 'search-input'}}) }}
                     {{ form_label(choice, null, {'label_attr': {'class': 'search-label'}}) }}
