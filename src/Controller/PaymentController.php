@@ -71,14 +71,6 @@ class PaymentController extends AbstractController
             dd($order);
                 
 
-        // j'organise les produits en session sous forme de tableau 
-        foreach($cart as $product => $quantity){
-            $cartData[] = [
-                'product' => $product,
-                'quantity' => $quantity,
-            ];
-        }
-
         // PB : récupérer le total + les sous-totaux ? 
 
 
