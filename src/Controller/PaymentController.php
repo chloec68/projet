@@ -41,6 +41,9 @@ class PaymentController extends AbstractController
             //j'ajoute la date et l'heure à la commande
             $now = now();
             $order->setDateOfPlacement($now);
+            //je génère un numéro de commande 
+            $orderReference = uniqid('stecru-e');
+            $order->setorderReference($orderReference);
             //j'ajoute le prénom à la commande
             $userFirstName = $data->getOrderUserFirstName();
             $order->setOrderUserFirstName($userFirstName);
@@ -66,20 +69,6 @@ class PaymentController extends AbstractController
             }
 
             dd($order);
-
-            
-            
-            //je récupère le panier 
-            $cart = $session->get('cart',[]);
-
-                
-            // $order->setReference(); // générer une référence
-            // $order->setDateOfPlacement(); // générer la date "now"
-            // products -> récupérer les produits en session
-            //orderIsCollected 
-            // orderTotal -> récupérer le total en session 
-            // appUser -> récupérer l'utilisateur en session s'il existe, sinon null 
-
                 
 
         // j'organise les produits en session sous forme de tableau 
