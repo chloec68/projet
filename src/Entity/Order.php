@@ -157,10 +157,11 @@ class Order
         return $this->products;
     }
 
-    public function addProduct(Product $product): static
+    public function addProduct(Product $product, int $quantity): static
     {
         if (!$this->products->contains($product)) {
             $this->products->add($product);
+            $this->productQuantity[$product->getId()] = $quantity;
         }
 
         return $this;
