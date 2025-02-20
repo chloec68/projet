@@ -55,7 +55,6 @@ class PaymentController extends AbstractController
             $order->setOrderEmail($userEmail);
             //j'ajoute le panier à la commande 
             $cart = $session->get('cart');
-            // dd($cart);
             foreach ($cart as $productId => $quantity) {
                 $product = $productRepository->find($productId);
                 if($product){
@@ -68,16 +67,7 @@ class PaymentController extends AbstractController
                 $order->setAppUser($user);
             }
 
-            dd($order);
-                
-
-        // PB : récupérer le total + les sous-totaux ? 
-
-
         // PB: toutes les infos sont dans l'URL
-
-     
-
             return $this->redirectToRoute('app_payment-collection');
         }
 
