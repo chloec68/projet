@@ -13,6 +13,7 @@
     --main:#242426;
     --black:#242426;
     --light-grey:#D9D9D9;
+    --ultra-light-grey:#f4f4f4;
     --dark-grey:#7E8286;
     --red:#6D1919;
     --green:#5DE571;
@@ -641,17 +642,19 @@ footer small{
     flex-grow:2;
    }
 
-    table{
+   .detail-section table{
     width:100%;
     border-bottom:1px var(--light-grey) solid;
+
+    td{
+        padding:3rem 1.5rem 3rem 1.5rem;
+        font-family:'Roboto Condensed','serif';
+        font-size: 1.1em;
+        width:15%;
+       }
+    
    }
 
-   td{
-    padding:3rem 1.5rem 3rem 1.5rem;
-    font-family:'Roboto Condensed','serif';
-    font-size: 1.1em;
-    width:15%;
-   }
 
    .product-pic{
     width:50px;
@@ -914,4 +917,70 @@ footer small{
 .flip > .back p {
   font-size: 0.9125rem;
   color: #999;
+}
+
+
+/* **************************************************************** PAYMENT STEP 1: IDENTIFICATION ************************************************************ */
+
+
+.identification-page{
+    padding:3rem 12rem 12rem 12rem;
+}
+.identification-form{
+    display:block;
+    margin:auto;
+    width:65%;
+}
+.groups-wrapper{
+    display:flex;
+    gap:2rem;
+    align-content:space-between;
+}
+
+.id-label{
+    width:100%;
+    font-size:1.5em;
+    margin:1rem auto 1rem auto;
+}
+
+.identificationForm-group{
+    display:flex;
+    flex-direction:column;
+    width:100%;
+}
+
+.agreeTerms-group{
+    margin : 6rem auto 6rem auto;
+    display: flex;
+    gap:0.5rem;
+}
+
+.horizontal-line{
+    border:1px solid var(--light-grey);
+    margin-bottom:3rem;
+}
+.identification-btn{
+    display:block;
+    width:50%;
+    margin: 1rem auto 1rem auto;
+    width:60%;
+    padding:0.3rem;
+    background-color: var(--black);
+    color:var(--white);
+    font-size:1.5em;
+    border-radius: 5px;
+    border:none;
+    font-family:'Bebas Neue','serif';
+}
+
+.identification-page p{
+    text-align:center;
+    width:fit-content;
+    padding:0.3rem;
+    background-color:var(--blue);
+    color:var(--white);
+    font-family:'nunito';
+    font-size:1em;
+    border-radius:2px;
+    margin:auto;
 }

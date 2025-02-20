@@ -45,20 +45,20 @@ class IdentificationFormType extends AbstractType{
                     'message' => 'Je certifie avoir 18 ans',
                 ])
             ]
-        ])
-
-        ->add('Continuer', SubmitType::class, [
-            'attr'=>[
-                'class' => 'identification-btn btn'
-            ]
         ]);
+
+        // ->add('Continuer', SubmitType::class, [
+        //     'attr'=>[
+        //         'class' => 'identification-btn btn',
+        //     ],
+        // ]);
         
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'method' => 'GET',
+            'method' => 'POST',
             'data_class' => Order::class,
         ]);
     }

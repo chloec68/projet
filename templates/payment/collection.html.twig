@@ -1,0 +1,168 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Identifiez-vous{% endblock %}
+
+{% block body %}
+
+<article class="collection-page">
+            
+    <h1>2. Choisissez votre point de retrait</h1>
+
+    <div class="horizontal-line"></div>
+
+    <div class="sections-wrapper">
+        <section class="option1-container">
+            <h2>Brasserie Ste Cru</h2>
+            <h3>Adresse</h3> 
+            <p>14, rue Denis Papin - 68000 COLMAR</p>
+            <a href="">Voir sur la carte <i class="fa-solid fa-location-arrow"></i></a>
+            <h3>Horaires d'ouverture</h3>
+            <table>
+                <thead>
+                    <tr>
+                    <th>Jour</th>
+                    <th>Matin</th>
+                    <th>Après-midi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="colored"><td>lundi</td><td></td><td class="closed">fermé</td></tr>
+                    <tr><td>mardi</td><td></td> <td>17h - 22h30</td></tr>
+                    <tr class="colored"><td>mercredi</td><td></td><td>17h - 22h30</td></tr>
+                    <tr><td>jeudi</td><td></td><td>17h - 22h30</td></tr>
+                    <tr class="colored"><td>vendredi</td><td></td><td> 17h - 22h30</td></tr>
+                    <tr><td>samedi</td> <td>10h-20h</td><td>15h - 20h30</td></tr>
+                    <tr class="colored"><td>dimanche<td></td></td><td class="closed">fermé</td></tr>
+                </tbody>
+            </table>
+
+            <button type="submit" class="btn">CHOISIR CE POINT DE RETRAIT</button>
+        </section>
+
+        <section class="option2-container">
+            <h2>Entrepôt Ste Cru</h2>
+            <h3>Adresse</h3> 
+            <p>7, rue Denis Papin - 68000 COLMAR</p>
+            <a href="">Voir sur la carte <i class="fa-solid fa-location-arrow"></i></a>
+            <h3>Horaires d'ouverture</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Jour</th>
+                        <th>Matin</th>
+                        <th>Après-midi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="colored"><td>lundi</td><td>10-12h</td><td>14h-17h</td></tr>
+                    <tr><td>mardi</td><td>10-12h</td><td>14h-17h</td></tr>
+                    <tr class="colored"><td>mercredi</td><td>10-12h</td><td>14h-17h</td></tr>
+                    <tr><td>jeudi</td><td>10-12h</td><td>14h-17h</td></tr>
+                    <tr class="colored"><td>vendredi</td><td>10-12h</td><td>14h-17h</td></tr>
+                    <tr><td>samedi</td> <td></td><td class="closed">fermé</td></tr>
+                    <tr class="colored"><td>dimanche<td></td></td><td class="closed">fermé</td></tr>
+                </tbody>
+            </table>
+
+            <button type="submit" class="btn">CHOISIR CE POINT DE RETRAIT</button>
+        </section>
+    </div>
+
+<style>
+    .collection-page{
+        width:100%;
+        padding:6rem;
+
+        h3{
+            font-family: 'bebas neue';
+            font-size:1.5em;
+            text-align: left;
+            margin-top:2rem;
+        }
+
+        button{
+            border: var(--green) solid 1px;
+            padding:0.48rem 2rem 0.3rem 2rem;
+            border-radius:50px;
+            font-family: 'roboto condensed';
+            margin:auto;
+            width:fit-content;
+            display: block;
+            background-color: var(--white);
+        }
+
+        button:hover{
+            background-color: var(--green);
+        }
+
+        a{
+            width:fit-content;
+            display: block;
+            margin: 1rem auto 1rem auto;
+            background-color:var(--main);
+            color:white;
+            padding:0.3rem;
+            font-family: 'roboto condensed';
+            transition:transform 0.3s ease
+        }
+
+        a:hover{
+            transform: scale(1.3);
+            
+        }
+    }
+
+    .sections-wrapper{
+        display: flex;
+        gap:3rem;
+    }
+
+    .option1-container,.option2-container{
+        width:40%;
+        border: 1px solid var(--light-grey);
+        font-family:'nunito';
+        padding:1rem;
+        border-radius:6px;
+
+        table{
+            width:80%;
+            margin:1rem auto 2rem auto;
+
+            th{
+                font-family: 'bebas neue';
+                font-size:1.3em;
+            }
+
+            tr{ 
+                width:100%;
+                display: flex;
+                justify-content: space-between;
+                padding:0.5rem 1rem 0.5rem 1rem;
+            }
+
+            td{
+                width:30%;
+            }
+
+            .colored{
+                background-color: var(--ultra-light-grey);
+            }
+
+            .closed{
+                color:var(--red);
+                font-weight: 700;
+            }
+        }
+
+        p{
+            text-align: center;
+        }
+    }
+
+
+
+
+
+</style>
+
+{% endblock %}
