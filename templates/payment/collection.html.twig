@@ -10,7 +10,7 @@
 
     <div class="horizontal-line"></div>
 
-    <div class="sections-wrapper">
+    <div class="collection__sections-wrapper">
     
         <form action="{{ path('app_payment-collection') }}" method="post">
             <input type="hidden" name="selected_option" id="selected_option" value="">
@@ -74,21 +74,13 @@
             
                 </section>
 
-                <button type="submit">Go</button>
+                <button class="btn choose-btn" type="submit">Continuer</button>
             </form>
     </div>
 
 </article>
 
-<style>
-    .sections-wrapper form{
-        width:100%;
 
-        button{
-            display: block;
-        }
-    }
-</style>
 
 <script>
     function setOption(option){
