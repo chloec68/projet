@@ -6,10 +6,12 @@ use Stripe\Stripe;
 use App\Entity\Order;
 use App\Entity\Product;
 use Stripe\Checkout\Session;
+use App\Repository\OrderRepository;
 use App\Form\IdentificationFormType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 
@@ -19,14 +21,45 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class PaymentController extends AbstractController
 {
 
-    #[Route('/payment/identification', name:'app_identification')]
-    public function idenfication(Request $request): Response
+    #[Route('/payment/identification', name:'app_payment-identification')]
+    public function identification(Request $request, SessionInterface $session): Response
     {   
+        // je crée une nouvelle commande 
         $order = new Order();
-        $identificationForm = $this->createForm(IdentificationFormType::class, $order);
-        // $identificationForm->handleRequest($request);
+        // je récupère les produits en session 
+        // $cart = $session->get('cart',[]);
+        // j'organise les produits en session sous forme de tableau 
+        // foreach($cart as $product => $quantity){
+        //     $cartData[] = [
+        //         'product' => $product,
+        //         'quantity' => $quantity,
+        //     ];
+        // }
+        // dd($cartData);
+        // PB : récupérer le total + les sous-totaux ? 
 
-        // if ($identificationForm->isSubmitted() && $identificationForm->isValid()) {}
+        // $user = $session->get('user');
+
+        $identificationForm = $this->createForm(IdentificationFormType::class, $order);
+        // $identificationForm->handleRequest($request); 
+
+        // PB: toutes les infos sont dans l'URL
+
+        if ($identificationForm->isSubmitted() && $identificationForm->isValid()) {
+            $data = $identificationForm->getData();
+            dd($data);
+            // $order->setOrderUserFirstName($data);
+            // $order->setOrderUserLastName($data);
+            // $order->setOrderEmail($data);
+            // $order->setReference(); // générer une référence
+            // $order->setDateOfPlacement(); // générer la date "now"
+            // products -> récupérer les produits en session
+            //orderIsCollected -> vérifier que set à false 
+            // orderTotal -> récupérer le total en session 
+            // appUser -> récupérer l'utilisateur en session s'il existe, sinon null 
+
+            return $this->redirectToRoute('app_payment-collection');
+        }
 
         return $this->render('/payment/identification.html.twig',[
             'controller_name' => 'PaymentController',
@@ -34,7 +67,13 @@ class PaymentController extends AbstractController
         ]);
     }
    
-
+    #[Route('/payment/collection', name:'app_payment-collection')]
+    public function collection(Request $request): Response
+    {
+        return $this->render('/payment/collection.html.twig', [
+            'controller_name' => 'PaymentController',
+        ]);
+    }
 
 
 

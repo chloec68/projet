@@ -30,7 +30,7 @@ class Order
     private ?string $orderUserLastName = null;
 
     #[ORM\Column]
-    private ?bool $orderIsCollected = null;
+    private ?bool $orderIsCollected = false;
 
     #[ORM\Column(type: Types::DECIMAL, precision: 6, scale: 2)]
     private ?string $orderTotal = null;
