@@ -72,7 +72,6 @@ class PaymentController extends AbstractController
         }
 
         return $this->render('/payment/identification.html.twig',[
-            'controller_name' => 'PaymentController',
             'identificationForm' => $identificationForm,
         ]);
     }
@@ -80,7 +79,7 @@ class PaymentController extends AbstractController
     #[Route('/payment/collection', name:'app_payment-collection')]
     public function collection(Request $request): Response
     {   
-        
+        // dd($request);
         return $this->render('/payment/collection.html.twig', [
             'controller_name' => 'PaymentController',
         ]);
