@@ -44,20 +44,22 @@
                         {% endif %}
                     </div>
                 </div>
+
+                <nav>
+                    {% block nav %}
+                        <div class="nav__container">
+                            <a class="nav__container-a" href=" {{ path('app_home') }}">Accueil</a>
+                            <a class="nav__container-a">taproom</a>
+                            <a class="nav__container-a" href=" {{ path('app_beers') }}">nos bières</a>
+                            <a class="nav__container-a" href=" {{ path('app_goodies')}}">goodies</a>
+                            <a class="nav__container-a">la brasserie</a>
+                        </div>
+                    {% endblock %}
+                </nav>
             {% endblock %}
         </header>
 
-        <nav>
-            {% block nav %}
-                <div class="nav__container">
-                    <a class="nav__container-a" href=" {{ path('app_home') }}">Accueil</a>
-                    <a class="nav__container-a">taproom</a>
-                    <a class="nav__container-a" href=" {{ path('app_beers') }}">nos bières</a>
-                    <a class="nav__container-a" href=" {{ path('app_goodies')}}">goodies</a>
-                    <a class="nav__container-a">la brasserie</a>
-                </div>
-            {% endblock %}
-        </nav>
+
 
             {% for message in app.flashes('success') %}
             <div class="alert alert-success" role="alert">{{ message }}</div>

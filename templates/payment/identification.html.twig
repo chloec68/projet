@@ -25,7 +25,7 @@
                     </div>
                     <div class="identificationForm-group">
                         {{form_label(identificationForm, 'Email',{'label_attr':{'class':'id-label'}})}}
-                        {{form_widget(identificationForm.orderEmail) }}
+                        {{form_widget(identificationForm.orderEmail, {'attr': {'value':app.user ? app.user.getEmail() : ''} }) }}
                     </div>
                     <div class="groups-wrapper">
                         <div class="agreeTerms-group">

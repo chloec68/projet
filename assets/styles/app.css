@@ -81,18 +81,11 @@ a{
     padding:1em 0 0.5em 2em;
 }
 
-/* .header__wrapper{
-    background-image: url('/img/sgelt2.webp');
-    background-repeat: no-repeat;
-    background-size:142px;
-    background-position-x: 506px;
-    background-position-y:70px;
-} */
-
 .header__container-right{
     display: flex;
     gap:4em;
-    align-items: end;
+    align-items:end;
+    
     padding:0 5rem 1rem 0; 
 }
 
@@ -102,13 +95,16 @@ a{
     margin-right:1rem;
 }
 
-.header__container-right a:visited{
+.header__container-right a:visited, .header__container-right a{
     color:var(--white);
+    font-size:1.2em;
+    display: flex;
+    align-items: baseline;
 }
 
-.header__container-right a:hover{
-    text-decoration: underline;
-    text-underline-offset:0.3em;
+.header__container-right a:hover,.header__container-right i:hover{
+    text-decoration: none;
+    color:var(--green);
 }
 
 .header__container-left{
@@ -126,10 +122,10 @@ a{
     font-size:2em;
 }
 
-#nbItems{
+/* #nbItems{
     color:var(--white);
     font-family:"roboto condensed";
-}
+} */
 /* *************************NAVBAR************************* */
 
 .nav__container{
@@ -655,7 +651,6 @@ footer small{
     
    }
 
-
    .product-pic{
     width:50px;
    }
@@ -685,7 +680,6 @@ footer small{
     font-family:'Roboto Condensed','serif';
     margin:1rem;
    }
-
 
 /* **************************************************************** DETAIL PRODUCT ************************************************************ */
 
@@ -983,4 +977,98 @@ footer small{
     font-size:1em;
     border-radius:2px;
     margin:auto;
+}
+
+
+/* **************************************************************** PAYMENT STEP 2: COLLECTION ************************************************************ */
+
+.collection-page{
+    width:100%;
+    padding:6rem;
+
+    h3{
+        font-family: 'bebas neue';
+        font-size:1.5em;
+        text-align: left;
+        margin-top:2rem;
+    }
+
+    button{
+        border: var(--green) solid 1px;
+        padding:0.48rem 2rem 0.3rem 2rem;
+        border-radius:50px;
+        font-family: 'roboto condensed';
+        margin:auto;
+        width:fit-content;
+        display: block;
+        background-color: var(--white);
+    }
+
+    button:hover,button:focus{
+        background-color: var(--green);
+        color:var(--white);
+    }
+
+    a{
+        width:fit-content;
+        display: block;
+        margin: 1rem auto 1rem auto;
+        background-color:var(--main);
+        color:white;
+        padding:0.3rem;
+        font-family: 'roboto condensed';
+        transition:transform 0.3s ease
+    }
+
+    a:hover{
+        transform: scale(1.3);
+        
+    }
+}
+
+.sections-wrapper{
+    display: flex;
+    gap:3rem;
+}
+
+.option1-container,.option2-container{
+    width:40%;
+    border: 1px solid var(--light-grey);
+    font-family:'nunito';
+    padding:1rem;
+    border-radius:6px;
+
+    table{
+        width:80%;
+        margin:1rem auto 2rem auto;
+
+        th{
+            font-family: 'bebas neue';
+            font-size:1.3em;
+        }
+
+        tr{ 
+            width:100%;
+            display: flex;
+            justify-content: space-between;
+            padding:0.5rem 1rem 0.5rem 1rem;
+        }
+
+        td{
+            width:30%;
+        }
+
+        .colored{
+            background-color: var(--ultra-light-grey);
+        }
+
+        .closed{
+            color:var(--red);
+            font-weight: 700;
+        }
+    }
+
+    p{
+        text-align: center;
+    }
 }

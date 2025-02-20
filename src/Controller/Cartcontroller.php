@@ -66,7 +66,6 @@ class CartController extends AbstractController
            }
    
            $session->set('cart',$cart);
-   
            $nbItems = array_sum($cart); // array_sum() => native PHP function that returns the sum of values in an array
    
            return new JsonResponse(['success' => true,'nbItems'=>$nbItems,'cart' => $cart]);

@@ -136,7 +136,7 @@ function updateCart(product,quantity){
     .then(data => {
       nbItemsElements.forEach(nbItemsElement => {
         if(data.nbItems == 1){
-              nbItemsElement.textContent = data.nbItems + " article";
+          nbItemsElement.textContent = data.nbItems + " article";
         }else{
           nbItemsElement.textContent = data.nbItems + " articles";
         }
