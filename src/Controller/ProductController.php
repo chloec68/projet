@@ -21,7 +21,8 @@ final class ProductController extends AbstractController
     #[Route('/product/goodies', name: 'app_goodies')]
     public function allGoodies(ProductRepository $productRepository, Request $request): Response
     {   
-        $products = $productRepository->findGoodies([],['productName'=>'ASC']);
+        $idCategory = 2;
+        $products = $productRepository->findGoodies($idCategory,[],['productName'=>'ASC']);
         $searchData = new SearchDataGoodies();
         $form = $this->createForm(SearchFormGoodies::class,$searchData);
         $form->handleRequest($request);
@@ -42,8 +43,8 @@ final class ProductController extends AbstractController
     #[Route('/product/beers/search', name:'app_beers_search')]
     public function allBeers(ProductRepository $productRepository, Request $request): Response
     {   
-        // Default query for all products (beers)
-        $products = $productRepository->findBeers([],['productName'=>'ASC']);
+        $idCategory=1;
+        $products = $productRepository->findBeers($idCategory,[],['productName'=>'ASC']);
         $searchData = new SearchDataBeers();
         $form = $this->createForm(SearchFormBeers::class,$searchData);
         $form->handleRequest($request);

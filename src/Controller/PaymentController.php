@@ -6,16 +6,18 @@ use Stripe\Stripe;
 use App\Entity\Order;
 use App\Entity\Product;
 use Stripe\Checkout\Session;
+use App\Entity\Establishment;
 use App\Repository\OrderRepository;
 use App\Form\IdentificationFormType;
 use App\Repository\ProductRepository;
+use function Symfony\Component\Clock\now;
+use App\Repository\EstablishmentRepository;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use function Symfony\Component\Clock\now;
 
 
 
@@ -50,6 +52,9 @@ class PaymentController extends AbstractController
             //j'ajoute le nom à la commande 
             $userLastName = $data->getOrderUserLastName();
             $order->setOrderUserLastName($userLastName);
+            //j'ajoute le total à la commande, lequel est enregistré en session
+            $orderTotal = $session->get('priceTotal');
+            $order->setOrderTotal($orderTotal);
             //j'ajoute l'email à la commande
             $userEmail = $data->getOrderEmail();
             $order->setOrderEmail($userEmail);
@@ -66,8 +71,8 @@ class PaymentController extends AbstractController
             if($user){
                 $order->setAppUser($user);
             }
+            $session->set('order',$order);
 
-        // PB: toutes les infos sont dans l'URL
             return $this->redirectToRoute('app_payment-collection');
         }
 
@@ -77,21 +82,38 @@ class PaymentController extends AbstractController
     }
    
     #[Route('/payment/collection', name:'app_payment-collection')]
-    public function collection(Request $request): Response
+    public function collection(Request $request, SessionInterface $session, EstablishmentRepository $establishmentRepository): Response
     {   
-        // dd($request);
+        //vérifier si le formulaire a été soumis pour ne pas directement "entrer dans le controller" dès la redirection
+        if(isset($_POST['submit'])){
+            //récupérer la commande en session
+            $order = $session->get('order');
+            //récupérer le résultat de la requête 
+            $selectedOption = $request->request->all(); 
+            //si $chosenOption est définie
+                if(isset($selectedOption)){
+                    //créer un objet établissement 
+                    $establishment = new Establishment ; 
+                    //si la variable $selectedOption est définie/ !== NULL
+                    if($selectedOption['selected_option'] == 'option2'){
+                        $name = 'Brasserie';
+                    }else{
+                        $name = 'Entrepot';   
+                    }
+                    $establishment = $establishmentRepository->findByName($name);
+                    // ajouter l'établissement 
+                    $order->setEstablishment($establishment);
+                }
+
+                return $this->redirectToRoute('app_payment-charge');
+        }
         return $this->render('/payment/collection.html.twig', [
             'controller_name' => 'PaymentController',
         ]);
     }
 
-
-
-
-
-
     
-    #[Route('/charge/cart/{id}', name:'charge')]
+    #[Route('/charge/cart/{id}', name:'app_payment-charge')]
     public function charge(Request $request, ProductRepository $productRepository,): Response{
 
         $stripeSecretKey = 'sk_test_51QuA8b2M19Cf3LVfWJz7Rfz26oC27Xt5ZkaYQW1sYqSf0QKgVl5sdPkOLUZUpYtVWLs4GtX6BE0QkSNEtxJo7bFJ00jaZoqcwT';

@@ -28,15 +28,6 @@ class Establishment
     #[ORM\Column(length: 50)]
     private ?string $establishmentCity = null;
 
-    #[ORM\Column(type: Types::TIME_MUTABLE)]
-    private ?\DateTimeInterface $establishmentOpeningTime = null;
-
-    #[ORM\Column(type: Types::TIME_MUTABLE)]
-    private ?\DateTimeInterface $establishmentClosingTime = null;
-
-    #[ORM\Column(length: 10)]
-    private ?string $establishmentOpeningDay = null;
-
     /**
      * @var Collection<int, Order>
      */
@@ -97,42 +88,6 @@ class Establishment
     public function setEstablishmentCity(string $establishmentCity): static
     {
         $this->establishmentCity = $establishmentCity;
-
-        return $this;
-    }
-
-    public function getEstablishmentOpeningTime(): ?\DateTimeInterface
-    {
-        return $this->establishmentOpeningTime;
-    }
-
-    public function setEstablishmentOpeningTime(\DateTimeInterface $establishmentOpeningTime): static
-    {
-        $this->establishmentOpeningTime = $establishmentOpeningTime;
-
-        return $this;
-    }
-
-    public function getEstablishmentClosingTime(): ?\DateTimeInterface
-    {
-        return $this->establishmentClosingTime;
-    }
-
-    public function setEstablishmentClosingTime(\DateTimeInterface $establishmentClosingTime): static
-    {
-        $this->establishmentClosingTime = $establishmentClosingTime;
-
-        return $this;
-    }
-
-    public function getEstablishmentOpeningDay(): ?string
-    {
-        return $this->establishmentOpeningDay;
-    }
-
-    public function setEstablishmentOpeningDay(string $establishmentOpeningDay): static
-    {
-        $this->establishmentOpeningDay = $establishmentOpeningDay;
 
         return $this;
     }
