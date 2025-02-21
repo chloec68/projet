@@ -1,27 +1,37 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Identifiez-vous{% endblock %}
+{% block title %}Paiement étape 2/3{% endblock %}
 
 {% block body %}
 
-<article class="collection-page">
+<main class="collection-page">
             
     <h1>2. Choisissez votre point de retrait</h1>
 
     <div class="horizontal-line"></div>
 
-    <div class="collection__sections-wrapper">
-    
-        <form action="{{ path('app_payment-collection') }}" method="post">
-            <input type="hidden" name="selected_option" id="selected_option" value="">
-
-                <section class="option1-container">
-                    <h2>Brasserie Ste Cru</h2>
-                    <h3>Adresse</h3> 
-                    <p>14, rue Denis Papin - 68000 COLMAR</p>
-                    <a href="">Voir sur la carte <i class="fa-solid fa-location-arrow"></i></a>
-                    <h3>Horaires d'ouverture</h3>
-                    <table>
+        {{ form_errors(collectionForm) }}
+                {{ form_start(collectionForm,{'attr': {'class': ''}}) }}
+                <div class="options-container">
+                {% for establishment in establishments %}
+                    <section class="option-container">
+                        <h2>{{establishment.establishmentName}}</h2>
+                        <h3>Adresse</h3> 
+                        <p> {{establishment.establishmentAddress}} - {{establishment.establishmentPostCode}} {{establishment.establishmentCity}}</p>
+                        <a href="">Voir sur la carte <i class="fa-solid fa-location-arrow"></i></a>
+                        <h3>Horaires d'ouverture</h3>
+                        <table>
+                        </table>
+                    </section>
+                {% endfor %}
+                </div>
+            <button class="btn choose-btn" type="submit" name="submit">Continuer</button>
+        {{ form_end(collectionForm) }}
+    </div>
+</main>
+                
+          
+                    {# <table>
                         <thead>
                             <tr>
                             <th>Jour</th>
@@ -38,55 +48,10 @@
                             <tr><td>samedi</td> <td>10h-20h</td><td>15h - 20h30</td></tr>
                             <tr class="colored"><td>dimanche<td></td></td><td class="closed">fermé</td></tr>
                         </tbody>
-                    </table>
-
-                    
-                    <button type="button" onclick="setOption('option2')" class="btn">CHOISIR CE POINT DE RETRAIT</button>
-                    
-                </section>
-
-                <section class="option2-container">
-                    <h2>Entrepôt Ste Cru</h2>
-                    <h3>Adresse</h3> 
-                    <p>7, rue Denis Papin - 68000 COLMAR</p>
-                    <a href="">Voir sur la carte <i class="fa-solid fa-location-arrow"></i></a>
-                    <h3>Horaires d'ouverture</h3>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Jour</th>
-                                <th>Matin</th>
-                                <th>Après-midi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr class="colored"><td>lundi</td><td>10-12h</td><td>14h-17h</td></tr>
-                            <tr><td>mardi</td><td>10-12h</td><td>14h-17h</td></tr>
-                            <tr class="colored"><td>mercredi</td><td>10-12h</td><td>14h-17h</td></tr>
-                            <tr><td>jeudi</td><td>10-12h</td><td>14h-17h</td></tr>
-                            <tr class="colored"><td>vendredi</td><td>10-12h</td><td>14h-17h</td></tr>
-                            <tr><td>samedi</td> <td></td><td class="closed">fermé</td></tr>
-                            <tr class="colored"><td>dimanche</td><td></td><td class="closed">fermé</td></tr>
-                        </tbody>
-                    </table>
-                
-                    <button type="button" onclick="setOption('option1')" class="btn">CHOISIR CE POINT DE RETRAIT</button>
-            
-                </section>
-
-                <button class="btn choose-btn" type="submit" name="submit">Continuer</button>
-            </form>
-    </div>
-
-</article>
+                    </table> #}
 
 
 
-<script>
-    function setOption(option){
-        document.getElementById('selected_option').value = option;
-        console.log(document.getElementById('selected_option').value = option)
-    }
-</script>
+
 
 {% endblock %}

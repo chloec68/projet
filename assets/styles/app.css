@@ -998,7 +998,7 @@ footer small{
         padding:0.48rem 2rem 0.3rem 2rem;
         border-radius:50px;
         font-family: 'roboto condensed';
-        margin:auto;
+        margin:4rem auto 0 auto;
         width:fit-content;
         display: block;
         background-color: var(--white);
@@ -1030,26 +1030,13 @@ footer small{
         
     }
 }
-.collection__sections-wrapper{
-    width:80%;
-    margin: auto;
-}
-.collection__sections-wrapper form{
-    display:grid;
-    grid-template-columns: 1fr 0.1fr 1fr;
-    grid-template-rows: 1fr 0.3fr;
-    justify-items: center;
 
-    .option1-container{
-        grid-column-start: 1;
-    }
-
-    .option2-container{
-        grid-column-start: 3;
-    }
+.options-container{
+    display: flex;
+    gap:6rem;
 }
 
-.option1-container,.option2-container{
+.option-container{
     width:90%;
     border: 1px solid var(--light-grey);
     font-family:'nunito';
