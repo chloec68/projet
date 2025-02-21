@@ -11,12 +11,9 @@ use App\Repository\EstablishmentRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-
-
-
-
 
 
 class PaymentController extends AbstractController
@@ -62,8 +59,6 @@ class PaymentController extends AbstractController
             // j'enregistre l'objet contenu dans $establishment en session 
             $session->set('establishment',$establishment);
             // redirection vers la page paiement de Stripe 
-
-            dd($session);
             return $this->redirectToRoute('app_payment-checkout');
         }
 
@@ -84,7 +79,6 @@ class PaymentController extends AbstractController
         $userEmail = $identificationData['orderEmail'];
         
         Stripe::setApiKey($_ENV['STRIPE_SECRET_KEY']);
-        Stripe::setApiVersion('2025-01-27');
 
         $YOUR_DOMAIN = 'http://127.0.0.1:8000';
 
@@ -111,12 +105,20 @@ class PaymentController extends AbstractController
         }
 
         #[Route('/payment/checkout/success', name:'app_payment-checkout_success')]
-        public function success(SessionInterface $session)
-        { }
+        public function success(SessionInterface $session):Response
+        {
+            return $this->render('/payment/success.html.twig', [
+                'controller_name' => 'Paymentcontroller',
+            ]);
+         }
 
         #[Route('/payment/checkout/success', name:'app_payment-checkout_error')]
-        public function error(SessionInterface $session)
-        { }
+        public function error(SessionInterface $session):Response
+        { 
+            return $this->render('/payment/error.html.twig', [
+                'controller_name' => 'Paymentcontroller',
+            ]);
+        }
     }
         
    
