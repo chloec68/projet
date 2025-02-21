@@ -25,18 +25,17 @@ class PaymentController extends AbstractController
       #[Route('/payment/identification', name:'app_payment-identification')]
     public function identification(Request $request, SessionInterface $session): Response
     {   
-
+        // création du formulaire 
         $identificationForm = $this->createForm(IdentificationFormType::class);
-
+        // traitement de la requête
         $identificationForm->handleRequest($request); 
-
+        // si formulaire soumis et valide
         if ($identificationForm->isSubmitted() && $identificationForm->isValid()) {
-
+            //récupération des données du formulaire
             $data = $identificationForm->getData();
-
+            //enregistrement en session
             $session->set('identificationData',$data);
-
-            // dd($session);
+            // redirection vers la page choisir point de retrait
             return $this->redirectToRoute('app_payment-collection');
         }
 
@@ -50,21 +49,22 @@ class PaymentController extends AbstractController
     {   
         // récupérer les établissement en bdd pour les envoyer à la vue 
         $establishments = $establishmentRepository->findAll([],['establishmentName'=>'ASC']);
-        // création d'un nouvel objet établissement qui pourra ultérieurement être passé à la commande
-        $establishment = new Establishment();
         // créer le formulaire permettant de connaître le choix de l'utilisateur
-        $collectionForm = $this->createForm(CollectionFormType::class,$establishment);
+        $collectionForm = $this->createForm(CollectionFormType::class);
         //traitement de la requête envoyée par le client via le formulaire
         $collectionForm->handleRequest($request);
-        // dd($request);
         //si le formulaire est soumis et valide
         if ($collectionForm->isSubmitted() && $collectionForm->isValid()){
-            // j'extraie les data du formulaire et les stocke dans une variable
-            $data = $collectionForm->getData();
-            $establishmentName = $data->getEstablishmentName();
-            // dd($establishmentName);
+            // j'extraie les data du formulaire (le formulaire contient un array avec "establishmentName" => "2") et les stocke dans une variable
+            // en récupérant seulement l'id (la valeur associée à la clé), getData() récupère l'objet lié ; 
+            // sinon on enregistre un tableau avec la clé establishmentName avec l'objet pour valeur
+            $establishment = $collectionForm->get('establishmentName')->getData();
+            // j'enregistre l'objet contenu dans $establishment en session 
             $session->set('establishment',$establishment);
-            // dd($session);
+            // redirection vers la page paiement de Stripe 
+
+            dd($session);
+            return $this->redirectToRoute('app_payment-checkout');
         }
 
         return $this->render('/payment/collection.html.twig', [
@@ -73,120 +73,50 @@ class PaymentController extends AbstractController
         ]);
     }
 
-    // #[Route('/payment/identification', name:'app_payment-identification')]
-    // public function identification(Request $request, SessionInterface $session, Security $security, ProductRepository $productRepository): Response
-    // {   
-    //     // je crée un nouvel objet commande 
-    //     $order = new Order();
-    //     // je crée le formulaire associé à la classe commande delaquelle j'ai instancié l'objet
-    //     $identificationForm = $this->createForm(IdentificationFormType::class, $order);
-    //     // je traite la requête http envoyée par le client après soumission du formulaire
-    //     $identificationForm->handleRequest($request); 
-    //     // si le formulaire a été soumis et que les champs sont valides 
-    //     if ($identificationForm->isSubmitted() && $identificationForm->isValid()) {
-    //         // je récupère les data du formulaire 
-    //         $data = $identificationForm->getData();
-    //         //j'ajoute la date et l'heure à la commande
-    //         $now = now();
-    //         $order->setDateOfPlacement($now);
-    //         //je génère un numéro de commande 
-    //         $orderReference = uniqid('stecru-e');
-    //         $order->setorderReference($orderReference);
-    //         //j'ajoute le prénom à la commande
-    //         $userFirstName = $data->getOrderUserFirstName();
-    //         $order->setOrderUserFirstName($userFirstName);
-    //         //j'ajoute le nom à la commande 
-    //         $userLastName = $data->getOrderUserLastName();
-    //         $order->setOrderUserLastName($userLastName);
-    //         //j'ajoute le total à la commande, lequel est enregistré en session
-    //         $orderTotal = $session->get('priceTotal');
-    //         $order->setOrderTotal($orderTotal);
-    //         //j'ajoute l'email à la commande
-    //         $userEmail = $data->getOrderEmail();
-    //         $order->setOrderEmail($userEmail);
-    //         //j'ajoute le panier à la commande 
-    //         $cart = $session->get('cart');
-    //         foreach ($cart as $productId => $quantity) {
-    //             $product = $productRepository->find($productId);
-    //             if($product){
-    //                 $order->addProduct($product,$quantity);
-    //             }
-    //         }
-    //         // s'il existe en session, j'ajoute l'objet user
-    //         $user = $security->getUser();
-    //         if($user){
-    //             $order->setAppUser($user);
-    //         }
-    //         $session->set('order',$order);
-
-    //         return $this->redirectToRoute('app_payment-collection');
-    //     }
-
-    //     return $this->render('/payment/identification.html.twig',[
-    //         'identificationForm' => $identificationForm,
-    //     ]);
-    // }
-   
-    // #[Route('/payment/collection', name:'app_payment-collection')]
-    // public function collection(Request $request, SessionInterface $session, EstablishmentRepository $establishmentRepository): Response
-    // {   
-    //     //vérifier si le formulaire a été soumis pour ne pas directement "entrer dans le controller" dès la redirection
-    //     if(isset($_POST['submit'])){
-    //         //récupérer la commande en session
-    //         $order = $session->get('order');
-    //         //récupérer le résultat de la requête 
-    //         $selectedOption = $request->request->all(); 
-    //         //si $chosenOption est définie
-    //             if(isset($selectedOption)){
-    //                 //créer un objet établissement 
-    //                 $establishment = new Establishment ; 
-    //                 //si la variable $selectedOption est définie/ !== NULL
-    //                 if($selectedOption['selected_option'] == 'option2'){
-    //                     $name = 'Brasserie';
-    //                 }else{
-    //                     $name = 'Entrepot';   
-    //                 }
-    //                 $establishment = $establishmentRepository->findByName($name);
-    //                 // ajouter l'établissement 
-    //                 $order->setEstablishment($establishment);
-
-    //                 $session->set('order',$order);
-    //             }
-
-    //             return $this->redirectToRoute('app_payment-charge');
-    //     }
-    //     return $this->render('/payment/collection.html.twig', [
-    //         'controller_name' => 'PaymentController',
-    //     ]);
-    // }
+ 
 
     
-    #[Route('/charge/order', name:'app_payment-charge')]
-    public function charge(Request $request, ProductRepository $productRepository,): Response{
-
-        $stripeSecretKey = 'sk_test_51QuA8b2M19Cf3LVfWJz7Rfz26oC27Xt5ZkaYQW1sYqSf0QKgVl5sdPkOLUZUpYtVWLs4GtX6BE0QkSNEtxJo7bFJ00jaZoqcwT';
+    #[Route('/payment/checkout', name:'app_payment-checkout')]
+    public function checkout(SessionInterface $session)
+    {   
+        $priceTotal = $session->get('priceTotal');
+        $identificationData = $session->get('identificationData');
+        $userEmail = $identificationData['orderEmail'];
         
-        Stripe::setApiKey($stripeSecretKey);
-        Stripe::setApiVersion('2025-01-27.acacia');
-
-        $order = $session->get('order');
-
-        // header('Content-Type: application/json');
+        Stripe::setApiKey($_ENV['STRIPE_SECRET_KEY']);
+        Stripe::setApiVersion('2025-01-27');
 
         $YOUR_DOMAIN = 'http://127.0.0.1:8000';
 
         $checkout_session = Session::create([
+            'payment_method_types' => ['card'],
             'line_items' => [
-               
+                [
+                    'price_data' => [
+                        'currency' => 'eur',
+                        'product_data' => [
+                            'name' => 'Commande',  // Nom générique ou autre
+                        ],
+                        'unit_amount' => $priceTotal * 100,  // Montant en cents (exemple pour 5.00 USD => 500)
+                    ],
+                    'quantity' => 1,  // Tu peux juste mettre une quantité de 1 si tu passes un seul montant
+                ],
             ],
-            'customer_email'=> $order,
+            'customer_email'=> $userEmail,
             'mode' => 'payment',
             'success_url' => $YOUR_DOMAIN . '/success.html.twig',
             'cancel_url' => $YOUR_DOMAIN . '/cancel.html.twig',
             ]);
-    
+            return new RedirectResponse($checkout_session->url);
         }
 
+        #[Route('/payment/checkout/success', name:'app_payment-checkout_success')]
+        public function success(SessionInterface $session)
+        { }
+
+        #[Route('/payment/checkout/success', name:'app_payment-checkout_error')]
+        public function error(SessionInterface $session)
+        { }
     }
         
    
