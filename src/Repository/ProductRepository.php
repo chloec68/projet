@@ -19,21 +19,21 @@ class ProductRepository extends ServiceEntityRepository
     }
 
     // FIND ALL PRODUCTS THAT BELONG TO BEERS CATEGORY
-    public function findBeers():array
+    public function findBeers($idCategory):array
     {
         return $this->createQueryBuilder('p')
             ->andWhere('p.category = :idCategory')
-            ->setParameter('idCategory', '1')
+            ->setParameter('idCategory', $idCategory)
             ->getQuery()
             ->getResult();
     }
 
     //FIND ALL PRODUCTS THAT BELONG TO GOODIES CATEGORY
-    public function findGoodies():array
+    public function findGoodies($idCategory):array
     {
         return $this->createQueryBuilder('p')
             ->andWhere('p.category = :idCategory')
-            ->setParameter('idCategory', '2')
+            ->setParameter('idCategory', $idCategory)
             ->getQuery()
             ->getResult();
     }

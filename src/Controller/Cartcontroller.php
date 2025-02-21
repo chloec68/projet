@@ -36,6 +36,8 @@ class CartController extends AbstractController
                 ];
                 $total += $product->getProductPrice() * $quantity;
                 $nbItems += $quantity ; 
+
+                $session->set('priceTotal',$total);
             }
         }
 
