@@ -29,8 +29,7 @@ class CollectionFormType extends AbstractType{
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'method' => 'POST',
-            'data_class' => Establishment::class
+            'method' => 'POST'
         ]);
     }
 }
