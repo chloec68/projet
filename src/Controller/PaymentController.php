@@ -5,9 +5,11 @@ namespace App\Controller;
 use Stripe\Stripe;
 use Stripe\Checkout\Session;
 use App\Entity\Establishment;
+use Doctrine\ORM\EntityManager;
 use App\Form\CollectionFormType;
 use App\Form\IdentificationFormType;
 use App\Repository\EstablishmentRepository;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -33,6 +35,7 @@ class PaymentController extends AbstractController
             //enregistrement en session
             $session->set('identificationData',$data);
             // redirection vers la page choisir point de retrait
+            dd($session);
             return $this->redirectToRoute('app_payment-collection');
         }
 
@@ -68,7 +71,11 @@ class PaymentController extends AbstractController
         ]);
     }
 
- 
+    #[Route('/payment/recap', name:'app_payment-recap')]
+    public function recap():Response
+    {
+
+    }
 
     
     #[Route('/payment/checkout', name:'app_payment-checkout')]
@@ -105,8 +112,40 @@ class PaymentController extends AbstractController
         }
 
         #[Route('/payment/checkout/success', name:'app_payment-checkout_success')]
-        public function success(SessionInterface $session):Response
+        public function success(SessionInterface $session, Security $security, EntityManager $entityManager):Response
         {
+            $order = new Order;
+            $order->setOrderDateOfPlacement(now());
+            $order->setOrderReference(uniqid('stecru-e'));
+
+            $userFirstName = $session->get('orderUserFirstName');
+            $order->setOrderUserFirstName($userFirstName);
+
+            $userLastName = $session->get('orderUserLastName');
+            $order->setOrderUserLastName($userLastName);
+
+            $email = $session->get('orderEmail');
+            $order->setOrderEmail($email);
+
+            $cart = $session->get('cart');
+            $priceTotal= $cart['priceTotal'];
+            $order->setOrderTotal($priceTotal);
+
+            foreach ($cart as $product => $quantity) {
+                $order->add($product);
+            }
+            $establishment = $session->get('establishment');
+            $order->setEstablishment($establishment);
+
+            $appUser = $security->getUser();
+
+            if(isset($user)){
+                $order->setAppUser($appUser);
+            }
+
+            $entityManager->persist($order);
+            $entityManager->flush();
+
             return $this->render('/payment/success.html.twig', [
                 'controller_name' => 'Paymentcontroller',
             ]);
