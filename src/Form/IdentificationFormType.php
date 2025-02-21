@@ -2,7 +2,6 @@
 
 namespace App\Form;
 
-use App\Entity\Order;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\IsTrue;
@@ -59,8 +58,6 @@ class IdentificationFormType extends AbstractType{
     {
         $resolver->setDefaults([
             'method' => 'POST',
-            'data_class' => Order::class,
         ]);
     }
-
 }
