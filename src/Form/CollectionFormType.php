@@ -23,7 +23,6 @@ class CollectionFormType extends AbstractType{
             'placeholder' => false,
             'expanded' => true, 
             'multiple' => false,
-            'mapped' => false
         ]);
     }
 
