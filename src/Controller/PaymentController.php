@@ -41,6 +41,7 @@ class PaymentController extends AbstractController
 
         return $this->render('/payment/identification.html.twig',[
             'identificationForm' => $identificationForm,
+            'meta_description' => "Vous êtes à l'étape 1/3 du paiement. Dites-nous qui vous êtes pour que nous puissions préparer votre commande"
         ]);
     }
 
@@ -67,7 +68,8 @@ class PaymentController extends AbstractController
 
         return $this->render('/payment/collection.html.twig', [
             'establishments' => $establishments,
-            'collectionForm' => $collectionForm
+            'collectionForm' => $collectionForm,
+            'meta_description' => "Vous êtes à l'étape 2/3 du paiement. Choisissez le point de retrait où vous souhaitez retirer votre commande"
         ]);
     }
 
@@ -149,6 +151,7 @@ class PaymentController extends AbstractController
 
             return $this->render('/payment/success.html.twig', [
                 'controller_name' => 'Paymentcontroller',
+                'meta_description' => "Le paiement a réussi. Nous vous remercions pour votre commande."
             ]);
          }
 
@@ -157,6 +160,7 @@ class PaymentController extends AbstractController
         { 
             return $this->render('/payment/cancel.html.twig', [
                 'controller_name' => 'Paymentcontroller',
+                'meta_description' => "Le paiement a échoué, votre commande n'a pas été enregistrée."
             ]);
         }
     }

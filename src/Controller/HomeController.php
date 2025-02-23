@@ -26,6 +26,7 @@ final class HomeController extends AbstractController
             'controller_name' => 'HomeController',
             'permanent' => $permanent,
             'ephemeral' => $ephemeral,
+            'meta_description' => 'Bienvenue sur le site de la Brasserie locale et artisanale Sainte Cru sur laquelle vous pourrez découvrir nos produits et les acheter directement en ligne'
             // 'nbItems' => $nbItems
         ]);
     }
