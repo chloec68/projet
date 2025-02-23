@@ -113,7 +113,8 @@ class PaymentController extends AbstractController
 
         #[Route('/payment/checkout/success', name:'app_payment-checkout-success')]
         public function success(SessionInterface $session, Security $security, EntityManagerInterface $entityManager):Response
-        {
+        {   
+            
             // $order = new Order;
             // $order->setOrderDateOfPlacement(now());
             // $order->setOrderReference(uniqid('stecru-e'));
