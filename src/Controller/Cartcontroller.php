@@ -27,19 +27,27 @@ class CartController extends AbstractController
   
         foreach($cart as $id=>$quantity){
             $product = $productRepository->find($id);
-
             if ($product !== null){
+                $pictures = [];
+                foreach ($product->getPictures() as $picture){
+                    $pictures[] = $picture->getPictureName();
+                }
                 $data[] = [
                     'product' => $product,
+                    'typeName' => $product->getType()->getTypeName(),
                     'quantity' => $quantity,
-                    'subtotal' => $subtotal = $product->getProductPrice() * $quantity
+                    'subtotal' => $product->getProductPrice() * $quantity,
+                    'pictures' => $pictures,
                 ];
                 $total += $product->getProductPrice() * $quantity;
                 $nbItems += $quantity ; 
-
-                $session->set('priceTotal',$total);
             }
         }
+
+        $session->set('cartData',$data); // je set les data en session pour les rendre accessible partout dans l'application et pas seulement dans la vue du panier
+        $session->set('priceTotal',$total);
+        $session->set('nbItems',$nbItems);
+        dd($session);
 
         return $this->render('cart/index.html.twig',[       
             'data'=>$data,

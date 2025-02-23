@@ -59,6 +59,139 @@
             {% endblock %}
         </header>
 
+        {% set cartData = app.session.get('cartData', []) %}
+        {% set nbItems = app.session.get('nbItems', []) %}
+        <div class="cart-summary">
+            <h2>Votre panier</h2>
+            {# <div class="horizontal-line"> #}
+                {% if cartData is not empty %}
+                    {% for item in cartData %}
+                    <article>
+                        {% for picture in item.pictures %}
+                            {% if loop.first %}
+                            <div class="item-containers">
+                                <div class="item-container">
+                                    <img class="product-pic" src="{{picture}}" alt="">
+                                {% endif %}
+                        {% endfor %}
+                                    <p>{{ item.product.productName }} - {{ item.typeName }} - {{ item.product.productVolume}}</p>
+                                </div>
+                                <div class="item-container middle">
+                                    <div class="counter">
+                                        <div class="counter-display">{{ item.quantity }}</div>
+                                        <div class="counter-controls">
+                                          <div class="control-button plus">+</div>
+                                          <div class="control-button minus">-</div>
+                                        </div>
+                                      </div>
+                                      <p>x {{item.product.productPrice}} €</p>
+                                </div>
+                                <div class="item-container right">
+                                    <p>sous-total : {{item.subtotal}} €</p>
+                                </div>
+                            </div>
+                    </article>
+                    {% endfor %}
+                    <article>
+                        {% if nbItems <=1 %}
+                            {{nbItems}} article
+                        {% else %}
+                            {{nbItems}} articles
+                        {% endif %}
+                    </article>
+                    {% else %}
+                    <p>Le panier est vide</p>
+                {% endif %}
+            </div>
+        </div>
+
+        <style>
+            .cart-summary{
+                width:fit-content;
+                padding:1.5rem;
+                position:absolute;
+                z-index:1000;
+                top:10%;
+                right:0;
+                background-color:var(--light-background);
+                font-family: 'roboto condensed';
+
+                h2{
+                    font-family: 'bebas neue';
+                    text-align: center;
+                }
+            }
+            .item-container{
+                display: flex;
+                align-items:center ;
+                gap:0.5rem;
+                padding:0.2rem;
+            }
+
+            .middle{
+                justify-content: center;
+            }
+
+            .right{
+                justify-content: flex-end;
+            }
+
+            article{
+                padding:1.5rem 0;
+                border-bottom: 1px solid var(--light-grey);
+            }
+
+            .product-qty{
+                display: block;
+            }
+
+
+            .counter {
+                display: inline-flex;
+                height: 2em;
+                border: 1px solid #e5e7eb;
+                border-radius: 0.5rem;
+                background: var(--white);
+              }
+              
+              .counter-display {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                min-width: fit-content;
+                padding: 0 1.2rem 0 1.2rem;
+                font-size: 1em;
+              }
+              
+              .counter-controls {
+                display: flex;
+                flex-direction: column;
+                border-left: 1px solid var(--light-grey);
+              }
+              
+              .control-button {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 2em;
+                height: 1em;
+                cursor: pointer;
+              }
+              
+              .control-button:hover {
+                background-color: var(--green);
+              }
+              
+              .control-button.plus {
+                border-bottom: 1px solid var(--light-grey);
+                border-top-right-radius: 0.5rem;
+              }
+              
+              .control-button.minus {
+                border-bottom-right-radius: 0.5rem;
+              }
+
+        </style>
 
 
             {% for message in app.flashes('success') %}
