@@ -33,7 +33,7 @@
                 <div class="swiper-button-next"></div>
             </div>
 
-            <div class="seeAll-link__container"> <a href="{{ path('app_beers') }}" class="seeAll-link">tout voir<img id="icone-doubleArrowRight" src="/icones/doubleArrowRight.svg" alt=""></a></div>
+            <div class="seeAll-link__container"> <a href="{{ path('app_beers') }}" class="seeAll-link">tout voir<img id="icone-doubleArrowRight" src="/icones/doubleArrowRight.svg" alt="" loading="lazy"></a></div>
 
         </section>
 
@@ -49,7 +49,7 @@
             {% for product in ephemeral %}
                 {% for picture in product.pictures %}
                     {% if loop.first %}
-                        <div class="swiper-slide"><img src="{{picture.pictureName}}" alt=""></div>
+                        <div class="swiper-slide"><img src="{{picture.pictureName}}" alt="" loading="lazy"></div>
                     {% endif %}
                 {% endfor %}            
             {% endfor %}

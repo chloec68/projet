@@ -22,6 +22,7 @@ class CartController extends AbstractController
         $data=[];
         $total=0;
         $formattedTotal = 0;
+        $formattedSubtotal = 0;
         $subtotal=0;
         $nbItems=0;
         $quantity = 0;
@@ -37,11 +38,11 @@ class CartController extends AbstractController
                     'product' => $product,
                     'typeName' => $product->getType()->getTypeName(),
                     'quantity' => $quantity,
-                    'subtotal' => $product->getProductPrice() * $quantity,
+                    'subtotal' => number_format($product->getProductPrice() * $quantity,2,'.',''),
                     'pictures' => $pictures,
                 ];
                 $total += $product->getProductPrice() * $quantity;
-                $formattedTotal = number_format($total, 2);
+                $formattedTotal = number_format($total, 2, '.', '');
                 $nbItems += $quantity ; 
             }
         }
@@ -52,8 +53,8 @@ class CartController extends AbstractController
 
         return $this->render('cart/index.html.twig',[       
             'data'=>$data,
-            'total'=>$total,
-            'subtotal'=>$subtotal,
+            'total'=>$formattedTotal,
+            'subtotal'=>$formattedSubtotal,
             'nbItems'=>$nbItems,
             'quantity'=>$quantity,
             'meta_description' => 'Votre panier contient ' . $nbItems . ' articles. Vous pouvez continuer vos achats ou choisir votre point de retrait et procéder au paiement.'

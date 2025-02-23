@@ -236,4 +236,11 @@ function updateCartSubTotals(){
   });
 
  
+// PANIER LATERAL - TOGGLE  
+const sideCart = document.querySelector('.cart-summary'); 
+const cartIcon = document.querySelector('.fa-basket-shopping');
+
+cartIcon.addEventListener('click', function() {
+  sideCart.classList.toggle('visible'); 
+});
 

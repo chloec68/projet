@@ -36,7 +36,7 @@
                     <h1 id="logo-text">Brasserie indépendante</h1>
                     </div>
                     <div class="header__container-right">
-                        <a href="{{ path('app_cart') }}"><i class="fa-solid fa-basket-shopping"></i></a>
+                        <i class="fa-solid fa-basket-shopping"></i>
                         {# <span type="number" class="nbItems"> {% if nbItems <= 1 %} {{nbItems}} article {% else %} {{nbItems}} articles {% endif %}</span> #}
                         {% if app.user %}
                         <a href=""><i class="fa-solid fa-user"></i>{{ app.user.userIdentifier }}</a>
@@ -105,6 +105,7 @@
                         </p>
                         <div class="total bold"><p>Total ttc :</p><p class="bold">{{priceTotal}} €</p></div>
                     </article>
+                    <a href="{{ path('app_cart') }}">Panier</a>
                     {% else %}
                     <p>Le panier est vide</p>
                 {% endif %}
@@ -118,7 +119,7 @@
                 padding:1.5rem;
                 position:absolute;
                 z-index:1000;
-                top:10%;
+                top:16vh;
                 right:0;
                 background-color:var(--light-background);
                 font-family: 'roboto condensed';
@@ -127,6 +128,26 @@
                     font-family: 'bebas neue';
                     text-align: center;
                 }
+
+                a{
+                    border:var(--green) solid 1px;
+                    padding:0.5rem;
+                    font-family: "bebas neue";
+                    font-size:1.3em;
+                    margin:1rem auto 1rem auto;
+                    display: block;
+                    width:fit-content;
+                    color:var(--black);
+                    border-radius:6px;
+                }
+
+                a:hover{
+                    background-color: var(--green);
+                }
+            }
+
+            .visible{
+                display: block;
             }
             .item-container{
                 display: flex;
@@ -171,7 +192,7 @@
                 border-radius: 0.5rem;
                 background: var(--white);
 
-                .counter-display {
+                .counter-display{
                     display: flex;
                     align-items: center;
                     justify-content: center;
