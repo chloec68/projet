@@ -57,7 +57,7 @@
             <div class="product-card">
                 {% for picture in product.pictures %}
                     {% if loop.first %}
-                    <a href="{{ path('detail_product',{id:product.id}) }}"><div class="picture-container"> <img src="{{ picture.pictureName }}" alt=""> </div></a>
+                    <a href="{{ path('detail_product',{id:product.id}) }}"><div class="picture-container"> <img src="{{ picture.pictureName }}" alt="photo de la face avant du produit"> </div></a>
                     {% endif %}
                 {% endfor %}
 

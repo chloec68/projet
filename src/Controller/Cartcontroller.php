@@ -21,6 +21,7 @@ class CartController extends AbstractController
 
         $data=[];
         $total=0;
+        $formattedTotal = 0;
         $subtotal=0;
         $nbItems=0;
         $quantity = 0;
@@ -40,11 +41,12 @@ class CartController extends AbstractController
                     'pictures' => $pictures,
                 ];
                 $total += $product->getProductPrice() * $quantity;
+                $formattedTotal = number_format($total, 2);
                 $nbItems += $quantity ; 
             }
         }
         $session->set('cartData',$data); // je set les data en session pour les rendre accessible partout dans l'application et pas seulement dans la vue du panier
-        $session->set('priceTotal',$total);
+        $session->set('priceTotal',$formattedTotal);
         $session->set('nbItems',$nbItems);
         // dd($session);
 
@@ -53,7 +55,8 @@ class CartController extends AbstractController
             'total'=>$total,
             'subtotal'=>$subtotal,
             'nbItems'=>$nbItems,
-            'quantity'=>$quantity
+            'quantity'=>$quantity,
+            'meta_description' => 'Votre panier contient ' . $nbItems . ' articles. Vous pouvez continuer vos achats ou choisir votre point de retrait et procéder au paiement.'
             ]);
     }
 
