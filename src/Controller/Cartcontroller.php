@@ -43,11 +43,10 @@ class CartController extends AbstractController
                 $nbItems += $quantity ; 
             }
         }
-
         $session->set('cartData',$data); // je set les data en session pour les rendre accessible partout dans l'application et pas seulement dans la vue du panier
         $session->set('priceTotal',$total);
         $session->set('nbItems',$nbItems);
-        dd($session);
+        // dd($session);
 
         return $this->render('cart/index.html.twig',[       
             'data'=>$data,
@@ -60,7 +59,7 @@ class CartController extends AbstractController
 
        // ADD ITEM TO CART  
 
-       #[Route('/cart/update/{id}', name:'app_cart-add')]
+       #[Route('/cart/add/{id}', name:'app_cart-add')]
        public function add(Request $request, SessionInterface $session)
        {
            $data = json_decode($request->getContent(),true);
@@ -95,7 +94,6 @@ class CartController extends AbstractController
         
     $session->set('cart',$cart);
     $nbItems = array_sum($cart);
-        
     return new JsonResponse(['success' => true, 'nbItems'=>$nbItems]);
     }
 
