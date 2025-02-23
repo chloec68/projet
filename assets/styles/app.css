@@ -106,6 +106,7 @@ a{
 .header__container-right a:hover,.header__container-right i:hover{
     text-decoration: none;
     color:var(--green);
+    cursor: pointer;
 }
 
 .header__container-left{
