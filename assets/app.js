@@ -62,10 +62,26 @@ incrementButtons.forEach(button => {
     let input = document.querySelector(`input[data-product="${product}"]`);
     let currentQuantity = parseInt(input.value);
     input.value = currentQuantity + 1 ; 
-    updatePriceTotal();
-    updateCartSubTotals();
   });
 }); 
+
+// DECREMENT QUANTITY (PRODUCTS)
+
+let decrementButtons = document.querySelectorAll('.decrement');
+decrementButtons.forEach(button => {
+  button.addEventListener('click', function(){
+    let product = button.getAttribute('data-product');
+    let input = document.querySelector(`input[data-product="${product}"]`);
+    let currentQuantity = parseInt(input.value);
+    if(currentQuantity > 0){
+      input.value = currentQuantity - 1 ; 
+    }else{
+      input.value = 0;
+    }
+  });
+}); 
+
+
 
 // ADD TO CART (PRODUCTS)
 let addToCartButtons = document.querySelectorAll(".add-to-cart");
@@ -73,13 +89,13 @@ addToCartButtons.forEach(button => {
   button.addEventListener('click', function() {
     let product = button.getAttribute('data-product');
     let quantity = document.querySelector(`input[data-product="${product}"]`).value;
-
     if (parseInt(quantity) > 0) {
       updateCart(product, quantity);
     }
   });
 });
 
+// PAGE PANIER
 
 // INCREMENT QUANTITY (CART)
 
@@ -99,9 +115,9 @@ incrementButtonsCart.forEach(button => {
 }); 
 
 // DECREMENT QUANTITY (CART)
-let decrementButtons = document.querySelectorAll('.cart-decrement');
+let decrementButtonsCart = document.querySelectorAll('.cart-decrement');
 
-decrementButtons.forEach(button => {
+decrementButtonsCart.forEach(button => {
   button.addEventListener('click', function(){
     let product = button.getAttribute('cart-product');
     let input = document.querySelector(`input[cart-product="${product}"]`);
@@ -120,14 +136,14 @@ function updateCart(product,quantity){
 
   let nbItemsElements = document.querySelectorAll('.nbItems')
 
-  fetch('/cart/update/{id}',{
+  fetch('/cart/add/{id}',{
     method : 'POST',
     headers :{
         'Content-Type':'application/json'
     } ,
     body: JSON.stringify({
-    product:product,
-    quantity:quantity
+      product:product,
+      quantity:quantity
     })
   })
 
@@ -154,13 +170,18 @@ function updatePriceTotal(){
 
   let totalPrice = 0; 
   let cartItems = document.querySelectorAll('.cart-item');
+  if(cartItems.length>0){
     cartItems.forEach(item => {
       let input = item.querySelector('input[cart-product]');
       let quantity = parseInt(input.value);
       let price = parseFloat(item.querySelector('.product-price').textContent);
       totalPrice += price*quantity;
       document.querySelector('.total-price').textContent = totalPrice.toFixed(2) + " €";
-  })
+      })
+  }else{
+    document.querySelector('.total-price').textContent = "0 €";
+  }
+
 }
 
 
@@ -181,30 +202,36 @@ function updateCartSubTotals(){
  // DELETE ITEM (CART)
 
   let removeItemButton = document.querySelectorAll('.remove-item');
-
   removeItemButton.forEach(button => {
     button.addEventListener('click',function(){
       let product = button.getAttribute('cart-product');
-      let url = `/cart/remove/${product}`;
-
-      fetch(url, {
-        method: 'POST',
-        headers: {
-          'Content-Type':'application/json',
-        },
-      })
-      .then(response => response.json())
-      .then(data => {
-        if(data.success){
-          let productTable = document.querySelector(`table[cart-item="${product}"]`);
-          if (productTable){
-            productTable.remove();
+        let url = `/cart/remove/${product}`;
+        fetch(url, {
+          method: 'POST',
+          headers: {
+            'Content-Type':'application/json',
+          },
+        })
+        .then(response => response.json())
+        .then(data => {
+          if(data.success){
+            let productTable = document.querySelector(`table[cart-item="${product}"]`);
+            let nbItemsElement = document.querySelector('.nbItems'); 
+              if (productTable){
+                let DataNbItems = data.nbItems;
+                if (data.nbItems === 1) {
+                  nbItemsElement.textContent = `${data.nbItems} article`;
+              } else {
+                  nbItemsElement.textContent = `${data.nbItems} articles`;
+              }
+              productTable.remove();   
+              updatePriceTotal();
+            }
+          }else{
+            console.error('erreur lors de la suppression');
           }
-        }else{
-          console.error('erreur lors de la suppression');
-        }
-      })
-      .catch(error => console.error('Erreur:', error));
+        })
+        .catch(error => console.error('Erreur:', error));
     });
   });
 
