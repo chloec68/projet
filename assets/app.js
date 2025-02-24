@@ -241,6 +241,15 @@ const sideCart = document.querySelector('.cart-summary');
 const cartIcon = document.querySelector('.fa-basket-shopping');
 
 cartIcon.addEventListener('click', function() {
-  sideCart.classList.toggle('visible'); 
+  sideCart.classList.toggle('visible');
 });
 
+document.addEventListener('click', function(event) {
+  if (!sideCart.contains(event.target) && !cartIcon.contains(event.target)) {
+    sideCart.classList.remove('visible');
+  }
+});
+
+// => event.target = référence à l'élément cliqué 
+// => sideCart.contains(event.target) => si l'élément sideCart contient l'élément cliqué 
+// => "!" la condition précédente est "vraie" si clique à l'extérieur du panier, sinon elle est fausse 

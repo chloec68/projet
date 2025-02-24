@@ -3,10 +3,12 @@
 namespace App\Controller;
 
 use Stripe\Stripe;
+use App\Entity\Order;
 use Stripe\Checkout\Session;
 use App\Entity\Establishment;
 use App\Form\CollectionFormType;
 use App\Form\IdentificationFormType;
+use App\Repository\ProductRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\EstablishmentRepository;
 use Symfony\Bundle\SecurityBundle\Security;
@@ -35,7 +37,7 @@ class PaymentController extends AbstractController
             //enregistrement en session
             $session->set('identificationData',$data);
             // redirection vers la page choisir point de retrait
-            // dd($session);
+            dd($session);
             return $this->redirectToRoute('app_payment-collection');
         }
 
@@ -114,43 +116,64 @@ class PaymentController extends AbstractController
         }
 
         #[Route('/payment/checkout/success', name:'app_payment-checkout-success')]
-        public function success(SessionInterface $session, Security $security, EntityManagerInterface $entityManager):Response
+        public function success(SessionInterface $session, Security $security, EntityManagerInterface $entityManager, ProductRepository $productRepository):Response
         {   
+            //COMMANDE
+            //création d'un nouvel objet commande 
+            $order = new Order;
+            //ajout d'un objet DateTime - à vérifier 
+            $order->setDateOfPlacement(new \DateTime());
+            //ajout d'une référence
+            $order->setOrderReference(uniqid('stecru-e'));
+            //ajout des données d'identification de l'utilisateur préalablement enregistrées en session si not NULL (existe + déclarée)
+            if(isset($identificationData)){
+                // récupération du tableau de données d'identification en session
+                $identificationData = $session->get('identificationData');
+                // récupération de la clé prénom utilisateur et de sa valeur
+                $orderFirstName = $identificationData['orderUserFirstName'];
+                // ajout prénom utilisateur (clé + valeur)
+                $order->setOrderUserFirstName($orderFirstName);
+                // idem avec nom de famille et email
+                $orderLastName = $identificationData['orderUserLastName'];
+                $order->setOrderUserLastName($orderLastName);
+                $orderEmail = $identificationData['orderEmail'];
+                $order->setOrderEmail($orderEmail);  
+            }
+            //récupération du total du panier enregistré en session + ajout à la commande
+            $priceTotal= $session->get('priceTotal');
+            $order->setOrderTotal($priceTotal);
             
-            // $order = new Order;
-            // $order->setOrderDateOfPlacement(now());
-            // $order->setOrderReference(uniqid('stecru-e'));
+            // récupération du tableau panier enregistré en session et itération dans le tableau associatif
+            $cart = $session->get('cart');
+            foreach ($cart as $id => $quantity) {
+                // récupération des objets produit en fonction de l'id contenu dans le tableau associatif panier 
+                $product = $productRepository->find($id);
+                // ajout de chaque produit et de la quantité (valeur) associée à la commande
+                $order->addProduct($product,$quantity);
+            }
 
-            // $userFirstName = $session->get('orderUserFirstName');
-            // $order->setOrderUserFirstName($userFirstName);
+            // récupération clé en session et si la variable existe et est définie, récupération de la valeur (un objet établissement) et ajout à la commande
+            $establishment = $session->get('establishment');
+            if(isset($establishment)){
+                $order->setEstablishment($establishment);
+            }
 
-            // $userLastName = $session->get('orderUserLastName');
-            // $order->setOrderUserLastName($userLastName);
+            // idem 
+            $appUser = $security->getUser();
+            if(isset($appUser)){
+                $order->setAppUser($appUser);
+            }
 
-            // $email = $session->get('orderEmail');
-            // $order->setOrderEmail($email);
+            //FACTURE 
+            
 
-            // $cart = $session->get('cart');
-            // $priceTotal= $cart['priceTotal'];
-            // $order->setOrderTotal($priceTotal);
+            dd($order);
 
-            // foreach ($cart as $product => $quantity) {
-            //     $order->add($product);
-            // }
-            // $establishment = $session->get('establishment');
-            // $order->setEstablishment($establishment);
-
-            // $appUser = $security->getUser();
-
-            // if(isset($user)){
-            //     $order->setAppUser($appUser);
-            // }
-
-            // $entityManager->persist($order);
-            // $entityManager->flush();
+            $entityManager->persist($order);
+            $entityManager->flush();
 
             return $this->render('/payment/success.html.twig', [
-                'controller_name' => 'Paymentcontroller',
+                'order' => $order,
                 'meta_description' => "Le paiement a réussi. Nous vous remercions pour votre commande."
             ]);
          }
