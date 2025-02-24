@@ -40,7 +40,6 @@ class CartController extends AbstractController
                 
                 $dataItem = [
                     'product' => $product,
-                    // 'typeName' => $product->getType()->getTypeName(),
                     'quantity' => $quantity,
                     'VATprice' => $VATprice,
                     'subtotal' => number_format(floatval($product->getProductVATprice()) * $quantity,2,'.',''),
@@ -92,7 +91,7 @@ class CartController extends AbstractController
            }
    
            $session->set('cart',$cart);
-           $nbItems = array_sum($cart); // array_sum() => native PHP function that returns the sum of values in an array
+           $nbItems = array_sum($cart); // array_sum() => native PHP function that returns the sum of VALUES in an array
    
            return new JsonResponse(['success' => true,'nbItems'=>$nbItems,'cart' => $cart]);
        }
