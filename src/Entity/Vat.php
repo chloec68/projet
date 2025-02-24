@@ -2,10 +2,11 @@
 
 namespace App\Entity;
 
-use App\Repository\VatRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\VatRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 #[ORM\Entity(repositoryClass: VatRepository::class)]
 class Vat
@@ -15,7 +16,7 @@ class Vat
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 10)]
+    #[ORM\Column(type: Types::DECIMAL, precision: 5, scale: 2)]
     private ?string $vatRate = null;
 
     /**

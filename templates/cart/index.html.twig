@@ -20,7 +20,7 @@
                         {% endfor %}
                         <td>{{item.product.productName}} - {% if item.product.type is not null %}{{item.product.type.typeName}}{% endif %}</td>
                         <td>{{item.product.productVolume}}</td>
-                        <td class="product-price">{{item.product.productPrice}} €</td>
+                        <td class="product-price">{{item.product.productVATprice}} €</td>
                         <td>
                             <div class="wrapper">
                                 <div class="quantity">
