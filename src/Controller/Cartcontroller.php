@@ -37,14 +37,23 @@ class CartController extends AbstractController
                 foreach ($product->getPictures() as $picture){
                     $pictures[] = $picture->getPictureName();
                 }
-                $data[] = [
+                
+                $dataItem = [
                     'product' => $product,
-                    'typeName' => $product->getType()->getTypeName(),
+                    // 'typeName' => $product->getType()->getTypeName(),
                     'quantity' => $quantity,
                     'VATprice' => $VATprice,
                     'subtotal' => number_format(floatval($product->getProductVATprice()) * $quantity,2,'.',''),
                     'pictures' => $pictures,
                 ];
+
+                $type = $product->getType();
+                if(!empty($type)){
+                    $dataItem['typeName']=  $type->getTypeName();
+                }
+
+                $data[] = $dataItem;
+
                 $total += floatval($product->getProductVATprice()) * $quantity;
                 $formattedTotal = number_format($total, 2, '.', '');
                 $nbItems += $quantity ; 

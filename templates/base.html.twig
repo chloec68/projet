@@ -6,6 +6,7 @@
         <meta name="description" content="{{ meta_description ?? 'Site vitrine et de vente en ligne de la brasserie colmarienne Sainte-Cru' }}">
         <title>{% block title %}Welcome{% endblock %}</title>
         <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
+
         {% block stylesheets %}
         {% endblock %}
 
@@ -69,15 +70,15 @@
                 {% if cartData is not empty %}
                     {% for item in cartData %}
                     <article>
+                        <div class="item-containers">
+                            <div class="item-container">
                         {% for picture in item.pictures %}
                             {% if loop.first %}
-                            <div class="item-containers">
-                                <div class="item-container">
-                                    <img class="product-pic" src="{{picture}}" alt="Photo de la face avant du produit">
-                                {% endif %}
+                                <img class="product-pic" src="{{picture}}" alt="Photo de la face avant du produit">
+                            {% endif %}   
                         {% endfor %}
-                                    <p>{{ item.product.productName }} - {{ item.typeName }} - {{ item.product.productVolume}}</p>
-                                </div>
+                                <p>{{ item.product.productName }} - {% if item.typeName is defined %}{{ item.typeName }} {% else %} {{item.product.productColor}}{% endif %} - {% if item.product.productVolume %}{{ item.product.productVolume}} {% else %} {{ item.product.size.sizeName}} {% endif %}</p>
+                            </div>
                                 <div class="item-container middle">
                                     <div class="counter">
                                         <div class="counter-display" type="number" value="{{item.quantity}}" min="0" sideCart-product="{{ item.product.id }}"></div>
@@ -86,7 +87,7 @@
                                           <div class="control-button decrement" sideCart-product="{{item.product.id}}">-</div>
                                         </div>
                                     </div>
-                                      <p>x {{item.VATprice}} €</p>
+                                      <p>x {{item.product.productPrice}} €</p>
                                 </div>
                                 <div class="item-container right bold">
                                     <p>sous-total : {{item.subtotal}} €</p>
