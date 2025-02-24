@@ -26,7 +26,7 @@ final class ProductController extends AbstractController
         $products = $productRepository->findGoodies($idCategory,[],['productName'=>'ASC']);
 
         foreach ($products as $product) {
-            $VATprice = $VATpriceCalculator->VATprice($product);
+            $VATprice = number_format($VATpriceCalculator->VATprice($product),2,'.','');
             $product->setProductVATprice($VATprice);
         }
 
@@ -54,7 +54,7 @@ final class ProductController extends AbstractController
         $products = $productRepository->findBeers($idCategory,[],['productName'=>'ASC']);
 
         foreach ($products as $product) {
-            $VATprice = $VATpriceCalculator->VATprice($product);
+            $VATprice = number_format($VATpriceCalculator->VATprice($product),2,'.','');
             $product->setProductVATprice($VATprice);
         }
 
