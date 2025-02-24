@@ -8,7 +8,6 @@ class VATpriceCalculator{
 
     public function VATprice(Product $product): float
     {
-     
         return $product->getProductPrice() * (1 + $product->getVAT()->getVATRate());
     }
 }
