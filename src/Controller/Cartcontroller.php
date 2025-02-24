@@ -2,6 +2,7 @@
 namespace App\Controller;
 
 use App\Entity\Product;
+use App\Service\VATpriceCalculator;
 use App\Repository\ProductRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
@@ -15,7 +16,7 @@ class CartController extends AbstractController
 {   
 
     #[Route('/cart', name:'app_cart')]
-    public function index(SessionInterface $session, ProductRepository $productRepository)
+    public function index(SessionInterface $session, ProductRepository $productRepository, VATpriceCalculator $VATpriceCalculator)
     {
         $cart = $session->get('cart',[]);
 
@@ -26,10 +27,12 @@ class CartController extends AbstractController
         $subtotal=0;
         $nbItems=0;
         $quantity = 0;
-  
+
         foreach($cart as $id=>$quantity){
             $product = $productRepository->find($id);
             if ($product !== null){
+                $VATprice = $VATpriceCalculator->VATprice($product);
+                $product->setProductVATprice($VATprice);
                 $pictures = [];
                 foreach ($product->getPictures() as $picture){
                     $pictures[] = $picture->getPictureName();
@@ -38,10 +41,11 @@ class CartController extends AbstractController
                     'product' => $product,
                     'typeName' => $product->getType()->getTypeName(),
                     'quantity' => $quantity,
-                    'subtotal' => number_format($product->getProductPrice() * $quantity,2,'.',''),
+                    'VATprice' => $VATprice,
+                    'subtotal' => number_format(floatval($product->getProductVATprice()) * $quantity,2,'.',''),
                     'pictures' => $pictures,
                 ];
-                $total += $product->getProductPrice() * $quantity;
+                $total += floatval($product->getProductVATprice()) * $quantity;
                 $formattedTotal = number_format($total, 2, '.', '');
                 $nbItems += $quantity ; 
             }

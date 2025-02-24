@@ -7,6 +7,7 @@ use App\Form\SearchFormBeers;
 use App\Model\SearchDataBeers;
 use App\Form\SearchFormGoodies;
 use App\Model\SearchDataGoodies;
+use App\Service\VATpriceCalculator;
 use App\Repository\ProductRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,10 +20,16 @@ final class ProductController extends AbstractController
    
     // DISPLAY ALL GOODIES + SEARCH
     #[Route('/product/goodies', name: 'app_goodies')]
-    public function allGoodies(ProductRepository $productRepository, Request $request): Response
+    public function allGoodies(ProductRepository $productRepository, Request $request, VATpriceCalculator $VATpriceCalculator): Response
     {   
         $idCategory = 2;
         $products = $productRepository->findGoodies($idCategory,[],['productName'=>'ASC']);
+
+        foreach ($products as $product) {
+            $VATprice = $VATpriceCalculator->VATprice($product);
+            $product->setProductVATprice($VATprice);
+        }
+
         $searchData = new SearchDataGoodies();
         $form = $this->createForm(SearchFormGoodies::class,$searchData);
         $form->handleRequest($request);
@@ -41,10 +48,16 @@ final class ProductController extends AbstractController
     // DISPLAY ALL BEERS + SEARCH
     #[Route('/product/beers', name: 'app_beers')]
     #[Route('/product/beers/search', name:'app_beers_search')]
-    public function allBeers(ProductRepository $productRepository, Request $request): Response
+    public function allBeers(ProductRepository $productRepository, Request $request,VATpriceCalculator $VATpriceCalculator): Response
     {   
         $idCategory=1;
         $products = $productRepository->findBeers($idCategory,[],['productName'=>'ASC']);
+
+        foreach ($products as $product) {
+            $VATprice = $VATpriceCalculator->VATprice($product);
+            $product->setProductVATprice($VATprice);
+        }
+
         $searchData = new SearchDataBeers();
         $form = $this->createForm(SearchFormBeers::class,$searchData);
         $form->handleRequest($request);

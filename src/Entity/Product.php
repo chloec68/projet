@@ -123,6 +123,18 @@ class Product
         return $this;
     }
 
+    public function getProductVATprice(): ?string
+    {
+        return $this->productVATprice;
+    }
+
+    public function setProductVATprice(string $productVATprice): static
+    {
+        $this->productVATprice = $productVATprice;
+
+        return $this;
+    }
+
     public function getProductAlcoholLevel(): ?string
     {
         return $this->productAlcoholLevel;
