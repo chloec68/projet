@@ -6,7 +6,6 @@
         <meta name="description" content="{{ meta_description ?? 'Site vitrine et de vente en ligne de la brasserie colmarienne Sainte-Cru' }}">
         <title>{% block title %}Welcome{% endblock %}</title>
         <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
-        <link rel="preload" fetchpriority="high" as="image" href="/img/stecruDark.webp" type="image/webp">
         {% block stylesheets %}
         {% endblock %}
 
@@ -108,131 +107,10 @@
                     <a href="{{ path('app_cart') }}">Panier</a>
                     {% else %}
                     <p>Le panier est vide</p>
+                    <a href="{{ path('app_cart') }}">Panier</a>
                 {% endif %}
             </div>
         </div>
-
-        <style>
-            .cart-summary{
-                display: none;
-                width:20%;
-                padding:1.5rem;
-                position:absolute;
-                z-index:1000;
-                top:16vh;
-                right:0;
-                background-color:var(--light-background);
-                font-family: 'roboto condensed';
-
-                h2{
-                    font-family: 'bebas neue';
-                    text-align: center;
-                }
-
-                a{
-                    border:var(--green) solid 1px;
-                    padding:0.5rem;
-                    font-family: "bebas neue";
-                    font-size:1.3em;
-                    margin:1rem auto 1rem auto;
-                    display: block;
-                    width:fit-content;
-                    color:var(--black);
-                    border-radius:6px;
-                }
-
-                a:hover{
-                    background-color: var(--green);
-                }
-            }
-
-            .visible{
-                display: block;
-            }
-            .item-container{
-                display: flex;
-                align-items:center ;
-                gap:0.5rem;
-                padding:0.2rem;
-            }
-
-            .middle{
-                justify-content: center;
-            }
-
-            .right{
-                justify-content: flex-end;
-                text-align: right;
-            }
-
-            .bold{
-                font-weight:700;
-            }
-
-            .total{
-                display: flex;
-                justify-content: space-between;
-                text-transform: uppercase;
-            }
-
-            article{
-                padding:1.5rem 0;
-                border-bottom: 1px solid var(--light-grey);
-            }
-
-            .product-qty{
-                display: block;
-            }
-
-
-            .counter {
-                display: inline-flex;
-                height: 2em;
-                border: 1px solid #e5e7eb;
-                border-radius: 0.5rem;
-                background: var(--white);
-
-                .counter-display{
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    min-width: fit-content;
-                    padding: 0 1.2rem 0 1.2rem;
-                    font-size: 1em;
-                  }
-                  
-                  .counter-controls {
-                    display: flex;
-                    flex-direction: column;
-                    border-left: 1px solid var(--light-grey);
-                  }
-                  
-                  .control-button {
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    width: 2em;
-                    height: 1em;
-                    cursor: pointer;
-                  }
-                  
-                  .control-button:hover {
-                    background-color: var(--green);
-                  }
-                  
-                  .control-button.increment {
-                    border-bottom: 1px solid var(--light-grey);
-                    border-top-right-radius: 0.5rem;
-                  }
-                  
-                  .control-button.decrement {
-                    border-bottom-right-radius: 0.5rem;
-                  }
-              }
-              
-       
-
-        </style>
 
 
             {% for message in app.flashes('success') %}

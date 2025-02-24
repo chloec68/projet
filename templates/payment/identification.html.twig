@@ -10,8 +10,6 @@
 
             <div class="horizontal-line"></div>
 
-                {{ form_errors(identificationForm) }}
-
                 {{ form_start(identificationForm,{'attr': {'class': 'identification-form'}}) }}
                     <div class="groups-wrapper">
                         <div class="identificationForm-group">
@@ -26,6 +24,7 @@
                     <div class="identificationForm-group">
                         {{form_label(identificationForm, 'Email',{'label_attr':{'class':'id-label'}})}}
                         {{form_widget(identificationForm.orderEmail, {'attr': {'value':app.user ? app.user.getEmail() : ''} }) }}
+                        {{ form_errors(identificationForm.orderEmail) }}
                     </div>
                     <div class="groups-wrapper">
                         <div class="agreeTerms-group">

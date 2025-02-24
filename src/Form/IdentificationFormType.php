@@ -4,6 +4,7 @@ namespace App\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -31,6 +32,11 @@ class IdentificationFormType extends AbstractType{
             ])
 
         ->add('orderEmail', EmailType::class, [
+            'constraints' => [
+                new Email([
+                    'message' => 'L\'adresse email n\'nest pas valide.'
+                ])
+            ],
             'attr'=> [
                 'placeholder'=>'Email',
                 'class'=>'custom-input'
