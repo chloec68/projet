@@ -10,8 +10,8 @@
 
     <div class="horizontal-line"></div>
 
-        {{ form_errors(collectionForm) }}
-                {{ form_start(collectionForm,{'attr': {'class': ''}}) }}
+        {{ form_errors(pickUpPointForm) }}
+                {{ form_start(pickUpPointForm,{'attr': {'class': ''}}) }}
                 <div class="options-container">
                 {% for establishment in establishments %}
                     <section class="option-container">
@@ -26,7 +26,7 @@
                 {% endfor %}
                 </div>
             <button class="btn choose-btn" type="submit" name="submit">Continuer</button>
-        {{ form_end(collectionForm) }}
+        {{ form_end(pickUpPointForm) }}
     </div>
 </main>
                 

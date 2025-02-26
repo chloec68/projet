@@ -100,15 +100,15 @@ class Establishment
         return $this->orders;
     }
 
-    public function addOrder(Order $order): static
-    {
-        if (!$this->orders->contains($order)) {
-            $this->orders->add($order);
-            $order->setEstablishment($this);
-        }
+    // public function addOrder(Order $order): static
+    // {
+    //     if (!$this->orders->contains($order)) {
+    //         $this->orders->add($order);
+    //         $order->setEstablishment($this);
+    //     }
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
     public function removeOrder(Order $order): static
     {
@@ -120,5 +120,10 @@ class Establishment
         }
 
         return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->establishmentName;
     }
 }

@@ -3,10 +3,11 @@
 namespace App\Controller;
 
 use Stripe\Stripe;
+use App\Entity\Bill;
 use App\Entity\Order;
 use Stripe\Checkout\Session;
 use App\Entity\Establishment;
-use App\Form\CollectionFormType;
+use App\Form\PickUpPointFormType;
 use App\Form\IdentificationFormType;
 use App\Repository\ProductRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -37,8 +38,8 @@ class PaymentController extends AbstractController
             //enregistrement en session
             $session->set('identificationData',$data);
             // redirection vers la page choisir point de retrait
-            dd($session);
-            return $this->redirectToRoute('app_payment-collection');
+            // dd($session);
+            return $this->redirectToRoute('app_payment-pickUpPoint');
         }
 
         return $this->render('/payment/identification.html.twig',[
@@ -47,30 +48,33 @@ class PaymentController extends AbstractController
         ]);
     }
 
-    #[Route('/payment/collection', name:'app_payment-collection')]
-    public function collection(EstablishmentRepository $establishmentRepository, Request $request, SessionInterface $session): Response
+    #[Route('/payment/pickUpPoint', name:'app_payment-pickUpPoint')]
+    public function pickUpPoint(EstablishmentRepository $establishmentRepository, Request $request, SessionInterface $session): Response
     {   
         // récupérer les établissement en bdd pour les envoyer à la vue 
         $establishments = $establishmentRepository->findAll([],['establishmentName'=>'ASC']);
         // créer le formulaire permettant de connaître le choix de l'utilisateur
-        $collectionForm = $this->createForm(CollectionFormType::class);
+        $pickUpPointForm = $this->createForm(PickUpPointFormType::class);
         //traitement de la requête envoyée par le client via le formulaire
-        $collectionForm->handleRequest($request);
+        $pickUpPointForm->handleRequest($request);
         //si le formulaire est soumis et valide
-        if ($collectionForm->isSubmitted() && $collectionForm->isValid()){
+        if ($pickUpPointForm->isSubmitted() && $pickUpPointForm->isValid()){
             // j'extraie les data du formulaire (le formulaire contient un array avec "establishmentName" => "2") et les stocke dans une variable
             // en récupérant seulement l'id (la valeur associée à la clé), getData() récupère l'objet lié ; 
             // sinon on enregistre un tableau avec la clé establishmentName avec l'objet pour valeur
-            $establishment = $collectionForm->get('establishmentName')->getData();
+            $establishment = $pickUpPointForm->get('establishmentName')->getData();
             // j'enregistre l'objet contenu dans $establishment en session 
             $session->set('establishment',$establishment);
+
+
             // redirection vers la page paiement de Stripe 
+            // dd($session);
             return $this->redirectToRoute('app_payment-checkout');
         }
 
-        return $this->render('/payment/collection.html.twig', [
+        return $this->render('/payment/pickUpPoint.html.twig', [
             'establishments' => $establishments,
-            'collectionForm' => $collectionForm,
+            'pickUpPointForm' => $pickUpPointForm,
             'meta_description' => "Vous êtes à l'étape 2/3 du paiement. Choisissez le point de retrait où vous souhaitez retirer votre commande"
         ]);
     }
@@ -116,7 +120,7 @@ class PaymentController extends AbstractController
         }
 
         #[Route('/payment/checkout/success', name:'app_payment-checkout-success')]
-        public function success(SessionInterface $session, Security $security, EntityManagerInterface $entityManager, ProductRepository $productRepository):Response
+        public function success(EstablishmentRepository $establishmentRepository, SessionInterface $session, Security $security, EntityManagerInterface $entityManager, ProductRepository $productRepository):Response
         {   
             //COMMANDE
             //création d'un nouvel objet commande 
@@ -125,20 +129,19 @@ class PaymentController extends AbstractController
             $order->setDateOfPlacement(new \DateTime());
             //ajout d'une référence
             $order->setOrderReference(uniqid('stecru-e'));
-            //ajout des données d'identification de l'utilisateur préalablement enregistrées en session si not NULL (existe + déclarée)
-            if(isset($identificationData)){
-                // récupération du tableau de données d'identification en session
-                $identificationData = $session->get('identificationData');
-                // récupération de la clé prénom utilisateur et de sa valeur
-                $orderFirstName = $identificationData['orderUserFirstName'];
-                // ajout prénom utilisateur (clé + valeur)
-                $order->setOrderUserFirstName($orderFirstName);
-                // idem avec nom de famille et email
-                $orderLastName = $identificationData['orderUserLastName'];
-                $order->setOrderUserLastName($orderLastName);
-                $orderEmail = $identificationData['orderEmail'];
-                $order->setOrderEmail($orderEmail);  
-            }
+         
+            // récupération du tableau de données d'identification en session
+            $identificationData = $session->get('identificationData');
+            // récupération de la clé prénom utilisateur et de sa valeur
+            $orderFirstName = $identificationData['orderUserFirstName'];
+            // ajout prénom utilisateur (clé + valeur)
+            $order->setOrderUserFirstName($orderFirstName);
+            // idem avec nom de famille et email
+            $orderLastName = $identificationData['orderUserLastName'];
+            $order->setOrderUserLastName($orderLastName);
+            $orderEmail = $identificationData['orderEmail'];
+            $order->setOrderEmail($orderEmail);  
+   
             //récupération du total du panier enregistré en session + ajout à la commande
             $priceTotal= $session->get('priceTotal');
             $order->setOrderTotal($priceTotal);
@@ -152,31 +155,70 @@ class PaymentController extends AbstractController
                 $order->addProduct($product,$quantity);
             }
 
-            // récupération clé en session et si la variable existe et est définie, récupération de la valeur (un objet établissement) et ajout à la commande
-            $establishment = $session->get('establishment');
-            if(isset($establishment)){
-                $order->setEstablishment($establishment);
-            }
-
             // idem 
             $appUser = $security->getUser();
             if(isset($appUser)){
                 $order->setAppUser($appUser);
             }
 
-            //FACTURE 
-            
+            // récupération de l'établissement choisi en session
+            $establishment = $session->get('establishment');
+            // récupération de l'id de l'établissement
+            $establishmentId = $establishment->getId();
+            // récupération de l'objet via le manager pour que doctrine fasse le lien et ne crée pas de nouvelle entité + réassigne à la variable
+            $establishment = $establishmentRepository->find($establishmentId);
+            // ajout de l'établissement à la commande 
+            $order->setEstablishment($establishment);
 
-            dd($order);
-
+            //ajout de la commande en BDD
             $entityManager->persist($order);
             $entityManager->flush();
 
+            //FACTURE 
+            $bill = new Bill();
+            // création de la référence facture
+            $billReferenceNumber = uniqid('bill');
+            //ajout référence à la facture
+            $bill -> setBillReferenceNumber($billReferenceNumber);
+            // ajout du prix total TTC 
+            $bill->setBillTotalVat($priceTotal);  
+            // ajout de la date à la facture
+            $bill->setBillDate(new \DateTime()); 
+
+            //récupération de la collection d'objets Produit de la commande
+            $products = $order->getProducts();
+            //initialisation du prix total en dehors de la boucle pour qu'il ne soit pas reset à 0 à chaque tour de boucle
+            $noVatPriceTotal = 0;
+            //pour chaque produit
+            foreach ($products as $product) {
+                // récupérer le prix HT de chaque produit
+                $priceNoVat = $product->getProductPrice();
+                // additionner chaque prix HT et les ajouter au total
+                $noVatPriceTotal += $priceNoVat;
+            }
+
+            $bill->setBillTotalBeforeVat($noVatPriceTotal);
+
+            $bill->setAppOrder($order);
+
+            dd($bill);
+           
             return $this->render('/payment/success.html.twig', [
                 'order' => $order,
                 'meta_description' => "Le paiement a réussi. Nous vous remercions pour votre commande."
             ]);
          }
+
+        #[Route('/payment/checkout/bill', name:'app_payment-checkout-bill')]
+        public function billGenerator():Response
+        {   
+            $billpdf = new Dompdf;
+
+            return $this->render('/payment/bill.html.twig',[
+                'controller_name' => 'ControllerName',
+                'meta_description' => 'Merci pour votre commande. Vous pouvez télécharger votre facture au format PDF ou l\'imprimer.'
+            ]);
+        } 
 
         #[Route('/payment/checkout/cancel', name:'app_payment-checkout-cancel')]
         public function error(SessionInterface $session):Response

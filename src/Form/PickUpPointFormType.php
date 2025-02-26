@@ -10,7 +10,7 @@ use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 
-class CollectionFormType extends AbstractType{
+class PickUpPointFormType extends AbstractType{
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {   

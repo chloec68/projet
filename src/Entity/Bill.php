@@ -23,13 +23,11 @@ class Bill
     #[ORM\Column(type: Types::DECIMAL, precision: 6, scale: 2)]
     private ?string $billTotalBeforeVat = null;
 
-    #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 2)]
-    private ?string $billVat = null;
-
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $billDate = null;
 
-    #[ORM\OneToOne(mappedBy: 'bill', cascade: ['persist', 'remove'])]
+    #[ORM\OneToOne(inversedBy: 'bill', cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(nullable: false)]
     private ?Order $appOrder = null;
 
     public function getId(): ?int
@@ -73,18 +71,6 @@ class Bill
         return $this;
     }
 
-    public function getBillVat(): ?string
-    {
-        return $this->billVat;
-    }
-
-    public function setBillVat(string $billVat): static
-    {
-        $this->billVat = $billVat;
-
-        return $this;
-    }
-
     public function getBillDate(): ?\DateTimeInterface
     {
         return $this->billDate;
@@ -97,23 +83,14 @@ class Bill
         return $this;
     }
 
+
     public function getAppOrder(): ?Order
     {
         return $this->appOrder;
     }
 
-    public function setAppOrder(?Order $appOrder): static
+    public function setAppOrder(Order $appOrder): static
     {
-        // unset the owning side of the relation if necessary
-        if ($appOrder === null && $this->appOrder !== null) {
-            $this->appOrder->setBill(null);
-        }
-
-        // set the owning side of the relation if necessary
-        if ($appOrder !== null && $appOrder->getBill() !== $this) {
-            $appOrder->setBill($this);
-        }
-
         $this->appOrder = $appOrder;
 
         return $this;
