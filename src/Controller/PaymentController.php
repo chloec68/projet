@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use Stripe\Stripe;
 use Dompdf\Dompdf;
+use Dompdf\Options;
 use App\Entity\Bill;
 use App\Entity\Order;
 use Stripe\Checkout\Session;
@@ -211,22 +212,33 @@ class PaymentController extends AbstractController
          }
 
         #[Route('/payment/checkout/bill', name:'app_payment-checkout-bill')]
-        public function billGenerator()
+        public function billGenerator():Response
         {   //création d'une instance de Dompf()
             $dompdf = new Dompdf();
             //récupération du contenu HTML de la vue 
             $html = $this->renderView('/payment/bill.html.twig');
+            $html = mb_convert_encoding($html, 'UTF-8', 'auto');
             //charge HTML dans Dompf
             $dompdf->loadHtml($html);
             //configuration format et orientation page
             $dompdf->setPaper('A4', 'portrait');
-            $dompdf->setBasePath(realpath('account/facture.html.twig'));
             //rend PDF
             $dompdf->render();
-            //envoie PDF au navigateur
-            $dompdf->stream('facture.pdf',[
-                'Attachment' => 0 // affiche le PDF en mode visionneuse (sans téléchargement) / =>1 télécharge automatiquement dans le navigateur
-            ]);
+            //envoie PDF au navigateur en générant une réponse manuellement 
+
+            return new Response(
+                $dompdf->output(), //le contenu PDF généré 
+                200, //Code de statut HTTP (OK)
+                [   //définition manuelle des entêtes HTTP 
+                    'Content-Type' => 'application/pdf', 
+                    'Content-Disposition' => 'inline; filename="facture.pdf"'//attachment pour forcer le téléchargement
+                ]
+            );
+
+            //si j'utilise stream() qui envoie le pdf généré j'ai une erreur de chargement du PDF 
+            // $dompdf->stream('facture.pdf', [
+            //     'Attachment' => 0 // Affiche le PDF dans la visionneuse sans téléchargement
+            // ]);
         } 
 
         #[Route('/payment/checkout/cancel', name:'app_payment-checkout-cancel')]

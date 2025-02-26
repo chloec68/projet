@@ -244,6 +244,8 @@ footer small{
     border:none;
     border-radius: 100%;
     margin:0;
+    width:5em;
+    opacity:95%;
 }
 
 #icone-doubleArrowRight{
@@ -627,6 +629,7 @@ footer small{
 
 .input-box[type="number"] {
   -moz-appearance: textfield;
+  appearance: textfield;
 }
 
 /* ************************* CART DETAIL SECTION ************************* */
