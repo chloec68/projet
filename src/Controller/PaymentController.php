@@ -220,6 +220,7 @@ class PaymentController extends AbstractController
             $dompdf->loadHtml($html);
             //configuration format et orientation page
             $dompdf->setPaper('A4', 'portrait');
+            $dompdf->setBasePath(realpath('account/facture.html.twig'));
             //rend PDF
             $dompdf->render();
             //envoie PDF au navigateur
