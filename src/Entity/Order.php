@@ -45,14 +45,14 @@ class Order
     private Collection $products;
 
     #[ORM\ManyToOne(inversedBy: 'orders')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]
     private ?User $appUser = null;
 
     #[ORM\ManyToOne(inversedBy: 'orders')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Establishment $establishment = null;
 
-    #[ORM\OneToOne(inversedBy: 'appOrder', cascade: ['persist', 'remove'])]
+    #[ORM\OneToOne(mappedBy: 'appOrder', cascade: ['persist', 'remove'])]
     private ?Bill $bill = null;
 
     public function __construct()
@@ -203,10 +203,16 @@ class Order
         return $this->bill;
     }
 
-    public function setBill(?Bill $bill): static
+    public function setBill(Bill $bill): static
     {
+        // set the owning side of the relation if necessary
+        if ($bill->getAppOrder() !== $this) {
+            $bill->setAppOrder($this);
+        }
+
         $this->bill = $bill;
 
         return $this;
     }
+
 }

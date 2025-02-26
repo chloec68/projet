@@ -42,7 +42,7 @@ class CartController extends AbstractController
                     'product' => $product,
                     'quantity' => $quantity,
                     'VATprice' => $VATprice,
-                    'subtotal' => number_format(floatval($product->getProductVATprice()) * $quantity,2,'.',''),
+                    'subtotal' => number_format(floatval($product->getProductvatPrice()) * $quantity,2,'.',''),
                     'pictures' => $pictures,
                 ];
 
@@ -53,7 +53,7 @@ class CartController extends AbstractController
 
                 $data[] = $dataItem;
 
-                $total += floatval($product->getProductVATprice()) * $quantity;
+                $total += floatval($product->getProductvatPrice()) * $quantity;
                 $formattedTotal = number_format($total, 2, '.', '');
                 $nbItems += $quantity ; 
             }
