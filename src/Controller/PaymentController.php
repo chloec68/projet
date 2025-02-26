@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use Stripe\Stripe;
+use Dompdf\Dompdf;
 use App\Entity\Bill;
 use App\Entity\Order;
 use Stripe\Checkout\Session;
@@ -201,7 +202,7 @@ class PaymentController extends AbstractController
 
             $bill->setAppOrder($order);
 
-            dd($bill);
+            // dd($bill);
            
             return $this->render('/payment/success.html.twig', [
                 'order' => $order,
@@ -210,13 +211,20 @@ class PaymentController extends AbstractController
          }
 
         #[Route('/payment/checkout/bill', name:'app_payment-checkout-bill')]
-        public function billGenerator():Response
-        {   
-            $billpdf = new Dompdf;
-
-            return $this->render('/payment/bill.html.twig',[
-                'controller_name' => 'ControllerName',
-                'meta_description' => 'Merci pour votre commande. Vous pouvez télécharger votre facture au format PDF ou l\'imprimer.'
+        public function billGenerator()
+        {   //création d'une instance de Dompf()
+            $dompdf = new Dompdf();
+            //récupération du contenu HTML de la vue 
+            $html = $this->renderView('/payment/bill.html.twig');
+            //charge HTML dans Dompf
+            $dompdf->loadHtml($html);
+            //configuration format et orientation page
+            $dompdf->setPaper('A4', 'portrait');
+            //rend PDF
+            $dompdf->render();
+            //envoie PDF au navigateur
+            $dompdf->stream('facture.pdf',[
+                'Attachment' => 0 // affiche le PDF en mode visionneuse (sans téléchargement) / =>1 télécharge automatiquement dans le navigateur
             ]);
         } 
 
