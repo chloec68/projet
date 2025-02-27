@@ -229,6 +229,9 @@ class PaymentController extends AbstractController
                 $totalNoVat += $priceNoVat ; 
             }
             $vat = $order->getOrderTotal() - $totalNoVat ; 
+            $pickUpTime = new \DateTime();
+            $pickUpTime->modify('+1 day');
+            $pickUpTime->format('dd.mm.Y');
 
             $options = new Options();
 
@@ -242,7 +245,8 @@ class PaymentController extends AbstractController
                 'cartData' => $cartData,
                 'nbItems' => $nbItems,
                 'seller' => $seller,
-                'vat' => $vat
+                'vat' => $vat,
+                'pickUpTime'=>$pickUpTime
             ]);
             $html = mb_convert_encoding($html, 'UTF-8', 'auto');
             //charge HTML dans Dompf
