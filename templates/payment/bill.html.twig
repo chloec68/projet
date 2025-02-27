@@ -1,13 +1,15 @@
 
+<h1 class="wide centered">{{seller.establishmentName}}</h1>
+<div class="horizontal-line"></div>
 
-<p>Votre commande du {{order.dateOfPlacement|date('d-m-Y à H:i:s')}}</p>
-<p class="centered"> Merci {{order.orderUserFirstName}},<br> Votre commande est bien enregistrée sous la référence <span class="bold">{{order.orderReference}}</span></p>
-<p>Vous avez choisi de retirer votre commande à : <br>{{order.establishment.establishmentName}}<br>{{order.establishment.establishmentAddress}}<br>{{order.establishment.establishmentPostCode}} {{order.establishment.establishmentCity}}</p>
-<p>Votre commande sera disponible à partir de (date du lendemain) aux horaires d'ouverture du point de retrait désigné ci-dessus</p>
-<p>Munissez-vous d'une pièce d'identité et de votre numéro de commande</p>
-<p>Pour consulter les horaires d'ouverture de nos points de retrait, rendez-vous sur notre site et cliquez sur le lien 'horaires d'ouverture' visible en pied de page</p>
+<p class="centered"> <span class="wide bold">Merci {{order.orderUserFirstName}},</span>
+<p class="grey"><span class="bold">Votre commande du {{order.dateOfPlacement|date('d.m.Y')}}</span> est bien enregistrée sous la référence <span class="bold">{{order.orderReference}}.</span></p>
+<p class="grey">Votre commande sera disponible à partir de (date du lendemain) aux horaires d'ouverture du point de retrait que vous avez sélectionné.</p>
+<p class="grey">Pour la retirer, munissez-vous d'une pièce d'identité et de votre numéro de commande</p>
+<p class="grey">Nous vous rappelons que vous avez choisi de retirer votre commande à :</p> <p class="pickUpPoint">{{order.establishment.establishmentName}}<br>{{order.establishment.establishmentAddress}}<br>{{order.establishment.establishmentPostCode}} {{order.establishment.establishmentCity}}</p>
+<p class="grey">Pour consulter les horaires d'ouverture de nos points de retrait, rendez-vous sur notre site et cliquez sur le lien 'horaires d'ouverture' visible en pied de page</p>
 
-<h1>Votre commande</h1>
+<h2>Votre commande</h2>
 <table class="bill-table">
     <th>
         <tr>
@@ -19,20 +21,27 @@
     </th>
     <tbody>
 {% for item in cartData %}
-    <tr><td >{{item.product.productName}}</td> - <td class="centered">{{item.VATprice}} €</td> <td class="centered">{{item.quantity}}</td><td class="right">{{item.product.productVATprice}} €</td></tr>
+    <tr><td class="grey">{{item.product.productName}}</td> - <td class="centered grey">{{item.VATprice}} €</td> <td class="centered grey">{{item.quantity}}</td><td class="right grey">{{item.product.productVATprice}} €</td></tr>
 {% endfor %}
 <tr class="total"><td class="bold centered">TOTAL TTC</td><td class="centered">-</td><td class="bold centered">{{nbItems}} articles</td><td class="bold right">{{order.orderTotal}} €</td></tr>
 </tbody>
 </table>
 
 <h2>Paiement</h2>
-<p>Total TTC : {{order.orderTotal}} €</p>
-<p>Mode de paiement : carte bancaire</p>
+<p><span class="bold">Total payé (TTC) :</span> {{order.orderTotal}} €</p>
+<p><span class="bold">TVA : {{vat}} €</span>
+<p><span class="bold">Mode de paiement : carte bancaire</p></span>
 
 
 <style>
-
+*{
+    font-family:'helvetica';
+}
+h2{
+    margin-top:3rem;
+}
 .bill-table{
+    margin:2rem 0 2rem 0;
     width:100%;
     border-collapse: collapse;
     
@@ -65,4 +74,35 @@
 .right{
     text-align: right;
 }
+
+.wide{
+    font-size:2em;
+}
+
+.half-wide{
+    font-size:1.5em;
+}
+
+.pickUpPoint{
+    width:25%;
+    margin:auto;
+    border-radius:3px;
+    padding:0.3rem;
+    border:solid 2px rgb(173, 255, 173);
+    text-align: center;
+    font-weight: 700;
+}
+
+.grey{
+    color:rgb(71, 71, 71);
+}
+
+.horizontal-line{
+    width: 100%;
+    height:4px;
+    background-color: rgb(192, 192, 192);
+    border-radius: 50px;
+}
+
+
 </style>
