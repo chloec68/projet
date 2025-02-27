@@ -2,14 +2,15 @@
 
 namespace App\Controller;
 
-use Stripe\Stripe;
 use Dompdf\Dompdf;
+use Stripe\Stripe;
 use Dompdf\Options;
 use App\Entity\Bill;
 use App\Entity\Order;
 use Stripe\Checkout\Session;
 use App\Entity\Establishment;
 use App\Form\PickUpPointFormType;
+use App\Repository\OrderRepository;
 use App\Form\IdentificationFormType;
 use App\Repository\ProductRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -156,7 +157,6 @@ class PaymentController extends AbstractController
                 // ajout de chaque produit et de la quantité (valeur) associée à la commande
                 $order->addProduct($product,$quantity);
             }
-
             // idem 
             $appUser = $security->getUser();
             if(isset($appUser)){
@@ -175,6 +175,9 @@ class PaymentController extends AbstractController
             //ajout de la commande en BDD
             $entityManager->persist($order);
             $entityManager->flush();
+
+            $orderId = $order->getId(); 
+            $session->set('orderId',$orderId);
 
             //FACTURE 
             $bill = new Bill();
@@ -202,8 +205,6 @@ class PaymentController extends AbstractController
             $bill->setBillTotalBeforeVat($noVatPriceTotal);
 
             $bill->setAppOrder($order);
-
-            // dd($bill);
            
             return $this->render('/payment/success.html.twig', [
                 'order' => $order,
@@ -212,11 +213,22 @@ class PaymentController extends AbstractController
          }
 
         #[Route('/payment/checkout/bill', name:'app_payment-checkout-bill')]
-        public function billGenerator():Response
-        {   //création d'une instance de Dompf()
+        public function billGenerator(SessionInterface $session, OrderRepository $orderRepository):Response
+        {   
+            //récupération de la commande pour l'envoyer à la vue
+            $orderId = $session->get('orderId'); 
+            $order = $orderRepository->find($orderId);
+            $cartData = $session->get('cartData');
+            $nbItems = $session->get('nbItems');
+
+            //création d'une instance de Dompf()
             $dompdf = new Dompdf();
             //récupération du contenu HTML de la vue 
-            $html = $this->renderView('/payment/bill.html.twig');
+            $html = $this->renderView('/payment/bill.html.twig',[
+                'order' => $order,
+                'cartData' => $cartData,
+                'nbItems' => $nbItems,
+            ]);
             $html = mb_convert_encoding($html, 'UTF-8', 'auto');
             //charge HTML dans Dompf
             $dompdf->loadHtml($html);

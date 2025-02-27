@@ -18,23 +18,15 @@ import './styles/app.css';
     spaceBetween: 10,
     centeredSlides: true,
     grabCursor:true,
+    effect:'slide',
     loop:true,
     speed:600,
     navigation: {
       nextEl: ".swiper-button-next",
       prevEl: ".swiper-button-prev",
-    },
+      lazy:true,
+    }
   });
-
-
-  var swiper = new Swiper(".mySwiperProducts", {
-    grabCursor:true,
-    pagination: {
-      el: ".swiper-pagination",
-      dynamicBullets: true,
-    },
-  });
-
 
   // SCROLL UP BUTTON
   function buttonVisibility() {
