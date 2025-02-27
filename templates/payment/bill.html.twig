@@ -1,2 +1,68 @@
-{# templates/payment/bill.html.twig #}
-<span>rgbvrebgvrebgrebgvrehbrebgrebgrede</span>
+
+
+<p>Votre commande du {{order.dateOfPlacement|date('d-m-Y à H:i:s')}}</p>
+<p class="centered"> Merci {{order.orderUserFirstName}},<br> Votre commande est bien enregistrée sous la référence <span class="bold">{{order.orderReference}}</span></p>
+<p>Vous avez choisi de retirer votre commande à : <br>{{order.establishment.establishmentName}}<br>{{order.establishment.establishmentAddress}}<br>{{order.establishment.establishmentPostCode}} {{order.establishment.establishmentCity}}</p>
+<p>Votre commande sera disponible à partir de (date du lendemain) aux horaires d'ouverture du point de retrait désigné ci-dessus</p>
+<p>Munissez-vous d'une pièce d'identité et de votre numéro de commande</p>
+<p>Pour consulter les horaires d'ouverture de nos points de retrait, rendez-vous sur notre site et cliquez sur le lien 'horaires d'ouverture' visible en pied de page</p>
+
+<h1>Votre commande</h1>
+<table class="bill-table">
+    <th>
+        <tr>
+        <th class="left">Désignation produit</th>
+        <th class="centered">Prix unitaire TTC</th>
+        <th class="centered">Quantité</th>
+        <th class="right">Sous-total TTC</th>
+        </tr>
+    </th>
+    <tbody>
+{% for item in cartData %}
+    <tr><td >{{item.product.productName}}</td> - <td class="centered">{{item.VATprice}} €</td> <td class="centered">{{item.quantity}}</td><td class="right">{{item.product.productVATprice}} €</td></tr>
+{% endfor %}
+<tr class="total"><td class="bold centered">TOTAL TTC</td><td class="centered">-</td><td class="bold centered">{{nbItems}} articles</td><td class="bold right">{{order.orderTotal}} €</td></tr>
+</tbody>
+</table>
+
+<h2>Paiement</h2>
+<p>Total TTC : {{order.orderTotal}} €</p>
+<p>Mode de paiement : carte bancaire</p>
+
+
+<style>
+
+.bill-table{
+    width:100%;
+    border-collapse: collapse;
+    
+}
+
+.bill-table tr{
+    width:100%;
+
+}
+
+.bill-table td{
+    padding:10px 5px 10px 5px;
+}
+
+.bold{
+    font-weight:700;
+}
+.centered{
+    text-align: center;
+}
+
+.total{
+    border-top:1px solid grey;
+}
+
+.left{
+    text-align: left;
+}
+
+.right{
+    text-align: right;
+}
+</style>
