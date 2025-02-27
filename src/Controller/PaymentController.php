@@ -213,21 +213,36 @@ class PaymentController extends AbstractController
          }
 
         #[Route('/payment/checkout/bill', name:'app_payment-checkout-bill')]
-        public function billGenerator(SessionInterface $session, OrderRepository $orderRepository):Response
+        public function billGenerator(SessionInterface $session, OrderRepository $orderRepository, EstablishmentRepository $establishmentRepository):Response
         {   
-            //récupération de la commande pour l'envoyer à la vue
+            //récupération des infos nécessaires à la vue
             $orderId = $session->get('orderId'); 
             $order = $orderRepository->find($orderId);
             $cartData = $session->get('cartData');
             $nbItems = $session->get('nbItems');
+            $id=1;
+            $seller = $establishmentRepository->find($id);
+            $products = $order->getProducts();
+            $totalNoVat = 0;
+            foreach($products as $product){
+                $priceNoVat = $product->getProductPrice();
+                $totalNoVat += $priceNoVat ; 
+            }
+            $vat = $order->getOrderTotal() - $totalNoVat ; 
 
+            $options = new Options();
+
+            $options->set('defaultFont', 'helvetica');
             //création d'une instance de Dompf()
-            $dompdf = new Dompdf();
+            $dompdf = new Dompdf($options);
+
             //récupération du contenu HTML de la vue 
             $html = $this->renderView('/payment/bill.html.twig',[
                 'order' => $order,
                 'cartData' => $cartData,
                 'nbItems' => $nbItems,
+                'seller' => $seller,
+                'vat' => $vat
             ]);
             $html = mb_convert_encoding($html, 'UTF-8', 'auto');
             //charge HTML dans Dompf
