@@ -47,7 +47,7 @@ import './styles/app.css';
 
 // INCREMENT QUANTITY (PRODUCTS)
 
-let incrementButtons = document.querySelectorAll('.increment');
+const incrementButtons = document.querySelectorAll('.increment');
 incrementButtons.forEach(button => {
   button.addEventListener('click', function(){
     let product = button.getAttribute('data-product');
@@ -59,7 +59,7 @@ incrementButtons.forEach(button => {
 
 // DECREMENT QUANTITY (PRODUCTS)
 
-let decrementButtons = document.querySelectorAll('.decrement');
+const decrementButtons = document.querySelectorAll('.decrement');
 decrementButtons.forEach(button => {
   button.addEventListener('click', function(){
     let product = button.getAttribute('data-product');
@@ -103,7 +103,7 @@ addToCartButtons.forEach(button => {
 
 // INCREMENT QUANTITY (CART)
 
-let incrementButtonsCart = document.querySelectorAll('.cart-increment');
+const incrementButtonsCart = document.querySelectorAll('.cart-increment');
 incrementButtonsCart.forEach(button => {
   button.addEventListener('click', function(){
     let product = button.getAttribute('cart-product');
@@ -119,7 +119,7 @@ incrementButtonsCart.forEach(button => {
 }); 
 
 // DECREMENT QUANTITY (CART)
-let decrementButtonsCart = document.querySelectorAll('.cart-decrement');
+const decrementButtonsCart = document.querySelectorAll('.cart-decrement');
 
 decrementButtonsCart.forEach(button => {
   button.addEventListener('click', function(){
@@ -173,7 +173,7 @@ function updateCart(product,quantity){
 function updatePriceTotal(){
 
   let totalPrice = 0; 
-  let cartItems = document.querySelectorAll('.cart-item');
+  const cartItems = document.querySelectorAll('.cart-item');
   if(cartItems.length>0){
     cartItems.forEach(item => {
       let input = item.querySelector('input[cart-product]');
@@ -191,7 +191,7 @@ function updatePriceTotal(){
 
 // UPDATE SUBTOTALS (CART)
 function updateCartSubTotals(){
-  let cartItems = document.querySelectorAll('.cart-item');
+  const cartItems = document.querySelectorAll('.cart-item');
   let subTotal = 0; 
   cartItems.forEach(item => {
     let quantity = item.querySelector('input[type="number"].input-box').value;
@@ -205,7 +205,7 @@ function updateCartSubTotals(){
 
  // DELETE ITEM (CART)
 
-  let removeItemButton = document.querySelectorAll('.remove-item');
+  const removeItemButton = document.querySelectorAll('.remove-item');
   removeItemButton.forEach(button => {
     button.addEventListener('click',function(){
       let product = button.getAttribute('cart-product');
@@ -222,7 +222,7 @@ function updateCartSubTotals(){
             let productTable = document.querySelector(`table[cart-item="${product}"]`);
             let nbItemsElement = document.querySelector('.nbItems'); 
               if (productTable){
-                let DataNbItems = data.nbItems;
+        
                 if (data.nbItems === 1) {
                   nbItemsElement.textContent = `${data.nbItems} article`;
               } else {
