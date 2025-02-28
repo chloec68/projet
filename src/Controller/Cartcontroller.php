@@ -89,7 +89,7 @@ class CartController extends AbstractController
            }else{
                $cart[$product] += $quantity; 
            }
-   
+           
            $session->set('cart',$cart);
            $nbItems = array_sum($cart); // array_sum() => native PHP function that returns the sum of VALUES in an array
    

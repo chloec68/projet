@@ -858,8 +858,6 @@ footer small{
            display: flex;
            align-items: center;
            justify-content: center;
-           min-width: fit-content;
-           padding: 0 1.2rem 0 1.2rem;
            font-size: 1em;
          }
          
@@ -874,8 +872,8 @@ footer small{
            align-items: center;
            justify-content: center;
            width: 2em;
-           height: 1em;
            cursor: pointer;
+           border:none;
          }
          
          .control-button:hover {
