@@ -75,9 +75,9 @@ decrementButtons.forEach(button => {
 
 // ADD TO CART (PRODUCTS)
 
-let alertBox = document.querySelector(".alertBox");
-let alertContent = document.querySelector(".alertContent");
-let closeAlert = document.querySelector(".closeAlert");
+const alertBox = document.querySelector(".alertBox");
+let alertMessage = document.querySelector(".alertMessage");
+const closeAlert = document.querySelector(".closeAlert");
 
 let addToCartButtons = document.querySelectorAll(".add-to-cart");
 addToCartButtons.forEach(button => {
@@ -85,16 +85,16 @@ addToCartButtons.forEach(button => {
     let product = button.getAttribute('data-product');
     let quantity = document.querySelector(`input[data-product="${product}"]`).value;
 
-    alertContent.innerHTML = "Produit ajouté au panier";
+    alertMessage.innerHTML = "Produit ajouté au panier";
     alertBox.style.display = "block";
- 
+
+    closeAlert.addEventListener('click',function(){
+      alertBox.style.display = "none";
+    })
+
     if (parseInt(quantity) > 0) {
       updateCart(product, quantity);
     }
-
-    closeAlert.addEventListener('click', function () {
-        alertBox.style.display = "none";
-    });
   });
 });
 

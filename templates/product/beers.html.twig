@@ -6,50 +6,12 @@
 
 {% block body %}
 
- <div class="alertBox"><div class="alertContent"><p class="closeAlert">fermer</p><p class="alertMessage"></p></div></div>
-
-<style>
-
-.alertBox {
-    display: none;
-    position: fixed;
-    z-index: 1000;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0, 0, 0, 0.4);
-}
-
-.alertContent {
-    background-color: #fefefe;
-    margin:auto;
-    padding: 20px;
-    border: 1px solid #888;
-    width: 80%;
-    max-width: 400px;
-    border-radius: 8px;
-    position: relative;
-    top:50%;
-
-}
-
-.closeAlert {
-    color: red;
-}
-
-.closeAlert:hover,
-.closeAlert:focus {
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
-}
-
-.alertMessage {
-    color: #45a049;
-}
-</style>
+ <div class="alertBox">
+    <div class="alertContent">
+        <p class="closeAlert">fermer</p>
+        <p class="alertMessage"></p>
+    </div>
+</div>
 
 <a href="#header"><img class="top-button" src="/icones/arrow.webp" alt=""></a>
 <div class="products__page-wrapper">
