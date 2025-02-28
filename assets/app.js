@@ -73,19 +73,31 @@ decrementButtons.forEach(button => {
   });
 }); 
 
-
-
 // ADD TO CART (PRODUCTS)
+
+let alertBox = document.querySelector(".alertBox");
+let alertContent = document.querySelector(".alertContent");
+let closeAlert = document.querySelector(".closeAlert");
+
 let addToCartButtons = document.querySelectorAll(".add-to-cart");
 addToCartButtons.forEach(button => {
   button.addEventListener('click', function() {
     let product = button.getAttribute('data-product');
     let quantity = document.querySelector(`input[data-product="${product}"]`).value;
+
+    alertContent.innerHTML = "Produit ajouté au panier";
+    alertBox.style.display = "block";
+ 
     if (parseInt(quantity) > 0) {
       updateCart(product, quantity);
     }
+
+    closeAlert.addEventListener('click', function () {
+        alertBox.style.display = "none";
+    });
   });
 });
+
 
 // PAGE PANIER
 
