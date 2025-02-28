@@ -81,29 +81,29 @@
                             </div>
                                 <div class="item-container middle">
                                     <div class="counter">
-                                        <div class="counter-display" type="number" value="{{item.quantity}}" min="0" sideCart-product="{{ item.product.id }}"></div>
+                                        <input class="counter-display input-box" type="number" value="{{item.quantity}}" min="0" side-cart-product="{{ item.product.id }}"></input>
                                         <div class="counter-controls">
-                                          <div class="control-button increment" sideCart-product="{{item.product.id}}">+</div>
-                                          <div class="control-button decrement" sideCart-product="{{item.product.id}}">-</div>
+                                          <button class="control-button side-cart-increment" side-cart-product="{{ item.product.id }}">+</button>
+                                          <button class="control-button side-cart-decrement" side-cart-product="{{ item.product.id }}">-</button>
                                         </div>
                                     </div>
-                                      <p>x {{item.product.productPrice}} €</p>
+                                      <p class="product-price">x {{item.product.productPrice}} €</p>
                                 </div>
                                 <div class="item-container right bold">
-                                    <p>sous-total : {{item.subtotal}} €</p>
+                                    <p class="sub-total__side-cart">sous-total : {{item.subtotal}} €</p>
                                 </div>
                             </div>
                     </article>
                     {% endfor %}
                     <article class="right">
-                        <p>
+                        <p class="side-cart__nbItems">
                         {% if nbItems <=1 %}
                             {{nbItems}} article
                         {% else %}
                             {{nbItems}} articles
                         {% endif %}
                         </p>
-                        <div class="total bold"><p>Total ttc :</p><p class="bold">{{priceTotal}} €</p></div>
+                        <div class="total bold "><p>Total ttc :</p><p class="bold">{{priceTotal}} €</p></div>
                     </article>
                     <a href="{{ path('app_cart') }}">Panier</a>
                     {% else %}
