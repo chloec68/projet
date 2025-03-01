@@ -6,64 +6,57 @@
     
 <main class="detail-product-main">
 
-
-    <h1 class="centered">{{product.productName}}</h1>
- 
-
-    {% if product.productStock > 10 %}
-        <div class="stock-status available">En stock</div>
-    {% else %}
-        <div class="stock-status unavailable">Indisponible</div>
-    {% endif %}
-
-    <div class="sections-wrapper">
-        <section class="detail-product-section">
-            
-            <p class="description centered">{{product.productDescription}}</p>
-            <div class="caracteristics-container">
-            <div class="flex"><p>Taux d'alcool</p><p class="bold">{{product.productAlcoholLevel}}</p></div>
-            <div class="flex"><p>Volume</p><p class="bold">{{product.productVolume}}</p></div>
-            <div class="flex"><p>Couleur</p><p class="bold">{{product.productColor}}</p></div>
-            <div class="flex"><p>Type</p><p class="bold">{{product.type.typeName}}</p></div>
-            </div>
-
-        </section>
-
         <section class="bezier-section">
             <div class="flip">
-                <div class="front" style="background-image:url(/img/beerNoBackground.png)"> <p>Bière {{product.productColor}}</p>
-                {# <h2>{{product.productName}}</h2> #}
-                </div>
+                {% for picture in product.pictures %}
+                    {% if loop.first %}
+                    <div class="front" style="background-image:url({{ picture.pictureName }})">
+                        <p>Bière {{product.productColor}}</p>
+                    </div>
+                    {% endif %}
 
-                <div class="back" style="background-image:url(/img/beerNoBackground.png)">
-                <p>{{product.productAlcoholLevel}}</p><p>{{product.productVolume}}</p>
+                {% if loop.last %}
+                    <div class="back" style="background-image:url({{picture.pictureName}})">
+                {% endif %}
+                    </div>
+                {% endfor %}
             </div>
         </section>
 
         <section class="pricing-card-section">
-            <div class="price-tag"><p>{{product.productPrice}} €</p></div>
+            <div class="price-tag"><p>{{product.productVATPrice}} €</p></div>
+            <h1 class="centered">{{product.productName}}</h1>
+            {% if product.productStock > 10 %}
+            <div class="stock-status available">En stock</div>
+        {% else %}
+            <div class="stock-status unavailable">Indisponible</div>
+        {% endif %}
             
-                <div class="qty-wrapper">
-                <p>Quantité :</p>
-                    <div class="qty-container">
-                        <button class="qty-btn-minus btn-rounded" type="button"><i class="fa fa-chevron-left"></i></button>
-                        <input type="text" name="qty" value="0" class="input-qty input-rounded"/>
-                        <button class="qty-btn-plus btn-rounded" type="button"><i class="fa fa-chevron-right"></i></button>
-                    </div>
+        <div class="description">
+            <p id="product-description">{{product.productDescription}}</p>
+            <p class="row"><span>Volume d'alcool</span><span class="bold">{{product.productAlcoholLevel}}</span></p>
+            <p class="row"><span>Couleur</span><span class="bold">{{product.productColor}}</span></p>
+            <p class="row"><span>Type</span><span class="bold">{{product.type.typeName}}</span></p>
+        
+            
+            
+        </div>
+            
+            <div class="qty-wrapper">
+            <p>Quantité :</p>
+                <div class="qty-container">
+                    <button class="qty-btn-minus btn-rounded decrement" type="button" data-product="{{product.id}}"><i class="fa-solid fa-minus"></i></button>
+                    <input type="text" name="qty" value="1" min="0" class="input-qty input-rounded" data-product="{{ product.id }}">
+                    <button class="qty-btn-plus btn-rounded increment" type="button" data-product="{{product.id}}"><i class="fa-solid fa-plus"></i></button>
                 </div>
-
-            <button class="basket-btn-green btn">Ajouter au panier</button>
-
-            <div class="tags-cloud">
-                <a href="">{{product.productColor}}</a>
-                <a href="">{{product.type.typeName}}</a>
-                <a href="">{{product.productVolume}}</a>
-                <a href="">{{product.category.categoryName}}</a>
             </div>
+
+            <button data-product="{{product.id}}" type="submit"class="basket-btn-green btn add-to-cart">Ajouter au panier</button>
         </section>
-    </div>
 </main>
 
-
-</div>
 {% endblock %}
+
+
+
+

@@ -925,15 +925,9 @@ footer small{
 
 .detail-product-main{
     padding:3rem;
-}
-
-.sections-wrapper{
-    display:flex;
-    align-items: center;
-    gap:3rem;
-    width:100%;
-    margin:auto;
-    justify-content:center;
+    display: flex;
+    justify-content: center;
+    gap:2rem;
 }
 
 .stock-status{
@@ -952,49 +946,50 @@ footer small{
     color:var(--red);
 }
 
-.detail-product-section{
-    background-image: url(/img/hopDark.webp);
-    background-size:cover;
-    background-repeat:no-repeat;
-    background-position-x:center;
-    
-    border-radius:55px; 
-    padding:2rem;
-
-    color:var(--white);
-    font-size:1.2em;
-    font-family:'Nunito';
-
-    height:30%;
-    width:25%;
-}
-
-.description{
-    width:80%;
-    margin:auto;
-}
-
-.caracteristics-container{
-    display:block;
-}
-
-.flex{
-    display: flex;
-    justify-content:space-between;
-    margin:1rem;
-}
-
 .bold{
     font-weight:bold;
 }
 
 .pricing-card-section{
-    border:2px solid var(--green);
-    width:20%;
+    border:1px solid var(--ultra-light-grey);
+    width:30%;
     height: fit-content;
     padding-bottom:1rem;
-    border-radius:55px;
- 
+    border-radius:6px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+
+    h1{
+        width:100%;
+        background-color: var(--main);
+        border-radius: 2px;
+        color:var(--white);
+        margin:2rem auto ;
+        padding:0.55rem 1.7rem 0.5rem 1.7rem ;
+    }
+}
+
+.description{
+    display: flex;
+    flex-direction: column;
+    padding:0.5rem;
+    gap:1rem;
+
+    width:90%;
+    margin: 2rem auto;
+
+    color:var(--main);
+    font-family:"roboto condensed";
+    font-size:1.1em;
+
+    #product-description{
+        font-family:"nunito";
+        font-size:1.2em;
+    }
+
+    .row{
+        display: flex;
+        justify-content: space-between;
+    }
 }
 
 .price-tag{
@@ -1010,33 +1005,12 @@ footer small{
     left:60%;
 }
 
-.tags-cloud{
-    display: flex;
-    gap:2rem;
-    width:100%;
-    justify-content: center;
-}
-
-.tags-cloud a{
-    border:1px rgb(233, 233, 233) solid;
-    background-color:rgb(233, 233, 233);
-    border-radius:15px;
-    padding:0.25rem;
-    color:var(--black);
-    font-family:'Nunito';
-    font-size:0.8em;
-}
-
-.tags-cloud a:hover{
-    border:1px var(--light-grey) solid;
-    background-color:var(--light-grey);
-}
 
 .basket-btn-green{
     width:fit-content;
-    margin:2rem auto 3rem auto;
+    margin:2.5rem auto 2rem auto;
     display: block;
-    padding:0.5rem;
+    padding:0.5rem 1rem;
     border-radius:20px;
     border:none;
     background-color: var(--black);
@@ -1044,11 +1018,13 @@ footer small{
     color:var(--white);
     font-size:1.3em;
     font-family:'bebas neue','serif';
+    transition:0.4s ease;
 }
 
 .basket-btn-green:hover{
     background-color:var(--green);
     border:var(--green) solid 1px;
+
 }
 
   /*---------------------------*/
@@ -1069,32 +1045,39 @@ footer small{
     margin:0.5rem auto 1rem auto;
 }
 .qty-container .input-qty{
-text-align: center;
-padding: 6px 10px;
-border: 1px solid #d4d4d4;
-max-width: 80px;
+    text-align: center;
+    padding: 6px 10px;
+    border: 1px solid #d4d4d4;
+    max-width: 80px;
 }
 .qty-container .qty-btn-minus,
 .qty-container .qty-btn-plus{
-border: 1px solid var(--green);
-padding: 5px;
-font-size: 0.8em;
-height: 30px;
-width: 30px;
-transition: 0.3s;
-color:var(--white);
+    border: 1px solid var(--main);
+    padding: 5px;
+    font-size: 0.8em;
+    height: 30px;
+    width: 30px;
+    transition: 0.3s;
+    color:var(--white);
+    cursor: pointer;
 }
 .qty-container .qty-btn-plus{
-margin-left: -1px;
+    margin-left: -1px;
 }
 .qty-container .qty-btn-minus{
-margin-right: -1px;
+    margin-right: -1px;
 }
 
 .btn-rounded{
-border-radius: 50%;
-background-color: var(--green);
+    border-radius: 50%;
+    background-color: var(--main);
 }
+
+.btn-rounded:hover{
+    background-color:var(--green);
+    border:1px solid var(--green);
+}
+
 .input-rounded{
 border-radius: 50px;
 }
@@ -1108,15 +1091,13 @@ border-radius: 50px;
     margin-right: 2px;
     margin-bottom: 1em;
     width: 30rem; /* SI HAUTEUR DE L'IMAGE, LARGEUR ICI*/
+    width:30rem;
+    perspective: 1000px;
 }
-.flip > .front,.flip > .back {
-    display: block;
-    transition-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    transition-duration: 0.5s;
-    transition-property: transform, opacity;
-}
+
 .flip > .front {
     transform: rotateY(0deg);
+    transform-origin: center;
 }
 .flip > .back {
     position: absolute;
@@ -1126,6 +1107,7 @@ border-radius: 50px;
     width: 100%;
     height: 100%;
     transform: rotateY(-180deg);
+    transform-origin: center;
 }
 .flip:hover > .front {
   transform: rotateY(180deg);
@@ -1137,15 +1119,20 @@ border-radius: 50px;
 
 .flip > .front,
 .flip > .back {
-  display: block;
-  color: var(--black);;
-  width: inherit;
-  background-size: cover !important;
-  background-position: center !important;
-  height: 50rem; /* HAUTEUR DE L'IMAGE*/
-  padding: 1em 2em;
-  background: var(--white);
-  border-radius: 10px;
+    display: block;
+    transition-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transition-duration: 0.8s;
+    transition-property: transform, opacity;
+    display: block;
+    color: var(--black);;
+    width: inherit;
+    background-size: cover !important;
+    background-position: center !important;
+    height: 50rem; /* HAUTEUR DE L'IMAGE*/
+    padding: 1em 2em;
+    background: var(--white);
+    border-radius: 10px;
+    transform-origin: center;
 }
 .flip > .front p,
 .flip > .back p {
