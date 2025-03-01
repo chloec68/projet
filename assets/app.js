@@ -43,9 +43,9 @@ import './styles/app.css';
 
 // ************************************************************** CART *********************************************************************** 
 
-// PAGE PRODUCTS 
+// PAGE PRODUCTS & DETAIL PRODUCT 
 
-// INCREMENT QUANTITY (PRODUCTS)
+// INCREMENT QUANTITY (PRODUCTS + DETAIL PRODUCT)
 
 const incrementButtons = document.querySelectorAll('.increment');
 incrementButtons.forEach(button => {
@@ -57,7 +57,7 @@ incrementButtons.forEach(button => {
   });
 }); 
 
-// DECREMENT QUANTITY (PRODUCTS)
+// DECREMENT QUANTITY (PRODUCTS + DETAIL)
 
 const decrementButtons = document.querySelectorAll('.decrement');
 decrementButtons.forEach(button => {
@@ -73,7 +73,7 @@ decrementButtons.forEach(button => {
   });
 }); 
 
-// ADD TO CART (PRODUCTS)
+// ADD TO CART (PRODUCTS + DETAIL)
 
 const alertBox = document.querySelector(".alertBox");
 let alertMessage = document.querySelector(".alertMessage");
@@ -85,12 +85,14 @@ addToCartButtons.forEach(button => {
     let product = button.getAttribute('data-product');
     let quantity = document.querySelector(`input[data-product="${product}"]`).value;
 
-    alertMessage.innerHTML = "Produit ajouté au panier";
-    alertBox.style.display = "block";
-
-    closeAlert.addEventListener('click',function(){
-      alertBox.style.display = "none";
-    })
+    if(alertBox && alertMessage && closeAlert){
+      alertMessage.innerHTML = "Produit ajouté au panier";
+      alertBox.style.display = "block";
+  
+      closeAlert.addEventListener('click',function(){
+        alertBox.style.display = "none";
+      })
+    }
 
     if (parseInt(quantity) > 0) {
       updateCart(product, quantity);

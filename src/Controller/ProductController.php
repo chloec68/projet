@@ -76,11 +76,13 @@ final class ProductController extends AbstractController
 
     // DISPLAY A SPECIFIC PRODUCT
     #[Route('/product/{id}/detail', name: 'detail_product')]
-    public function detailProduct(Product $product, ProductRepository $productRepository):Response
+    public function detailProduct(Product $product, ProductRepository $productRepository,VATpriceCalculator $VATpriceCalculator):Response
     {   
- 
+        $VATprice = number_format($VATpriceCalculator->VATprice($product),2,'.','');
+        $product->setProductVATprice($VATprice);
         return $this->render('/product/detail-product.html.twig',[
-            'product'=>$product
+            'product'=>$product,
+            'VATprice' =>$VATprice
         ]);
     }
 
