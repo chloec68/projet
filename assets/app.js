@@ -78,6 +78,7 @@ decrementButtons.forEach(button => {
 const alertBox = document.querySelector(".alertBox");
 let alertMessage = document.querySelector(".alertMessage");
 const closeAlert = document.querySelector(".closeAlert");
+const successMsg = document.getElementById("success-msg");
 
 let addToCartButtons = document.querySelectorAll(".add-to-cart");
 addToCartButtons.forEach(button => {
@@ -92,7 +93,10 @@ addToCartButtons.forEach(button => {
       closeAlert.addEventListener('click',function(){
         alertBox.style.display = "none";
       })
+
     }
+
+ 
 
     if (parseInt(quantity) > 0) {
       updateCart(product, quantity);
