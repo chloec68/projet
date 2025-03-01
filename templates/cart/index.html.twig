@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Cart{% endblock %}
+{% block title %}Votre panier{% endblock %}
 
 
 
@@ -51,7 +51,8 @@
                 <p class="grey-paragraph centered">Paiement 100% sécurisé</p>
             </section>
         {% else %}
-            <div class="emptyCart"><p>Le panier est vide</p></div>
+            <div class="emptyCart__container"><p class="emptyCart">Le panier est vide</p><a class="redirection-link" href="{{ path('app_beers') }}">nos bières <i class="fa-solid fa-circle-arrow-right"></i></a></div>
+            
         {% endif %}  
     </div>
 </div>
