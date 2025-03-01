@@ -649,22 +649,53 @@ footer small{
 
 /* **************************************************************** CART ************************************************************ */
 .cart-page-wrapper{
-    padding:6rem;
+    padding:3rem;
 }
 
 .cart-page-wrapper h1{
     text-align:center;
+    margin-bottom:2rem;
+}
+
+.emptyCart__container{
+    width:fit-content;
+    margin:2rem auto 2rem auto;
+   
 }
 
 .emptyCart{
-    width:fit-content;
     padding:1rem;
-    margin:2rem auto 2rem auto;
+    width:fit-content;
     font-family: 'Roboto Condensed';
     font-size:1.5em;
-    border:1px solid var(--blue);
+    border:1px solid var(--main);
     border-radius:5px;
 }
+
+.redirection-link{
+    padding:0.8rem;
+    border:var(--main);
+    color:var(--white);
+    background-color: var(--main);
+    border-radius:4px;
+    font-size:1.5em;
+    margin:2em auto 1em auto;
+    display: block;
+    width:fit-content;
+    display: flex;
+    gap:1rem;
+}
+
+.redirection-link:hover {
+    box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
+    transform: translateY(-2px);
+  }
+
+  .redirection-link:active,  .redirection-link:focus  {
+    box-shadow: none;
+    transform: translateY(0);
+  }
+
 /* ************************* QUANTITY INPUT ************************* */
 .wrapper {
   display: flex;
