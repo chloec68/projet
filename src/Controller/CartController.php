@@ -16,10 +16,9 @@ class CartController extends AbstractController
 {   
 
     #[Route('/cart', name:'app_cart')]
-    public function index(SessionInterface $session, ProductRepository $productRepository, VATpriceCalculator $VATpriceCalculator)
+    public function index(SessionInterface $session, ProductRepository $productRepository, VATpriceCalculator $VATpriceCalculator): Response
     {
         $cart = $session->get('cart',[]);
-
         $data=[];
         $total=0;
         $formattedTotal = 0;
@@ -76,7 +75,7 @@ class CartController extends AbstractController
        // ADD ITEM TO CART  
 
        #[Route('/cart/add/{id}', name:'app_cart-add')]
-       public function add(Request $request, SessionInterface $session)
+       public function add(Request $request, SessionInterface $session): JsonResponse
        {
            $data = json_decode($request->getContent(),true);
    
@@ -98,7 +97,7 @@ class CartController extends AbstractController
 
     // REMOVE AN ITEM FROM CART 
     #[Route('cart/remove/{id}', name:'app_cart-remove')]
-    public function removeProduct(SessionInterface $session,Product $product, Request $request)
+    public function removeProduct(SessionInterface $session,Product $product, Request $request): JsonResponse
     {   
         $data = json_decode($request->getContent(),true);
         $cart = $session->get('cart',[]);
@@ -111,6 +110,20 @@ class CartController extends AbstractController
     $session->set('cart',$cart);
     $nbItems = array_sum($cart);
     return new JsonResponse(['success' => true, 'nbItems'=>$nbItems]);
+    }
+
+
+    #[Route('cart/side-cart', name:'app_side-cart')]
+    public function retrieveCart(SessionInterface $session, ProductRepository $productRepository): JsonResponse
+    {
+        $cart = $session->get('cart');
+        $data = [];
+
+        foreach ($cart as $id => $quantity) {
+            $product = $productRepository->find($is);
+        }
+        
+        return $this->json($data);
     }
 
 }
