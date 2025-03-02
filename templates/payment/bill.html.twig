@@ -5,7 +5,7 @@
 <p class="centered"> <span class="wide bold">Merci {{order.orderUserFirstName}},</span>
 <p class="grey"><span class="bold">Votre commande du {{order.dateOfPlacement|date('d.m.Y')}}</span> est bien enregistrée sous la référence <span class="bold">{{order.orderReference}}.</span></p>
 <p class="grey">Votre commande sera disponible à partir du {{pickUpTime|date('d.m.Y')}} aux horaires d'ouverture du point de retrait que vous avez sélectionné.</p>
-<p class="grey">Pour la retirer, munissez-vous d'une pièce d'identité et de votre numéro de commande</p>
+<p class="grey">Pour la retirer, munissez-vous d'une pièce d'identité et de votre numéro de commande.</p>
 <p class="grey">Nous vous rappelons que vous avez choisi de retirer votre commande à :</p> <p class="pickUpPoint">{{order.establishment.establishmentName}}<br>{{order.establishment.establishmentAddress}}<br>{{order.establishment.establishmentPostCode}} {{order.establishment.establishmentCity}}</p>
 <p class="grey">Pour consulter les horaires d'ouverture de nos points de retrait, rendez-vous sur notre site et cliquez sur le lien 'horaires d'ouverture' visible en pied de page</p>
 
@@ -22,7 +22,7 @@
     </th>
     <tbody>
 {% for item in cartData %}
-    <tr><td class="grey">{{item.product.productName}}</td> - <td class="centered grey">{{item.product.productPrice}} €</td> <td class="centered grey">{{item.quantity}}</td><td class="centered">{{item.product.vat.vatRate * 100}} %</td><td class="right grey">{{item.product.productVATprice * item.quantity}} €</td></tr>
+    <tr><td class="grey capitalize">{{item.product.productName}}</td> - <td class="centered grey">{{item.product.productPrice}} €</td> <td class="centered grey">{{item.quantity}}</td><td class="centered">{{item.product.vat.vatRate * 100}} %</td><td class="right grey">{{item.product.productVATprice * item.quantity}} €</td></tr>
 {% endfor %}
 <tr class="total"><td class="bold centered">TOTAL TTC</td><td class="centered">-</td><td class="bold centered">{{nbItems}} articles</td><td></td><td class="bold right">{{order.orderTotal}} €</td></tr>
 </tbody>
@@ -30,8 +30,8 @@
 
 <h2>Paiement</h2>
 <p><span class="bold">Total payé (TTC) :</span> {{order.orderTotal}} €</p>
-<p><span class="bold">TVA : {{vat}} €</span>
-<p><span class="bold">Mode de paiement : carte bancaire</p></span>
+<p><span class="bold">TVA :</span> {{vat}} €</p>
+<p><span class="bold">Mode de paiement :</span> carte bancaire</p>
 
 
 <style>
@@ -55,6 +55,7 @@ h2{
 
 .bill-table td{
     padding:10px 5px 10px 5px;
+    font-size:0.9em;
 }
 
 .bold{
@@ -100,9 +101,13 @@ h2{
 
 .horizontal-line{
     width: 100%;
-    height:4px;
-    background-color: rgb(192, 192, 192);
+    height:2px;
+    background-color: rgb(215, 215, 215);
     border-radius: 50px;
+}
+
+.capitalize{
+    text-transform: capitalize;
 }
 
 
