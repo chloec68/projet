@@ -4,7 +4,7 @@
 
 <p class="centered"> <span class="wide bold">Merci {{order.orderUserFirstName}},</span>
 <p class="grey"><span class="bold">Votre commande du {{order.dateOfPlacement|date('d.m.Y')}}</span> est bien enregistrée sous la référence <span class="bold">{{order.orderReference}}.</span></p>
-<p class="grey">Votre commande sera disponible à partir de (date du lendemain) aux horaires d'ouverture du point de retrait que vous avez sélectionné.</p>
+<p class="grey">Votre commande sera disponible à partir du {{pickUpTime|date('d.m.Y')}} aux horaires d'ouverture du point de retrait que vous avez sélectionné.</p>
 <p class="grey">Pour la retirer, munissez-vous d'une pièce d'identité et de votre numéro de commande</p>
 <p class="grey">Nous vous rappelons que vous avez choisi de retirer votre commande à :</p> <p class="pickUpPoint">{{order.establishment.establishmentName}}<br>{{order.establishment.establishmentAddress}}<br>{{order.establishment.establishmentPostCode}} {{order.establishment.establishmentCity}}</p>
 <p class="grey">Pour consulter les horaires d'ouverture de nos points de retrait, rendez-vous sur notre site et cliquez sur le lien 'horaires d'ouverture' visible en pied de page</p>
