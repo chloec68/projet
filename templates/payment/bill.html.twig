@@ -14,7 +14,7 @@
     <th>
         <tr>
         <th class="left">Désignation produit</th>
-        <th class="centered">Prix unitaire TTC</th>
+        <th class="centered">Prix unitaire HT</th>
         <th class="centered">Quantité</th>
         <th class="centered">TVA</th>
         <th class="right">Sous-total TTC</th>
@@ -22,9 +22,9 @@
     </th>
     <tbody>
 {% for item in cartData %}
-    <tr><td class="grey">{{item.product.productName}}</td> - <td class="centered grey">{{item.VATprice}} €</td> <td class="centered grey">{{item.quantity}}</td><td class="centered">{{item.product.vat.vatRate * 100}} %</td><td class="right grey">{{item.product.productVATprice}} €</td></tr>
+    <tr><td class="grey">{{item.product.productName}}</td> - <td class="centered grey">{{item.product.productPrice}} €</td> <td class="centered grey">{{item.quantity}}</td><td class="centered">{{item.product.vat.vatRate * 100}} %</td><td class="right grey">{{item.product.productVATprice * item.quantity}} €</td></tr>
 {% endfor %}
-<tr class="total"><td class="bold centered">TOTAL TTC</td><td class="centered">-</td><td class="bold centered">{{nbItems}} articles</td><td class="bold right">{{order.orderTotal}} €</td></tr>
+<tr class="total"><td class="bold centered">TOTAL TTC</td><td class="centered">-</td><td class="bold centered">{{nbItems}} articles</td><td></td><td class="bold right">{{order.orderTotal}} €</td></tr>
 </tbody>
 </table>
 
