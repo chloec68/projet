@@ -5,6 +5,7 @@ use App\Entity\Product;
 use App\Service\VATpriceCalculator;
 use App\Repository\ProductRepository;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -41,7 +42,7 @@ class CartController extends AbstractController
                     'product' => $product,
                     'quantity' => $quantity,
                     'VATprice' => $VATprice,
-                    'subtotal' => number_format(floatval($product->getProductvatPrice()) * $quantity,2,'.',''),
+                    'subtotal' => number_format(floatval($product->getProductVATprice()) * $quantity,2,'.',''),
                     'pictures' => $pictures,
                 ];
 
@@ -52,7 +53,7 @@ class CartController extends AbstractController
 
                 $data[] = $dataItem;
 
-                $total += floatval($product->getProductvatPrice()) * $quantity;
+                $total += floatval($product->getProductVATprice()) * $quantity;
                 $formattedTotal = number_format($total, 2, '.', '');
                 $nbItems += $quantity ; 
             }
@@ -60,7 +61,6 @@ class CartController extends AbstractController
         $session->set('cartData',$data); // je set les data en session pour les rendre accessible partout dans l'application et pas seulement dans la vue du panier
         $session->set('priceTotal',$formattedTotal);
         $session->set('nbItems',$nbItems);
-        // dd($session);
 
         return $this->render('cart/index.html.twig',[       
             'data'=>$data,
@@ -114,15 +114,36 @@ class CartController extends AbstractController
 
 
     #[Route('cart/side-cart', name:'app_side-cart')]
-    public function retrieveCart(SessionInterface $session, ProductRepository $productRepository): JsonResponse
+    public function retrieveCart(SessionInterface $session, ProductRepository $productRepository, VATpriceCalculator $VATpriceCalculator): JsonResponse
     {
         $cart = $session->get('cart');
         $data = [];
+        $nbItems = 0;
+        $total = 0;
 
         foreach ($cart as $id => $quantity) {
-            $product = $productRepository->find($is);
+            $product = $productRepository->find($id);
+            if($product){
+                $VATprice = number_format($VATpriceCalculator->VATprice($product),2,'.','');
+                $product->setProductVATprice($VATprice);
+                $pictures = [];
+                foreach ($product->getPictures() as $picture){
+                    $pictures[] = $picture->getPictureName();
+                }
+
+                $data[]=[
+                    'productId' => $product->getId(),
+                    'productName'=>$product->getProductName(),
+                    'type' => $product->getType()->getTypeName(),
+                    'quantity'=>$quantity,
+                    'VATprice'=> $VATprice,
+                    'color' => $product->getProductColor(),
+                    'volume' => $product->getProductVolume(),
+                    'size' => $product->getSize(),
+                    'pictures' => $pictures
+                ];
+            }
         }
-        
         return $this->json($data);
     }
 

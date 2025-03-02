@@ -69,7 +69,7 @@
             {# <div class="horizontal-line"> #}
                 {% if cartData is not empty %}
                     {% for item in cartData %}
-                    <article>
+                    <article class="sideCart-item side-cart-product="{{ item.product.id }}">
                         <div class="item-containers">
                             <div class="item-container">
                         {% for picture in item.pictures %}
@@ -77,7 +77,7 @@
                                 <img class="product-pic" src="{{picture}}" alt="Photo de la face avant du produit">
                             {% endif %}   
                         {% endfor %}
-                                <p>{{ item.product.productName }} - {% if item.typeName is defined %}{{ item.typeName }} {% else %} {{item.product.productColor}}{% endif %} - {% if item.product.productVolume %}{{ item.product.productVolume}} {% else %} {{ item.product.size.sizeName}} {% endif %}</p>
+                                <p><span class="productName">{{ item.product.productName }} -</span> <span class="typeOrColor">{% if item.typeName is defined %}{{ item.typeName }} {% else %} {{item.product.productColor}}{% endif %} - </span><span class="volumeOrSize">{% if item.product.productVolume %}{{ item.product.productVolume}} {% else %} {{ item.product.size.sizeName}} {% endif %}</span></p>
                             </div>
                                 <div class="item-container middle">
                                     <div class="counter">
