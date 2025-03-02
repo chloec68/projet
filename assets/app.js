@@ -95,9 +95,6 @@ addToCartButtons.forEach(button => {
       })
 
     }
-
- 
-
     if (parseInt(quantity) > 0) {
       updateCart(product, quantity);
       // updateSideCartQuantity(product,quantity);
@@ -248,12 +245,13 @@ function updateCartSubTotals(){
     });
   });
 
- 
+
 // PANIER LATERAL - TOGGLE  
 const sideCart = document.querySelector('.cart-summary'); 
 const cartIcon = document.querySelector('.fa-basket-shopping');
 
 cartIcon.addEventListener('click', function() {
+  updateSideCart()
   sideCart.classList.toggle('visible');
 });
 
@@ -261,101 +259,90 @@ document.addEventListener('click', function(event) {
   if (!sideCart.contains(event.target) && !cartIcon.contains(event.target)) {
     sideCart.classList.remove('visible');
   }
+  // => event.target = référence à l'élément cliqué 
+// => sideCart.contains(event.target) => si l'élément sideCart contient l'élément cliqué 
+// => "!" la condition précédente est "vraie" si clique à l'extérieur du panier, sinon elle est fausse 
 });
+
+
+
+
+
+
+ function updateSideCart(){
+  const cartItems = document.querySelectorAll(".sideCart-item");
+  cartItems.forEach((cartItem, index) => {
+    
+    const url = '/cart/side-cart';
+
+    fetch(url, {
+      headers:{
+        'Content-Type':'application/json',
+      }
+    })
+    .then(response => {
+      console.log(response);
+      return response.json();
+    } )
+    .then(data => {
+      console.log('data',data);
+      console.log('hello');
+      if(data.length >0){
+        let item = data[index];
+          cartItem.querySelector('.productName').textContent = item.productName;
+          cartItem.querySelector('.typeOrColor').textContent = item.productType ? item.productType : item.productColor;
+          cartItem.querySelector('.volumeOrSize').textContent = item.productVolume ? item.productVolume : item.size;
+          cartItem.querySelector('.counter-display').value = item.quantity;
+          cartItem.querySelector('.product-price').textContent = item.VATprice ;
+          cartItem.querySelector('.sub-total__side-cart').textContent = item.VATprice * item.quantity + ' €' ;
+          // document.querySelector('price-total').textContent = total ;
+      }
+    })
+    .catch(error => console.error('Erreur lors de la mise à jour du panier:', error))
+  });
+}
+
+
+
+
+
+
+
 
 
 
 
 // INCREMENT QUANTITY (SIDE CART)
 
-const incrementButtonsSideCart = document.querySelectorAll('.side-cart-increment');
-incrementButtonsSideCart.forEach(button => {
-  button.addEventListener('click', function(){
-    let product = button.getAttribute('side-cart-product');
-    let input = document.querySelector(`input[side-cart-product="${product}"]`);
-    let currentQuantity = parseInt(input.value);
-    input.value = currentQuantity + 1 ; 
-
-  });
-}); 
-
-// DECREMENT QUANTITY (SIDE CART)
-const decrementButtonsSideCart = document.querySelectorAll('.side-cart-decrement');
-
-decrementButtonsSideCart.forEach(button => {
-  button.addEventListener('click', function(){
-    let product = button.getAttribute('side-cart-product');
-    let input = document.querySelector(`input[side-cart-product="${product}"]`);
-    let currentQuantity = parseInt(input.value);
-    if(currentQuantity > 0) {
-      input.value = currentQuantity -1;
-      updatePriceTotal()
-      updateCartSubTotals()
-      updateCart(product, -1);
-    }
-  });
-});
-
-
-// function updateSideCart()
-// {
-//   let cartIncrementButtons = document.querySelectorAll('.cart-increment');
-//   let sideCartIncrementButtons = document.querySelectorAll('.side-cart-increment');
-//   cartIncrementButtons.forEach(button => {
-//     let cartProduct = button.getAttribute('cart-product');
-//       sideCartIncrementButtons.forEach(button => {
-//         let sideCartProduct = button.getAttribute('side-cart-product');
-//         let cartInput = document.querySelector(`input[cart-product="${cartProduct}"]`);
-//         let quantity = parseInt(cartInput.value); 
-//         let sideCartInput = document.querySelector(`input[side-cart-product="${sideCartProduct}"]`);
-//         console.log(sideCartInput.value = quantity);
-//         console.log(sideCartInput.value);
-//       })
+// const incrementButtonsSideCart = document.querySelectorAll('.side-cart-increment');
+// incrementButtonsSideCart.forEach(button => {
+//   button.addEventListener('click', function(){
+//     let product = button.getAttribute('side-cart-product');
+//     let input = document.querySelector(`input[side-cart-product="${product}"]`);
+//     let currentQuantity = parseInt(input.value);
+//     input.value = currentQuantity + 1 ; 
 
 //   });
+// }); 
 
-// }
+// DECREMENT QUANTITY (SIDE CART)
+// const decrementButtonsSideCart = document.querySelectorAll('.side-cart-decrement');
 
-
-// function updateSideCartQuantity(product,quantity){
-
-//   let nbItemsElements = document.querySelectorAll('.side-cart__nbItems')
-
-//   fetch('/cart/add/{id}',{
-//     method : 'POST',
-//     headers :{
-//         'Content-Type':'application/json'
-//     } ,
-//     body: JSON.stringify({
-//       product:product,
-//       quantity:quantity
-//     })
-//   })
-
-//   .then(response => response.json())
-
-//     .then(data => {
-//       nbItemsElements.forEach(nbItemsElement => {
-//         if(data.nbItems == 1){
-//           nbItemsElement.textContent = data.nbItems + " article";
-//         }else{
-//           nbItemsElement.textContent = data.nbItems + " articles";
-//         }
-//       })
-//     })
-
-//     .catch(error => {
-//       console.error('Erreur',error);
-//     });
-//   }
+// decrementButtonsSideCart.forEach(button => {
+//   button.addEventListener('click', function(){
+//     let product = button.getAttribute('side-cart-product');
+//     let input = document.querySelector(`input[side-cart-product="${product}"]`);
+//     let currentQuantity = parseInt(input.value);
+//     if(currentQuantity > 0) {
+//       input.value = currentQuantity -1;
+//       updatePriceTotal()
+//       updateCartSubTotals()
+//       updateCart(product, -1);
+//     }
+//   });
+// });
 
 
-
-
-
-// => event.target = référence à l'élément cliqué 
-// => sideCart.contains(event.target) => si l'élément sideCart contient l'élément cliqué 
-// => "!" la condition précédente est "vraie" si clique à l'extérieur du panier, sinon elle est fausse 
 
 
 

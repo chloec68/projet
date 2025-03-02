@@ -38,10 +38,10 @@
             </section>
             <section class="recap-section">
                 
-                {% if nbItems > 1 %}
-                <p class="nbItems centered">{{nbItems}} articles</p>
-                {% else %}
+                {% if nbItems <= 1 %}
                 <p class="nbItems centered">{{nbItems}} article</p>
+                {% else %}
+                <p class="nbItems centered">{{nbItems}} articles</p>
                 {% endif %}
                
                 <div class="price-container">
