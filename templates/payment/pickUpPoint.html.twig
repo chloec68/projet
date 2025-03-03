@@ -9,47 +9,75 @@
     <h1>2. Choisissez votre point de retrait</h1>
 
     <div class="horizontal-line"></div>
-
-        {{ form_errors(pickUpPointForm) }}
-                {{ form_start(pickUpPointForm,{'attr': {'class': ''}}) }}
-                <div class="options-container">
-                {% for establishment in establishments %}
-                    <section class="option-container">
-                        <h2>{{establishment.establishmentName}}</h2>
-                        <h3>Adresse</h3> 
-                        <p> {{establishment.establishmentAddress}} - {{establishment.establishmentPostCode}} {{establishment.establishmentCity}}</p>
-                        <a href="">Voir sur la carte <i class="fa-solid fa-location-arrow"></i></a>
-                        <h3>Horaires d'ouverture</h3>
-                        <table>
-                        </table>
-                    </section>
-                {% endfor %}
-                </div>
-            <button class="btn choose-btn" type="submit" name="submit">Continuer</button>
-        {{ form_end(pickUpPointForm) }}
+         
+    <div class="options-container">
+        {% for establishment in establishments %}
+            <section class="option-container">
+                <h2>{{establishment.establishmentName}}</h2>
+                <h3>Adresse</h3> 
+                <p> {{establishment.establishmentAddress}} - {{establishment.establishmentPostCode}} {{establishment.establishmentCity}}</p>
+                <a class="map-button" href="" id="{{establishment.id}}" >Voir sur la carte <i class="fa-solid fa-location-arrow"></i></a>
+                <h3>Horaires d'ouverture</h3>
+                <table>
+                    <thead>
+                        <tr>
+                        <th>Jour</th>
+                        <th>Matin</th>
+                        <th>Après-midi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="colored"><td>lundi</td><td></td><td class="closed">fermé</td></tr>
+                        <tr><td>mardi</td><td></td> <td>17h - 22h30</td></tr>
+                        <tr class="colored"><td>mercredi</td><td></td><td>17h - 22h30</td></tr>
+                        <tr><td>jeudi</td><td></td><td>17h - 22h30</td></tr>
+                        <tr class="colored"><td>vendredi</td><td></td><td> 17h - 22h30</td></tr>
+                        <tr><td>samedi</td> <td>10h-20h</td><td>15h - 20h30</td></tr>
+                        <tr class="colored"><td>dimanche<td></td></td><td class="closed">fermé</td></tr>
+                    </tbody>
+                </table>
+            </section>
+        {% endfor %}
     </div>
+
+    <h4 class="centered">Indiquez votre choix : </h4>
+    {{ form_start(pickUpPointForm) }}
+        {{form_widget(pickUpPointForm)}}
+        {{ form_errors(pickUpPointForm) }}
+        <button class="btn choose-btn" type="submit" name="submit">Valider</button>
+    {{ form_end(pickUpPointForm) }}
+
 </main>
                 
-          
-                    {# <table>
-                        <thead>
-                            <tr>
-                            <th>Jour</th>
-                            <th>Matin</th>
-                            <th>Après-midi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr class="colored"><td>lundi</td><td></td><td class="closed">fermé</td></tr>
-                            <tr><td>mardi</td><td></td> <td>17h - 22h30</td></tr>
-                            <tr class="colored"><td>mercredi</td><td></td><td>17h - 22h30</td></tr>
-                            <tr><td>jeudi</td><td></td><td>17h - 22h30</td></tr>
-                            <tr class="colored"><td>vendredi</td><td></td><td> 17h - 22h30</td></tr>
-                            <tr><td>samedi</td> <td>10h-20h</td><td>15h - 20h30</td></tr>
-                            <tr class="colored"><td>dimanche<td></td></td><td class="closed">fermé</td></tr>
-                        </tbody>
-                    </table> #}
+        
 
+<style>
+    .iframe-container{
+        width:40%;
+        margin:auto;
+        display:none;
+    }
+
+    #pick_up_point_form_establishmentName{
+        display:flex;
+        justify-content:center;
+        margin:2rem;
+    }
+
+    #pick_up_point_form_establishmentName input{
+        margin : 0.5rem;
+    }
+
+    #pick_up_point_form_establishmentName label{
+        font-size:2em;
+    }
+
+    .pickUpPage-page h4{
+        font-size:2em;
+        font-family:'Nunito';
+    }
+       
+</style>
 
 
 
