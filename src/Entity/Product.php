@@ -75,6 +75,9 @@ class Product
     #[ORM\Column(length: 10, nullable: true)]
     private ?string $productGender = null;
 
+    #[ORM\Column]
+    private ?bool $isDeleted = null;
+
     public function __construct()
     {
         $this->users = new ArrayCollection();
@@ -340,6 +343,18 @@ class Product
     public function setProductGender(?string $productGender): static
     {
         $this->productGender = $productGender;
+
+        return $this;
+    }
+
+    public function isDeleted(): ?bool
+    {
+        return $this->isDeleted;
+    }
+
+    public function setIsDeleted(bool $isDeleted): static
+    {
+        $this->isDeleted = $isDeleted;
 
         return $this;
     }
