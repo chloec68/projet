@@ -68,10 +68,7 @@ a{
 
 .centered{
     text-align: center;
-    }
-
-
-      
+}
 
 /* **************************************************************** BASE ************************************************************ */
 
@@ -423,6 +420,8 @@ footer small{
 .terms-container{
     display: flex;
     gap:0.5rem;
+    margin-top:2rem;
+    font-size:1.5em;
 }
 
 .registration-form label,.login-form label{
@@ -927,15 +926,17 @@ footer small{
     padding:3rem;
     display: flex;
     justify-content: center;
-    gap:2rem;
+    gap:4rem;
+    align-items: center;
 }
 
 .stock-status{
     border:2px solid var(--green);
     width:fit-content;
-    padding:0.5rem;
+    padding:0.3rem 0.5rem;
     border-radius:6px;
     margin:1rem auto 1rem auto;
+    font-size:1em;
 }
 
 .available{
@@ -952,7 +953,7 @@ footer small{
 
 .pricing-card-section{
     border:1px solid var(--ultra-light-grey);
-    width:30%;
+    width:25%;
     height: fit-content;
     padding-bottom:1rem;
     border-radius:6px;
@@ -984,6 +985,7 @@ footer small{
     #product-description{
         font-family:"nunito";
         font-size:1.2em;
+        margin:1rem;
     }
 
     .row{
@@ -1128,7 +1130,7 @@ border-radius: 50px;
     width: inherit;
     background-size: cover !important;
     background-position: center !important;
-    height: 50rem; /* HAUTEUR DE L'IMAGE*/
+    height: 40rem; /* HAUTEUR DE L'IMAGE*/
     padding: 1em 2em;
     background: var(--white);
     border-radius: 10px;
@@ -1236,11 +1238,6 @@ border-radius: 50px;
         color:var(--white);
     }
 
-    .choose-btn{
-        grid-row-start: 2;
-        grid-column-start:2;
-    }
-
     a{
         width:fit-content;
         display: block;
@@ -1261,6 +1258,7 @@ border-radius: 50px;
 .options-container{
     display: flex;
     gap:6rem;
+    margin:3rem;
 }
 
 .option-container{
@@ -1308,14 +1306,14 @@ border-radius: 50px;
         text-align: center;
     }
 }
-/* **************************************************************** PAYMENT SUCCESS ************************************************************ */
+/* **************************************************************** PAYMENT SUCCESS / PAYMENT ERROR ************************************************************ */
 
-    .sucess-page__wrapper{
+    .sucess-page__wrapper,.cancel-page__wrapper{
         padding:1rem;
         background-position-y: -30px;
     }
 
-    .success-container{
+    .success-container,.cancel-container{
         display: flex;
         align-items: center;
         width: fit-content;
@@ -1329,11 +1327,20 @@ border-radius: 50px;
         color:var(--main);
     }
 
-    .thanks,.confirmed{
+    .cancel-container img{
+        width:90px;
+        margin:0.8rem;
+    }
+
+    .thanks,.confirmed,.oops{
         margin: 2rem 0 2rem 0;
     }
 
-    .thanks{
+    .try-again{
+        margin:3rem;
+    }
+
+    .thanks, .oops{
         font-size:2em;
     }
 
@@ -1342,16 +1349,54 @@ border-radius: 50px;
         font-size:1.3em;
     }
 
-    .sucess-page__wrapper a{
+    .sucess-page__wrapper a,.cancel-page__wrapper a{
         margin:auto;
         display: block;
         width: fit-content;
         color:var(--main);
     }
 
-    .sucess-page__wrapper span{
+    .sucess-page__wrapper span,.cancel-page__wrapper span{
         color:var(--blue)
     }
+
+    .cancel-page__wrapper{
+        .basket-btn{
+            width:fit-content;
+            display: flex;
+            align-items: center;
+            gap:1rem;
+            background-color:var(--wite);
+            border: 1px solid var(--ultra-light-grey);
+            border-radius: .25rem;
+            box-shadow: rgba(0, 0, 0, 0.02) 0 1px 3px 0;
+            color: rgba(0, 0, 0, 0.85);
+            cursor: pointer;
+            font-size: 1.5em;
+            padding: 0.8rem;
+            transition: all 250ms;
+            }
+
+            .basket-btn:hover,
+            .basket-btn:focus {
+            border-color: rgba(0, 0, 0, 0.15);
+            box-shadow: rgba(0, 0, 0, 0.1) 0 4px 12px;
+            }
+
+            .basket-btn:hover {
+            transform: translateY(-1px);
+            }
+
+            .basket-btn:active {
+            background-color: #F0F0F1;
+            border-color: rgba(0, 0, 0, 0.15);
+            box-shadow: rgba(0, 0, 0, 0.06) 0 2px 4px;
+            color: rgba(0, 0, 0, 0.65);
+            transform: translateY(0);
+            }
+
+        }
+    
 
 
 

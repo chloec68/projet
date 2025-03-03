@@ -17,7 +17,7 @@
             <div class="vertical-line"></div>
 
             <section class="registration-section">
-                <h2 class="registration-section-title title">S'inscrire</h2>
+                <h2 class="registration-section-title title">Creer un compte</h2>
                         {{ form_errors(registrationForm) }}
 
                         {{ form_start(registrationForm,{'attr': {'class': 'registration-form'}}) }}
@@ -25,8 +25,8 @@
                             {{ form_row(registrationForm.plainPassword, {
                                 label: 'Password'}) }}
                             <div class="terms-container">
-                            {{ form_label(registrationForm.agreeTerms) }}
-                            {{ form_widget(registrationForm.agreeTerms) }}
+                                <p>J'accepte les termes et conditions</p>
+                                {{ form_widget(registrationForm.agreeTerms) }}
                             </div>
                             <button type="submit" class="register-login-btn btn">Créer un compte</button>
                         {{ form_end(registrationForm) }}
