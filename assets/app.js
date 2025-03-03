@@ -251,7 +251,7 @@ const sideCart = document.querySelector('.cart-summary');
 const cartIcon = document.querySelector('.fa-basket-shopping');
 
 cartIcon.addEventListener('click', function() {
-  updateSideCart()
+  // updateSideCart()
   sideCart.classList.toggle('visible');
 });
 
@@ -265,43 +265,41 @@ document.addEventListener('click', function(event) {
 });
 
 
-
-
-
-
- function updateSideCart(){
-  const cartItems = document.querySelectorAll(".sideCart-item");
-  cartItems.forEach((cartItem, index) => {
+//  function updateSideCart(){
+//   const cartItems = document.querySelectorAll(".sideCart-item");
+//   cartItems.forEach((cartItem, index) => {
     
-    const url = '/cart/side-cart';
+//     const url = '/cart/side-cart';
 
-    fetch(url, {
-      headers:{
-        'Content-Type':'application/json',
-      }
-    })
-    .then(response => {
-      console.log(response);
-      return response.json();
-    } )
-    .then(data => {
-      console.log('data',data);
-      console.log('hello');
-      if(data.length >0){
-        let item = data[index];
-          cartItem.querySelector('.productName').textContent = item.productName;
-          cartItem.querySelector('.typeOrColor').textContent = item.productType ? item.productType : item.productColor;
-          cartItem.querySelector('.volumeOrSize').textContent = item.productVolume ? item.productVolume : item.size;
-          cartItem.querySelector('.counter-display').value = item.quantity;
-          cartItem.querySelector('.product-price').textContent = item.VATprice ;
-          cartItem.querySelector('.sub-total__side-cart').textContent = item.VATprice * item.quantity + ' €' ;
-          // document.querySelector('price-total').textContent = total ;
-      }
-    })
-    .catch(error => console.error('Erreur lors de la mise à jour du panier:', error))
-  });
-}
+//     fetch(url, {
+//       headers:{
+//         'Content-Type':'application/json',
+//       }
+//     })
+//     .then(response => {
+//       console.log(response);
+//       return response.json();
+//     } )
+//     .then(data => {
+//       console.log('data',data);
+//       console.log('hello');
+//       if(data.length >0){
+//         data.forEach(item => {
+//           let item = data[index];
+//           cartItem.querySelector('.productName').textContent = item.productName;
+//           cartItem.querySelector('.typeOrColor').textContent = item.productType ? item.productType : item.productColor; 
+//           cartItem.querySelector('.volumeOrSize').textContent = item.productVolume ? item.productVolume : item.size;
+//           cartItem.querySelector('.counter-display').value = item.quantity;
+//           cartItem.querySelector('.product-price').textContent = item.VATprice ;
+//           cartItem.querySelector('.sub-total__side-cart').textContent = item.VATprice * item.quantity + ' €' ;
+//           // document.querySelector('price-total').textContent = total ;
+//         });
 
+//       }
+//     })
+//     .catch(error => console.error('Erreur lors de la mise à jour du panier:', error))
+//   });
+// }
 
 
 

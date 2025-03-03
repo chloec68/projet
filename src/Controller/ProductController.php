@@ -23,7 +23,8 @@ final class ProductController extends AbstractController
     public function allGoodies(ProductRepository $productRepository, Request $request, VATpriceCalculator $VATpriceCalculator): Response
     {   
         $idCategory = 2;
-        $products = $productRepository->findGoodies($idCategory,[],['productName'=>'ASC']);
+        $isDeleted = false;
+        $products = $productRepository->findGoodies($idCategory,$isDeleted,[],['productName'=>'ASC']);
 
         foreach ($products as $product) {
             $VATprice = number_format($VATpriceCalculator->VATprice($product),2,'.','');
@@ -51,7 +52,8 @@ final class ProductController extends AbstractController
     public function allBeers(ProductRepository $productRepository, Request $request,VATpriceCalculator $VATpriceCalculator): Response
     {   
         $idCategory=1;
-        $products = $productRepository->findBeers($idCategory,[],['productName'=>'ASC']);
+        $isDeleted = false;
+        $products = $productRepository->findBeers($idCategory,$isDeleted,[],['productName'=>'ASC']);
 
         foreach ($products as $product) {
             $VATprice = number_format($VATpriceCalculator->VATprice($product),2,'.','');
