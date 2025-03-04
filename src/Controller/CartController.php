@@ -31,7 +31,7 @@ class CartController extends AbstractController
         foreach($cart as $id=>$quantity){
             $product = $productRepository->find($id);
             if ($product !== null){
-                $VATprice = $VATpriceCalculator->VATprice($product);
+                $VATPrice = $VATpriceCalculator->VATprice($product);
                 $product->setProductVATprice($VATprice);
                 $pictures = [];
                 foreach ($product->getPictures() as $picture){
