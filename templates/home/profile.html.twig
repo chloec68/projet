@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Votre profil{% endblock %}
+
+    <main class="user-profile__main">
+        <div id="main-container">
+            <h3>Informations du compte</h3>
+            <p>{{user.userFirstName}}</p>
+            <p>{{user.userLastName}}</p>
+            <p>{{user.userEmail}}</p>
+            <h3>Mes commandes passées</h3>
+            {% for order in user.orders %}
+                {% if order is not null %}
+                    <p>{{order.dateOfPlacement | ('d-m-Y')}} <i class="fa-regular fa-circle-right"></i></p>
+                {% endif %}
+                    <p class="centered">Vous n'avez pas de commande</p>
+                {% endif %}
+            {% endfor %}
+        </div>
+
+        <div id="side-container">
+            <a href=""><i class="fa-solid fa-heart"></i> Mes favoris</a>
+        </div>
+    </main>
+
+{% block body %}
+
+
+<style>
+    .user-profile__main{
+        display:flex;
+    }
+</style>
+
+{% endblock %}
