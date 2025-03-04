@@ -1222,43 +1222,30 @@ border-radius: 50px;
         margin-top:2rem;
     }
 
-    .button {
+    button {
     margin:4rem auto 0 auto;
+    display: block;
     width:fit-content;
-    background: #FF4742;
-    /* background-color: var(--white); */
-    border: 1px solid #FF4742;
-    /* border: var(--green) solid 1px; */
+    background: var(--green);
+    border: 1px solid var(--green);
     border-radius: 6px;
     box-shadow: rgba(0, 0, 0, 0.1) 1px 2px 4px;
-    box-sizing: border-box;
-    color: #FFFFFF;
+    color: var(--white);
     cursor: pointer;
-    display: inline-block;
-    font-family: 'roboto condensed';
-    font-size: 16px;
-    font-weight: 800;
-    line-height: 16px;
-    min-height: 40px;
-    outline: 0;
-    padding: 12px 14px;
+    font-weight:600;
+    font-size: 1em;
+    padding: 1rem;
     text-align: center;
-    text-rendering: geometricprecision;
-    text-transform: none;
-    user-select: none;
-    -webkit-user-select: none;
-    touch-action: manipulation;
-    vertical-align: middle;
     }
 
-    .button:hover,
-    .button:active {
+    button:hover,
+    button:active {
     background-color: initial;
     background-position: 0 0;
-    color: #FF4742;
+    color:var(--green);
     }
 
-    .button:active {
+    button:active {
     opacity: .5;
     }
 
