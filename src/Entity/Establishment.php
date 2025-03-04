@@ -34,9 +34,16 @@ class Establishment
     #[ORM\OneToMany(targetEntity: Order::class, mappedBy: 'establishment')]
     private Collection $orders;
 
+    /**
+     * @var Collection<int, Schedule>
+     */
+    #[ORM\OneToMany(targetEntity: Schedule::class, mappedBy: 'establishment', orphanRemoval: true)]
+    private Collection $schedules;
+
     public function __construct()
     {
         $this->orders = new ArrayCollection();
+        $this->schedules = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -122,8 +129,39 @@ class Establishment
         return $this;
     }
 
+
     public function __toString()
     {
         return $this->establishmentName;
+    }
+
+    /**
+     * @return Collection<int, Schedule>
+     */
+    public function getSchedules(): Collection
+    {
+        return $this->schedules;
+    }
+
+    public function addSchedule(Schedule $schedule): static
+    {
+        if (!$this->schedules->contains($schedule)) {
+            $this->schedules->add($schedule);
+            $schedule->setEstablishment($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSchedule(Schedule $schedule): static
+    {
+        if ($this->schedules->removeElement($schedule)) {
+            // set the owning side to null (unless already changed)
+            if ($schedule->getEstablishment() === $this) {
+                $schedule->setEstablishment(null);
+            }
+        }
+
+        return $this;
     }
 }

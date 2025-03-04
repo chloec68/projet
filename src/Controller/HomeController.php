@@ -18,16 +18,11 @@ final class HomeController extends AbstractController
 
         $ephemeral = $productRepository->findByPermanency(false,1);
 
-        // $cart = $session->get('cart',[]);
-
-        // $nbItems = array_sum($cart);
-
         return $this->render('home/index.html.twig', [
             'controller_name' => 'HomeController',
             'permanent' => $permanent,
             'ephemeral' => $ephemeral,
             'meta_description' => 'Bienvenue sur le site de la Brasserie locale et artisanale Sainte Cru sur laquelle vous pourrez découvrir nos produits et les acheter directement en ligne'
-            // 'nbItems' => $nbItems
         ]);
     }
 
