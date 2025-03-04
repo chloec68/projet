@@ -3,11 +3,54 @@
 {% block title %}Récapitulatif de votre commande{% endblock %}
 
 {% block body %}
-    
+<div class="recap-wrapper">
+    <table id="recap-table">
+        <thead>
+            <th>Produit</th>
+            <th>Quantité</th>
+            <th>Prix</th>
+        </thead>
+    <tbody>
     {% for item in cartData %}
-   
-            {{item.product.productName}} - {{item.product.productVATprice}} - {{item.quantity}} - <br>
+        
+        <tr>
+            <td>{{item.product.productName}}</td>
+            <td>{{item.quantity}}</td>
+            <td>{{item.product.productVATprice}} €</td>
+        </tr>
+
 
     {% endfor %}
+    </tbody>
+    </table>
+</div>
 
+
+<style>
+    .recap-wrapper{
+        width:100%;
+        padding:6rem;
+    }
+    #recap-table{
+        width : 60%;
+        margin:auto;
+
+        th,td{
+            text-align:center;
+        }
+        
+        th{
+            font-family:'anton sc';
+            font-size:1.5em;
+            font-weight:200;
+        }
+
+        td{
+            font-family : 'nunito';
+        }
+       
+    }
+
+
+</style>
 {% endblock %}
