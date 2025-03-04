@@ -72,7 +72,7 @@ class PaymentController extends AbstractController
 
             // redirection vers la page paiement de Stripe 
             // dd($session);
-            return $this->redirectToRoute('app_payment-checkout');
+            return $this->redirectToRoute('app_payment-recap');
         }
 
         return $this->render('/payment/pickUpPoint.html.twig', [
@@ -87,9 +87,11 @@ class PaymentController extends AbstractController
     {   
 
         $cartData = $session->get('cartData');
-        // dd($cartData);
+        $total = $session->get('priceTotal');
+
         return $this->render('/payment/recap.html.twig', [
             'cartData' => $cartData,
+            'total' => $total,
             'meta_description' => "Récapitulatif de votre commande"
         ]);
 

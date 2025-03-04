@@ -8,7 +8,9 @@ class VATpriceCalculator{
 
     public function vatPrice(Product $product): float
     {
-        return $product->getProductPrice() * (1 + $product->getVAT()->getVATRate());
+        $result = $product->getProductPrice() * (1 + $product->getVAT()->getVATRate());
+
+        return number_format($result,2,'.','');
     }
 }
 

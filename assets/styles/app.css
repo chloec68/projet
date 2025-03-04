@@ -1239,7 +1239,8 @@ border-radius: 50px;
     }
 
     button:hover,
-    button:active {
+    button:active,
+    button:focus {
     background-color: initial;
     background-position: 0 0;
     color:var(--green);
@@ -1317,6 +1318,87 @@ border-radius: 50px;
         text-align: center;
     }
 }
+
+/* **************************************************************** RECAP ************************************************************ */
+    .recap-wrapper{
+        width:100%;
+        padding:6rem;
+
+        a{
+            margin:4rem auto 0 auto;
+            display: block;
+            width:15%;
+            background: var(--main);
+            border: 1px solid var(--main);
+            border-radius: 6px;
+            box-shadow: rgba(0, 0, 0, 0.1) 1px 2px 4px;
+            color: var(--white);
+            cursor: pointer;
+            font-weight:400;
+            font-size: 1.7em;
+            padding: 0.7rem 1rem;
+            text-align: center;
+            }
+        
+            a:hover,
+            a:active,
+            a:focus {
+            background-color: initial;
+            background-position: 0 0;
+            color:var(--main);
+            }
+        
+            a:active {
+            opacity: .5;
+            }
+    }
+    #recap-table{
+        width : 60%;
+        margin:auto;
+        border-radius:6px;
+        border-collapse:separate;
+        border-spacing: 0 15px;
+
+        th,td{
+            text-align:center;
+            width:30%;
+        }
+        
+        .recap-item-row{
+            background-color: #ffffff;
+            box-shadow: 0px 0px 9px 0px rgba(0,0,0,0.1);
+            
+        }
+        
+        th,.total-recap{
+            font-family:'anton sc';
+            font-size:1.5em;
+            font-weight:200;
+        }
+
+        td{
+            font-family : 'nunito';
+            margin-top:2rem;
+            padding:1rem;
+      
+        }
+
+        .total-recap{
+            text-align:right;
+        }
+
+        .recap-picture{
+            width:15%;
+            border-radius:100px;
+            display:table-cell;
+            margin:auto;
+        }
+
+        .large{
+            font-size:1.3em;
+        }
+    }
+
 /* **************************************************************** PAYMENT SUCCESS / PAYMENT ERROR ************************************************************ */
 
     .sucess-page__wrapper,.cancel-page__wrapper{

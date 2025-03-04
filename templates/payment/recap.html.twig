@@ -3,54 +3,40 @@
 {% block title %}Récapitulatif de votre commande{% endblock %}
 
 {% block body %}
+<h1 class=centered>Récapitulatif avant paiement</h1>
 <div class="recap-wrapper">
     <table id="recap-table">
         <thead>
-            <th>Produit</th>
-            <th>Quantité</th>
-            <th>Prix</th>
+            <tr>
+                <th>Produit</th>
+                <th>Quantité</th>
+                <th>Prix</th>
+            </tr>
         </thead>
-    <tbody>
-    {% for item in cartData %}
-        
-        <tr>
-            <td>{{item.product.productName}}</td>
-            <td>{{item.quantity}}</td>
-            <td>{{item.product.productVATprice}} €</td>
-        </tr>
-
-
-    {% endfor %}
-    </tbody>
+        <tbody>
+        {% for item in cartData %}
+            
+            <tr class="recap-item-row">
+                <td>
+                {% for picture in item.product.pictures %}
+                    {% if loop.first %}
+                        <img class="recap-picture" src="{{picture.pictureName}}" alt="photo de la face avant du produit">
+                    {% endif %}
+                {% endfor %}
+                {{item.product.productName}}
+                </td>
+                <td>{{item.quantity}}</td>
+                <td>{{item.product.productVATprice}} €</td>
+            </tr>
+        {% endfor %}
+            <tr>
+                <td></td><td class="total-recap">total</td><td class="bold large">{{total}} €</td>
+            </tr>
+        </tbody>
     </table>
+    <a class="btn choose-btn" href="{{ path('app_payment-checkout') }}">Payer</a>
 </div>
 
 
-<style>
-    .recap-wrapper{
-        width:100%;
-        padding:6rem;
-    }
-    #recap-table{
-        width : 60%;
-        margin:auto;
 
-        th,td{
-            text-align:center;
-        }
-        
-        th{
-            font-family:'anton sc';
-            font-size:1.5em;
-            font-weight:200;
-        }
-
-        td{
-            font-family : 'nunito';
-        }
-       
-    }
-
-
-</style>
 {% endblock %}
