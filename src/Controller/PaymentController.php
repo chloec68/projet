@@ -83,8 +83,15 @@ class PaymentController extends AbstractController
     }
 
     #[Route('/payment/recap', name:'app_payment-recap')]
-    public function recap():Response
-    {
+    public function recap(SessionInterface $session):Response
+    {   
+
+        $cartData = $session->get('cartData');
+        // dd($cartData);
+        return $this->render('/payment/recap.html.twig', [
+            'cartData' => $cartData,
+            'meta_description' => "Récapitulatif de votre commande"
+        ]);
 
     }
 

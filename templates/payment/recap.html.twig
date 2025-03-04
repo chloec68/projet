@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Récapitulatif de votre commande{% endblock %}
+
+{% block body %}
+    
+    {% for item in cartData %}
+   
+            {{item.product.productName}} - {{item.product.productVATprice}} - {{item.quantity}} - <br>
+
+    {% endfor %}
+
+{% endblock %}
