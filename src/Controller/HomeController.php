@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Repository\OrderRepository;
+use App\Service\VATpriceCalculator;
 use App\Repository\ProductRepository;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Response;
@@ -41,28 +42,39 @@ final class HomeController extends AbstractController
 
     // USER PROFILE > ORDER 
     #[Route('/user/order/{id}', name:'app_order')]
-    public function showOrder(OrderRepository $orderRepository, int $id)
+    public function showOrder(OrderRepository $orderRepository, int $id, VATpriceCalculator $VATpriceCalculator)
     {   
      
         $order = $orderRepository->find($id);
 
         $orderProducts = $order->getOrderProducts();
 
+
         $subTotals = [];
         foreach($orderProducts as $orderProduct){
             $quantity = $orderProduct->getQuantity();
-            $price = $orderProduct->getAppProduct()->getProductPrice();
-            $vatRate = $orderProduct->getAppProduct()->getVat()->getVatRate();
-            $vat = $price * $vatRate ;
-            $vatPrice = $price + $vat;
-            $subTotal = $vatPrice * $quantity;
+            $product = $orderProduct->getAppProduct() ;
+            $subTotal = $VATpriceCalculator->vatPriceSubTotal($product,$quantity);
+
             $subTotals[$orderProduct->getAppProduct()->getId()] = $subTotal; 
         }
+
+        // $subTotals = [];
+        // foreach($orderProducts as $orderProduct){
+        //     $quantity = $orderProduct->getQuantity();
+        //     $price = $orderProduct->getAppProduct()->getProductPrice();
+        //     $vatRate = $orderProduct->getAppProduct()->getVat()->getVatRate();
+        //     $vat = $price * $vatRate ;
+        //     $vatPrice = $price + $vat;
+        //     $subTotal = $vatPrice * $quantity;
+        //     $subTotals[$orderProduct->getAppProduct()->getId()] = $subTotal; 
+
+        //     //$orderProduct->getSubTotal()
+        // }
         
         return $this->render('home/order.html.twig', [
             'order' => $order,
             'subTotals' =>$subTotals,
-            'vatTotal' => $vatTotal,
             'meta_description' => 'Le détail de votre commande'
         ]);
     }
