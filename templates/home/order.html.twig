@@ -1,0 +1,87 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Votre commande {{order.orderReference}}{% endblock %}
+
+{% block body %}
+<main class="order__main">
+   <div><h1>Commande du {{order.dateOfPlacement|date('d/m/Y')}}</h1><span>Référence : <strong>{{order.orderReference}}</strong></span></div>
+   
+   <h2>Références client</h2>
+    <p><span class="fit">Nom client : </span><span class="bold name">{{order.orderUserLastName}}</span></p>
+    <p><span class="fit">Prénom client : </span><span class="bold name">{{order.orderUserFirstName}}</span></p>
+    <p><span class="fit">Email : </span><span class="bold">{{order.orderEmail}}</span></p>
+
+   <h2>Produit(s)</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Désignation</th>
+                <th>Prix unitaire</th>
+                <th>Quantité</th>
+                <th>TVA</th>
+                <th>Sous-total TTC</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for product in order.products %}
+                <tr>
+                    <td>{{product.productName}} {% if product.productVolume is not null %} {{product.productVolume}} {% else %} {{product.size.sizeName}} {% endif %}</td>
+                    <td>{{product.productPrice}}</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+ 
+   <h2>Total</h2>
+</main>
+
+<style>
+    .order__main{
+        font-family:'nunito';
+        padding:1rem 8rem;
+
+        div{
+            display:flex;
+            justify-content: space-between;
+            padding: 0.5rem 1rem;
+            box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px;
+
+            h1{
+                font-weight:400;
+                font-size:1em;
+            }
+
+            span{
+                border:none;
+                width:fit-content;
+            }
+        }
+
+        h2{
+            border-bottom:var(--main) solid 1px;
+            width:20%;
+            margin:4rem 0.5rem 2rem 0.5rem;
+            font-weight:400;
+            font-size:1em;
+        }
+
+        p{  
+            width:100%;
+            display: flex;
+            gap:5rem;
+            margin:1rem 0.5rem;
+        }
+
+        .name{
+            text-transform: capitalize;
+        }
+
+        .fit{
+            width:15%;
+        }
+    }
+</style>
+{% endblock %}

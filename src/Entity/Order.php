@@ -38,11 +38,11 @@ class Order
     #[ORM\Column(length: 255)]
     private ?string $orderEmail = null;
 
-    /**
-     * @var Collection<int, Product>
-     */
-    #[ORM\ManyToMany(targetEntity: Product::class, inversedBy: 'orders')]
-    private Collection $products;
+    // /**
+    //  * @var Collection<int, Product>
+    //  */
+    // #[ORM\ManyToMany(targetEntity: Product::class, inversedBy: 'orders')]
+    // private Collection $products;
 
     #[ORM\ManyToOne(inversedBy: 'orders')]
     #[ORM\JoinColumn(nullable: true)]
@@ -55,9 +55,17 @@ class Order
     #[ORM\OneToOne(mappedBy: 'appOrder', cascade: ['persist', 'remove'])]
     private ?Bill $bill = null;
 
+    /**
+     * @var Collection<int, OrderProducts>
+     */
+    #[ORM\OneToMany(targetEntity: OrderProducts::class, mappedBy: 'appOrder')]
+    private Collection $orderProducts;
+
+
     public function __construct()
     {
         $this->products = new ArrayCollection();
+        $this->orderProducts = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -149,30 +157,36 @@ class Order
         return $this;
     }
 
-    /**
-     * @return Collection<int, Product>
-     */
-    public function getProducts(): Collection
-    {
-        return $this->products;
-    }
+    // /**
+    //  * @return Collection<int, Product>
+    //  */
+    // public function getProducts(): Collection
+    // {
+    //     return $this->products;
+    // }
 
-    public function addProduct(Product $product, int $quantity): static
-    {
-        if (!$this->products->contains($product)) {
-            $this->products->add($product);
-            $this->productQuantity[$product->getId()] = $quantity;
-        }
+    // public function addProduct(Product $product, int $quantity): static
+    // {
+    //     if (!$this->products->contains($product)) {
+    //         $this->products->add($product);
+    //         // $this->productQuantity[$product->getId()] = $quantity;
+    //     }
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
-    public function removeProduct(Product $product): static
-    {
-        $this->products->removeElement($product);
+    // public function getProductQuantity(Product $product): ?int
+    // {   
 
-        return $this;
-    }
+    //     return $this->productQuantity[$product->getId()];
+    // }
+
+    // public function removeProduct(Product $product): static
+    // {
+    //     $this->products->removeElement($product);
+
+    //     return $this;
+    // }
 
     public function getAppUser(): ?User
     {
@@ -211,6 +225,36 @@ class Order
         }
 
         $this->bill = $bill;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, OrderProducts>
+     */
+    public function getOrderProducts(): Collection
+    {
+        return $this->orderProducts;
+    }
+
+    public function addOrderProduct(OrderProducts $orderProduct): static
+    {
+        if (!$this->orderProducts->contains($orderProduct)) {
+            $this->orderProducts->add($orderProduct);
+            $orderProduct->setAppOrder($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOrderProduct(OrderProducts $orderProduct): static
+    {
+        if ($this->orderProducts->removeElement($orderProduct)) {
+            // set the owning side to null (unless already changed)
+            if ($orderProduct->getAppOrder() === $this) {
+                $orderProduct->setAppOrder(null);
+            }
+        }
 
         return $this;
     }

@@ -41,11 +41,11 @@ final class HomeController extends AbstractController
 
     // USER PROFILE > ORDER 
     #[Route('/user/order/{id}', name:'app_order')]
-    public function showOrder(OrderRepository $orderRepository)
+    public function showOrder(OrderRepository $orderRepository, int $id)
     {   
-        $id=3;
+     
         $order = $orderRepository->find($id);
-        dd($order);
+
 
         return $this->render('home/order.html.twig', [
             'order' => $order,
