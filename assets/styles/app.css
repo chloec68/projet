@@ -549,7 +549,7 @@ footer small{
 
 .order__main{
     font-family:'nunito';
-    padding:1rem 8rem;
+    padding:1rem 10rem;
 
     div{
         display:flex;
@@ -1158,10 +1158,13 @@ footer small{
     transition:0.4s ease;
 }
 
-.basket-btn-green:hover{
+.basket-btn-green:hover,.basket-btn-green:hover{
     background-color:var(--green);
     border:var(--green) solid 1px;
+}
 
+.basket-btn-green:active{
+    transform:scale(0.8);
 }
 
   /*---------------------------*/
