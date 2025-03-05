@@ -43,11 +43,11 @@ class Product
     #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'products')]
     private Collection $users;
 
-    /**
-     * @var Collection<int, Order>
-     */
-    #[ORM\ManyToMany(targetEntity: Order::class, mappedBy: 'products')]
-    private Collection $orders;
+    // /**
+    //  * @var Collection<int, Order>
+    //  */
+    // #[ORM\ManyToMany(targetEntity: Order::class, mappedBy: 'products')]
+    // private Collection $orders;
 
     #[ORM\ManyToOne(inversedBy: 'products')]
     private ?Type $type = null;
@@ -213,32 +213,32 @@ class Product
         return $this;
     }
 
-    /**
-     * @return Collection<int, Order>
-     */
-    public function getOrders(): Collection
-    {
-        return $this->orders;
-    }
+    // /**
+    //  * @return Collection<int, Order>
+    //  */
+    // public function getOrders(): Collection
+    // {
+    //     return $this->orders;
+    // }
 
-    public function addOrder(Order $order): static
-    {
-        if (!$this->orders->contains($order)) {
-            $this->orders->add($order);
-            $order->addProduct($this);
-        }
+    // public function addOrder(Order $order): static
+    // {
+    //     if (!$this->orders->contains($order)) {
+    //         $this->orders->add($order);
+    //         $order->addProduct($this);
+    //     }
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
-    public function removeOrder(Order $order): static
-    {
-        if ($this->orders->removeElement($order)) {
-            $order->removeProduct($this);
-        }
+    // public function removeOrder(Order $order): static
+    // {
+    //     if ($this->orders->removeElement($order)) {
+    //         $order->removeProduct($this);
+    //     }
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
     public function getType(): ?Type
     {
@@ -318,11 +318,6 @@ class Product
         return $this;
     }
 
-    public function __toString(): string
-    {
-        return $this->getProductName();
-    }
-
     public function isPermanent(): ?bool
     {
         return $this->isPermanent;
@@ -357,5 +352,10 @@ class Product
         $this->isDeleted = $isDeleted;
 
         return $this;
+    }
+
+    public function __toString(): string
+    {
+        return $this->getProductName();
     }
 }
