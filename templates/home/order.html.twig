@@ -23,19 +23,21 @@
             </tr>
         </thead>
         <tbody>
-            {% for product in order.products %}
+            {% for orderProduct in order.orderProducts %}
                 <tr>
-                    <td>{{product.productName}} {% if product.productVolume is not null %} {{product.productVolume}} {% else %} {{product.size.sizeName}} {% endif %}</td>
-                    <td>{{product.productPrice}}</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td>{{orderProduct.appProduct.productName}} {% if orderProduct.appProduct.productVolume is not null %} {{orderProduct.appProduct.productVolume}} {% else %} {{orderProduct.appProduct.size.sizeName}} {% endif %}</td>
+                    <td class="centered">{{orderProduct.appProduct.productPrice}} €</td>
+                    <td class="centered">{{orderProduct.quantity|number_format(2,'.',' ')}}</td>
+                    <td class="centered">{{orderProduct.appProduct.vat.vatRate * 100}} %</td>
+                    <td class="centered bold">{{subTotals[orderProduct.appProduct.id]}} €</td>
                 </tr>
             {% endfor %}
         </tbody>
     </table>
  
    <h2>Total</h2>
+   <p><span>Total TTC :</span><span>{{order.orderTotal}} €</span></p>
+   <p><span>TVA : </span><span>{{vatTotal}}</span></p>
 </main>
 
 <style>
@@ -81,6 +83,9 @@
 
         .fit{
             width:15%;
+        }
+        table{
+            width:100%;
         }
     }
 </style>
