@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\OrderRepository;
 use App\Repository\ProductRepository;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Response;
@@ -26,14 +27,29 @@ final class HomeController extends AbstractController
         ]);
     }
 
+    // USER PROFILE
     #[Route('/user', name: 'app_user')]
     public function userProfile(Security $security):Response
     {   
         $user = $security->getUser();
-
+  
         return $this->render('home/profile.html.twig', [
             'user' => $user,
             'meta_description' => ''
+        ]);
+    }
+
+    // USER PROFILE > ORDER 
+    #[Route('/user/order/{id}', name:'app_order')]
+    public function showOrder(OrderRepository $orderRepository)
+    {   
+        $id=3;
+        $order = $orderRepository->find($id);
+        dd($order);
+
+        return $this->render('home/order.html.twig', [
+            'order' => $order,
+            'meta_description' => 'Le détail de votre commande'
         ]);
     }
 }
