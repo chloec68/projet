@@ -11,15 +11,15 @@
     <p><span class="fit">Prénom client : </span><span class="bold name">{{order.orderUserFirstName}}</span></p>
     <p><span class="fit">Email : </span><span class="bold">{{order.orderEmail}}</span></p>
 
-   <h2>Produit(s)</h2>
+   <h2>{% if nbItems > 1 %} Produits ({{nbItems}} produits) {% else %} Produit ({{ nbItems }} produit) {% endif %} <span></span></h2>
     <table>
         <thead>
             <tr>
                 <th>Désignation</th>
-                <th>Prix unitaire</th>
+                <th>Prix unitaire HT</th>
                 <th>Quantité</th>
                 <th>TVA</th>
-                <th>Sous-total TTC</th>
+                <th class="right">Sous-total TTC</th>
             </tr>
         </thead>
         <tbody>
@@ -29,15 +29,15 @@
                     <td class="centered">{{orderProduct.appProduct.productPrice}} €</td>
                     <td class="centered">{{orderProduct.quantity|number_format(2,'.',' ')}}</td>
                     <td class="centered">{{orderProduct.appProduct.vat.vatRate * 100}} %</td>
-                    <td class="centered bold">{{subTotals[orderProduct.appProduct.id]}} €</td>
+                    <td class="right bold">{{subTotals[orderProduct.appProduct.id]}} €</td>
                 </tr>
             {% endfor %}
         </tbody>
     </table>
  
-   <h2>Total</h2>
-   <p><span>Total TTC :</span><span>{{order.orderTotal}} €</span></p>
-   <p><span>TVA : </span><span></span></p>
+   <h2>Total TTC : <span class="bold">{{order.orderTotal}} €</span></h2>
+
+
 </main>
 
 <style>
@@ -67,7 +67,7 @@
             width:20%;
             margin:4rem 0.5rem 2rem 0.5rem;
             font-weight:400;
-            font-size:1em;
+            font-size:1.1em;
         }
 
         p{  
@@ -82,11 +82,22 @@
         }
 
         .fit{
-            width:15%;
+            width:10%;
         }
         table{
             width:100%;
+            border-collapse:separate;
+            border-spacing: 0 15px;
+       
+            td,th{
+                width:fit-content;
+                padding:1rem;
+            }
+        }
+        .right{
+            text-align: right;
         }
     }
+
 </style>
 {% endblock %}

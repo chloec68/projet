@@ -49,32 +49,21 @@ final class HomeController extends AbstractController
 
         $orderProducts = $order->getOrderProducts();
 
-
+        // $nbItems = 0;
         $subTotals = [];
         foreach($orderProducts as $orderProduct){
             $quantity = $orderProduct->getQuantity();
             $product = $orderProduct->getAppProduct() ;
             $subTotal = $VATpriceCalculator->vatPriceSubTotal($product,$quantity);
-
             $subTotals[$orderProduct->getAppProduct()->getId()] = $subTotal; 
+
+            // $nbItems += $quantity;
         }
-
-        // $subTotals = [];
-        // foreach($orderProducts as $orderProduct){
-        //     $quantity = $orderProduct->getQuantity();
-        //     $price = $orderProduct->getAppProduct()->getProductPrice();
-        //     $vatRate = $orderProduct->getAppProduct()->getVat()->getVatRate();
-        //     $vat = $price * $vatRate ;
-        //     $vatPrice = $price + $vat;
-        //     $subTotal = $vatPrice * $quantity;
-        //     $subTotals[$orderProduct->getAppProduct()->getId()] = $subTotal; 
-
-        //     //$orderProduct->getSubTotal()
-        // }
-        
+        $nbItems = 1;
         return $this->render('home/order.html.twig', [
             'order' => $order,
             'subTotals' =>$subTotals,
+            // 'nbItems' => $nbItems,
             'meta_description' => 'Le détail de votre commande'
         ]);
     }
