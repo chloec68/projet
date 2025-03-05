@@ -624,12 +624,15 @@ footer small{
     height: 100%;
     overflow: auto;
     background-color: rgba(0, 0, 0, 0.4);
+    
 }
 
 .alertContent {
-    background-color: var(--white);
+    /* background-color: var(--white); */
+    background-color: var(--main);
     padding: 20px;
-    border: 1px solid #888;
+    /* border: 1px solid #888; */
+    border:solid 1px var(--green);
     width: 80%;
     max-width: 400px;
     border-radius: 8px;
@@ -640,21 +643,27 @@ footer small{
 }
 
 .closeAlert {
-    color:var(--red);
+    /* color:var(--red); */
+    color:var(--white);
     text-align:right;
 }
 
 .closeAlert:hover,
 .closeAlert:focus {
-    color: black;
+    /* color: black; */
+    color:var(--green);
     text-decoration: none;
     cursor: pointer;
 }
 
 .alertMessage {
-    color: var(--main);
-    font-family:'nunito';
-    font-size:1.5em;
+    /* color: var(--main); */
+    color:var(--white);
+    /* font-family:'nunito'; */
+    font-family: 'bebas neue';
+    letter-spacing: 2px;;
+    /* font-size:1.5em; */
+    font-size:2em;
 }
 
 /* ************************* PRODUCT CARD ************************* */
