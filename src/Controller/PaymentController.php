@@ -9,6 +9,7 @@ use App\Entity\Bill;
 use App\Entity\Order;
 use Stripe\Checkout\Session;
 use App\Entity\Establishment;
+use App\Entity\OrderProducts;
 use App\Form\PickUpPointFormType;
 use App\Repository\OrderRepository;
 use App\Form\IdentificationFormType;
@@ -163,8 +164,14 @@ class PaymentController extends AbstractController
             foreach ($cart as $id => $quantity) {
                 // récupération des objets produit en fonction de l'id contenu dans le tableau associatif panier 
                 $product = $productRepository->find($id);
+                // création d'un nouvel objet OrderProduct
+                $orderProduct = new OrderProducts();
+                // ajout du produit à OrderProduct
+                $orderProduct->setAppProduct($product);
+                // ajout de la quantity 
+                $orderProduct->setQuantity($quantity);
                 // ajout de chaque produit et de la quantité (valeur) associée à la commande
-                $order->addProduct($product,$quantity);
+                $order->addOrderProduct($orderProduct);
             }
             // idem 
             $appUser = $security->getUser();
@@ -200,13 +207,13 @@ class PaymentController extends AbstractController
             $bill->setBillDate(new \DateTime()); 
 
             //récupération de la collection d'objets Produit de la commande
-            $products = $order->getProducts();
+            $orderproducts = $order->getOrderProducts();
             //initialisation du prix total en dehors de la boucle pour qu'il ne soit pas reset à 0 à chaque tour de boucle
             $noVatPriceTotal = 0;
             //pour chaque produit
-            foreach ($products as $product) {
+            foreach ($orderproducts as $orderproduct) {
                 // récupérer le prix HT de chaque produit
-                $priceNoVat = $product->getProductPrice();
+                $priceNoVat = $orderproduct->getAppProduct()->getProductPrice();
                 // additionner chaque prix HT et les ajouter au total
                 $noVatPriceTotal += $priceNoVat;
             }
@@ -231,10 +238,10 @@ class PaymentController extends AbstractController
             $nbItems = $session->get('nbItems');
             $id=1;
             $seller = $establishmentRepository->find($id);
-            $products = $order->getProducts();
+            $orderproducts = $order->getOrderProducts();
             $totalNoVat = 0;
-            foreach($products as $product){
-                $priceNoVat = $product->getProductPrice();
+            foreach($orderproducts as $orderproduct){
+                $priceNoVat = $orderproduct->getAppProduct()->getProductPrice();
                 $totalNoVat += $priceNoVat ; 
             }
             $vat = $order->getOrderTotal() - $totalNoVat ; 
