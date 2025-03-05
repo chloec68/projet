@@ -58,7 +58,7 @@ class Order
     /**
      * @var Collection<int, OrderProducts>
      */
-    #[ORM\OneToMany(targetEntity: OrderProducts::class, mappedBy: 'appOrder')]
+    #[ORM\OneToMany(targetEntity: OrderProducts::class, mappedBy: 'appOrder', cascade:['persist'])]
     private Collection $orderProducts;
 
 
