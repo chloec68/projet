@@ -2,6 +2,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Anton+SC&family=Bebas+Neue&family=Fredoka:wght@300..700&family=Istok+Web:ital,wght@0,400;0,700;1,400;1,700&family=Quicksand:wght@300..700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Anton+SC&family=Archivo+Narrow:ital,wght@0,400..700;1,400..700&family=Bebas+Neue&family=Fredoka:wght@300..700&family=Istok+Web:ital,wght@0,400;0,700;1,400;1,700&family=Quicksand:wght@300..700&display=swap');
 
 /* **************************************************************** GENERAL ************************************************************ */
 
@@ -183,21 +184,30 @@ footer{
 }
 
 #contact,#find,#follow,#about{
-    font-family:"Anton SC", serif;
-    font-size:1em;
+    font-family:"anton sc", serif;
+    font-size:1.1em;
+    letter-spacing:0.5px;
+
 }
 
 .footer__wrapper-container span{
-    font-family: "Archivo Narrow", serif;
+    font-family: "archivo narrow", serif;
     font-size:1em;
 }
 
 .icons-container{
+    width:100%;
     display: flex;
+    gap:1rem;
+    justify-content: center;
+
+    i{
+        font-size:1.5em;
+    }
 }
 
 footer small{
-    font-family:"Archivo Narrow", serif;
+    font-family:"archivo narrow", serif;
 }
 
 .newsletter__container{
@@ -251,17 +261,13 @@ footer small{
     transition:0.3s ease-out;
 }
 
-.newsletter__container button:hover{
+.newsletter__container button:hover,.newsletter__container button:focus{
     box-shadow: var(--green) 0px 7px 29px 0px;
 }
 
 .newsletter__container button:active{
-   padding:0.8rem;
+   padding:0.3rem;
 }
-.newsletter__container button:focus{
-    /* A FAIRE */
-}
-
 
 /* **************************************************************** HOME PAGE ************************************************************ */
 #home-wrapper h2,#home-wrapper h3{
@@ -279,6 +285,7 @@ footer small{
     margin:0;
     width:5em;
     opacity:95%;
+    background-color:var(--green);
 }
 
 #icone-doubleArrowRight{
@@ -335,8 +342,8 @@ footer small{
 /* ************************* SWIPER ************************* */
 
 .swiper {
-    width: 100%;
-    height: 45vh;
+    width: 80%;
+    height: 60vh;
     margin: 2rem auto 2rem auto;
   }
 
