@@ -628,11 +628,9 @@ footer small{
 }
 
 .alertContent {
-    /* background-color: var(--white); */
-    background-color: var(--main);
+    background-color: var(--ultra-light-grey);
     padding: 20px;
-    /* border: 1px solid #888; */
-    border:solid 1px var(--green);
+    border: 1px solid var(--grey);
     width: 80%;
     max-width: 400px;
     border-radius: 8px;
@@ -643,27 +641,23 @@ footer small{
 }
 
 .closeAlert {
-    /* color:var(--red); */
-    color:var(--white);
+    color:var(--main);
     text-align:right;
 }
 
 .closeAlert:hover,
 .closeAlert:focus {
-    /* color: black; */
     color:var(--green);
     text-decoration: none;
     cursor: pointer;
 }
 
 .alertMessage {
-    /* color: var(--main); */
-    color:var(--white);
-    /* font-family:'nunito'; */
-    font-family: 'bebas neue';
-    letter-spacing: 2px;;
-    /* font-size:1.5em; */
-    font-size:2em;
+    color:var(--main);
+    font-family: 'nunito';
+    letter-spacing:1px;
+    font-size:1.5em;
+    font-weight:600;
 }
 
 /* ************************* PRODUCT CARD ************************* */
