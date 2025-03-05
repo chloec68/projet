@@ -493,6 +493,19 @@ footer small{
         p{
             margin:2rem 0;
         }
+
+        a,i{
+            color:var(--main);
+            transition:0.3s ease;
+        }
+
+        a:hover, i:hover,a:focus,i:focus{
+            transform:scale(1.2);
+        }
+
+        a:active,i:active{
+            transform:scale(0.8);
+        }
     }
 
     #personal-info{
@@ -532,6 +545,65 @@ footer small{
         }
     }
 
+/* **************************************************************** ORDER VIEW ************************************************************ */
+
+.order__main{
+    font-family:'nunito';
+    padding:1rem 8rem;
+
+    div{
+        display:flex;
+        justify-content: space-between;
+        padding: 0.5rem 1rem;
+        box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px;
+
+        h1{
+            font-weight:400;
+            font-size:1em;
+        }
+
+        span{
+            border:none;
+            width:fit-content;
+        }
+    }
+
+    h2{
+        border-bottom:var(--main) solid 1px;
+        width:20%;
+        margin:4rem 0.5rem 2rem 0.5rem;
+        font-weight:400;
+        font-size:1.1em;
+    }
+
+    p{  
+        width:100%;
+        display: flex;
+        gap:5rem;
+        margin:1rem 0.5rem;
+    }
+
+    .name{
+        text-transform: capitalize;
+    }
+
+    .fit{
+        width:10%;
+    }
+    table{
+        width:100%;
+        border-collapse:separate;
+        border-spacing: 0 15px;
+   
+        td,th{
+            width:fit-content;
+            padding:1rem;
+        }
+    }
+    .right{
+        text-align: right;
+    }
+}
 
 /* **************************************************************** PRODUCTS/BEERS ************************************************************ */
 .products__page-wrapper{
