@@ -301,7 +301,7 @@ footer small{
     text-transform: uppercase;
     text-decoration: none;
     font-size: 1.8em;
-    color:var(--black);
+    color:var(--main);
 }
 
 .seeAll-link:hover{
@@ -400,7 +400,7 @@ footer small{
 .register-login-btn{
     width:fit-content;
     padding:0.8rem;
-    background-color: var(--black);
+    background-color: var(--main);
     color:var(--white);
     font-family: "Roboto Condensed", serif;
     font-size: 1.3em;
@@ -702,7 +702,7 @@ footer small{
     margin: 2rem auto 1rem auto;
     display: block;
     padding:0.3rem;
-    color:var(--black);
+    color:var(--main);
     border:none;
     border-radius: 5px;
     font-family: 'Bebas Neue','serif';
@@ -721,7 +721,7 @@ footer small{
     position: sticky;
     top:0;
     width:18%;
-    border-right:1px solid var(--black);
+    border-right:1px solid var(--main);
     height: fit-content;
     padding-right:2rem;
 }
@@ -763,7 +763,7 @@ footer small{
     margin: 1rem auto 1rem auto;
     width:100%;
     padding:0.3rem;
-    background-color: var(--black);
+    background-color: var(--main);
     color:var(--white);
     font-size:1.5em;
     border-radius: 5px;
@@ -853,7 +853,7 @@ footer small{
 
 .quantity button {
   background-color: var(--light-grey);
-  color: var(--black);
+  color: var(--main);
   border: none;
   cursor: pointer;
   font-size: 1.2em;
@@ -971,7 +971,7 @@ footer small{
            margin:1rem auto 1rem auto;
            display: block;
            width:fit-content;
-           color:var(--black);
+           color:var(--main);
            border-radius:6px;
        }
 
@@ -1157,8 +1157,8 @@ footer small{
     padding:0.5rem 1rem;
     border-radius:20px;
     border:none;
-    background-color: var(--black);
-    border:var(--black) solid 1px;
+    background-color: var(--main);
+    border:var(--main) solid 1px;
     color:var(--white);
     font-size:1.3em;
     font-family:'bebas neue','serif';
@@ -1271,7 +1271,7 @@ border-radius: 50px;
     transition-duration: 0.8s;
     transition-property: transform, opacity;
     display: block;
-    color: var(--black);;
+    color: var(--main);;
     width: inherit;
     background-size: cover !important;
     background-position: center !important;
@@ -1333,7 +1333,7 @@ border-radius: 50px;
     margin: 1rem auto 1rem auto;
     width:60%;
     padding:0.3rem;
-    background-color: var(--black);
+    background-color: var(--main);
     color:var(--white);
     font-size:1.5em;
     border-radius: 5px;
