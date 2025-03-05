@@ -3,7 +3,14 @@
 {% block title %}Bières{% endblock %}
 
 {% block body %}
-    
+
+<div class="alertBox">
+    <div class="alertContent">
+        <p class="closeAlert"><i class="fa-solid fa-xmark"></i></p>
+        <p class="alertMessage"></p>
+    </div>
+</div>
+
 <main class="detail-product-main">
 
         <section class="bezier-section">
@@ -46,7 +53,7 @@
             <p>Quantité :</p>
                 <div class="qty-container">
                     <button class="qty-btn-minus btn-rounded decrement" type="button" data-product="{{product.id}}"><i class="fa-solid fa-minus"></i></button>
-                    <input type="text" name="qty" value="1" min="0" class="input-qty input-rounded" data-product="{{ product.id }}">
+                    <input type="text" name="qty" value="1" min="0" class="input-qty input-rounded qty-input" data-product="{{ product.id }}">
                     <button class="qty-btn-plus btn-rounded increment" type="button" data-product="{{product.id}}"><i class="fa-solid fa-plus"></i></button>
                 </div>
             </div>

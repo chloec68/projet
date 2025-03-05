@@ -79,6 +79,7 @@ const alertBox = document.querySelector(".alertBox");
 let alertMessage = document.querySelector(".alertMessage");
 const closeAlert = document.querySelector(".closeAlert");
 const successMsg = document.getElementById("success-msg");
+const qtyInput = document.querySelector(".qty-input")
 
 let addToCartButtons = document.querySelectorAll(".add-to-cart");
 addToCartButtons.forEach(button => {
@@ -87,8 +88,15 @@ addToCartButtons.forEach(button => {
     let quantity = document.querySelector(`input[data-product="${product}"]`).value;
 
     if(alertBox && alertMessage && closeAlert){
-      alertMessage.innerHTML = "Produit ajouté au panier";
-      alertBox.style.display = "block";
+      if(qtyInput.value > 1){
+        alertMessage.innerHTML = "Produits ajoutés au panier";
+        alertBox.style.display = "block";
+      }else if(qtyInput.value == 1) {
+        alertMessage.innerHTML = "Produit ajouté au panier";
+        alertBox.style.display = "block";
+      }else{
+        alertBox.style.display = "none";
+      }
   
       closeAlert.addEventListener('click',function(){
         alertBox.style.display = "none";
