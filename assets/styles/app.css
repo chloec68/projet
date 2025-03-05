@@ -1,17 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Fredoka:wght@300..700&family=Istok+Web:ital,wght@0,400;0,700;1,400;1,700&family=Quicksand:wght@300..700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Anton+SC&family=Bebas+Neue&family=Fredoka:wght@300..700&family=Istok+Web:ital,wght@0,400;0,700;1,400;1,700&family=Quicksand:wght@300..700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Anton+SC&family=Archivo+Narrow:ital,wght@0,400..700;1,400..700&family=Bebas+Neue&family=Fredoka:wght@300..700&family=Istok+Web:ital,wght@0,400;0,700;1,400;1,700&family=Quicksand:wght@300..700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
+
 /* **************************************************************** GENERAL ************************************************************ */
 
 :root{
     --white:#FCFCFC;
     --blue:#2E5BFF;
-    /* --black:#191919; */
-    /* --main:#2b2e2b; */
     --main:#242426;
-    --black:#242426;
+    /* --black:#242426; */
     --light-grey:#D9D9D9;
     --ultra-light-grey:#f4f4f4;
     --dark-grey:#7E8286;
@@ -162,7 +160,7 @@ a{
 
 
 footer{
-    background-color:var(--black);
+    background-color:var(--main);
     width:100%;
     color:var(--white);
     padding: 0 0 2rem 0;
@@ -709,7 +707,12 @@ footer small{
     border-radius: 5px;
     font-family: 'Bebas Neue','serif';
     font-size:1.3em;
+    transition:0.4s ease;
 }
+
+/* ************************* QUANTITY INPUT ************************* */
+
+/* ===> cf:supra  CART / QTY INPUT */
 
 /* ************************* SIDEBAR ************************* */
 
@@ -766,6 +769,7 @@ footer small{
     border-radius: 5px;
     border:none;
     font-family:'Bebas Neue','serif';
+    transition:0.4s ease;
 }
 
 .reset-button{
@@ -777,7 +781,7 @@ footer small{
     border-radius:5px;
     padding:0.3rem;
     color:#191919;
-    /* font-family: "Nunito", serif; */
+    transition:0.4s ease;
 }
 
 .reset-button:hover{
@@ -856,7 +860,7 @@ footer small{
   width: 1.2em;
   height: 100%;
   text-align: center;
-  transition: background-color 0.2s;
+  transition: 0.4s ease;
 }
 
 .quantity button:hover {
