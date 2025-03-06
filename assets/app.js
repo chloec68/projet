@@ -252,8 +252,9 @@ function updateCartSubTotals(){
     });
   });
 
+  // ****************************************************************** SIDE CART 
 
-// PANIER LATERAL - TOGGLE  
+// SIDE CART - TOGGLE  
 const sideCart = document.querySelector('.cart-summary'); 
 const cartIcon = document.querySelector('.fa-basket-shopping');
 
@@ -272,80 +273,55 @@ document.addEventListener('click', function(event) {
 });
 
 
-//  function updateSideCart(){
-//   const cartItems = document.querySelectorAll(".sideCart-item");
-//   cartItems.forEach((cartItem, index) => {
-    
-//     const url = '/cart/side-cart';
+// SIDE CART
 
-//     fetch(url, {
-//       headers:{
-//         'Content-Type':'application/json',
-//       }
-//     })
-//     .then(response => {
-//       console.log(response);
-//       return response.json();
-//     } )
-//     .then(data => {
-//       console.log('data',data);
-//       console.log('hello');
-//       if(data.length >0){
-//         data.forEach(item => {
-//           let item = data[index];
-//           cartItem.querySelector('.productName').textContent = item.productName;
-//           cartItem.querySelector('.typeOrColor').textContent = item.productType ? item.productType : item.productColor; 
-//           cartItem.querySelector('.volumeOrSize').textContent = item.productVolume ? item.productVolume : item.size;
-//           cartItem.querySelector('.counter-display').value = item.quantity;
-//           cartItem.querySelector('.product-price').textContent = item.VATprice ;
-//           cartItem.querySelector('.sub-total__side-cart').textContent = item.VATprice * item.quantity + ' €' ;
-//           // document.querySelector('price-total').textContent = total ;
-//         });
+const basketButton = document.querySelector('.fa-basket-shopping');
+basketButton.addEventListener('click',function(){
 
-//       }
-//     })
-//     .catch(error => console.error('Erreur lors de la mise à jour du panier:', error))
-//   });
-// }
+      const url = '/cart/side-cart';
+    fetch(url, {
+      headers:{
+        'Content-Type':'application/json',
+      }
+    })
+    .then(response => {
+      return response.json();
+    } )
+    .then(data => {
+      const cartSummary = document.querySelector('.cart-summary');
+      let htmlContent = "<h2>Votre panier</h2><a href='/cart'>Voir le panier</a>";
+        if(data.length > 0){
+          
+            data.forEach(item => {
+              htmlContent += 
+                `<article class="sideCart-item side-cart-product">
+                    <div class="item-containers">
+                        <div class="item-container">
+                          <img class="product-pic" src="${item.picture}" alt="Photo du produit">
+                          <p><span class="productName">${item.productName} -</span> <span>${item.type ? item.type : item.productColor} -</span> <span>${item.volume ? item.volume : item.size.sizeName}</span> </p>
+                        </div>
+                        <div class="item-container middle">
+                          <div class="counter">
+                            <input class="counter-display input-box" type="number" value="${item.quantity}" min="0" />
+                          </div>
+                          <p class="product-price">x ${item.VATprice} €</p>
+                        </div>
+                        <div class="item-container right bold">
+                          <p class="sub-total__side-cart">Sous-total : ${item.VATprice * item.quantity} €</p>
+                        </div>
+                    </div>
+                  </article>
+                `;
+            })
+            htmlContent += 
+            '<p class="side-cart__nbItems">  Nombre d\'articles : '+ data[data.length-1].nbItems + '</p> <div class="total bold"><p>Total ttc :</p><p class="bold side-cart-total">' + data[data.length-1].total + '€</p></div>';
 
-
-
-
-
-
-
-
-
-
-// INCREMENT QUANTITY (SIDE CART)
-
-// const incrementButtonsSideCart = document.querySelectorAll('.side-cart-increment');
-// incrementButtonsSideCart.forEach(button => {
-//   button.addEventListener('click', function(){
-//     let product = button.getAttribute('side-cart-product');
-//     let input = document.querySelector(`input[side-cart-product="${product}"]`);
-//     let currentQuantity = parseInt(input.value);
-//     input.value = currentQuantity + 1 ; 
-
-//   });
-// }); 
-
-// DECREMENT QUANTITY (SIDE CART)
-// const decrementButtonsSideCart = document.querySelectorAll('.side-cart-decrement');
-
-// decrementButtonsSideCart.forEach(button => {
-//   button.addEventListener('click', function(){
-//     let product = button.getAttribute('side-cart-product');
-//     let input = document.querySelector(`input[side-cart-product="${product}"]`);
-//     let currentQuantity = parseInt(input.value);
-//     if(currentQuantity > 0) {
-//       input.value = currentQuantity -1;
-//       updatePriceTotal()
-//       updateCartSubTotals()
-//       updateCart(product, -1);
-//     }
-//   });
-// });
+      }else{
+        htmlContent = "<h2>Votre panier</h2><a href='/cart'>Voir le panier</a> <p>Le panier est vide</p>";
+      }
+      cartSummary.innerHTML = htmlContent;
+    })
+})
 
 
 
