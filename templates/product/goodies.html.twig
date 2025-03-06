@@ -69,7 +69,8 @@
                 {% endfor %}
 
                 <h3 class="centered">{{product.productName}}</h3> 
-                {# <p class="centered">{{product.type.typeName}} | {{product.productAlcoholLevel}} | {{product.productVolume}}</p> #}
+                {% if product.productStock > 10 %}<div class="stock-info"><div class="green-dot"></div>en stock</div>{% else %} <div class="stock-info"><div class="red-dot"></div>indisponible</div>{% endif %}
+                <p class="centered">{{product.size.sizeName}} | {{product.productColor}} </p>
                 <p class="centered">{{product.productVATprice}} €</p>
                 <div class="wrapper">
                     <div class="quantity">
