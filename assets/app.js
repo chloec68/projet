@@ -289,7 +289,7 @@ basketButton.addEventListener('click',function(){
                 <div class="item-containers">
                     <div class="item-container">
                       <img class="product-pic" src="${item.picture}" alt="Photo du produit">
-                      <p><span class="productName">${item.productName} -</span> <span>${item.type ? item.type : item.productColor} -</span> <span>${item.volume ? item.volume : item.size.sizeName}</span> </p>
+                      <p><span class="productName">${item.productName} -</span> <span>${item.type ? item.type : item.color} -</span> <span>${item.volume ? item.volume : item.size}</span> </p>
                     </div>
                     <div class="item-container middle">
                       <div class="counter">
