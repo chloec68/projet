@@ -1,17 +1,19 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Votre profil{% endblock %}
+{% block title %}Votre compte{% endblock %}
 
 {% block body %}
+<h1 class="centered">Votre compte</h1>
     <main class="user-profile__main">
+       
         <div id="side-container">
             <a href=""><i class="fa-solid fa-heart"></i> Mes favoris</a>
         </div>
 
         <div id="main-container">
-            <h3>Informations du compte</h3>
+            <h2>Informations du compte</h2>
             <p id="personal-info">Email : <span class="bold">{{user.email}}</span></p>
-            <h3>Mes commandes passées</h3>
+            <h2>Mes commandes passées</h2>
             {% if user.orders is not empty %}
                 {% for order in user.orders %}
                     <p>Commande du {{ order.dateOfPlacement|date('d-m-Y') }} <a href="{{ path('app_order',{id:order.id}) }}"><i class="fa-regular fa-circle-right"></i></a></p>
