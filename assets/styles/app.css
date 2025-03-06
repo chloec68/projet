@@ -506,12 +506,13 @@ footer small{
         gap:3rem;
         padding:1rem 6rem 1rem 0rem;
 
-        h3{
+        h2{
             font-weight:400;
             box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px;
             padding:0.5rem;
             border-radius:5px;
             width:90%;
+            font-size:1.2em;
         }
     }
 
