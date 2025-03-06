@@ -133,7 +133,7 @@ class CartController extends AbstractController
                     $pictures[] = $picture->getPictureName();
                 }
 
-                if(isset($pictures)){
+                if(isset($picture)){
                     $picture = $pictures[0];
                 }else{
                     $picture = "";
