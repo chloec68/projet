@@ -131,14 +131,14 @@ class CartController extends AbstractController
                 $pictures = [];
                 foreach ($product->getPictures() as $picture){
                     $pictures[] = $picture->getPictureName();
+
+                    if(isset($picture)){
+                        $picture = $pictures[0];
+                    }else{
+                        $picture = "";
+                    }
                 }
 
-                if(isset($picture)){
-                    $picture = $pictures[0];
-                }else{
-                    $picture = "";
-                }
-                
                 $size = $product->getSize();
                 if (isset($size)){
                     $size = $size->getSizeName();
