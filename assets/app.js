@@ -104,7 +104,6 @@ addToCartButtons.forEach(button => {
     }
     if (parseInt(quantity) > 0) {
       updateCart(product, quantity);
-      // updateSideCartQuantity(product,quantity);
     }
   });
 });
@@ -125,9 +124,6 @@ incrementButtonsCart.forEach(button => {
     updatePriceTotal();
     updateCartSubTotals();
     updateCart(product, 1);
-
-    // updateSideCart()
-
   });
 }); 
 
@@ -201,7 +197,6 @@ function updatePriceTotal(){
 
 }
 
-
 // UPDATE SUBTOTALS (CART)
 function updateCartSubTotals(){
   const cartItems = document.querySelectorAll('.cart-item');
@@ -217,7 +212,6 @@ function updateCartSubTotals(){
 }
 
  // DELETE ITEM (CART)
-
   const removeItemButton = document.querySelectorAll('.remove-item');
   removeItemButton.forEach(button => {
     button.addEventListener('click',function(){
@@ -252,14 +246,13 @@ function updateCartSubTotals(){
     });
   });
 
-  // ****************************************************************** SIDE CART 
+  // ******************************************************************************** SIDE CART********************************************************* 
 
-// SIDE CART - TOGGLE  
+// SIDE CART - DISPLAY / TOGGLE  
 const sideCart = document.querySelector('.cart-summary'); 
 const cartIcon = document.querySelector('.fa-basket-shopping');
 
 cartIcon.addEventListener('click', function() {
-  // updateSideCart()
   sideCart.classList.toggle('visible');
 });
 
@@ -273,54 +266,52 @@ document.addEventListener('click', function(event) {
 });
 
 
-// SIDE CART
-
+// SIDE CART - CONTENT UPDATE
 const basketButton = document.querySelector('.fa-basket-shopping');
 basketButton.addEventListener('click',function(){
 
-      const url = '/cart/side-cart';
-    fetch(url, {
-      headers:{
-        'Content-Type':'application/json',
-      }
-    })
-    .then(response => {
-      return response.json();
-    } )
-    .then(data => {
-      const cartSummary = document.querySelector('.cart-summary');
-      let htmlContent = "<h2>Votre panier</h2><a href='/cart'>Voir le panier</a>";
-        if(data.length > 0){
-          
-            data.forEach(item => {
-              htmlContent += 
-                `<article class="sideCart-item side-cart-product">
-                    <div class="item-containers">
-                        <div class="item-container">
-                          <img class="product-pic" src="${item.picture}" alt="Photo du produit">
-                          <p><span class="productName">${item.productName} -</span> <span>${item.type ? item.type : item.productColor} -</span> <span>${item.volume ? item.volume : item.size.sizeName}</span> </p>
-                        </div>
-                        <div class="item-container middle">
-                          <div class="counter">
-                            <input class="counter-display input-box" type="number" value="${item.quantity}" min="0" />
-                          </div>
-                          <p class="product-price">x ${item.VATprice} €</p>
-                        </div>
-                        <div class="item-container right bold">
-                          <p class="sub-total__side-cart">Sous-total : ${item.VATprice * item.quantity} €</p>
-                        </div>
+  const url = '/cart/side-cart';
+  fetch(url, {
+    headers:{
+      'Content-Type':'application/json',
+    }
+  })
+  .then(response => {
+    return response.json();
+  } )
+  .then(data => {
+    const cartSummary = document.querySelector('.cart-summary');
+    let htmlContent = "<h2>Votre panier</h2><a href='/cart'>Voir le panier</a>";
+      if(data.length > 0){
+        data.forEach(item => {
+          htmlContent += 
+            `<article class="sideCart-item side-cart-product">
+                <div class="item-containers">
+                    <div class="item-container">
+                      <img class="product-pic" src="${item.picture}" alt="Photo du produit">
+                      <p><span class="productName">${item.productName} -</span> <span>${item.type ? item.type : item.productColor} -</span> <span>${item.volume ? item.volume : item.size.sizeName}</span> </p>
                     </div>
-                  </article>
-                `;
-            })
-            htmlContent += 
-            '<p class="side-cart__nbItems">  Nombre d\'articles : '+ data[data.length-1].nbItems + '</p> <div class="total bold"><p>Total ttc :</p><p class="bold side-cart-total">' + data[data.length-1].total + '€</p></div>';
+                    <div class="item-container middle">
+                      <div class="counter">
+                        <input class="counter-display input-box" type="number" value="${item.quantity}" min="0" />
+                      </div>
+                      <p class="product-price">x ${item.VATprice} €</p>
+                    </div>
+                    <div class="item-container right bold">
+                      <p class="sub-total__side-cart">Sous-total : ${item.VATprice * item.quantity} €</p>
+                    </div>
+                </div>
+              </article>
+            `;
+        })
+        htmlContent += 
+        '<p class="side-cart__nbItems">  Nombre d\'articles : '+ data[data.length-1].nbItems + '</p> <div class="total bold"><p>Total ttc :</p><p class="bold side-cart-total">' + data[data.length-1].total + '€</p></div>';
 
       }else{
         htmlContent = "<h2>Votre panier</h2><a href='/cart'>Voir le panier</a> <p>Le panier est vide</p>";
       }
-      cartSummary.innerHTML = htmlContent;
-    })
+    cartSummary.innerHTML = htmlContent;
+  })
 })
 
 
