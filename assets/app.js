@@ -293,22 +293,22 @@ basketButton.addEventListener('click',function(){
                     </div>
                     <div class="item-container middle">
                       <div class="counter">
-                        <input class="counter-display input-box" type="number" value="${item.quantity}" min="0" />
+                        <input class="input-box" type="number" value="${item.quantity}" min="0">
                       </div>
                       <p class="product-price">x ${item.VATprice} €</p>
                     </div>
                     <div class="item-container right bold">
-                      <p class="sub-total__side-cart">Sous-total : ${item.VATprice * item.quantity} €</p>
+                      <p class="sub-total__side-cart">${item.VATprice * item.quantity} €</p>
                     </div>
                 </div>
               </article>
             `;
         })
         htmlContent += 
-        '<p class="side-cart__nbItems">  Nombre d\'articles : '+ data[data.length-1].nbItems + '</p> <div class="total bold"><p>Total ttc :</p><p class="bold side-cart-total">' + data[data.length-1].total + '€</p></div>';
+        '<p class="side-cart__nbItems centered">  Nombre d\'articles : '+ data[data.length-1].nbItems + '</p> <div class="total bold"><p>Total ttc :</p><p class="bold side-cart-total">' + data[data.length-1].total + '€</p></div>';
 
       }else{
-        htmlContent = "<h2>Votre panier</h2><a href='/cart'>Voir le panier</a> <p>Le panier est vide</p>";
+        htmlContent = "<h2>Votre panier</h2><a href='/cart'>Voir le panier</a> <p class='empty-sidecart'>Le panier est vide</p>";
       }
     cartSummary.innerHTML = htmlContent;
   })
