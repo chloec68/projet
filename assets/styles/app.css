@@ -855,11 +855,13 @@ footer small{
     width:fit-content;
     display: flex;
     gap:1rem;
+    transition:0.2s ease;
 }
 
 .redirection-link:hover {
-    box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
+    box-shadow: var(--dark-grey) 0 8px 15px;
     transform: translateY(-2px);
+    background-color:var(--green);
   }
 
   .redirection-link:active,  .redirection-link:focus  {

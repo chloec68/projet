@@ -126,21 +126,52 @@ class CartController extends AbstractController
             if($product){
                 $VATprice = number_format($VATpriceCalculator->VATprice($product),2,'.','');
                 $product->setProductVATprice($VATprice);
+                $total += $VATprice;
+                $nbItems += $quantity;
                 $pictures = [];
                 foreach ($product->getPictures() as $picture){
                     $pictures[] = $picture->getPictureName();
                 }
 
+                if(isset($pictures)){
+                    $picture = $pictures[0];
+                }else{
+                    $picture = "";
+                }
+                
+                $size = $product->getSize();
+                if (isset($size)){
+                    $size = $size->getSizeName();
+                }else{
+                    $size="";
+                }
+
+                $type = $product->getType();
+                if(isset($type)){
+                    $type = $type->getTypeName();
+                }else{
+                    $type ="";
+                }
+
+                $volume = $product->getProductVolume();
+                if(isset($volume)){
+                    $volume;
+                }else{
+                    $volume="";
+                }
+
                 $data[]=[
                     'productId' => $product->getId(),
                     'productName'=>$product->getProductName(),
-                    'type' => $product->getType()->getTypeName(),
-                    'quantity'=>$quantity,
                     'VATprice'=> $VATprice,
+                    'picture' => $picture,
+                    'quantity'=>$quantity,
+                    'type' => $type,
                     'color' => $product->getProductColor(),
-                    'volume' => $product->getProductVolume(),
-                    'size' => $product->getSize(),
-                    'pictures' => $pictures
+                    'volume' => $volume,
+                    'size' => $size,
+                    'total' => $total,
+                    'nbItems' => $nbItems
                 ];
             }
         }
