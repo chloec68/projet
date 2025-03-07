@@ -84,18 +84,23 @@ class PaymentController extends AbstractController
     }
 
     #[Route('/payment/recap', name:'app_payment-recap')]
-    public function recap(SessionInterface $session):Response
+    public function recap(SessionInterface $session, ProductRepository $productRepository):Response
     {   
 
         $cartData = $session->get('cartData');
         $total = $session->get('priceTotal');
-
+        $subTotals=[];
+        foreach ($cartData as $data) {
+           $product = $data['product'];
+           $subTotal = number_format($product->getProductPrice() * $data['quantity'],2,'.',' ');
+           $subTotals[$product->getId()] = $subTotal;
+        }
         return $this->render('/payment/recap.html.twig', [
             'cartData' => $cartData,
             'total' => $total,
+            'subTotals' => $subTotals,
             'meta_description' => "Récapitulatif de votre commande"
         ]);
-
     }
 
     

@@ -519,7 +519,7 @@ footer small{
         flex-grow:2;
 
         p{
-            margin:2rem 0;
+            width:fit-content;
         }
 
         a,i{
@@ -536,9 +536,18 @@ footer small{
         }
     }
 
+    .orders-list{
+        display:grid;
+        grid-template-columns:1fr 1fr 1fr 1fr 1fr;
+        gap:1rem;
+        margin:2rem 0 1rem 0;
+        padding:2rem;
+    }
+
     #personal-info{
         display:flex;
         gap:3rem;
+        margin:2rem 0;
     }
 
     #side-container{
@@ -572,6 +581,10 @@ footer small{
             transform:scale(0.8);
         }
     }
+
+    
+
+
 
 /* **************************************************************** ORDER VIEW ************************************************************ */
 
@@ -637,7 +650,6 @@ footer small{
 .products__page-wrapper{
     display: flex;
     padding:0 3rem 0 3rem;
- 
 }
 
 /* ************************* CUSTOM ALERT() ************************* */
@@ -693,12 +705,12 @@ footer small{
     display: flex;
     flex-wrap: wrap;
     width:80%;
-    gap:2rem;
+    gap:3rem;
     justify-content: center;
 }
 
 .product-card{
-    width:30%;
+    width:25%;
     height: fit-content;
     padding:0.2rem;
     border: solid 1px rgb(240, 239, 239);
@@ -716,14 +728,14 @@ footer small{
 .picture-container{
     margin:1rem auto 1rem auto;
     width:100%;
-    height:12rem;
+    height:20vh;
     display: flex;
     justify-content: center;
     align-items: center;
     padding:1rem;
 
     img{
-        width:60%;
+        width:50%;
     }
 }
 
@@ -760,13 +772,18 @@ footer small{
     display: flex;
     gap:0.5rem;
     width:fit-content;
-    margin: 0.5rem auto 0.5rem auto;
+    margin: 1rem auto 1rem auto;
     align-items: center;
     font-family: 'roboto condensed';
     font-size:0.8em;
     border:1px solid var(--light-grey);
     border-radius:55px;
     padding:0 0.6rem 0 0.6rem;
+}
+
+.beer-price{
+    font-family: 'roboto condensed';
+    font-size:1em;
 }
 
 /* ************************* QUANTITY INPUT ************************* */
@@ -849,7 +866,7 @@ footer small{
 
 /* **************************************************************** CART ************************************************************ */
 .cart-page-wrapper{
-    padding:3rem;
+    padding:6rem;
 }
 
 .cart-page-wrapper h1{
@@ -961,13 +978,20 @@ footer small{
 
    .detail-section table{
     width:100%;
-    border-bottom:1px var(--light-grey) solid;
+    margin-top:2rem;
+
+        th{
+            text-align:center;
+            font-family: 'nunito';
+        }
 
         td{
-            padding:3rem 1.5rem 3rem 1.5rem;
+            border-bottom:1px var(--light-grey) solid;
+            padding:2rem 1.5rem;
             font-family:'Roboto Condensed','serif';
             font-size: 1.1em;
             width:15%;
+            text-align: center;
 
             .fa-trash{
                 cursor:pointer;
@@ -977,6 +1001,7 @@ footer small{
 
    .product-pic{
     width:50px;
+    border-radius: 100px;;
    }
 
 /* ************************* RECAP SECTION ************************* */
@@ -1534,7 +1559,8 @@ border-radius: 50px;
             a:focus {
             background-color: initial;
             background-position: 0 0;
-            color:var(--main);
+            color:var(--green);
+            border:1px solid var(--green);
             }
         
             a:active {

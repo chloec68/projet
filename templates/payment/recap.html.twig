@@ -23,10 +23,10 @@
                         <img class="recap-picture" src="{{picture.pictureName}}" alt="photo de la face avant du produit">
                     {% endif %}
                 {% endfor %}
-                {{item.product.productName}}
+                {{item.product.productName}} - {% if item.product.productVolume is not null %}{{item.product.productVolume}}{% else %}{{item.product.size.sizeName}}{% endif %}
                 </td>
                 <td>{{item.quantity}}</td>
-                <td>{{item.product.productVATprice}} €</td>
+                <td>{{subTotals[item.product.id]}} €</td>
             </tr>
         {% endfor %}
             <tr>
