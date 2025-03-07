@@ -290,7 +290,7 @@ basketButton.addEventListener('click',function(){
   })
   .then(response => {
     return response.json();
-  } )
+  })
   .then(data => {
     const cartSummary = document.querySelector('.cart-summary');
     let htmlContent = "<h2>Votre panier</h2><a href='/cart'>Voir le panier</a>";
@@ -326,6 +326,34 @@ basketButton.addEventListener('click',function(){
   })
 })
 
+
+//FAVORITE 
+let favoriteButtons = document.querySelectorAll('.fa-heart');
+favoriteButtons.forEach(element => {
+  element.addEventListener('click',function(){
+    let productId = element.getAttribute('data-product-favorite');
+    const url = `/favorite/add/${productId}`;
+
+    fetch(url, {
+      headers:{
+        'Content-Type':'application/json',
+      }
+    })
+
+    .then(response => {
+      return response.json();
+    })
+
+    .then(data => {
+      console.log(data);
+      if(data.success){
+        element.classList.replace('fa-regular','fa-solid');
+      }else{
+        return false;
+      }
+    })
+  })
+});
 
 
 

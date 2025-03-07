@@ -40,14 +40,8 @@ class Product
     /**
      * @var Collection<int, User>
      */
-    #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'products')]
+    #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'favoriteProducts')]
     private Collection $users;
-
-    // /**
-    //  * @var Collection<int, Order>
-    //  */
-    // #[ORM\ManyToMany(targetEntity: Order::class, mappedBy: 'products')]
-    // private Collection $orders;
 
     #[ORM\ManyToOne(inversedBy: 'products')]
     private ?Type $type = null;
@@ -198,7 +192,7 @@ class Product
     {
         if (!$this->users->contains($user)) {
             $this->users->add($user);
-            $user->addProduct($this);
+            $user->addFavoriteProduct($this);
         }
 
         return $this;
@@ -212,33 +206,6 @@ class Product
 
         return $this;
     }
-
-    // /**
-    //  * @return Collection<int, Order>
-    //  */
-    // public function getOrders(): Collection
-    // {
-    //     return $this->orders;
-    // }
-
-    // public function addOrder(Order $order): static
-    // {
-    //     if (!$this->orders->contains($order)) {
-    //         $this->orders->add($order);
-    //         $order->addProduct($this);
-    //     }
-
-    //     return $this;
-    // }
-
-    // public function removeOrder(Order $order): static
-    // {
-    //     if ($this->orders->removeElement($order)) {
-    //         $order->removeProduct($this);
-    //     }
-
-    //     return $this;
-    // }
 
     public function getType(): ?Type
     {

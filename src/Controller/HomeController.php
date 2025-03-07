@@ -2,10 +2,11 @@
 
 namespace App\Controller;
 
+
+use App\Repository\UserRepository;
 use App\Repository\OrderRepository;
 use App\Service\VATpriceCalculator;
 use App\Repository\ProductRepository;
-use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;

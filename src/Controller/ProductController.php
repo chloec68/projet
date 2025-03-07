@@ -10,9 +10,11 @@ use App\Model\SearchDataGoodies;
 use App\Service\VATpriceCalculator;
 use App\Repository\ProductRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 final class ProductController extends AbstractController
@@ -46,7 +48,7 @@ final class ProductController extends AbstractController
     }
 
     
-    // DISPLAY ALL BEERS + SEARCH
+    // DISPLAY ALL BEERS + SEARCH 
     #[Route('/product/beers', name: 'app_beers')]
     #[Route('/product/beers/search', name:'app_beers_search')]
     public function allBeers(ProductRepository $productRepository, Request $request,VATpriceCalculator $VATpriceCalculator): Response
@@ -75,7 +77,6 @@ final class ProductController extends AbstractController
         ]);
     }
 
-
     // DISPLAY A SPECIFIC PRODUCT
     #[Route('/product/{id}/detail', name: 'detail_product')]
     public function detailProduct(Product $product, ProductRepository $productRepository,VATpriceCalculator $VATpriceCalculator):Response
@@ -88,10 +89,18 @@ final class ProductController extends AbstractController
         ]);
     }
 
+    //FAVORITES
+    #[Route('/favorite/add/{productId}',name:'add-to-favorites')]
+    public function addFavorite(ProductRepository $productRepository,Security $security, int $productId,EntityManagerInterface $entityManager): JsonResponse
+    {
+        $product = $productRepository->find($productId);
+        $user = $security->getUser();
+        $product->addUser($user);
+        $entityManager->persist($user);
+        $entityManager->flush();
 
-    
-
-
+        return new JsonResponse(['success' => true,'productId'=>$productId]);
+    }
 
     // ADD A PRODUCT (ADMIN)
     #[Route('/product/new', name:'new_product')]
