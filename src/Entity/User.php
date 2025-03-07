@@ -43,7 +43,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @var Collection<int, PRODUCT>
      */
     #[ORM\ManyToMany(targetEntity: Product::class, inversedBy: 'users')]
-    private Collection $products;
+    private Collection $favoriteProducts;
 
     /**
      * @var Collection<int, Order>
@@ -55,6 +55,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         $this->products = new ArrayCollection();
         $this->orders = new ArrayCollection();
+        $this->favorites = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -147,23 +148,23 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @return Collection<int, PRODUCT>
      */
-    public function getProducts(): Collection
+    public function getFavoriteProducts(): Collection
     {
-        return $this->products;
+        return $this->favoriteProducts;
     }
 
-    public function addProduct(PRODUCT $product): static
+    public function addFavoriteProduct(PRODUCT $favoriteProduct): static
     {
-        if (!$this->products->contains($product)) {
-            $this->products->add($product);
+        if (!$this->favoriteProducts->contains($favoriteProduct)) {
+            $this->favoriteProducts->add($favoriteProduct);
         }
 
         return $this;
     }
 
-    public function removeProduct(PRODUCT $product): static
+    public function removeProduct(PRODUCT $favoriteProduct): static
     {
-        $this->products->removeElement($product);
+        $this->favoriteProducts->removeElement($favoriteProduct);
 
         return $this;
     }
@@ -197,4 +198,5 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
 }
