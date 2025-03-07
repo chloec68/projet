@@ -80,7 +80,7 @@ let alertMessage = document.querySelector(".alertMessage");
 const closeAlert = document.querySelector(".closeAlert");
 const successMsg = document.getElementById("success-msg");
 let addToCartButtons = document.querySelectorAll(".add-to-cart");
-const stockElements = document.querySelectorAll('.stock-info');
+// const stockElements = document.querySelectorAll('.stock-info');
 
 // stockElements.forEach(element => {
 //   let stockQuantity = parseInt(element.getAttribute('data-stock'));
@@ -118,12 +118,6 @@ const stockElements = document.querySelectorAll('.stock-info');
    
   // }
 // });
-
-
-
-
-
-
 
 
 
@@ -244,7 +238,7 @@ function updateCartSubTotals(){
         .then(response => response.json())
         .then(data => {
           if(data.success){
-            let productTable = document.querySelector(`table[cart-item="${product}"]`);
+            let productTable = document.querySelector(`tr[cart-item="${product}"]`);
             let nbItemsElement = document.querySelector('.nbItems'); 
               if (productTable){
         
@@ -316,14 +310,14 @@ basketButton.addEventListener('click',function(){
                       <p class="product-price">x ${item.VATprice} €</p>
                     </div>
                     <div class="item-container right bold">
-                      <p class="sub-total__side-cart">${item.VATprice * item.quantity} €</p>
+                      <p class="sub-total__side-cart">${(item.VATprice * item.quantity).toFixed(2)} €</p>
                     </div>
                 </div>
               </article>
             `;
         })
         htmlContent += 
-        '<p class="side-cart__nbItems centered">  Nombre d\'articles : '+ data[data.length-1].nbItems + '</p> <div class="total bold"><p>Total ttc :</p><p class="bold side-cart-total">' + data[data.length-1].total + '€</p></div>';
+        '<p class="side-cart__nbItems centered">  Nombre d\'articles : '+ data[data.length-1].nbItems + '</p> <div class="total bold"><p>Total ttc :</p><p class="bold side-cart-total">' + (data[data.length-1].total).toFixed(2) + '€</p></div>';
 
       }else{
         htmlContent = "<h2>Votre panier</h2><a href='/cart'>Voir le panier</a> <p class='empty-sidecart'>Le panier est vide</p>";

@@ -14,6 +14,7 @@
             <h2>Informations du compte</h2>
             <p id="personal-info">Email : <span class="bold">{{user.email}}</span></p>
             <h2>Mes commandes passées</h2>
+                <div class="orders-list">
             {% if user.orders is not empty %}
                 {% for order in user.orders %}
                     <p>Commande du {{ order.dateOfPlacement|date('d-m-Y') }} <a href="{{ path('app_order',{id:order.id}) }}"><i class="fa-regular fa-circle-right"></i></a></p>
@@ -21,7 +22,10 @@
             {% else %}
                     <p class="centered">Vous n'avez pas de commande</p>
             {% endif %}
+                </div>
         </div>
     </main>
+
+
 {% endblock %}
 

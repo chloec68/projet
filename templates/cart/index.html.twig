@@ -10,16 +10,26 @@
     <div class="main-container">
         {% if data %}
             <section class="detail-section">
+            <table>
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Produit</th>
+                        <th>Prix unitaire</th>
+                        <th>Quantité</th>
+                        <th>Prix</th>
+                        <th>Supprimer l'article</th>
+                    </tr>
+                </thead>
+                <tbody>
                 {% for item in data %}
-                    <table class="cart-item" cart-item="{{item.product.id}}" >
-                    <tbody>
+                    <tr class="cart-item" cart-item="{{item.product.id}}" >
                         {% for picture in item.product.pictures %}
                             {% if loop.first %}
                         <td><img class="product-pic" src="{{picture.pictureName}}" alt="photo de la face avant de produit"></td>
                             {% endif %}
                         {% endfor %}
-                        <td>{{item.product.productName}} - {% if item.product.type is not null %}{{item.product.type.typeName}}{% endif %}</td>
-                        <td>{{item.product.productVolume}}</td>
+                        <td>{{item.product.productName}} - {% if item.product.type is not null %}{{item.product.type.typeName}}{% endif %} - {{item.product.productVolume}}</td>
                         <td class="product-price">{{item.product.productVATprice}} €</td>
                         <td>
                             <div class="wrapper">
@@ -32,9 +42,11 @@
                             <td class="sub-total">{{item.subtotal}} €</td>
                         </td>
                         <td class="remove-item" cart-product="{{item.product.id}}"><i class="fa-solid fa-trash"></i></td>
+                        <tr>
+                        {% endfor %} 
                         </tbody>
                     </table>
-                {% endfor %} 
+                
             </section>
             <section class="recap-section">
                 
