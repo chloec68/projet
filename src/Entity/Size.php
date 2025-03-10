@@ -21,7 +21,7 @@ class Size
     /**
      * @var Collection<int, Product>
      */
-    #[ORM\OneToMany(targetEntity: Product::class, mappedBy: 'size')]
+    #[ORM\OneToMany(targetEntity: Product::class, mappedBy: 'sizes')]
     private Collection $products;
 
     public function __construct()

@@ -22,7 +22,7 @@ final class ProductController extends AbstractController
    
     // DISPLAY ALL GOODIES + SEARCH
     #[Route('/product/goodies', name: 'app_goodies')]
-    public function allGoodies(ProductRepository $productRepository, Request $request, VATpriceCalculator $VATpriceCalculator): Response
+    public function allGoodies(ProductRepository $productRepository, Request $request, VATpriceCalculator $VATpriceCalculator, Security $security): Response
     {   
         $idCategory = 2;
         $isDeleted = false;
@@ -41,9 +41,16 @@ final class ProductController extends AbstractController
             $searchData->setCategory(2);
             $products = $productRepository->searchProductGoodie($searchData);
         }
+
+        $user = $security->getUser();
+        if($user){
+            $favorites = $user->getFavoriteProducts();
+        }
+
         return $this->render('product/goodies.html.twig', [
             'products'=>$products,
-            'form'=>$form
+            'form'=>$form,
+            'favorites'=>$favorites
         ]);
     }
 
@@ -51,7 +58,7 @@ final class ProductController extends AbstractController
     // DISPLAY ALL BEERS + SEARCH 
     #[Route('/product/beers', name: 'app_beers')]
     #[Route('/product/beers/search', name:'app_beers_search')]
-    public function allBeers(ProductRepository $productRepository, Request $request,VATpriceCalculator $VATpriceCalculator): Response
+    public function allBeers(ProductRepository $productRepository, Request $request,VATpriceCalculator $VATpriceCalculator, Security $security): Response
     {   
         $idCategory=1;
         $isDeleted = false;
@@ -71,9 +78,15 @@ final class ProductController extends AbstractController
             $products = $productRepository->searchProductBeer($searchData);
         }
 
+        $user = $security->getUser();
+        if($user){
+            $favorites = $user->getFavoriteProducts();
+        }
+
         return $this->render('product/beers.html.twig', [
             'products'=>$products,
-            'form'=>$form
+            'form'=>$form,
+            'favorites'=>$favorites
         ]);
     }
 
@@ -89,7 +102,7 @@ final class ProductController extends AbstractController
         ]);
     }
 
-    //FAVORITES
+    //ADD TO FAVORITES 
     #[Route('/favorite/add/{productId}',name:'add-to-favorites')]
     public function addFavorite(ProductRepository $productRepository,Security $security, int $productId,EntityManagerInterface $entityManager): JsonResponse
     {
@@ -100,6 +113,22 @@ final class ProductController extends AbstractController
         $entityManager->flush();
 
         return new JsonResponse(['success' => true,'productId'=>$productId]);
+    }
+
+    //REMOVE FROM FAVORITES
+    #[Route('/favorite/remove/{productId}', name:'remove-from-favorites')]
+    public function removeFromFavorites(Security $security, int $productId, ProductRepository $productRepository,EntityManagerInterface $entityManager){
+        $user = $security->getUser();
+        $product = $productRepository->find($productId);
+        if($user && $product){
+            $favorites = $user->getFavoriteProducts();
+            if($favorites->contains($product)){
+                $user->removeProduct($product);
+                $entityManager->persist($user);
+                $entityManager->flush();
+            }
+        return new JsonResponse(['success'=>true,'productId'=>$productId]);
+        }
     }
 
     // ADD A PRODUCT (ADMIN)

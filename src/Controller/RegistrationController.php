@@ -62,8 +62,8 @@ class RegistrationController extends AbstractController
 
             // do anything else you need here, like send an email
             $this->addFlash('info', "Inscription réussie. N'oubliez pas de vérifier votre email en cliquant sur le lien qui vous a été envoyé");
-            // return $this->redirectToRoute('app_login');
-            return $userAuthenticator->authenticateUser($user, $authenticator, $request);
+            return $this->redirectToRoute('app_login');
+            // return $userAuthenticator->authenticateUser($user, $authenticator, $request);
         }
 
         return $this->render('registration/register.html.twig', [

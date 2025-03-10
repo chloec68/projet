@@ -538,7 +538,7 @@ footer small{
 
     .orders-list{
         display:grid;
-        grid-template-columns:1fr 1fr 1fr 1fr 1fr;
+        grid-template-columns:1fr 1fr 1fr 1fr;
         gap:1rem;
         margin:2rem 0 1rem 0;
         padding:2rem;
@@ -610,10 +610,10 @@ footer small{
     }
 
     h2{
-        border-bottom:var(--main) solid 1px;
+        border-bottom:var(--main) solid 2px;
         width:20%;
         margin:4rem 0.5rem 2rem 0.5rem;
-        font-weight:400;
+        font-weight:600;
         font-size:1.1em;
     }
 
@@ -638,7 +638,7 @@ footer small{
    
         td,th{
             width:fit-content;
-            padding:1rem;
+            padding:0.7rem;
         }
     }
     .right{

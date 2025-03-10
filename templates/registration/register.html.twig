@@ -7,6 +7,11 @@
         <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
     {% endfor %}
 
+    {% for message in app.flashes('info') %}
+    <div class="alert alert-info" role="alert">{{ message }}</div>
+    {% endfor %}
+
+
         <section class="registration-page">
             
             <section class="login-section">

@@ -81,7 +81,9 @@ class CartController extends AbstractController
    
            $product = $data['product'];
            $quantity = $data['quantity']; 
+           $size = $data['size'];
            $cart = $session->get('cart',[]);
+
    
            if(empty($cart[$product])){
                $cart[$product] = $quantity;

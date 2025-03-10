@@ -50,8 +50,10 @@ class Product
     #[ORM\JoinColumn(nullable: false)]
     private ?Category $category = null;
 
-    #[ORM\ManyToOne(inversedBy: 'products')]
-    private ?Size $size = null;
+    // #[ORM\ManyToOne(inversedBy: 'products')]
+    // private ?Size $size = null;
+    #[ORM\ManyToMany(targetEntity: Size::class, inversedBy: 'products')]
+    private Collection $sizes;
 
     #[ORM\ManyToOne(inversedBy: 'products')]
     #[ORM\JoinColumn(nullable: false)]
@@ -231,15 +233,35 @@ class Product
         return $this;
     }
 
-    public function getSize(): ?Size
+    // public function getSize(): ?Size
+    // {
+    //     return $this->size;
+    // }
+
+    // public function setSize(?Size $size): static
+    // {
+    //     $this->size = $size;
+
+    //     return $this;
+    // }
+
+    public function getSizes(): Collection
     {
-        return $this->size;
+        return $this->sizes;
     }
 
-    public function setSize(?Size $size): static
+    public function addSize(Size $size):self
     {
-        $this->size = $size;
+        if (!$this->sizes->contains($size)){
+            $this->sizes[] = $size;
+        }
 
+        return $this;
+    }
+
+    public function removeSize(Size $size):self
+    {
+        $this->sizes->removeElement($size);
         return $this;
     }
 
