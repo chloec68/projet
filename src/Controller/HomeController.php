@@ -7,6 +7,7 @@ use App\Repository\UserRepository;
 use App\Repository\OrderRepository;
 use App\Service\VATpriceCalculator;
 use App\Repository\ProductRepository;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -60,12 +61,25 @@ final class HomeController extends AbstractController
 
             $nbItems += $quantity;
         }
-        $nbItems = 1;
         return $this->render('home/order.html.twig', [
             'order' => $order,
             'subTotals' =>$subTotals,
             'nbItems' => $nbItems,
             'meta_description' => 'Le détail de votre commande'
+        ]);
+    }
+
+    // USER PROFILE > FAVORITES 
+    #[Route('/user/favorites', name:'app_favorites')]
+    public function showFavorites(Security $security)
+    {
+        $user = $security->getUser();
+        if($user){
+            $favorites = $user->getFavoriteProducts();
+        }
+
+        return $this->render('home/favorites.html.twig', [
+            'favorites' => $favorites
         ]);
     }
 }

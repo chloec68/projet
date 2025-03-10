@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Votre compte{% endblock %}
+
+{% block body %}
+    <h1>Vos favoris</h1>
+    
+    {% for favorite in favorites %}
+        <p>{{favorite.productName}}</p>
+    {% endfor %}
+
+
+{% endblock %}
+

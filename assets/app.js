@@ -9,7 +9,7 @@ import './styles/app.css';
 
 
 
-// SWIPER
+// ************************************************************** SWIPER *********************************************************************** 
 
   var swiper = new Swiper(".mySwiper", {
     observer: true,
@@ -28,7 +28,7 @@ import './styles/app.css';
     }
   });
 
-  // SCROLL UP BUTTON
+  // ************************************************************** SCROLL UP BUTTON *********************************************************************** 
   function buttonVisibility() {
     let button = document.querySelector(".top-button");
     if(button){
@@ -89,6 +89,9 @@ let addToCartButtons = document.querySelectorAll(".add-to-cart");
         button.addEventListener('click', function() {
           let product = button.getAttribute('data-product');
           let quantity = document.querySelector(`input[data-product="${product}"]`).value;
+
+          let sizeButton = document.querySelector(`button[product-size]`);
+          let size = sizeButton ? sizeButton.getAttribute('product-size') : null;
       
           if(alertBox && alertMessage && closeAlert){
             if(quantity > 1){
@@ -107,7 +110,7 @@ let addToCartButtons = document.querySelectorAll(".add-to-cart");
       
           }
           if (parseInt(quantity) > 0) {
-            updateCart(product, quantity);
+            updateCart(product,quantity,size);
           }
         });
       });
@@ -157,7 +160,7 @@ decrementButtonsCart.forEach(button => {
 });
 
 // UPDATE TOTAL ITEMS (CART)
-function updateCart(product,quantity){
+function updateCart(product,quantity,size){
 
   let nbItemsElements = document.querySelectorAll('.nbItems')
 
@@ -168,7 +171,8 @@ function updateCart(product,quantity){
     } ,
     body: JSON.stringify({
       product:product,
-      quantity:quantity
+      quantity:quantity,
+      size:size
     })
   })
 
@@ -258,7 +262,7 @@ function updateCartSubTotals(){
     });
   });
 
-  // ******************************************************************************** SIDE CART********************************************************* 
+  // ******************************************************************************** SIDE CART ********************************************************* 
 
 // SIDE CART - DISPLAY / TOGGLE  
 const sideCart = document.querySelector('.cart-summary'); 
@@ -327,35 +331,45 @@ basketButton.addEventListener('click',function(){
 })
 
 
-//FAVORITE 
+//****************************************************************** FAVORITE ******************************************************************
+
 let favoriteButtons = document.querySelectorAll('.fa-heart');
 favoriteButtons.forEach(element => {
   element.addEventListener('click',function(){
     let productId = element.getAttribute('data-product-favorite');
-    const url = `/favorite/add/${productId}`;
+    let isFavorite = element.classList.contains('fa-solid');
 
-    fetch(url, {
-      headers:{
-        'Content-Type':'application/json',
-      }
-    })
+    if(isFavorite){
+      element.classList.replace('fa-solid','fa-regular');
+      const url = `/favorite/remove/${productId}`;
 
-    .then(response => {
-      return response.json();
-    })
+      fetch(url, {
+        headers:{
+          'Content-Type' : 'application/json',
+        }
+      })
+    
+      .then(response => {
+        if(response.ok){
+          console.log('produit retiré des favoris');
+        }
+      });
 
-    .then(data => {
-      console.log(data);
-      if(data.success){
-        element.classList.replace('fa-regular','fa-solid');
-      }else{
-        return false;
-      }
-    })
+    }else{
+      element.classList.replace('fa-regular','fa-solid');
+      const url = `/favorite/add/${productId}`;
+
+      fetch(url, {
+        headers:{
+          'Content-Type':'application/json',
+        }
+      })
+    
+      .then(response => {
+        if(response.ok){
+          console.log('produit ajouté aux favoris');
+        }
+      });
+    }
   })
 });
-
-
-
-
-
