@@ -26,8 +26,8 @@ class UserCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         $fields = [
-            TextField::new('email')->setLabel('Email'),
-            BooleanField::new('isVerified')->setLabel('email vérifié')
+            TextField::new('email')->setLabel('Adresse Email'),
+            BooleanField::new('isVerified')->setLabel('Email vérifié')->renderAsSwitch(true)
         ];
 
         return $fields;
