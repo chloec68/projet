@@ -81,7 +81,7 @@ class CartController extends AbstractController
    
            $product = $data['product'];
            $quantity = $data['quantity']; 
-           $size = $data['size'];
+        //    $size = $data['size'];
            $cart = $session->get('cart',[]);
 
    
@@ -141,12 +141,12 @@ class CartController extends AbstractController
                     }
                 }
 
-                $size = $product->getSize();
-                if (isset($size)){
-                    $size = $size->getSizeName();
-                }else{
-                    $size="";
-                }
+                // $size = $product->getSize();
+                // if (isset($size)){
+                //     $size = $size->getSizeName();
+                // }else{
+                //     $size="";
+                // }
 
                 $type = $product->getType();
                 if(isset($type)){
@@ -171,7 +171,7 @@ class CartController extends AbstractController
                     'type' => $type,
                     'color' => $product->getProductColor(),
                     'volume' => $volume,
-                    'size' => $size,
+                    // 'size' => $size,
                     'total' => $total,
                     'nbItems' => $nbItems
                 ];

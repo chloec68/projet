@@ -90,8 +90,8 @@ let addToCartButtons = document.querySelectorAll(".add-to-cart");
           let product = button.getAttribute('data-product');
           let quantity = document.querySelector(`input[data-product="${product}"]`).value;
 
-          let sizeButton = document.querySelector(`button[product-size]`);
-          let size = sizeButton ? sizeButton.getAttribute('product-size') : null;
+          // let sizeButton = document.querySelector(`button[product-size]`);
+          // let size = sizeButton ? sizeButton.getAttribute('product-size') : null;
       
           if(alertBox && alertMessage && closeAlert){
             if(quantity > 1){
@@ -110,7 +110,8 @@ let addToCartButtons = document.querySelectorAll(".add-to-cart");
       
           }
           if (parseInt(quantity) > 0) {
-            updateCart(product,quantity,size);
+            updateCart(product,quantity); 
+            // ,size
           }
         });
       });
@@ -283,6 +284,9 @@ document.addEventListener('click', function(event) {
 
 
 // SIDE CART - CONTENT UPDATE
+// const cartSummary = document.querySelector('.cart-summary');
+// let htmlContent = "<h2>Votre panier</h2><a href='/cart'>Voir le panier</a>";
+
 const basketButton = document.querySelector('.fa-basket-shopping');
 basketButton.addEventListener('click',function(){
 
