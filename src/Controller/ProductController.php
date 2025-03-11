@@ -43,6 +43,7 @@ final class ProductController extends AbstractController
         }
 
         $user = $security->getUser();
+        $favorites = "";
         if($user){
             $favorites = $user->getFavoriteProducts();
         }
@@ -78,6 +79,7 @@ final class ProductController extends AbstractController
             $products = $productRepository->searchProductBeer($searchData);
         }
 
+        $favorites="";
         $user = $security->getUser();
         if($user){
             $favorites = $user->getFavoriteProducts();
