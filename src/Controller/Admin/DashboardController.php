@@ -10,14 +10,14 @@ use App\Entity\Product;
 use App\Entity\Newsletter;
 use App\Controller\Admin\DashboardController;
 use Symfony\Component\HttpFoundation\Response;
-// use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
-// use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
-// use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Attribute\AdminDashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
-// use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+
 
 
 // #[IsGranted('ROLE_ADMIN')]
@@ -41,7 +41,7 @@ class DashboardController extends AbstractDashboardController
 
     public function configureMenuItems(): iterable
     {
-        yield MenuItem::linkToDashboard('Home', 'fa fa-home');
+        yield MenuItem::linkToDashboard('Accueil', 'fa fa-home');
         
         yield MenuItem::linkToCrud('Produits', 'fas fa-dragon', Product::class);
 
@@ -57,10 +57,10 @@ class DashboardController extends AbstractDashboardController
 
     }
 
-
-    // public function configureActions(): Actions
-    // {
-    //     return parent::configureActions()
-    //     ->add(Crud::PAGE_INDEX, Action::DETAIL);
-    // }
+    public function configureActions(): Actions
+    {
+        return parent::configureActions()
+            ->add(Crud::PAGE_INDEX, Action::DETAIL);
+    }
 }
+
