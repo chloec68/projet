@@ -227,8 +227,8 @@ class PaymentController extends AbstractController
 
             $bill->setAppOrder($order);
 
-            $entityManager->persist($bill);
-            $entityManager->flush();
+            // $entityManager->persist($bill);
+            // $entityManager->flush();
            
             return $this->render('/payment/success.html.twig', [
                 'order' => $order,
