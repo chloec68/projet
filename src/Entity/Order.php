@@ -121,6 +121,11 @@ class Order
         return $this;
     }
 
+    public function getOrderFullName(): ?string
+    {
+        return $this->orderUserFirstName . " " . $this->orderUserLastName . " " . $this->orderEmail ;
+    }
+
     public function isOrderIsCollected(): ?bool
     {
         return $this->orderIsCollected;
@@ -145,6 +150,17 @@ class Order
         return $this;
     }
 
+    public function getTotalBeforeVat(): ?string
+    {
+        if($this->bill){
+            $totalBeforeVat = $this->bill->getBillTotalBeforeVat();
+        }else{
+            $totalBeforeVat = "";
+        }
+
+        return $totalBeforeVat;
+    }
+
     public function getOrderEmail(): ?string
     {
         return $this->orderEmail;
@@ -156,37 +172,6 @@ class Order
 
         return $this;
     }
-
-    // /**
-    //  * @return Collection<int, Product>
-    //  */
-    // public function getProducts(): Collection
-    // {
-    //     return $this->products;
-    // }
-
-    // public function addProduct(Product $product, int $quantity): static
-    // {
-    //     if (!$this->products->contains($product)) {
-    //         $this->products->add($product);
-    //         // $this->productQuantity[$product->getId()] = $quantity;
-    //     }
-
-    //     return $this;
-    // }
-
-    // public function getProductQuantity(Product $product): ?int
-    // {   
-
-    //     return $this->productQuantity[$product->getId()];
-    // }
-
-    // public function removeProduct(Product $product): static
-    // {
-    //     $this->products->removeElement($product);
-
-    //     return $this;
-    // }
 
     public function getAppUser(): ?User
     {
@@ -215,6 +200,17 @@ class Order
     public function getBill(): ?Bill
     {
         return $this->bill;
+    }
+
+    public function getBillReference(): ?string
+    {   
+        if($this->bill){
+            $billReference = $this->bill->getBillReferenceNumber();
+        }else{
+            $billReference = "/";
+        }
+
+        return $billReference;
     }
 
     public function setBill(Bill $bill): static
@@ -257,6 +253,11 @@ class Order
         }
 
         return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->orderReference;
     }
 
 }
