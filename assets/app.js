@@ -183,7 +183,7 @@ function updateCart(product,quantity,size){
       nbItemsElements.forEach(nbItemsElement => {
         if(data.nbItems < 1){
           const cart = document.querySelector('.main-container');
-          cart.innerHTML = '<div class="emptyCart__container"><p class="emptyCart">Le panier est vide</p><a class="redirection-link" href="{{ path(\'app_beers\') }}">nos bières <i class="fa-solid fa-circle-arrow-right"></i></a></div>'
+          cart.innerHTML = '<div class="emptyCart__container"><p class="emptyCart">Le panier est vide</p><a class="redirection-link" href="/product/beers">nos bières <i class="fa-solid fa-circle-arrow-right"></i></a></div>'
         }
         else if(data.nbItems == 1){
           nbItemsElement.textContent = data.nbItems + " article";
@@ -252,7 +252,7 @@ function updateCartSubTotals(){
               if (productTable){
                 if(data.nbItems < 1){
                   const cart = document.querySelector('.main-container');
-                  cart.innerHTML = '<div class="emptyCart__container"><p class="emptyCart">Le panier est vide</p><a class="redirection-link" href="{{ path(\'app_beers\') }}">nos bières <i class="fa-solid fa-circle-arrow-right"></i></a></div>'
+                  cart.innerHTML = '<div class="emptyCart__container"><p class="emptyCart">Le panier est vide</p><a class="redirection-link" href="/product/beers">nos bières <i class="fa-solid fa-circle-arrow-right"></i></a></div>'
                 }
                 else if (data.nbItems == 1) {
                   nbItemsElement.textContent = `${data.nbItems} article`;
