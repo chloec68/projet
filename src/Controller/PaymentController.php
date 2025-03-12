@@ -7,11 +7,12 @@ use Stripe\Stripe;
 use Dompdf\Options;
 use App\Entity\Bill;
 use App\Entity\Order;
+use App\Entity\OrderProduct;
 use Stripe\Checkout\Session;
 use App\Entity\Establishment;
-use App\Entity\OrderProducts;
 use App\Form\PickUpPointFormType;
 use App\Repository\OrderRepository;
+use App\Service\VATpriceCalculator;
 use App\Form\IdentificationFormType;
 use App\Repository\ProductRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -84,17 +85,19 @@ class PaymentController extends AbstractController
     }
 
     #[Route('/payment/recap', name:'app_payment-recap')]
-    public function recap(SessionInterface $session, ProductRepository $productRepository):Response
+    public function recap(SessionInterface $session, ProductRepository $productRepository, VATpriceCalculator $priceCalculator):Response
     {   
 
         $cartData = $session->get('cartData');
         $total = $session->get('priceTotal');
         $subTotals=[];
+
         foreach ($cartData as $data) {
-           $product = $data['product'];
-           $subTotal = number_format($product->getProductPrice() * $data['quantity'],2,'.',' ');
-           $subTotals[$product->getId()] = $subTotal;
+            $product = $data['product'];
+            $subTotal = $priceCalculator->vatPriceSubTotal($product,$data['quantity']);
+            $subTotals[$product->getId()] = $subTotal;
         }
+
         return $this->render('/payment/recap.html.twig', [
             'cartData' => $cartData,
             'total' => $total,
@@ -170,11 +173,14 @@ class PaymentController extends AbstractController
                 // récupération des objets produit en fonction de l'id contenu dans le tableau associatif panier 
                 $product = $productRepository->find($id);
                 // création d'un nouvel objet OrderProduct
-                $orderProduct = new OrderProducts();
+                $orderProduct = new OrderProduct();
                 // ajout du produit à OrderProduct
                 $orderProduct->setAppProduct($product);
                 // ajout de la quantity 
                 $orderProduct->setQuantity($quantity);
+                //ajout du prix au jour de la commande
+                $price = $product->getProductPrice();      
+                $orderProduct->setProductPrice($price);
                 // ajout de chaque produit et de la quantité (valeur) associée à la commande
                 $order->addOrderProduct($orderProduct);
             }
@@ -212,17 +218,16 @@ class PaymentController extends AbstractController
             $bill->setBillDate(new \DateTime()); 
 
             //récupération de la collection d'objets Produit de la commande
-            $orderproducts = $order->getOrderProducts();
+            $orderproducts = $order->getOrderProduct();
             //initialisation du prix total en dehors de la boucle pour qu'il ne soit pas reset à 0 à chaque tour de boucle
             $noVatPriceTotal = 0;
             //pour chaque produit
             foreach ($orderproducts as $orderproduct) {
                 // récupérer le prix HT de chaque produit
-                $priceNoVat = $orderproduct->getAppProduct()->getProductPrice();
+                $priceNoVat = $orderproduct->getProductPrice();
                 // additionner chaque prix HT et les ajouter au total
                 $noVatPriceTotal += $priceNoVat;
             }
-
             $bill->setBillTotalBeforeVat($noVatPriceTotal);
 
             $bill->setAppOrder($order);
@@ -246,10 +251,10 @@ class PaymentController extends AbstractController
             $nbItems = $session->get('nbItems');
             $id=1;
             $seller = $establishmentRepository->find($id);
-            $orderproducts = $order->getOrderProducts();
+            $orderproduct = $order->getOrderProduct();
             $totalNoVat = 0;
-            foreach($orderproducts as $orderproduct){
-                $priceNoVat = $orderproduct->getAppProduct()->getProductPrice();
+            foreach($orderproduct as $product){
+                $priceNoVat = $product->getAppProduct()->getProductPrice();
                 $totalNoVat += $priceNoVat ; 
             }
             $vat = $order->getOrderTotal() - $totalNoVat ; 

@@ -34,9 +34,9 @@ class DashboardController extends AbstractDashboardController
     public function configureDashboard(): Dashboard
     {
         return Dashboard::new()
-            ->setTitle('Sainte Cru Admin')
-            ->setDefaultColorScheme('dark');
-    
+            ->setTitle('Tableau de bord')
+            ->setTranslationDomain('EasyAdmin')
+            ->setDefaultColorScheme('dark');    
     }
 
     public function configureMenuItems(): iterable

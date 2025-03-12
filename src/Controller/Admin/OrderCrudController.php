@@ -3,12 +3,14 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Order;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 
 class OrderCrudController extends AbstractCrudController
@@ -21,9 +23,7 @@ class OrderCrudController extends AbstractCrudController
     public function configureActions(Actions $actions): Actions
     {
         return $actions
-        ->disable('edit')
         ->disable('delete');
-        
     }
 
 
@@ -53,7 +53,33 @@ class OrderCrudController extends AbstractCrudController
             TextField::new('billReference')
                 ->setLabel('Référence facture'),
             
+            AssociationField::new('orderProduct','Produit(s)')
+            ->onlyOnIndex()
+            ->setFormTypeOptions([
+                'by_reference' => false,
+            ]),
+            
+            AssociationField::new('orderProduct','Produit(s)')
+            ->setTemplatePath('admin/fields/products_list.html.twig')
+            // ->onlyOnIndex()
+            ->onlyOnDetail()
+            // ->setFormTypeOption('choice_label', 'productName') 
+            // ->setHelp('Sélectionner un taux de TVA pour ce produit')
+            ->setFormTypeOptions([
+                // 'placeholder' => 'Choisir un taux de TVA', 
+                // 'label' => 'Taux de TVA'
+                'by_reference' => false,
+               
+            ]),
+            
         ];
+    }
+
+    public function configureCrud(Crud $crud): Crud
+    {
+        return $crud    
+            ->setPageTitle('index','Commande')
+            ->setPageTitle('edit','Modifier la commande');
     }
 
 }
