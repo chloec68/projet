@@ -53,3 +53,23 @@ Dans le formbuilder, symfony ajoute un champ 'hidden' contenant le jeton
 6- LOGIN THROTTLING (limitation du débit)
 Protection contre attaque DoS (Denial of service) + attaques par force brut 
 => limitation de la fréquences des requêtes d'un client pour éviter la surcharge du serveur ou abus automatisés
+
+
+
+
+
+
+
+
+A FAIRE 
+
+CART => A JOUR 
+CART DATA => NON MIS A JOUR ( utilisé dans RECAP + BILL ) => QUANTITY 
+
+SUPPRIMER COMPTE UTILISATEUR 
+
+MISE A JOUR DES STOCKS /!\
+
+IMPOSSIBILITE AJOUT PRODUIT EN FONCTION STOCK 
+
+GOODIES SIZE /!\

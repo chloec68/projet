@@ -89,6 +89,9 @@ class PaymentController extends AbstractController
     {   
 
         $cartData = $session->get('cartData');
+        dd($cartData);
+        $cart = $session->get('cart');
+        dd($cart);
         $total = $session->get('priceTotal');
         $subTotals=[];
 
@@ -172,6 +175,14 @@ class PaymentController extends AbstractController
             foreach ($cart as $id => $quantity) {
                 // récupération des objets produit en fonction de l'id contenu dans le tableau associatif panier 
                 $product = $productRepository->find($id);
+
+                // mise à jour du stock 
+                $stock = $product->getProductStock();
+                $updatedStock = $stock - $quantity;
+                $product->setProductStock($updatedStock);
+                $entityManager->persist($product);
+                $entityManager->flush();
+
                 // création d'un nouvel objet OrderProduct
                 $orderProduct = new OrderProduct();
                 // ajout du produit à OrderProduct

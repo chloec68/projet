@@ -120,7 +120,7 @@ class CartController extends AbstractController
     public function retrieveCart(SessionInterface $session, ProductRepository $productRepository, VATpriceCalculator $VATpriceCalculator): JsonResponse
     {
         $cart = $session->get('cart');
-        $cartData = $session->get('cartData');
+        // $cartData = $session->get('cartData');
         $data = [];
         $nbItems = 0;
         $total = 0;
