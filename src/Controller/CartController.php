@@ -42,7 +42,8 @@ class CartController extends AbstractController
                     'product' => $product,
                     'quantity' => $quantity,
                     'VATprice' => $VATprice,
-                    'subtotal' => number_format(floatval($product->getProductVATprice()) * $quantity,2,'.',''),
+                    // 'subtotal' => number_format(floatval($product->getProductVATprice()) * $quantity,2,'.',''),
+                    'subtotal' => $VATpriceCalculator->vatPriceSubTotal($product,$quantity),
                     'pictures' => $pictures,
                 ];
 
@@ -82,8 +83,7 @@ class CartController extends AbstractController
            $product = $data['product'];
            $quantity = $data['quantity']; 
         //    $size = $data['size'];
-           $cart = $session->get('cart',[]);
-
+            $cart = $session->get('cart',[]);
    
            if(empty($cart[$product])){
                $cart[$product] = $quantity;
@@ -92,7 +92,9 @@ class CartController extends AbstractController
            }
            
            $session->set('cart',$cart);
+   
            $nbItems = array_sum($cart); // array_sum() => native PHP function that returns the sum of VALUES in an array
+           $session->set('nbItems',$nbItems);
    
            return new JsonResponse(['success' => true,'nbItems'=>$nbItems,'cart' => $cart]);
        }
@@ -105,13 +107,12 @@ class CartController extends AbstractController
         $cart = $session->get('cart',[]);
         $id = $product->getId();
 
-        if(!empty($cart[$id])){
-            unset($cart[$id]);
-        }
+        unset($cart[$id]);
         
-    $session->set('cart',$cart);
-    $nbItems = array_sum($cart);
-    return new JsonResponse(['success' => true, 'nbItems'=>$nbItems]);
+        $session->set('cart',$cart);
+        $nbItems = array_sum($cart);
+        $session->set('nbItems',$nbItems);
+        return new JsonResponse(['success' => true, 'nbItems'=>$nbItems]);
     }
 
 
@@ -119,17 +120,19 @@ class CartController extends AbstractController
     public function retrieveCart(SessionInterface $session, ProductRepository $productRepository, VATpriceCalculator $VATpriceCalculator): JsonResponse
     {
         $cart = $session->get('cart');
+        $cartData = $session->get('cartData');
         $data = [];
         $nbItems = 0;
         $total = 0;
+        $subTotal = 0;
 
         foreach ($cart as $id => $quantity) {
             $product = $productRepository->find($id);
             if($product){
                 $VATprice = number_format($VATpriceCalculator->VATprice($product),2,'.','');
-                $product->setProductVATprice($VATprice);
-                $total += $VATprice;
                 $nbItems += $quantity;
+                $subTotal = $VATprice * $quantity;
+                $total += $subTotal;
                 $pictures = [];
                 foreach ($product->getPictures() as $picture){
                     $pictures[] = $picture->getPictureName();

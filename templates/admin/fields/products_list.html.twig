@@ -1,0 +1,10 @@
+
+{% for orderProduct in field.value %}
+    {% if orderProduct.appProduct is not null %}
+        <ul>
+            <li>
+                {{orderProduct.appProduct.productName}} - {{orderProduct.appProduct.ProductPrice}}
+            </li>
+        </ul>
+    {% endif %}
+{% endfor %}

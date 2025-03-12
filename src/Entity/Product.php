@@ -50,8 +50,6 @@ class Product
     #[ORM\JoinColumn(nullable: false)]
     private ?Category $category = null;
 
-    // #[ORM\ManyToOne(inversedBy: 'products')]
-    // private ?Size $size = null;
     #[ORM\ManyToMany(targetEntity: Size::class, inversedBy: 'products')]
     private Collection $sizes;
 
@@ -232,18 +230,6 @@ class Product
 
         return $this;
     }
-
-    // public function getSize(): ?Size
-    // {
-    //     return $this->size;
-    // }
-
-    // public function setSize(?Size $size): static
-    // {
-    //     $this->size = $size;
-
-    //     return $this;
-    // }
 
     public function getSizes(): Collection
     {

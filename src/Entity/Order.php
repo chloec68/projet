@@ -38,12 +38,6 @@ class Order
     #[ORM\Column(length: 255)]
     private ?string $orderEmail = null;
 
-    // /**
-    //  * @var Collection<int, Product>
-    //  */
-    // #[ORM\ManyToMany(targetEntity: Product::class, inversedBy: 'orders')]
-    // private Collection $products;
-
     #[ORM\ManyToOne(inversedBy: 'orders')]
     #[ORM\JoinColumn(nullable: true)]
     private ?User $appUser = null;
@@ -58,14 +52,14 @@ class Order
     /**
      * @var Collection<int, OrderProducts>
      */
-    #[ORM\OneToMany(targetEntity: OrderProducts::class, mappedBy: 'appOrder', cascade:['persist'])]
-    private Collection $orderProducts;
+    #[ORM\OneToMany(targetEntity: OrderProduct::class, mappedBy: 'appOrder', cascade:['persist'])]
+    private Collection $orderProduct;
 
 
     public function __construct()
     {
-        $this->products = new ArrayCollection();
-        $this->orderProducts = new ArrayCollection();
+        // $this->products = new ArrayCollection();
+        $this->orderProduct = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -226,26 +220,26 @@ class Order
     }
 
     /**
-     * @return Collection<int, OrderProducts>
+     * @return Collection<int, OrderProduct>
      */
-    public function getOrderProducts(): Collection
+    public function getOrderProduct(): Collection
     {
-        return $this->orderProducts;
+        return $this->orderProduct;
     }
 
-    public function addOrderProduct(OrderProducts $orderProduct): static
+    public function addOrderProduct(OrderProduct $orderProduct): static
     {
-        if (!$this->orderProducts->contains($orderProduct)) {
-            $this->orderProducts->add($orderProduct);
+        if (!$this->orderProduct->contains($orderProduct)) {
+            $this->orderProduct->add($orderProduct);
             $orderProduct->setAppOrder($this);
         }
 
         return $this;
     }
 
-    public function removeOrderProduct(OrderProducts $orderProduct): static
+    public function removeOrderProduct(OrderProduct $orderProduct): static
     {
-        if ($this->orderProducts->removeElement($orderProduct)) {
+        if ($this->orderProduct->removeElement($orderProduct)) {
             // set the owning side to null (unless already changed)
             if ($orderProduct->getAppOrder() === $this) {
                 $orderProduct->setAppOrder(null);

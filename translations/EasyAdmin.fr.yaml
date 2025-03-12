@@ -1,0 +1,23 @@
+admin:
+    action:
+        new: 'Ajouter'
+        edit: 'Modifier'
+        delete: 'Supprimer'
+        show: 'Voir'
+        list: 'Liste'
+        add: 'Blabla'
+
+    entity:
+        Product:
+            label: 'Produit'
+        User:
+            label: 'Utilisateur'
+        Vat:
+            label: 'TVA'
+        Order:
+            label: 'Commande'
+        Bill:
+            label: 'Facture'
+
+    dashboard:
+        title: 'Tableau de bord'
