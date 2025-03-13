@@ -6,6 +6,7 @@ use App\Entity\Vat;
 use App\Entity\Bill;
 use App\Entity\User;
 use App\Entity\Order;
+use App\Entity\Picture;
 use App\Entity\Product;
 use App\Entity\Newsletter;
 use App\Controller\Admin\DashboardController;
@@ -44,6 +45,8 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToDashboard('Accueil', 'fa fa-home');
         
         yield MenuItem::linkToCrud('Produits', 'fas fa-dragon', Product::class);
+
+        yield MenuItem::linkToCrud('Photos produit', 'fas fa-box-archive', Picture::class);
 
         yield MenuItem::linkToCrud('Utilisateurs', 'fas fa-users', User::class);
 
