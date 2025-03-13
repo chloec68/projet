@@ -8,7 +8,6 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\NumberField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
@@ -65,24 +64,28 @@ class ProductCrudController extends AbstractCrudController
                     'placeholder' => 'Choisir un taux de TVA', 
                     'label' => 'Taux de TVA'
                 ]),
-
+            
             AssociationField::new('pictures')
             ->setTemplatePath('admin/fields/pictures_list.html.twig')
-            // ->onlyOnDetail()
+            ->onlyOnDetail()
+            ->setFormTypeOption('choice_label', 'pictureName') 
+            ->setLabel('Photo(s) produit'),
+
+            AssociationField::new('pictures')
             ->setFormTypeOption('choice_label', 'pictureName') 
             ->setLabel('Photo(s) produit'),
 
             BooleanField::new('isDeleted')->setLabel('désactiver')
                     ->renderAsSwitch(true),
 
-            ImageField::new('pictures')
-            ->setFormTypeOption('multiple',true)
-            ->setUploadDir('public/img')
+            // ImageField::new('pictures')
+            // ->setFormTypeOption('multiple',true)
+            // ->setUploadDir('public/img')
             // ->setBasePath('public/img')
-            ->setLabel('Ajouter photo(s) produit')
+            // ->setLabel('Ajouter photo(s) produit')
             // >setFileConstraints(new Image(maxSize: '100k'))
             // ->setUploadedFileNamePattern('[year]/[month]/[day]/[slug]-[contenthash].[extension]');
-            ->setRequired(false),
+        //     ->setRequired(false),
         ];
         
         return $fields;
