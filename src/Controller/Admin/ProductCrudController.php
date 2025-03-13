@@ -4,6 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Entity\Product;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
@@ -23,7 +24,11 @@ class ProductCrudController extends AbstractCrudController
     public function configureActions(Actions $actions): Actions
     {
         return $actions
-        ->disable('delete');
+        ->disable('delete')
+
+        ->update(Crud::PAGE_INDEX, Action::NEW, function (Action $action) {
+            return $action->setIcon('fa fa-plus')->setLabel("Nouveau produit");
+        });
     }
     
     public function configureFields(string $pageName): iterable
@@ -31,6 +36,7 @@ class ProductCrudController extends AbstractCrudController
         $fields = [ 
             TextField::new('productName')->setLabel('Désignation du produit'),
             AssociationField::new('category')
+                ->setLabel('Catégorie')
                 ->setFormTypeOption('choice_label', 'categoryName') 
                 ->setHelp('Sélectionner une catégorie pour ce produit')
                 ->setFormTypeOptions([
@@ -52,6 +58,7 @@ class ProductCrudController extends AbstractCrudController
             NumberField::new('productStock')->setLabel('Stock'),
             AssociationField::new('vat')
                 ->setFormTypeOption('choice_label', 'vatRate') 
+                ->setLabel('TVA')
                 ->setHelp('Sélectionner un taux de TVA pour ce produit')
                 ->setFormTypeOptions([
                     'placeholder' => 'Choisir un taux de TVA', 

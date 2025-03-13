@@ -89,9 +89,9 @@ class PaymentController extends AbstractController
     {   
 
         $cartData = $session->get('cartData');
-        dd($cartData);
+        // dd($cartData);
         $cart = $session->get('cart');
-        dd($cart);
+        // dd($cart);
         $total = $session->get('priceTotal');
         $subTotals=[];
 
