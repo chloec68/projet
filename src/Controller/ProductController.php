@@ -133,24 +133,4 @@ final class ProductController extends AbstractController
         }
     }
 
-    // ADD A PRODUCT (ADMIN)
-    #[Route('/product/new', name:'new_product')]
-    public function newProduct():Response
-    {
-
-    }
-
-    //DELETE A PRODUCT FROM APP (GENERAL SCOPE) (ADMIN)
-    #[Route('/product/{id}/delete', name:'delete_product')]
-    public function deleteProduct(Product $product):Response
-    {
-
-    }
-
-    //UPDATE A PRODUCT (ADMIN)
-    #[Route('product/{id}/update', name:'update_product')]
-    public function updateProduct(Product $product)
-    {
-
-    }
 }

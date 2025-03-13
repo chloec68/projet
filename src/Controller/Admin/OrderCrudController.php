@@ -65,13 +65,8 @@ class OrderCrudController extends AbstractCrudController
             
             AssociationField::new('orderProduct','Produit(s)')
             ->setTemplatePath('admin/fields/products_list.html.twig')
-            // ->onlyOnIndex()
             ->onlyOnDetail()
-            // ->setFormTypeOption('choice_label', 'productName') 
-            // ->setHelp('Sélectionner un taux de TVA pour ce produit')
             ->setFormTypeOptions([
-                // 'placeholder' => 'Choisir un taux de TVA', 
-                // 'label' => 'Taux de TVA'
                 'by_reference' => false,
                
             ]),
