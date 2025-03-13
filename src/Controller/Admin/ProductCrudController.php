@@ -21,15 +21,9 @@ class ProductCrudController extends AbstractCrudController
         return Product::class;
     }
 
-    #[Route('/admin/charts',name:'admin_charts_chart')]
-    public function chart()
-    {
-        return $this->render('admin/charts/chart.html.twig');
-    }
-
     public function configureActions(Actions $actions): Actions
     {
-        $statsAction = Action::new('stats','Stats')->linkToRoute('admin_charts_chart')->setIcon('fa fa-bar-chart')->addCssClass('btn btn-info')->createAsGlobalAction();
+        $statsAction = Action::new('stats','Stats')->linkToRoute('admin_charts_products-chart')->setIcon('fa fa-bar-chart')->addCssClass('btn btn-info')->createAsGlobalAction();
 
         return $actions
             ->disable('delete')
