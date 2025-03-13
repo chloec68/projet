@@ -4,6 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Entity\Newsletter;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
@@ -21,7 +22,11 @@ class NewsletterCrudController extends AbstractCrudController
     public function configureActions(Actions $actions): Actions
     {
         return $actions
-        ->disable('edit');
+        ->disable('edit')
+
+        ->update(Crud::PAGE_INDEX, Action::NEW, function (Action $action) {
+            return $action->setIcon('fa fa-plus')->setLabel("Créer Newsletter");
+        });
     }
 
     public function configureFields(string $pageName): iterable
