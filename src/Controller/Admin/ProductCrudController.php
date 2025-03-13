@@ -21,14 +21,23 @@ class ProductCrudController extends AbstractCrudController
         return Product::class;
     }
 
+    #[Route('/admin/charts',name:'admin_charts_chart')]
+    public function chart()
+    {
+        return $this->render('admin/charts/chart.html.twig');
+    }
+
     public function configureActions(Actions $actions): Actions
     {
-        return $actions
-        ->disable('delete')
+        $statsAction = Action::new('stats','Stats')->linkToRoute('admin_charts_chart')->setIcon('fa fa-bar-chart')->addCssClass('btn btn-info')->createAsGlobalAction();
 
-        ->update(Crud::PAGE_INDEX, Action::NEW, function (Action $action) {
-            return $action->setIcon('fa fa-plus')->setLabel("Nouveau produit");
-        });
+        return $actions
+            ->disable('delete')
+            ->update(Crud::PAGE_INDEX, Action::NEW, function (Action $action) {
+                return $action->setIcon('fa fa-plus')->setLabel("Nouveau produit");
+            })
+        
+            ->add(Crud::PAGE_INDEX, $statsAction);
     }
     
     public function configureFields(string $pageName): iterable
@@ -99,6 +108,8 @@ class ProductCrudController extends AbstractCrudController
             ->setPageTitle('new','Créer un nouveau produit');
     }
     
+
+
 
 
 }
