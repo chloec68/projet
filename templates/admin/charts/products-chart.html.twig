@@ -23,10 +23,10 @@
     new Chart(ctx, {
       type: 'bar',
       data: {
-        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+        labels: [],
         datasets: [{
-          label: '# of Votes',
-          data: [12, 19, 3, 5, 2, 3],
+          label: 'Ventes de '
+          data: [],
           borderWidth: 1
         }]
       },
@@ -46,7 +46,12 @@
 
 
 
+{# Label (x-axis): Product Name
+Value (y-axis): Number of Sales (quantity sold)
+Month: Each set of bars for a product will correspond to a specific month. #}
 
-
-
+{# x-axis labels: Product names
+y-axis values: Number of sales (or quantity sold)
+Datasets: One dataset for each month (12 datasets, one for each month)
+ #}
 

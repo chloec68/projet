@@ -146,86 +146,35 @@ class ProductRepository extends ServiceEntityRepository
            return $result;
            
        }
-   
 
+        // CHARTS 
 
-    //FIND ALL BEERS OF A CERTAIN TYPE
-        // DQL => SELECT p FROM App\Entity\Beer p WHERE p.category = :idCategory AND p.type = :type
-    // public function findBeersByType($type):array
-    // {
-    //     return $this->createQueryBuilder('p')
-    //         ->andWhere('p.category = :idCategory')
-    //         ->andWhere('p.type = :type')
-    //         ->setParameter('idCategory', '1')
-    //         ->setParameter('type', $type)
-    //         ->orderBy('p.productName','ASC')
-    //         ->getQuery()
-    //         ->getResult();
-    // }
+       public function salesByMonth($category, $dateOfPlacement) {
 
-    // FIND ALL BEERS OF A CERTAIN COLOR 
-        // DQL => SELECT p FROM App\Entity\Beer p WHERE p.color = :color
-    // public function findBeersByColor($color):array
-    // {
-    //     return $this->createQueryBuilder('p')
-    //         ->andWhere('p.category = :idCategory')
-    //         ->andWhere('p.productColor = :productColor')
-    //         ->setParameter('idCategory', '1')
-    //         ->setParameter('productColor', $color)
-    //         ->orderBy('p.productName','ASC')
-    //         ->getQuery()
-    //         ->getResult();
-    // }
-       
-    //      public function findOneByName($name): ?Product
-    //    {
-    //        return $this->createQueryBuilder('p')
-    //             ->andWhere('p.category = :idCategory')
-    //             ->andWhere('p.productName LIKE :productName')
-    //             ->setParameter('idCategory', '1')
-    //             ->setParameter('productName', $name)
-    //             ->getQuery()
-    //             ->getOneOrNullResult()
-    //        ;
-    //    }
+        $year = $dateOfPlacement->format('Y');  //Extrait l'année de $dateOfPlacement
+        $month = $dateOfPlacement->format('m'); //Extrait le mois de $dateOfPlacement
+        $startDate = new \DateTime("$year-$month-01 00:00:00");
+        $endDate = clone $startDate;
+        $endDate->modify('last day of this month 23:59:59'); // Relative Date Modifier => la chaîne de caractères 'last day of this month' est une instruction
+        // PHP 
 
-        //DQL => 'SELECT * FROM product WHERE product_name LIKE "%'.$name.'%" 
-    //    public function findOneByName($name): ?Product
-    //    {
-    //        return $this->createQueryBuilder('p')
-    //             ->andWhere('p.category = :idCategory')
-    //             ->andWhere('p.productName LIKE :productName')
-    //             ->setParameter('idCategory', '1')
-    //             ->setParameter('productName', '%'.$name.'%')
-    //             ->getQuery()
-    //             ->getOneOrNullResult()
-    //        ;
-    //    }
+        return $this->createQueryBuilder('p')
+            ->select('p.productName','op')
+            ->innerJoin('p.orderProducts', 'op')  
+            ->innerJoin('op.appOrder', 'o')  
+            ->andWhere('p.category = :category')
+            ->andWhere('o.dateOfPlacement BETWEEN :startDate AND :endDate')
+            ->setParameter('category', $category)
+            ->setParameter('startDate', $startDate)
+            ->setParameter('endDate', $endDate)
+            ->orderBy('p.productName', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
 
+            // SELECT product.product_name,order_product.quantity FROM product 
+            // INNER JOIN order_product ON product.id = order_product.app_product_id
+            // INNER JOIN `order` ON order_product.app_order_id = `order`.id
+            // WHERE product.category_id = 1 AND CONCAT(YEAR(`order`.date_of_placement),'-',MONTH(`order`.date_of_placement)) = '2025-3'
 
-
-    //    /**
-    //     * @return Product[] Returns an array of Product objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('p')
-    //            ->andWhere('p.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('p.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
-
-    //    public function findOneBySomeField($value): ?Product
-    //    {
-    //        return $this->createQueryBuilder('p')
-    //            ->andWhere('p.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
 }

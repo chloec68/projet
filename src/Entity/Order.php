@@ -53,13 +53,13 @@ class Order
      * @var Collection<int, OrderProducts>
      */
     #[ORM\OneToMany(targetEntity: OrderProduct::class, mappedBy: 'appOrder', cascade:['persist'])]
-    private Collection $orderProduct;
+    private Collection $orderProducts;
 
 
     public function __construct()
     {
-        // $this->products = new ArrayCollection();
-        $this->orderProduct = new ArrayCollection();
+
+        $this->orderProducts = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -220,9 +220,9 @@ class Order
     }
 
     /**
-     * @return Collection<int, OrderProduct>
+     * @return Collection<int, OrderProducts>
      */
-    public function getOrderProduct(): Collection
+    public function getOrderProducts(): Collection
     {
         return $this->orderProduct;
     }
