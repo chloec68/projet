@@ -10,7 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class StatsController extends AbstractController
 {
     #[Route('/admin/charts', name:'admin_charts_products-chart')]
-    public function productsChart(ProductRepository $productRepository)
+    public function productsCharts(ProductRepository $productRepository)
     {   
         $january = DateTime::createFromFormat('m-Y','1-'.date('Y'));
         $february = \DateTime::createFromFormat('m-Y','2-'.date('Y'));
@@ -29,82 +29,33 @@ class StatsController extends AbstractController
         $labels = ["January","February","March","April","May","June","July","August","September","October","November","December"];
 
         // BEERS SALES 
-        $category = 1 ;
+        $category = 1;
         $yearlyProductSales = [];
-
-        for($i=0;$i<12;$i++){
-            $monthlySales = $productRepository->salesByMonth($category,$month[$i]);
+        $monthlyProductData = [];  
+    
+        for ($i = 0; $i < 12; $i++) {
+            $monthlySales = $productRepository->salesByMonth($category, $month[$i]);
             $monthlyProductSales = [];
-
-            foreach ($monthlySales as $monthlySale){
-              $productName = $monthlySale['productName'];
-              $quantity = $monthlySale['quantity'];
-
-              if(isset($monthlyProductSales[$productName])){
-                $monthlyProductSales[$productName] += $quantity;
-              }else{
-                $monthlyProductSales[$productName] = $quantity;
-              }
-            }
-            $yearlyProductSales[] = $monthlyProductSales;
-        }
-        
-        $datasets = []; 
-        $productNames = []; 
-
-        foreach($yearlyProductSales as $monthlySales){
-            foreach($monthlySales as $productName => $quantity){
-                if (!in_array($productName, $productNames)) {
-                    $productNames[] = $productName; 
+    
+            foreach ($monthlySales as $monthlySale) {
+                $productName = $monthlySale['productName'];
+                $quantity = $monthlySale['quantity'];
+            
+                if (isset($monthlyProductSales[$productName])) {
+                    $monthlyProductSales[$productName] += $quantity;
+                } else {
+                    $monthlyProductSales[$productName] = $quantity;
                 }
             }
+    
+            $yearlyProductSales[] = $monthlyProductSales;
+            $monthlyProductData[] = $monthlyProductSales;
         }
-
-        foreach ($productNames as $productName){
-            $productData = [];
-
-            foreach ($yearlyProductSales as $monthlySales){
-                $productData[] = isset($monthlySales[$productName]) ? $monthlySales[$productName] : 0;
-            }
-
-            $datasets[] = [
-                'label' => $productName,
-                'data' => $productData, 
-                'backgroundColor' => 'rgba(75, 192, 192, 0.2)',
-                'borderColor' => 'rgba(75, 192, 192, 1)',
-                'borderWidth' => 1,
-            ];
-
-        }
-
-        return $this->render('/admin/charts/products-chart.html.twig',[
-            'datasets' => $datasets,
-            'labels' => $labels
+    
+        return $this->render('admin/charts/products-chart.html.twig', [
+            'labels' => $labels,
+            'monthlyProductData' => $monthlyProductData,
         ]);
     }
 }
 
-
-        // $salesOfJanuaryBeers = $productRepository->salesByMonth($category,$january);
-        // $salesOfFebruaryBeers = $productRepository->salesByMonth($category,$february);
-        // $salesOfMarchBeers = $productRepository->salesByMonth($category,$march);
-        // $salesOfAprilBeers = $productRepository->salesByMonth($category,$april);
-        // $salesOfMayBeers = $productRepository->salesByMonth($category,$may);
-        // $salesOfJuneBeers = $productRepository->salesByMonth($category,$june);
-        // $salesOfJulyBeers = $productRepository->salesByMonth($category,$july);
-        // $salesOfAugustBeers = $productRepository->salesByMonth($category,$august);
-        // $salesOfSeptemberBeers = $productRepository->salesByMonth($category,$september);
-        // $salesOfOctoberBeers = $productRepository->salesByMonth($category,$october);
-        // $salesOfNovemberBeers = $productRepository->salesByMonth($category,$november);
-        // $salesOfDecemberBeers = $productRepository->salesByMonth($category,$december);
-
-
-        //GOODIES SALES 
-        // $category = 2 ; 
-        // $salesOfYearGoodies = [];
-        // for($i=0;$i<12;$i++){
-        //     $salesOfMonth = $productRepository->salesByMonth($category,$month[$i]);
-        //     $salesOfYearGoodies[] = $salesOfMonth ;
-        // }
-
-        // $saleOfMarchGoodies = $productRepository->salesByMonth($category, $march);
