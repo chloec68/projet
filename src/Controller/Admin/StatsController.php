@@ -26,17 +26,66 @@ class StatsController extends AbstractController
         $december = \DateTime::createFromFormat('m-Y','12-'.date('Y'));
 
         $month = [$january,$february,$march,$april,$may,$june,$july,$august,$september,$october,$november,$december];
+        $labels = ["January","February","March","April","May","June","July","August","September","October","November","December"];
 
         // BEERS SALES 
         $category = 1 ;
-        $salesOfYearBeers = [];
+        $yearlyProductSales = [];
 
         for($i=0;$i<12;$i++){
-            $salesOfMonth = $productRepository->salesByMonth($category,$month[$i]);
-            $salesOfYearBeers[] = $salesOfMonth ;
+            $monthlySales = $productRepository->salesByMonth($category,$month[$i]);
+            $monthlyProductSales = [];
+
+            foreach ($monthlySales as $monthlySale){
+              $productName = $monthlySale['productName'];
+              $quantity = $monthlySale['quantity'];
+
+              if(isset($monthlyProductSales[$productName])){
+                $monthlyProductSales[$productName] += $quantity;
+              }else{
+                $monthlyProductSales[$productName] = $quantity;
+              }
+            }
+            $yearlyProductSales[] = $monthlyProductSales;
         }
 
-        dd($salesOfYearBeers);
+        // dd($yearlyProductSales);
+
+        $datasets = []; 
+        $productNames = []; 
+
+        foreach($yearlyProductSales as $monthlySales){
+            foreach($monthlySales as $productName => $quantity){
+                // if (!in_array($productName, $productNames)) {
+                    $productNames[] = $productName; 
+                // }
+            }
+        }
+
+        foreach ($productNames as $productName){
+            $productData = [];
+
+            foreach ($yearlyProductSales as $monthlySales){
+                $productData[] = isset($monthlySales[$productName]) ? $monthlySales[$productName] : 0;
+            }
+        }
+
+        $datasets[] = [
+            'label' => $productName,
+            'data' => $productData,  // The sales quantities for each month
+            'backgroundColor' => 'rgba(75, 192, 192, 0.2)', // Customize the color
+            'borderColor' => 'rgba(75, 192, 192, 1)',
+            'borderWidth' => 1,
+        ];
+
+        dd($datasets);
+        return $this->render('/admin/charts/products-chart.html.twig',[
+            'datasets' => $datasets,
+            'labels' => $labels
+        ]);
+    }
+}
+
 
         // $salesOfJanuaryBeers = $productRepository->salesByMonth($category,$january);
         // $salesOfFebruaryBeers = $productRepository->salesByMonth($category,$february);
@@ -53,18 +102,11 @@ class StatsController extends AbstractController
 
 
         //GOODIES SALES 
-        $category = 2 ; 
-        $salesOfYearGoodies = [];
-        for($i=0;$i<12;$i++){
-            $salesOfMonth = $productRepository->salesByMonth($category,$month[$i]);
-            $salesOfYearGoodies[] = $salesOfMonth ;
-        }
+        // $category = 2 ; 
+        // $salesOfYearGoodies = [];
+        // for($i=0;$i<12;$i++){
+        //     $salesOfMonth = $productRepository->salesByMonth($category,$month[$i]);
+        //     $salesOfYearGoodies[] = $salesOfMonth ;
+        // }
 
-        $saleOfMarchGoodies = $productRepository->salesByMonth($category, $march);
-
-        return $this->render('/admin/charts/products-chart.html.twig',[
-            'salesOfYearBeers' => $salesOfYearBeers,
-            'salesOfYearGoodies' => $salesOfYearGoodies
-        ]);
-    }
-}
+        // $saleOfMarchGoodies = $productRepository->salesByMonth($category, $march);
