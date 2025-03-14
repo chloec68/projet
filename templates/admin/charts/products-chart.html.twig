@@ -1,46 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Stats</title>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.min.js" integrity="sha512-L0Shl7nXXzIlBSUUPpxrokqq4ojqgZFQczTYlGjzONGTDAcLremjwaWv5A+EDLnxhQzY5xUZPWLOLqYRkY0Cbw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-</head>
+  <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Stats</title>
+      <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+  </head>
 
-<body>
+  <body>
+    <div>
+      <canvas id="myChart" aria-label="Graphique qui montre les produits les plus vendus durant chaque mois de l'année en cours" role="img">Your browser does not support the canvas element.</canvas>
+    </div>
 
-  <div>
-    <canvas id="myChart" aria-label="Graphique qui montre les produits les plus vendus durant chaque mois de l'année en cours" role="img">Your browser does not support the canvas element.</canvas>
-  </div>
-
-  <script>
-    Chart.defaults.backgroundColor = '#9BD0F5';
-    Chart.defaults.borderColor = '#36A2EB';
-    Chart.defaults.color = '#000';
-
-    const ctx = document.getElementById('myChart');
-  
-    new Chart(ctx, {
-      type: 'bar',
-      data: {
-        labels: [],
-        datasets: [{
-          label: 'Ventes de '
-          data: [],
-          borderWidth: 1
-        }]
-      },
-      options: {
-        scales: {
-          y: {
-            beginAtZero: true
+    <script>
+      const ctx = document.getElementById('myChart').getContext('2d');
+      const productsChart = new Chart(ctx, {
+          type: 'bar',
+          data: {
+              labels: {{ labels|json_encode()|raw }},
+              datasets:  {{ datasets|json_encode()|raw }},
+          },
+          options: {
+              responsive: true,
+              plugins: {
+                  title: {
+                      display: true,
+                      text: 'Ventes de produits par mois'
+                  },
+                  legend: {
+                      position: 'top',
+                  },
+              },
+              scales: {
+                  x: {
+                      beginAtZero: true
+                  },
+                  y: {
+                      beginAtZero: true
+                  }
+              }
           }
-        }
-      }
-    });
-  </script>
-   
-</body>
+      });
+    </script>
+    
+  </body>
 </html>
 
 

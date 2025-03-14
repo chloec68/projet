@@ -159,7 +159,7 @@ class ProductRepository extends ServiceEntityRepository
         // PHP 
 
         return $this->createQueryBuilder('p')
-            ->select('p.productName','op')
+            ->select('p.productName','op.quantity')
             ->innerJoin('p.orderProducts', 'op')  
             ->innerJoin('op.appOrder', 'o')  
             ->andWhere('p.category = :category')
