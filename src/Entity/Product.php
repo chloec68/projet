@@ -72,10 +72,17 @@ class Product
     #[ORM\Column]
     private ?bool $isDeleted = null;
 
+    /**
+    * @var Collection<int, OrderProducts>
+    */
+    #[ORM\OneToMany(targetEntity: OrderProduct::class, mappedBy: 'appProduct')]
+    private Collection $orderProducts;
+
+
     public function __construct()
     {
         $this->users = new ArrayCollection();
-        $this->orders = new ArrayCollection();
+        $this->orderProducts = new ArrayCollection();
         $this->pictures = new ArrayCollection();
     }
 
@@ -327,6 +334,11 @@ class Product
         $this->isDeleted = $isDeleted;
 
         return $this;
+    }
+
+    public function getOrderProducts(): Collection
+    {
+        return $this->orderProducts;
     }
 
     public function __toString(): string
