@@ -14,34 +14,57 @@
 
     <script>
       const ctx = document.getElementById('myChart').getContext('2d');
-      const productsChart = new Chart(ctx, {
+      const labels = {{ labels|json_encode|raw }};
+      const monthlyProductData = {{ monthlyProductData|json_encode|raw }};  // Pass the monthly data
+
+      const salesChart = new Chart(ctx, {
           type: 'bar',
           data: {
-              labels: {{ labels|json_encode()|raw }},
-              datasets:  {{ datasets|json_encode()|raw }},
+              labels: labels,  // ABCISSE 
+              datasets: [{
+                  label: 'Total des ventes (quantité)',
+                  data: monthlyProductData.map(monthData => 
+                      Object.values(monthData).reduce((a, b) => a + b, 0) // Total vente par mois
+                  ), // .map() permet de créer un tableau à partir d'un tableau existant en appliquant une fonction sur chaque élément du tableau
+                    // .reduce() est une méthode qui permet de réduire un tableau à une seule valeur en appliquant une fonction de réduction ; 
+                    // ici la méthode reduce prend deux argument (a,b) et la réduction commence à partir de 0 (a = 0)
+                    // pour un tableau contenant [30,20,15], on a a=0, b=30 -> a+b=30 ; a=30, b=20 -> a+b=50 ; a=50, b=15 -> a+b=65 ; 
+                  backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                  borderColor: 'rgba(75, 192, 192, 1)',
+                  borderWidth: 1
+              }]
           },
           options: {
-              responsive: true,
-              plugins: {
-                  title: {
-                      display: true,
-                      text: 'Ventes de produits par mois'
-                  },
-                  legend: {
-                      position: 'top',
-                  },
-              },
-              scales: {
-                  x: {
-                      beginAtZero: true
-                  },
-                  y: {
-                      beginAtZero: true
+              responsive: true, //adaptation de la taille du graphique à la taille de la fenêtre ou conteneur parent 
+              onClick: function(e) {
+                  const activePoints = salesChart.getElementsAtEventForMode(e, 'nearest', { intersect: true }, true);
+                  //récupération de l'élément le plus proche où l'utilisateur a été cliqué 
+
+                  if (activePoints.length > 0) {
+                      const clickedMonthIndex = activePoints[0].index; // récupération de l'index du mois cliqué 
+
+                      // récupère données du mois cliqué (noms produit + quantité )
+                      const monthData = monthlyProductData[clickedMonthIndex];
+                      const productNames = Object.keys(monthData);
+                      const productQuantities = Object.values(monthData);
+
+                      // mise à jour de l'abcisse (nom produits) et de l'ordonnée (quantité) du graphique
+                      salesChart.data.labels = productNames;
+                      salesChart.data.datasets = [{
+                          label: 'Quantité vendue',
+                          data: productQuantities,
+                          backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                          borderColor: 'rgba(75, 192, 192, 1)',
+                          borderWidth: 1
+                      }];
+
+                      // Renvoie le graphique mis à jour 
+                      salesChart.update();
                   }
               }
           }
       });
-    </script>
+  </script>
     
   </body>
 </html>
