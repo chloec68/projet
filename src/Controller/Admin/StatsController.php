@@ -48,17 +48,15 @@ class StatsController extends AbstractController
             }
             $yearlyProductSales[] = $monthlyProductSales;
         }
-
-        // dd($yearlyProductSales);
-
+        
         $datasets = []; 
         $productNames = []; 
 
         foreach($yearlyProductSales as $monthlySales){
             foreach($monthlySales as $productName => $quantity){
-                // if (!in_array($productName, $productNames)) {
+                if (!in_array($productName, $productNames)) {
                     $productNames[] = $productName; 
-                // }
+                }
             }
         }
 
@@ -68,17 +66,17 @@ class StatsController extends AbstractController
             foreach ($yearlyProductSales as $monthlySales){
                 $productData[] = isset($monthlySales[$productName]) ? $monthlySales[$productName] : 0;
             }
+
+            $datasets[] = [
+                'label' => $productName,
+                'data' => $productData, 
+                'backgroundColor' => 'rgba(75, 192, 192, 0.2)',
+                'borderColor' => 'rgba(75, 192, 192, 1)',
+                'borderWidth' => 1,
+            ];
+
         }
 
-        $datasets[] = [
-            'label' => $productName,
-            'data' => $productData,  // The sales quantities for each month
-            'backgroundColor' => 'rgba(75, 192, 192, 0.2)', // Customize the color
-            'borderColor' => 'rgba(75, 192, 192, 1)',
-            'borderWidth' => 1,
-        ];
-
-        dd($datasets);
         return $this->render('/admin/charts/products-chart.html.twig',[
             'datasets' => $datasets,
             'labels' => $labels
