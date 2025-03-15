@@ -14,19 +14,19 @@
             </tr>
         </thead>
         <tbody>
-        {% for item in cartData %}
+        {% for product in products %}
             
             <tr class="recap-item-row">
                 <td>
-                {% for picture in item.product.pictures %}
+                {% for picture in product.pictures %}
                     {% if loop.first %}
                         <img class="recap-picture" src="{{picture.pictureName}}" alt="photo de la face avant du produit">
                     {% endif %}
                 {% endfor %}
-                {{item.product.productName}} - {% if item.product.productVolume is not null %}{{item.product.productVolume}}{% else %}{{item.product.size.sizeName}}{% endif %}
+                {{product.productName}} - {% if product.productVolume is not null %}{{product.productVolume}}{% else %}{{product.size.sizeName}}{% endif %}
                 </td>
-                <td>{{item.quantity}}</td>
-                <td>{{subTotals[item.product.id]}} €</td>
+                <td>{{quantities[product.id]}}</td>
+                <td>{{subTotals[product.id]}} €</td>
             </tr>
         {% endfor %}
             <tr>

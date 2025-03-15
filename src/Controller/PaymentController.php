@@ -73,7 +73,6 @@ class PaymentController extends AbstractController
 
 
             // redirection vers la page paiement de Stripe 
-            // dd($session);
             return $this->redirectToRoute('app_payment-recap');
         }
 
@@ -86,25 +85,40 @@ class PaymentController extends AbstractController
 
     #[Route('/payment/recap', name:'app_payment-recap')]
     public function recap(SessionInterface $session, ProductRepository $productRepository, VATpriceCalculator $priceCalculator):Response
-    {   
-
-        $cartData = $session->get('cartData');
-        // dd($cartData);
+    {  
         $cart = $session->get('cart');
-        // dd($cart);
-        $total = $session->get('priceTotal');
+        $products = [];
+        $nbItems = 0;
+        $total = 0;
         $subTotals=[];
-
-        foreach ($cartData as $data) {
-            $product = $data['product'];
-            $subTotal = $priceCalculator->vatPriceSubTotal($product,$data['quantity']);
+        $quantities = [];
+        
+        //pour chaque élément du tableau associatif $cart 
+        foreach ($cart as $id=> $quantity) {
+            // je récupère le prodiut à partir de l'id 
+            $product = $productRepository->find($id);
+            // je récupère le prix du produit 
+            $productPrice = $product->getProductPrice();
+            // je calcule le sous-total en multipliant le prix du produit par la quantité associée au produit dans $cart 
+            $subTotal = $productPrice * $quantity;
+            // j'ajoute le sous-total à un tableau associatif $id => $subTotal 
             $subTotals[$product->getId()] = $subTotal;
+            // j'additionne les quantités pour obtenir le nombre total de produits 
+            $nbItems += $quantity;
+            // j'additionne les sous-totaux pour obtenir le total
+            $total+=$subTotal;
+            // j'ajoute le produit à un tableau associatif indexé pour pouvoir les encoyer à la vue et les y afficher à l'aide d'une boucle
+            $products[]=$product;
+            // j'ajoute la quantité associée à chaque produit à un tableau associatif avec l'id produit comme index pour pouvoir récupérer la quantité associée au produit dans la vue
+            $quantities[$product->getId()] = $quantity;
         }
 
         return $this->render('/payment/recap.html.twig', [
-            'cartData' => $cartData,
+            'products' => $products,
             'total' => $total,
+            'nbItems' => $nbItems,
             'subTotals' => $subTotals,
+            'quantities' => $quantities,
             'meta_description' => "Récapitulatif de votre commande"
         ]);
     }
