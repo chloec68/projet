@@ -97,10 +97,10 @@ class PaymentController extends AbstractController
         foreach ($cart as $id=> $quantity) {
             // je récupère le prodiut à partir de l'id 
             $product = $productRepository->find($id);
-            // je récupère le prix du produit 
-            $productPrice = $product->getProductPrice();
+            // calcul du prix TTC du produit 
+            $VATprice = $priceCalculator->vatPrice($product);
             // je calcule le sous-total en multipliant le prix du produit par la quantité associée au produit dans $cart 
-            $subTotal = $productPrice * $quantity;
+            $subTotal = $VATprice * $quantity;
             // j'ajoute le sous-total à un tableau associatif $id => $subTotal 
             $subTotals[$product->getId()] = $subTotal;
             // j'additionne les quantités pour obtenir le nombre total de produits 
