@@ -9,13 +9,17 @@
 
   <body>
     <div>
-      <canvas id="myChart" aria-label="Graphique qui montre les produits les plus vendus durant chaque mois de l'année en cours" role="img">Your browser does not support the canvas element.</canvas>
+      <canvas id="chartProducts" aria-label="Graphique qui montre la quantité de produits vendus durant chaque mois de l'année en cours" role="img">Your browser does not support the canvas element.</canvas>
     </div>
+  
+    <div>
+        <canvas id="chartRevenue" aria-label="Graphique qui montre la quantité de produits vendus durant chaque mois de l'année en cours" role="img">Your browser does not support the canvas element.</canvas>
+      </div>
 
     <script>
-      const ctx = document.getElementById('myChart').getContext('2d');
-      const labels = {{ labels|json_encode|raw }};
-      const monthlyProductData = {{ monthlyProductData|json_encode|raw }};  // Pass the monthly data
+      const ctx = document.getElementById('chartProducts').getContext('2d');
+      let labels = JSON.parse('{{ labels|json_encode|raw }}');
+      let monthlyProductData = JSON.parse('{{ monthlyProductData|json_encode|raw }}');  // Pass the monthly data
 
       const salesChart = new Chart(ctx, {
           type: 'bar',

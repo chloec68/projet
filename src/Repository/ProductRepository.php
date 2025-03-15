@@ -149,7 +149,7 @@ class ProductRepository extends ServiceEntityRepository
 
         // CHARTS 
 
-       public function salesByMonth($category, $dateOfPlacement) {
+       public function salesByMonth($dateOfPlacement) {
 
         $year = $dateOfPlacement->format('Y');  //Extrait l'année de $dateOfPlacement
         $month = $dateOfPlacement->format('m'); //Extrait le mois de $dateOfPlacement
@@ -162,9 +162,9 @@ class ProductRepository extends ServiceEntityRepository
             ->select('p.productName','op.quantity')
             ->innerJoin('p.orderProducts', 'op')  
             ->innerJoin('op.appOrder', 'o')  
-            ->andWhere('p.category = :category')
+            // ->andWhere('p.category = :category')
             ->andWhere('o.dateOfPlacement BETWEEN :startDate AND :endDate')
-            ->setParameter('category', $category)
+            // ->setParameter('category', $category)
             ->setParameter('startDate', $startDate)
             ->setParameter('endDate', $endDate)
             ->orderBy('p.productName', 'ASC')
@@ -176,38 +176,5 @@ class ProductRepository extends ServiceEntityRepository
             // INNER JOIN order_product ON product.id = order_product.app_product_id
             // INNER JOIN `order` ON order_product.app_order_id = `order`.id
             // WHERE product.category_id = 1 AND CONCAT(YEAR(`order`.date_of_placement),'-',MONTH(`order`.date_of_placement)) = '2025-3'
-
-    public function topFiveSalesByMonth($category, $dateOfPlacement)
-    {
-        $year = $dateOfPlacement->format('Y');  //Extrait l'année de $dateOfPlacement
-        $month = $dateOfPlacement->format('m'); //Extrait le mois de $dateOfPlacement
-        $startDate = new \DateTime("$year-$month-01 00:00:00");
-        $endDate = clone $startDate;
-        $endDate->modify('last day of this month 23:59:59');
-
-        return $this->createQueryBuilder('p')
-        ->select('p.productName, SUM(op.quantity) as total')
-        ->innerJoin('p.orderProducts', 'op')  
-        ->innerJoin('op.appOrder', 'o')  
-        ->andWhere('p.category = :category')
-        ->andWhere('o.dateOfPlacement BETWEEN :startDate AND :endDate')
-        ->setParameter('category', $category)
-        ->setParameter('startDate', $startDate)
-        ->setParameter('endDate', $endDate)
-        ->groupBy('p.productName','op.quantity')
-        ->orderBy('op.quantity', 'DESC')
-        ->setMaxResults(5)
-        ->getQuery()
-        ->getResult();
-    }
-
-    // SELECT product.product_name, SUM(order_product.quantity) as total
-    // FROM product 
-    // INNER JOIN order_product ON product.id = order_product.app_product_id
-    // INNER JOIN `order` ON order_product.app_order_id = `order`.id
-    // WHERE product.category_id = 1 AND CONCAT(YEAR(`order`.date_of_placement),'-',MONTH(`order`.date_of_placement)) = '2025-3'
-    // GROUP BY product.product_name,order_product.quantity
-    // ORDER BY order_product.quantity ASC 
-    // LIMIT 5
 
 }
