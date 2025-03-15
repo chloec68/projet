@@ -2,6 +2,7 @@
 namespace App\Controller\Admin;
 
 use DateTime;
+use App\Repository\OrderRepository;
 use App\Repository\ProductRepository;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -10,8 +11,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class StatsController extends AbstractController
 {
     #[Route('/admin/charts', name:'admin_charts_products-chart')]
-    public function productsCharts(ProductRepository $productRepository)
+    public function salesCharts(ProductRepository $productRepository, OrderRepository $orderRepository)
     {   
+        //PRODUCTS
+
         $january = DateTime::createFromFormat('m-Y','1-'.date('Y'));
         $february = \DateTime::createFromFormat('m-Y','2-'.date('Y'));
         $march = \DateTime::createFromFormat('m-Y','3-'.date('Y'));
@@ -49,10 +52,19 @@ class StatsController extends AbstractController
             $yearlyProductSales[] = $monthlyProductSales;
             $monthlyProductData[] = $monthlyProductSales;
         }
+
+        //REVENUE 
+
+        $totalSales = [];
+        for($i = 0 ; $i<12 ; $i++){
+            $monthlyTotal = $orderRepository->totalSalesByMonth($month[$i]);
+            $totalSales[] = $monthlyTotal;
+        }
     
         return $this->render('admin/charts/products-chart.html.twig', [
             'labels' => $labels,
             'monthlyProductData' => $monthlyProductData,
+            'totalSales' => $totalSales
         ]);
     }
 }

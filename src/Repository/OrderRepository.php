@@ -16,6 +16,33 @@ class OrderRepository extends ServiceEntityRepository
         parent::__construct($registry, Order::class);
     }
 
+    public function totalSalesByMonth($dateOfPlacement)
+    {
+        $year = $dateOfPlacement->format('Y');  //Extrait l'année de $dateOfPlacement
+        $month = $dateOfPlacement->format('m'); //Extrait le mois de $dateOfPlacement
+        $startDate = new \DateTime("$year-$month-01 00:00:00");
+        $endDate = clone $startDate;
+        $endDate->modify('last day of this month 23:59:59');
+
+        $totalSales = $this->createQueryBuilder('o')
+        ->select('SUM(o.orderTotal)')
+        ->andWhere('o.dateOfPlacement BETWEEN :startDate AND :endDate')
+        ->setParameter('startDate', $startDate)
+        ->setParameter('endDate', $endDate)
+        ->getQuery()
+        ->getSingleScalarResult();
+
+        if($totalSales === null){
+            $totalSales = 0;
+        }
+
+        return $totalSales;
+    }
+
+    // SELECT SUM(order.order_total) AS total
+    // FROM `order`
+    // WHERE DATE_FORMAT(order.date_of_placement, '%Y-%m') = '2025-03';
+
     //    /**
     //     * @return Order[] Returns an array of Order objects
     //     */

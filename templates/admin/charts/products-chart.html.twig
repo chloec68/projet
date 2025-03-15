@@ -13,15 +13,15 @@
     </div>
   
     <div>
-        <canvas id="chartRevenue" aria-label="Graphique qui montre la quantité de produits vendus durant chaque mois de l'année en cours" role="img">Your browser does not support the canvas element.</canvas>
+        <canvas id="chartRevenue" aria-label="Graphique qui montre le chiffre d'affaire de chaque mois" role="img">Your browser does not support the canvas element.</canvas>
       </div>
 
     <script>
-      const ctx = document.getElementById('chartProducts').getContext('2d');
+      const ctx1 = document.getElementById('chartProducts').getContext('2d');
       let labels = JSON.parse('{{ labels|json_encode|raw }}');
       let monthlyProductData = JSON.parse('{{ monthlyProductData|json_encode|raw }}');  // Pass the monthly data
 
-      const salesChart = new Chart(ctx, {
+      const salesChart = new Chart(ctx1, {
           type: 'bar',
           data: {
               labels: labels,  // ABCISSE 
@@ -67,6 +67,28 @@
                   }
               }
           }
+      });
+      let totalSalesData = JSON.parse('{{ totalSales|json_encode|raw }}');
+      const ctx2 = document.getElementById('chartRevenue');
+      new Chart(ctx2, {
+        type: 'line',
+        data: {
+          labels: labels,
+          datasets: [{
+            label: 'CA mensuel',
+            data: totalSalesData,
+            borderWidth: 1,
+            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+            borderColor:'rgba(75, 192, 192, 1)',
+          }]
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          }
+        }
       });
   </script>
     
