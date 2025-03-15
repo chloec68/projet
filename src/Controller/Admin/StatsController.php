@@ -27,14 +27,12 @@ class StatsController extends AbstractController
 
         $month = [$january,$february,$march,$april,$may,$june,$july,$august,$september,$october,$november,$december];
         $labels = ["January","February","March","April","May","June","July","August","September","October","November","December"];
-
-        // BEERS SALES 
-        $category = 1;
+   
         $yearlyProductSales = [];
         $monthlyProductData = [];  
     
         for ($i = 0; $i < 12; $i++) {
-            $monthlySales = $productRepository->salesByMonth($category, $month[$i]);
+            $monthlySales = $productRepository->salesByMonth($month[$i]);
             $monthlyProductSales = [];
     
             foreach ($monthlySales as $monthlySale) {
