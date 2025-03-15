@@ -21,10 +21,14 @@
         </tr>
     </th>
     <tbody>
-{% for item in cartData %}
-    <tr><td class="grey capitalize">{{item.product.productName}} - {% if item.product.productVolume is not null %}{{item.product.productVolume}}{% else %}{{item.product.size.sizeName}}{% endif %}</td> - <td class="centered grey">{{item.product.productPrice}} €</td> <td class="centered grey">{{item.quantity}}</td><td class="centered">{{item.product.vat.vatRate * 100}} %</td><td class="right grey">{{item.product.productVATprice * item.quantity}} €</td></tr>
-{% endfor %}
-<tr class="total"><td class="bold centered">TOTAL TTC</td><td class="centered">-</td><td class="bold centered">{{nbItems}} articles</td><td></td><td class="bold right">{{order.orderTotal}} €</td></tr>
+
+        {% for orderProduct in order.orderProducts %}
+
+        <tr><td class="grey capitalize">{{orderProduct.appProduct.productName}} - {% if orderProduct.appProduct.productVolume is not null %}{{orderProduct.appProduct.productVolume}}{% else %}{{orderProduct.appProduct.size.sizeName}}{% endif %}</td> - <td class="centered grey">{{orderProduct.appProduct.productPrice}} €</td> <td class="centered grey">{{orderProduct.quantity}}</td><td class="centered">{{orderProduct.appProduct.vat.vatRate * 100}} %</td><td class="right grey"> {{subTotals[orderProduct.appProduct.id]}} €</td></tr>
+        {% endfor %}
+  
+
+<tr class="total"><td class="bold centered">TOTAL TTC</td><td class="centered">-</td><td class="bold centered"> articles</td><td></td><td class="bold right">{{order.orderTotal}} €</td></tr>
 </tbody>
 </table>
 

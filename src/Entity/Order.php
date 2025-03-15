@@ -224,13 +224,13 @@ class Order
      */
     public function getOrderProducts(): Collection
     {
-        return $this->orderProduct;
+        return $this->orderProducts;
     }
 
     public function addOrderProduct(OrderProduct $orderProduct): static
     {
-        if (!$this->orderProduct->contains($orderProduct)) {
-            $this->orderProduct->add($orderProduct);
+        if (!$this->orderProducts->contains($orderProduct)) {
+            $this->orderProducts->add($orderProduct);
             $orderProduct->setAppOrder($this);
         }
 

@@ -243,7 +243,7 @@ class PaymentController extends AbstractController
             $bill->setBillDate(new \DateTime()); 
 
             //récupération de la collection d'objets Produit de la commande
-            $orderproducts = $order->getOrderProduct();
+            $orderproducts = $order->getOrderProducts();
             //initialisation du prix total en dehors de la boucle pour qu'il ne soit pas reset à 0 à chaque tour de boucle
             $noVatPriceTotal = 0;
             //pour chaque produit
@@ -267,21 +267,34 @@ class PaymentController extends AbstractController
          }
 
         #[Route('/payment/checkout/bill', name:'app_payment-checkout-bill')]
-        public function billGenerator(SessionInterface $session, OrderRepository $orderRepository, EstablishmentRepository $establishmentRepository):Response
+        public function billGenerator(SessionInterface $session, OrderRepository $orderRepository, EstablishmentRepository $establishmentRepository, VATpriceCalculator $priceCalculator):Response
         {   
-            //récupération des infos nécessaires à la vue
+            //récupération de l'id de la commmande
             $orderId = $session->get('orderId'); 
+            //récupération de la commande à partir de l'id
             $order = $orderRepository->find($orderId);
-            $cartData = $session->get('cartData');
-            $nbItems = $session->get('nbItems');
+            // je récupère l'établissement id=1 pour afficher le nom de la brasserie (le vendeur) en haut de page 
             $id=1;
             $seller = $establishmentRepository->find($id);
-            $orderproduct = $order->getOrderProduct();
+            // récupération des produits liés à la commande 
+            $orderproducts = $order->getOrderProducts();
+            //initialisation du total HT
             $totalNoVat = 0;
-            foreach($orderproduct as $product){
-                $priceNoVat = $product->getAppProduct()->getProductPrice();
+            //initialisation d'un tableau pour stocker les sous-totaux
+            $subTotals = [];
+
+            foreach($orderproducts as $orderProduct){
+                //calcul prix HT 
+                $priceNoVat = $orderProduct->getProductPrice();
                 $totalNoVat += $priceNoVat ; 
+
+                $quantity = $orderProduct->getQuantity();
+                $product = $orderProduct->getAppProduct();
+                //récupération sous-totaux
+                $subTotal = $priceCalculator->vatPriceSubTotal($product,$quantity);
+                $subTotals[$product->getId()]=$subTotal;
             }
+
             $vat = $order->getOrderTotal() - $totalNoVat ; 
             $pickUpTime = new \DateTime();
             $pickUpTime->modify('+1 day');
@@ -292,15 +305,15 @@ class PaymentController extends AbstractController
             $options->set('defaultFont', 'helvetica');
             //création d'une instance de Dompf()
             $dompdf = new Dompdf($options);
-
+  
             //récupération du contenu HTML de la vue 
             $html = $this->renderView('/payment/bill.html.twig',[
                 'order' => $order,
-                'cartData' => $cartData,
-                'nbItems' => $nbItems,
                 'seller' => $seller,
                 'vat' => $vat,
-                'pickUpTime'=>$pickUpTime
+                'pickUpTime'=>$pickUpTime,
+                'subTotals'=>$subTotals
+       
             ]);
             $html = mb_convert_encoding($html, 'UTF-8', 'auto');
             //charge HTML dans Dompf
