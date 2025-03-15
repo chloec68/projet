@@ -13,7 +13,6 @@ class StatsController extends AbstractController
     #[Route('/admin/charts', name:'admin_charts_products-chart')]
     public function salesCharts(ProductRepository $productRepository, OrderRepository $orderRepository)
     {   
-        //PRODUCTS
 
         $january = DateTime::createFromFormat('m-Y','1-'.date('Y'));
         $february = \DateTime::createFromFormat('m-Y','2-'.date('Y'));
@@ -30,6 +29,8 @@ class StatsController extends AbstractController
 
         $month = [$january,$february,$march,$april,$may,$june,$july,$august,$september,$october,$november,$december];
         $labels = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+
+        //PRODUCTS
    
         $yearlyProductSales = [];
         $monthlyProductData = [];  
