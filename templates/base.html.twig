@@ -64,11 +64,22 @@
 
         {% block footer %}
             <footer class="centered">
+                {% if newsletterForm is defined %}
                 <div class="newsletter__container">
+                    {% for message in app.flashes('success') %}
+                        <div class="alert alert-success">{{ message }}</div>
+                    {% endfor %}
+                    {% for message in app.flashes('error') %}
+                        <div class="alert alert-error">{{ message }}</div>
+                    {% endfor %}
+            
                     <p>m'inscrire à la newsletter</p>
-                    <input type="text" placeholder="mon-adresse@email.com" id="newsletterRecipient">
-                    <button class="btn">m'inscrire</button>
+     
+                    {{ form_start(newsletterForm) }}
+
+                    {{ form_end(newsletterForm) }}
                 </div>
+                {% endif %}
                 
                 <div class="footer__wrapper-main-container">
                     <div class="footer__wrapper-container">
