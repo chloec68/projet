@@ -28,12 +28,13 @@
         {% endfor %}
   
 
-<tr class="total"><td class="bold centered">TOTAL TTC</td><td class="centered">-</td><td class="bold centered"> articles</td><td></td><td class="bold right">{{order.orderTotal}} €</td></tr>
+<tr class="total"><td class="bold centered">TOTAL TTC</td><td class="centered">-</td><td class="bold centered">{{nbItems}} articles</td><td></td><td class="bold right">{{order.orderTotal}} €</td></tr>
 </tbody>
 </table>
 
 <h2>Paiement</h2>
-<p><span class="bold">Total payé (TTC) :</span> {{order.orderTotal}} €</p>
+<p><span class="bold">Total payé (T.T.C) :</span> {{order.orderTotal}} €</p>
+<p><span class="bold">Total payé (H.T) :</span> {{totalNoVat}} €</p>
 <p><span class="bold">TVA :</span> {{vat}} €</p>
 <p><span class="bold">Mode de paiement :</span> carte bancaire</p>
 

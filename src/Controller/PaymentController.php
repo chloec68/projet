@@ -252,14 +252,19 @@ class PaymentController extends AbstractController
 
             //récupération de la collection d'objets Produit de la commande
             $orderproducts = $order->getOrderProducts();
+    
             //initialisation du prix total en dehors de la boucle pour qu'il ne soit pas reset à 0 à chaque tour de boucle
             $noVatPriceTotal = 0;
             //pour chaque produit
             foreach ($orderproducts as $orderproduct) {
                 // récupérer le prix HT de chaque produit
                 $priceNoVat = $orderproduct->getProductPrice();
+                // récupérer la quantité associée à chaque produit 
+                $quantity = $orderProduct->getQuantity();
+                // calculer sous-total  
+                $subTotal = $quantity * $priceNoVat;
                 // additionner chaque prix HT et les ajouter au total
-                $noVatPriceTotal += $priceNoVat;
+                $noVatPriceTotal += $subTotal;
             }
             $bill->setBillTotalBeforeVat($noVatPriceTotal);
 
@@ -296,39 +301,44 @@ class PaymentController extends AbstractController
             $totalNoVat = 0;
             //initialisation d'un tableau pour stocker les sous-totaux
             $subTotals = [];
-
+            //initialisation du nombre total d'articles
+            $nbItems = 0;
             foreach($orderproducts as $orderProduct){
-                //calcul prix HT 
-                $priceNoVat = $orderProduct->getProductPrice();
-                $totalNoVat += $priceNoVat ; 
-
                 $quantity = $orderProduct->getQuantity();
                 $product = $orderProduct->getAppProduct();
                 //récupération sous-totaux
                 $subTotal = $priceCalculator->vatPriceSubTotal($product,$quantity);
                 $subTotals[$product->getId()]=$subTotal;
+                //addition des quantités pour obtenir nombre total d'articles
+                $nbItems += $quantity;
             }
+            //calcul de la TVA : 
+            $bill = $order->getBill();
+            $totalNoVat = $bill->getBillTotalBeforeVat();
+            $total = $order->getOrderTotal();
+            $vat = $total - $totalNoVat;
 
-            $vat = $order->getOrderTotal() - $totalNoVat ; 
+            //date de retrait (J+1)
             $pickUpTime = new \DateTime();
             $pickUpTime->modify('+1 day');
             $pickUpTime->format('dd.mm.Y');
 
             $options = new Options();
-
             $options->set('defaultFont', 'helvetica');
             //création d'une instance de Dompf()
             $dompdf = new Dompdf($options);
   
-            //récupération du contenu HTML de la vue 
+            //envoie du contenu HTML à la vue 
             $html = $this->renderView('/payment/bill.html.twig',[
                 'order' => $order,
                 'seller' => $seller,
                 'vat' => $vat,
                 'pickUpTime'=>$pickUpTime,
-                'subTotals'=>$subTotals
-       
+                'subTotals'=>$subTotals,
+                'totalNoVat' => $totalNoVat,
+                'nbItems' => $nbItems
             ]);
+
             $html = mb_convert_encoding($html, 'UTF-8', 'auto');
             //charge HTML dans Dompf
             $dompdf->loadHtml($html);
