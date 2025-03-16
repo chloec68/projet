@@ -130,7 +130,7 @@ class CartController extends AbstractController
             if($product){
                 $VATprice = number_format($VATpriceCalculator->VATprice($product),2,'.','');
                 $nbItems += $quantity;
-                $subTotal = $VATprice * $quantity;
+                $subTotal = $VATpriceCalculator->vatPriceSubTotal($product,$quantity);
                 $total += $subTotal;
                 $pictures = [];
                 foreach ($product->getPictures() as $picture){
