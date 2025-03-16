@@ -127,17 +127,17 @@ class Product
         return $this;
     }
 
-    // public function getProductVATprice(): ?string
-    // {
-    //     return $this->productVATprice;
-    // }
+    public function getProductVATprice(): ?string
+    {
+        return $this->productVATprice;
+    }
 
-    // public function setProductVATprice(string $productVATprice): static
-    // {
-    //     $this->productVATprice = $productVATprice;
+    public function setProductVATprice(string $productVATprice): static
+    {
+        $this->productVATprice = $productVATprice;
 
-    //     return $this;
-    // }
+        return $this;
+    }
 
     public function getProductAlcoholLevel(): ?string
     {

@@ -97,16 +97,16 @@ class PaymentController extends AbstractController
         foreach ($cart as $id=> $quantity) {
             // je récupère le prodiut à partir de l'id 
             $product = $productRepository->find($id);
-            // calcul du prix TTC du produit 
-            $VATprice = $priceCalculator->vatPrice($product);
-            // je calcule le sous-total en multipliant le prix du produit par la quantité associée au produit dans $cart 
-            $subTotal = $VATprice * $quantity;
+            // calcul du sous-total
+            $subTotal = $priceCalculator->vatPriceSubTotal($product,$quantity);
             // j'ajoute le sous-total à un tableau associatif $id => $subTotal 
             $subTotals[$product->getId()] = $subTotal;
             // j'additionne les quantités pour obtenir le nombre total de produits 
             $nbItems += $quantity;
             // j'additionne les sous-totaux pour obtenir le total
             $total+=$subTotal;
+            // j'ajoute le total en session 
+            $session->set('total',$total);
             // j'ajoute le produit à un tableau associatif indexé pour pouvoir les encoyer à la vue et les y afficher à l'aide d'une boucle
             $products[]=$product;
             // j'ajoute la quantité associée à chaque produit à un tableau associatif avec l'id produit comme index pour pouvoir récupérer la quantité associée au produit dans la vue
@@ -125,9 +125,17 @@ class PaymentController extends AbstractController
 
     
     #[Route('/payment/checkout', name:'app_payment-checkout')]
-    public function checkout(SessionInterface $session)
+    public function checkout(SessionInterface $session, ProductRepository $productRepository, VATpriceCalculator $priceCalculator)
     {   
-        $priceTotal = $session->get('priceTotal');
+        $cart = $session->get('cart');
+        $total = $session->get('total');
+        // foreach ($cart as $id => $quantity) {
+        //     $product = $productRepository->find($id);
+        //     $price = $product->getProductPrice();
+        //     $vatPrice = $priceCalculator->vatPrice($product);
+        //     $subTotal = $priceCalculator->vatPriceSubTotal($product,$quantity);
+        //     $total+=$subTotal;
+        // }
         $identificationData = $session->get('identificationData');
         $userEmail = $identificationData['orderEmail'];
         
@@ -144,7 +152,7 @@ class PaymentController extends AbstractController
                         'product_data' => [
                             'name' => 'Commande',  // Nom générique
                         ],
-                        'unit_amount' => $priceTotal * 100,  // Montant en cents (exemple pour 5.00 EUR => 500)
+                        'unit_amount' => $total * 100,  // Montant en cents (exemple pour 5.00 EUR => 500)
                     ],
                     'quantity' => 1,  // quantité de 1 car un seul montant (total)
                 ],
@@ -181,8 +189,8 @@ class PaymentController extends AbstractController
             $order->setOrderEmail($orderEmail);  
    
             //récupération du total du panier enregistré en session + ajout à la commande
-            $priceTotal= $session->get('priceTotal');
-            $order->setOrderTotal($priceTotal);
+            $total= $session->get('total');
+            $order->setOrderTotal($total);
             
             // récupération du tableau panier enregistré en session et itération dans le tableau associatif
             $cart = $session->get('cart');
@@ -238,7 +246,7 @@ class PaymentController extends AbstractController
             //ajout référence à la facture
             $bill -> setBillReferenceNumber($billReferenceNumber);
             // ajout du prix total TTC 
-            $bill->setBillTotalVat($priceTotal);  
+            $bill->setBillTotalVat($total);  
             // ajout de la date à la facture
             $bill->setBillDate(new \DateTime()); 
 
@@ -259,6 +267,12 @@ class PaymentController extends AbstractController
 
             $entityManager->persist($bill);
             $entityManager->flush();
+
+            // REINITILISATIO DU PANIER 
+
+            if($session->has('cart')){
+                $session->remove('cart');
+            }
            
             return $this->render('/payment/success.html.twig', [
                 'order' => $order,
