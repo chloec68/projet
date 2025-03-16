@@ -42,7 +42,6 @@ class CartController extends AbstractController
                     'product' => $product,
                     'quantity' => $quantity,
                     'VATprice' => $VATprice,
-                    // 'subtotal' => number_format(floatval($product->getProductVATprice()) * $quantity,2,'.',''),
                     'subtotal' => $VATpriceCalculator->vatPriceSubTotal($product,$quantity),
                     'pictures' => $pictures,
                 ];
@@ -60,7 +59,7 @@ class CartController extends AbstractController
             }
         }
         $session->set('cartData',$data); // je set les data en session pour les rendre accessible partout dans l'application et pas seulement dans la vue du panier
-        $session->set('priceTotal',$formattedTotal);
+        // $session->set('priceTotal',$formattedTotal);
         $session->set('nbItems',$nbItems);
 
         return $this->render('cart/index.html.twig',[       
