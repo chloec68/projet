@@ -98,15 +98,16 @@ class PaymentController extends AbstractController
             // je récupère le prodiut à partir de l'id 
             $product = $productRepository->find($id);
             // calcul du sous-total
-            $subTotal = $priceCalculator->vatPriceSubTotal($product,$quantity);
+            $subTotal = number_format($priceCalculator->vatPriceSubTotal($product,$quantity),2,'.',' ');
             // j'ajoute le sous-total à un tableau associatif $id => $subTotal 
             $subTotals[$product->getId()] = $subTotal;
             // j'additionne les quantités pour obtenir le nombre total de produits 
             $nbItems += $quantity;
             // j'additionne les sous-totaux pour obtenir le total
             $total+=$subTotal;
+            $totalformatted = number_format($total,2,'.',' ');
             // j'ajoute le total en session 
-            $session->set('total',$total);
+            $session->set('total',$totalformatted);
             // j'ajoute le produit à un tableau associatif indexé pour pouvoir les encoyer à la vue et les y afficher à l'aide d'une boucle
             $products[]=$product;
             // j'ajoute la quantité associée à chaque produit à un tableau associatif avec l'id produit comme index pour pouvoir récupérer la quantité associée au produit dans la vue
@@ -115,7 +116,7 @@ class PaymentController extends AbstractController
 
         return $this->render('/payment/recap.html.twig', [
             'products' => $products,
-            'total' => $total,
+            'total' => $totalformatted,
             'nbItems' => $nbItems,
             'subTotals' => $subTotals,
             'quantities' => $quantities,
@@ -129,13 +130,7 @@ class PaymentController extends AbstractController
     {   
         $cart = $session->get('cart');
         $total = $session->get('total');
-        // foreach ($cart as $id => $quantity) {
-        //     $product = $productRepository->find($id);
-        //     $price = $product->getProductPrice();
-        //     $vatPrice = $priceCalculator->vatPrice($product);
-        //     $subTotal = $priceCalculator->vatPriceSubTotal($product,$quantity);
-        //     $total+=$subTotal;
-        // }
+
         $identificationData = $session->get('identificationData');
         $userEmail = $identificationData['orderEmail'];
         
@@ -266,14 +261,15 @@ class PaymentController extends AbstractController
                 // additionner chaque prix HT et les ajouter au total
                 $noVatPriceTotal += $subTotal;
             }
-            $bill->setBillTotalBeforeVat($noVatPriceTotal);
+            $noVatPriceTotalformatted = number_format($noVatPriceTotal,2,'.',' ');
+            $bill->setBillTotalBeforeVat($noVatPriceTotalformatted);
 
             $bill->setAppOrder($order);
 
             $entityManager->persist($bill);
             $entityManager->flush();
 
-            // REINITILISATIO DU PANIER 
+            // REINITILISATION DU PANIER 
 
             if($session->has('cart')){
                 $session->remove('cart');
