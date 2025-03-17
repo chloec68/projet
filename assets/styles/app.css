@@ -1713,6 +1713,38 @@ border-radius: 50px;
 
         }
     
+/* **************************************************************** ACCESS DENIED PAGE ************************************************************ */
 
+        .access-denied__img{
+            background-image: url('/img/54485.webp');
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: contain;
+            width:300px;
+            height:300px;
+            border-radius: 100px;
+            margin: auto;
 
+        }
+        .denied-access-page__container{
+            text-align: center;
+            line-height: 4em;
+            margin:auto;
+            padding:2rem;
 
+            h1{
+                font-size:2em;
+            }
+
+            p{
+                font-family: 'bebas neue';
+                font-size:1.3em;
+            }
+            a{
+                color:var(--blue);
+                text-decoration: underline;
+            }
+            a:active{
+                color:var(--red);
+            }
+        }
