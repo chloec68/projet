@@ -46,6 +46,8 @@ class NewsletterCrudController extends AbstractCrudController
         return [
             DateTimeField::new('newsLetterDate')
                 ->renderAsNativeWidget(true)
+                ->setFormTypeOption('data', new \DateTime())
+                ->setRequired(true)
                 ->setLabel('Date')
                 ->setFormat('dd.MM.yyyy'),
 
