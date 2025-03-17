@@ -37,11 +37,6 @@ final class HomeController extends AbstractController
                     $this->addFlash('error','Vous êtes déjà inscrit à la newsletter');
                     return $this->redirectToRoute('app_home');
                 }
-                
-            $recipients = $recipientRepository->findAll(); 
-            foreach($recipients as $recipient){
-                $mailer->sendNewsletter($recipient->getRecipientEmail());
-            }
 
             $this->addFlash('success','Vous êtes inscrit à la newsletter');
         }
