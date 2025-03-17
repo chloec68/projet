@@ -15,24 +15,19 @@ class NewsletterMailer
         $this->mailerInterface = $mailerInterface;
     }
 
-    public function sendWelcomeEmail($recipientEmail)
+    public function sendNewsletter($recipient)
     {
-        $welcomeEmail = (new TemplatedEmail())
+        $newsletter = (new TemplatedEmail())
         ->from('test@localhost')
-        ->to($recipientEmail)
-        ->subject('Inscription Newsletter')
+        ->to($recipient)
+        ->subject('Newsletter')
         ->locale('fr')
         ->context([
-            'recipientEmail' => $recipientEmail
+            'recipients' => $recipient
         ])
-        ->htmlTemplate('newsletter/welcome-email.html.twig')
-        ->textTemplate('newsletter/welcome-email.txt.twig');
-        
-        try{
-            $this->mailerInterface->send($welcomeEmail);
-        }catch(TransportExceptionInterface $e){
-            $this->logger->error("Échec de l'envoi de l'email de bienvenue à " . $recipientEmail . ": " . $e->getMessage());
-        }
+        ->htmlTemplate('newsletter/email-content.html.twig');
+  
+            $this->mailerInterface->send($newsletter);
     }
 }
 

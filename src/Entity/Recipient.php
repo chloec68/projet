@@ -6,6 +6,8 @@ use App\Repository\RecipientRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: RecipientRepository::class)]
+#[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['recipientEmail'])]
+#[UniqueEntity(fields: ['recipientEmail'], message: 'There is already an account with this email')]
 class Recipient
 {
     #[ORM\Id]
@@ -15,10 +17,6 @@ class Recipient
 
     #[ORM\Column(length: 255)]
     private ?string $recipientEmail = null;
-
-    #[ORM\ManyToOne(inversedBy: 'recipients')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Newsletter $newsletter = null;
 
     public function getId(): ?int
     {
@@ -33,18 +31,6 @@ class Recipient
     public function setRecipientEmail(string $recipientEmail): static
     {
         $this->recipientEmail = $recipientEmail;
-
-        return $this;
-    }
-
-    public function getNewsletter(): ?Newsletter
-    {
-        return $this->newsletter;
-    }
-
-    public function setNewsletter(?Newsletter $newsletter): static
-    {
-        $this->newsletter = $newsletter;
 
         return $this;
     }
