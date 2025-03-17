@@ -13,7 +13,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 final class AuthentifiedUserController extends AbstractController
 {
    // USER PROFILE
-   #[Route('/user', name: 'app_user')]
+   #[Route('/profile', name: 'app_user')]
    public function userProfile(Security $security):Response
    {   
        $user = $security->getUser();
@@ -25,7 +25,7 @@ final class AuthentifiedUserController extends AbstractController
    }
 
    // USER PROFILE > ORDER 
-   #[Route('/user/order/{id}', name:'app_order')]
+   #[Route('/profile/order/{id}', name:'app_order')]
    public function showOrder(OrderRepository $orderRepository, int $id, VATpriceCalculator $VATpriceCalculator)
    {   
        $order = $orderRepository->find($id);
@@ -50,7 +50,7 @@ final class AuthentifiedUserController extends AbstractController
    }
 
    // USER PROFILE > FAVORITES 
-   #[Route('/user/favorites', name:'app_favorites')]
+   #[Route('/profile/favorites', name:'app_favorites')]
    public function showFavorites(Security $security)
    {
        $user = $security->getUser();

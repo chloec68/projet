@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Accès refusé{% endblock %}
+
+{% block body %}
+    <div class="access-denied__img"></div>
+    <div class="denied-access-page__container">
+        <h1>Vous n'avez pas la permission d'accéder à cette page</h1>
+        <p><a href="{{ path('app_home') }}">Retourner à la page d'accueil</a></p>
+    </div>
+
+    <style>
+        .access-denied__img{
+            background-image: url('/img/54485.jpg');
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: contain;
+            width:300px;
+            height:300px;
+            border-radius: 100px;
+            margin: auto;
+
+        }
+        .denied-access-page__container{
+            text-align: center;
+            line-height: 4em;
+            margin:auto;
+            padding:2rem;
+
+            h1{
+                font-size:2em;
+            }
+
+            p{
+                font-family: 'bebas neue';
+                font-size:1.3em;
+            }
+            a{
+                color:var(--blue);
+                text-decoration: underline;
+            }
+            a:active{
+                color:var(--red);
+            }
+        }
+    </style>
+{% endblock %}

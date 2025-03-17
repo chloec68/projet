@@ -4,10 +4,13 @@ namespace App\Controller\Admin;
 
 use App\Entity\User;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
+use EasyCorp\Bundle\EasyAdminBundle\Field\Field;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ArrayField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
@@ -22,7 +25,6 @@ class UserCrudController extends AbstractCrudController
     public function configureActions(Actions $actions): Actions
     {
         return $actions
-        ->disable('delete')
 
         ->update(Crud::PAGE_INDEX, Action::NEW, function (Action $action) {
             return $action->setIcon('fa fa-plus')->setLabel("Nouvel utilisateur");
@@ -33,7 +35,10 @@ class UserCrudController extends AbstractCrudController
     {
         $fields = [
             TextField::new('email')->setLabel('Adresse Email'),
-            BooleanField::new('isVerified')->setLabel('Email vérifié')->renderAsSwitch(true)
+            TextField::new('password')->setLabel('Mot de passe'),
+            BooleanField::new('isVerified')->setLabel('Email vérifié')->renderAsSwitch(true),
+            ArrayField::new('roles')
+            ->setLabel('roles')
         ];
 
         return $fields;
