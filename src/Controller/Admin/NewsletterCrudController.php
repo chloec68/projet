@@ -20,8 +20,20 @@ class NewsletterCrudController extends AbstractCrudController
     }
 
     public function configureActions(Actions $actions): Actions
-    {
+    {   
+
+        $sendNewsletterAction = Action::new('send','Envoyer')
+        ->linkToRoute('send-newsletter', function ($newsletter) {
+            return [
+                'idNewsletter' => $newsletter->getId()
+            ];
+        })
+        ->setIcon('fa fa-paper-plane')
+        ->addCssClass('btn btn-info');
+
         return $actions
+        ->add(Crud::PAGE_INDEX, $sendNewsletterAction)
+
         ->disable('edit')
 
         ->update(Crud::PAGE_INDEX, Action::NEW, function (Action $action) {

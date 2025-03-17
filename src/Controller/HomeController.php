@@ -58,7 +58,6 @@ final class HomeController extends AbstractController
         ]);
     }
 
-
     #[Route('/home/newsletterUnsubscription/{recipientEmail}', name:'newsletter-unsubscribe')]
     public function newsletterUnsubscribed(RecipientRepository $recipientRepository,EntityManagerInterface $entityManager, string $recipientEmail)
     {
@@ -71,5 +70,22 @@ final class HomeController extends AbstractController
         return $this->render('newsletter/unsubscribed.html.twig',[
             'controllerName' => 'Controller'
         ]);
+    }
+
+    #[Route('/newsletter/send/{idNewsletter}', name:'send-newsletter')]
+    public function sendNewsletter(NewsletterMailer $mailer, RecipientRepository $recipientRepository, NewsletterRepository $newsletterRepository, int $idNewsletter )
+    {
+        $recipients = $recipientRepository->findAll();
+        $newsletter = $newsletterRepository->find($idNewsletter);
+        $newsletterContent = $newsletter->getNewsletterContent();
+
+        if($recipients){
+            foreach($recipients as $recipient){
+                $recipientEmail = $recipient->getRecipientEmail();
+                $mailer->sendNewsletter($recipientEmail,$newsletterContent);
+            }
+        }
+
+        return $this->redirectToRoute('admin_newsletter_index');
     }
 }
