@@ -23,7 +23,7 @@ class NewsletterMailer
         ->subject('Newsletter')
         ->locale('fr')
         ->context([
-            'recipients' => $recipient
+            'recipient' => $recipient,
         ])
         ->htmlTemplate('newsletter/email-content.html.twig');
   

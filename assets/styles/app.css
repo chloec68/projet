@@ -114,7 +114,7 @@ a{
 }
 
 #logo{
-    width:10%;
+    width:100%;
 }
 
 #logo-text{
@@ -122,6 +122,9 @@ a{
     font-size:2em;
 }
 
+#home-link{
+    width: 10%;
+}
 /* #nbItems{
     color:var(--white);
     font-family:"roboto condensed";

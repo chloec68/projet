@@ -16,6 +16,17 @@ class RecipientRepository extends ServiceEntityRepository
         parent::__construct($registry, Recipient::class);
     }
 
+    public function findByEmail($recipientEmail): ?Recipient
+    {
+        return $this->createQueryBuilder('r')
+            ->andWhere('r.recipientEmail = :recipientEmail')
+            ->setParameter('recipientEmail', $recipientEmail)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
+
+
     //    /**
     //     * @return Recipient[] Returns an array of Recipient objects
     //     */
