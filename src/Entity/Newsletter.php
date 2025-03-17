@@ -22,12 +22,6 @@ class Newsletter
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $newsletterDate = null;
 
-    /**
-     * @var Collection<int, Recipient>
-     */
-    #[ORM\OneToMany(targetEntity: Recipient::class, mappedBy: 'newsletter')]
-    private Collection $recipients;
-
     public function __construct()
     {
         $this->recipients = new ArrayCollection();
@@ -58,36 +52,6 @@ class Newsletter
     public function setNewsletterDate(\DateTimeInterface $newsletterDate): static
     {
         $this->newsletterDate = $newsletterDate;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Recipient>
-     */
-    public function getRecipients(): Collection
-    {
-        return $this->recipients;
-    }
-
-    public function addRecipient(Recipient $recipient): static
-    {
-        if (!$this->recipients->contains($recipient)) {
-            $this->recipients->add($recipient);
-            $recipient->setNewsletter($this);
-        }
-
-        return $this;
-    }
-
-    public function removeRecipient(Recipient $recipient): static
-    {
-        if ($this->recipients->removeElement($recipient)) {
-            // set the owning side to null (unless already changed)
-            if ($recipient->getNewsletter() === $this) {
-                $recipient->setNewsletter(null);
-            }
-        }
 
         return $this;
     }

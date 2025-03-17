@@ -10,6 +10,7 @@ use App\Repository\UserRepository;
 use App\Repository\OrderRepository;
 use App\Service\VATpriceCalculator;
 use App\Repository\ProductRepository;
+use App\Repository\RecipientRepository;
 use App\Repository\NewsletterRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\SecurityBundle\Security;
@@ -17,35 +18,32 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 final class HomeController extends AbstractController
 {
     #[Route('/home', name: 'app_home')]
     #[Route('/home/newsletterSubscription', name:'newsletter-subscription')]
-    public function index(ProductRepository $productRepository,NewsletterRepository $newsletterRepository, SessionInterface $session,EntityManagerInterface $entityManager, Request $request, NewsletterMailer $mailer): Response
+    public function index(RecipientRepository $recipientRepository,ProductRepository $productRepository,NewsletterRepository $newsletterRepository, SessionInterface $session,EntityManagerInterface $entityManager, Request $request, NewsletterMailer $mailer): Response
     {   
         $recipient = new Recipient();
         $newsletterForm = $this->createForm(RecipientFormType::class,$recipient);
         $newsletterForm->handleRequest($request);
-        $welcomeNewsletter = $newsletterRepository->find(1);
 
         if($newsletterForm->isSubmitted() && $newsletterForm->isValid()){
-            $existingRecipients = $welcomeNewsletter->getRecipients();
-
-            foreach($existingRecipients as $existingRecipient){
-                if($existingRecipient->getRecipientEmail() === $recipient->getRecipientEmail()){
-                    $this->addFlash('error', 'Vous êtes déjà inscrit à cette newsletter.');   
+            try{
+                $entityManager->persist($recipient);
+                $entityManager->flush();
+                } catch (UniqueConstraintViolationException $e){
+                    $this->addFlash('error','Vous êtes déjà inscrit à la newsletter');
                     return $this->redirectToRoute('app_home');
                 }
+                
+            $recipients = $recipientRepository->findAll(); 
+            foreach($recipients as $recipient){
+                $mailer->sendNewsletter($recipient->getRecipientEmail());
             }
-              
-            $welcomeNewsletter->addRecipient($recipient);
-            $entityManager->persist($recipient);
-            $entityManager->flush();
-
-            $mailer->sendWelcomeEmail($recipient->getRecipientEmail());
-            
 
             $this->addFlash('success','Vous êtes inscrit à la newsletter');
         }

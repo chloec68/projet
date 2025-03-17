@@ -57,7 +57,7 @@ class OrderCrudController extends AbstractCrudController
             TextField::new('billReference')
                 ->setLabel('Référence facture'),
             
-            AssociationField::new('orderProduct','Produit(s)')
+            AssociationField::new('orderProducts','Produit(s)')
             ->onlyOnIndex()
             ->setFormTypeOptions([
                 'by_reference' => false,

@@ -33,7 +33,7 @@ class Order
     private ?bool $orderIsCollected = false;
 
     #[ORM\Column(type: Types::DECIMAL, precision: 6, scale: 2)]
-    private ?float $orderTotal = null;
+    private ?string $orderTotal = null;
 
     #[ORM\Column(length: 255)]
     private ?string $orderEmail = null;
@@ -132,7 +132,7 @@ class Order
         return $this;
     }
 
-    public function getOrderTotal(): ?float
+    public function getOrderTotal(): ?string
     {
         return $this->orderTotal;
     }

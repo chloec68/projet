@@ -1,22 +1,17 @@
 {% extends '@EasyAdmin/layout.html.twig' %}
 
 {% block main %}
-<p>
-    Produits : <br>
-    > Ajouter un nouveau Produit <br>
-    > Modifier un produit existant <br>
-    > Désactiver un produit <br>
 
-    Utilisateurs : <br>
+<div class=actions-container>
+<a href={{path('admin_product_new')}} class="btn btn-primary"><i class="fa-solid fa-plus"></i> Nouveau produit</a>
 
-    TVA : <br>
-    > Ajouter un taux de TVA <br>
-    > Modifier un taux existant <br>
-    > Supprimer un taux existant <br>
+<a href={{path('admin_user_new')}} class="btn btn-primary"><i class="fa-solid fa-plus"></i> Nouvel utilisateur</a>
 
-    Newslette : <br>
-    > Rédiger une nouvelle newsletter <br>
-    > Modifier une newsletter existante <br>
-    > Supprimer une newsletter existante <br>
-</p>
+<a href={{path('admin_newsletter_new')}} class="btn btn-primary"><i class="fa-solid fa-plus"></i> Créer newsletter</a>
+</div>
+
+{# //Liens vers dernières commandes  #}
+
+
 {% endblock main %}
+

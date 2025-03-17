@@ -26,8 +26,6 @@ class DashboardController extends AbstractDashboardController
 {   
     public function index(): Response
     {
-        // return parent::index();
-
         return $this->render('/admin/dashboard.html.twig');
     }
 
@@ -58,9 +56,10 @@ class DashboardController extends AbstractDashboardController
     }
 
     public function configureActions(): Actions
-    {
+    {   
         return parent::configureActions()
-            ->add(Crud::PAGE_INDEX, Action::DETAIL);
+    
+        ->add(Crud::PAGE_INDEX, Action::DETAIL);
     }
 }
 
