@@ -1,33 +1,91 @@
 
 {% apply inky_to_html|inline_css(source('@styles/email.css')) %}
 
-    <container>
-        <row class="header">
-            <columns>
-                <a href="{{ url('app_home') }}">
-                    {# <img src="{{ path('public\logo\Logo-1.webp') }}" class="logo" alt="SpaceBar Logo"> #}
-                </a>
-            </columns>
-        </row>
+
+        <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Title</title>
+   
+  </head>
+
+  <body>
+    <table class="body" data-made-with-foundation="">
+      <tr>
+        <td class="float-center" align="center" valign="top">
+          <center data-parsed="">
+            <table class="spacer float-center">
+              <tbody>
+                <tr>
+                  <td height="16px" style="font-size:16px;line-height:16px;">&#xA0;</td>
+                </tr>
+              </tbody>
+            </table>
+            <table align="center" class="container float-center">
+              <tbody>
+                <tr>
+                  <td>
+                    <table class="spacer">
+                      <tbody>
+                        <tr>
+                          <td height="16px" style="font-size:16px;line-height:16px;">&#xA0;</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <table class="row">
+                      <tbody>
+                        <tr>
+                          <th class="small-12 large-12 columns first last">
+                            <table>
+                              <tr>
+                                <th>
+                                  <center data-parsed=""> <img src="http://localhost:8000/logo/Logo-2.webp" align="center" class="float-center"> </center>
+                                </th>
+                                <th class="expander"></th>
+                              </tr>
+                            </table>
+                          </th>
+                        </tr>
+                      </tbody>
+                    </table>
+                  
 
 {% block content %}{% endblock %}
 
-  <row class="footer">
-            <columns>
-                <p>Cheers,</p>
-                <p>Your friendly <em>Space Bar Team</em></p>
-            </columns>
-        </row>
-        <row class="bottom">
-            <columns>
-                <center>
-                    <spacer size="20"></spacer>
-                    <div>
-                        Sent with ❤️ from the friendly folks at The Space Bar
-                    </div>
-                </center>
-            </columns>
-        </row>
-    </container>
+
+                    <table class="row">
+                      <tbody>
+                        <tr>
+                          <th class="small-12 large-12 columns first last">
+                            <table>
+                              <tr>
+                                <th>
+                                  <p>Vous avez reçu cet email parce que vous êtes inscrit à la newsletter. <a href="#">Cliquez ici pour vous désinscrire.</a></p>
+                                </th>
+                                <th class="expander"></th>
+                              </tr>
+                            </table>
+                          </th>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </center>
+        </td>
+      </tr>
+    </table>
+  </body>
+
+</html>
+
+
+
+
 
 {% endapply %}
