@@ -23,7 +23,7 @@ final class AuthentifiedUserController extends AbstractController
  
        return $this->render('home/profile.html.twig', [
            'user' => $user,
-           'meta_description' => ''
+           'meta_description' => 'Bienvenue sur votre profil utilisateur'
        ]);
    }
 
@@ -54,15 +54,21 @@ final class AuthentifiedUserController extends AbstractController
 
    // USER PROFILE > FAVORITES 
    #[Route('/profile/favorites', name:'app_favorites')]
-   public function showFavorites(Security $security)
+   public function showFavorites(Security $security, VATpriceCalculator $priceCalculator)
    {
         $user = $security->getUser();
+        $vatPricesArray=[];
        if($user){
            $favorites = $user->getFavoriteProducts();
+           foreach($favorites as $favorite){
+            $vatPrice = $priceCalculator->vatPrice($favorite);
+            $vatPricesArray[$favorite->getId()]=$vatPrice;
+           }
        }
 
        return $this->render('home/favorites.html.twig', [
-           'favorites' => $favorites
+           'favorites' => $favorites,
+           'vatPricesArray'=> $vatPricesArray,
        ]);
    }
 

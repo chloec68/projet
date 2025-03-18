@@ -1,19 +1,93 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Votre compte{% endblock %}
+{% block title %}Mes favoris{% endblock %}
 
 {% block body %}
-<div class="favorites-wrapper">
-    <h1>Vos favoris</h1>
-    
+
+<div class="favorites-wrapper">  
+    <h1>Mes favoris</h1>  
+    <div class="favorites-container">
     {% for favorite in favorites %}
-        <p>{{favorite.productName}}</p>
+        <div class="favorite-card">
+            <p class="banner">{{favorite.productName}}</p>
+            {% for picture in favorite.pictures %}
+                {% if loop.first %}
+            <img src="{{picture.pictureName}}" alt="{{favorite.productName}}">
+                {% endif %}
+            {% endfor %}
+            
+            <p class="pricing">{{vatPricesArray[favorite.id]}} €</p>
+                    <div class="qty-container">
+                        <button class="qty-btn-minus btn-rounded decrement" type="button" data-product="{{favorite.id}}"><i class="fa-solid fa-minus"></i></button>
+                        <input type="text" name="qty" value="1" min="0" class="input-qty input-rounded qty-input" data-product="{{ favorite.id }}">
+                        <button class="qty-btn-plus btn-rounded increment" type="button" data-product="{{favorite.id}}"><i class="fa-solid fa-plus"></i></button>
+                    </div>
+                <button data-product="{{favorite.id}}" type="submit"class=" btn add-to-cart">Ajouter au panier</button>
+        </div>
     {% endfor %}
+    </div>
+  
 </div>
 
 <style>
     .favorites-wrapper{
         text-align:center;
+        box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
+        width:90%;
+        margin: auto;
+        background-image: url('/img/black-hearts.jpg');
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        padding:2rem 0rem 5rem 0rem;
+
+        h1{
+            font-size:4em;
+            width:fit-content;
+            margin:auto;
+            padding:2rem;
+            background-color: var(--white);
+        }
+
+    }
+
+    .favorites-container{
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap:2rem;
+    }
+
+    .favorite-card{
+        width:25%;
+        height:fit-content;
+        border:1px solid black;
+        border-radius:2px;
+        background-color: var(--white);
+
+        img{
+            height:30vh;
+            border-radius:40px;
+        }
+
+        .banner{
+            background-color:var(--main);
+            color:var(--white);
+            font-size:2em;
+            position:relative;
+            top:0;
+            width:100%;
+            margin-bottom:1rem;
+        }
+
+        .pricing{
+            font-size:1.5em;
+            background-color: var(--green);
+            color:var(--white);
+            border-radius:100px;
+            width:20%;
+            margin: auto;
+        }
     }
 </style>
 
