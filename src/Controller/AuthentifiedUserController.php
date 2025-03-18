@@ -71,17 +71,20 @@ final class AuthentifiedUserController extends AbstractController
    public function deleteAccount(Security $security,EntityManagerInterface $entityManager, Session $session ): JsonResponse
    {
         $user = $security->getUser();
-
         if(!$user){
             return newJsonResponse(['success'=>false]);
         }
-
         try{
+            $email = $user->getEmail();
+            $hashedEmail = hash('sha256',$email);
+            $user->setEmail($hashedEmail);
+            $entityManager->persist($user);
+            $entityManager->flush();
             $session = new Session();
             $session->invalidate();
-            $entityManager->remove($user);
-            $entityManager->flush();
+
             return new JsonResponse(['success' => true]);
+            
         }catch (\Exception $e){
             return newJsonResponse(['success'=>false]);
         }   

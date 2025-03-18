@@ -631,19 +631,12 @@ footer small{
         padding:0.5rem;
         border-radius:55px;
         transition:0.4s ease;
+        box-shadow: rgba(57, 31, 91, 0.24) 0 2px 2px,rgba(182, 173, 185, 0.4) 0 8px 12px;
+        border:1px solid var(--light-grey);
     }
 
     .confirmButton .fa-check{
         color:var(--green);
-    }
-
-    .confirmButton{
-        border:1px solid var(--green);
-        box-shadow: rgba(57, 31, 91, 0.24) 0 2px 2px,rgba(179, 132, 201, 0.4) 0 8px 12px;
-    }
-
-    .cancelButton{
-        border:1px solid var(--red);
     }
 
     .cancelButton .fa-xmark{
