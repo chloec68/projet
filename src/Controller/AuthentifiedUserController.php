@@ -4,10 +4,13 @@ namespace App\Controller;
 
 use App\Repository\OrderRepository;
 use App\Service\VATpriceCalculator;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 final class AuthentifiedUserController extends AbstractController
@@ -53,7 +56,7 @@ final class AuthentifiedUserController extends AbstractController
    #[Route('/profile/favorites', name:'app_favorites')]
    public function showFavorites(Security $security)
    {
-       $user = $security->getUser();
+        $user = $security->getUser();
        if($user){
            $favorites = $user->getFavoriteProducts();
        }
@@ -62,4 +65,29 @@ final class AuthentifiedUserController extends AbstractController
            'favorites' => $favorites
        ]);
    }
+
+   //USER PROFILE > DELETE ACCOUNT
+   #[Route('/profile/delete-account',name:'delete-account')]
+   public function deleteAccount(Security $security,EntityManagerInterface $entityManager, Session $session ): JsonResponse
+   {
+        $user = $security->getUser();
+
+        if(!$user){
+            return newJsonResponse(['success'=>false]);
+        }
+
+        try{
+            $session = new Session();
+            $session->invalidate();
+            $entityManager->remove($user);
+            $entityManager->flush();
+            return new JsonResponse(['success' => true]);
+        }catch (\Exception $e){
+            return newJsonResponse(['success'=>false]);
+        }   
+   }
 }
+
+
+// JsonResponse::HTTP_UNAUTHORIZED
+// JsonResponse::HTTP_INTERNAL_SERVER_ERROR

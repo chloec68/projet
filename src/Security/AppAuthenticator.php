@@ -44,10 +44,6 @@ class AppAuthenticator extends AbstractLoginFormAuthenticator
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
     {   
-        // if ($security->isGranted('ROLE_ADMIN')) {
-        //     return $this->redirectToRoute('admin'); // Redirect to the admin dashboard
-        // }
-
         if ($targetPath = $this->getTargetPath($request->getSession(), $firewallName)) {
             return new RedirectResponse($targetPath);
         }
