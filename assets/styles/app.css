@@ -394,7 +394,7 @@ footer small{
   }
 
   .swiper-button-next,.swiper-button-prev{
-    color:var(--white);
+    color:var(--green);
   }
 
 
@@ -590,9 +590,101 @@ footer small{
         }
     }
 
+    .delete-accountButton{
+        cursor: pointer;
+    }
+    .alertContainer {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.7);
+    }
+
+    .a-content {
+        background-color: var(--ultra-light-grey);
+        padding: 20px;
+        border: 1px solid var(--grey);
+        width: 80%;
+        max-width: 400px;
+        border-radius: 2px;
+        margin:auto;
+        position: relative;
+        top:40%;
+        text-align:center;
+    }
+
+    .buttons-container{
+        display: flex;
+        gap:2rem;
+        width:100%;
+        justify-content: center;
+        margin:1.5rem 0;
+    }
+
+    .confirmButton, .cancelButton {
+        text-align:right;
+        padding:0.5rem;
+        border-radius:55px;
+        transition:0.4s ease;
+    }
+
+    .confirmButton .fa-check{
+        color:var(--green);
+    }
+
+    .confirmButton{
+        border:1px solid var(--green);
+        box-shadow: rgba(57, 31, 91, 0.24) 0 2px 2px,rgba(179, 132, 201, 0.4) 0 8px 12px;
+    }
+
+    .cancelButton{
+        border:1px solid var(--red);
+    }
+
+    .cancelButton .fa-xmark{
+        color:var(--red);
+    }
+
+    .confirmButton:hover,.cancelButton:hover
+    .confirmButton:focus,.cancelButton:hover {
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    .confirmButton:hover{
+        background-color: var(--green);
+        color:var(--white);
+
+        i{
+            color:var(--white);
+        }
+    }
+    .cancelButton:hover{
+        background-color: var(--red);
+        color:var(--white);
+        i{
+            color:var(--white);
+        }
+    }
+
+    .cancelButton:active,.confirmButton:active,.cancelButton:focus,.confirmButton:focus{
+        padding:1rem;
+    }
+
     
 
-
+    .alertMsg{
+        color:var(--main);
+        font-family: 'nunito';
+        letter-spacing:1px;
+        font-size:1.5em;
+        font-weight:600;
+    }
 
 /* **************************************************************** ORDER VIEW ************************************************************ */
 
