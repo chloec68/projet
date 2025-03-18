@@ -83,4 +83,6 @@ final class HomeController extends AbstractController
 
         return $this->redirectToRoute('admin_newsletter_index');
     }
+
+    
 }
