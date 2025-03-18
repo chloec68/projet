@@ -77,14 +77,17 @@ final class AuthentifiedUserController extends AbstractController
         try{
             $email = $user->getEmail();
             $hashedEmail = hash('sha256',$email);
+            $password = $user->getPassword();
+            $rehashedPassword = password_hash(bin2hex(random_bytes(16)),PASSWORD_DEFAULT);
             $user->setEmail($hashedEmail);
+            $user->setRoles(["ROLE_DELETED"]);
             $entityManager->persist($user);
             $entityManager->flush();
             $session = new Session();
             $session->invalidate();
 
             return new JsonResponse(['success' => true]);
-            
+
         }catch (\Exception $e){
             return newJsonResponse(['success'=>false]);
         }   
