@@ -3,12 +3,19 @@
 {% block title %}Votre compte{% endblock %}
 
 {% block body %}
+<div class="favorites-wrapper">
     <h1>Vos favoris</h1>
     
     {% for favorite in favorites %}
         <p>{{favorite.productName}}</p>
     {% endfor %}
+</div>
 
+<style>
+    .favorites-wrapper{
+        text-align:center;
+    }
+</style>
 
 {% endblock %}
 
