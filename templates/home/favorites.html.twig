@@ -33,13 +33,10 @@
     .favorites-wrapper{
         text-align:center;
         box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
-        width:90%;
+        width:80%;
         margin: auto;
-        background-image: url('/img/black-hearts.jpg');
-        background-position: center;
-        background-repeat: no-repeat;
-        background-size: cover;
-        padding:2rem 0rem 5rem 0rem;
+        background-color: var(--white);
+        padding:2rem 0rem;
 
         h1{
             font-size:4em;
@@ -48,14 +45,40 @@
             padding:2rem;
             background-color: var(--white);
         }
+    }
 
+    .favorites-wrapper::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-image: url('/img/black-hearts.jpg');
+        background-size: cover;
+        background-attachment: fixed;
+        background-repeat: no-repeat;
+        animation: scroll-vertical 20s linear infinite;
+        z-index: -1;
+    }
+
+    @keyframes scroll-vertical {
+        0% {
+            background-position: 0 0;
+          }
+          50% {
+            background-position: 0 50%;
+        }
+          100% {
+            background-position: 0 0;
+          }
     }
 
     .favorites-container{
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
-        gap:2rem;
+        gap:3rem;
     }
 
     .favorite-card{
