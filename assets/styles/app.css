@@ -559,6 +559,9 @@ footer small{
     }
 
     #side-container{
+        display: flex;
+        flex-direction: column;
+        row-gap:2rem;
         flex-grow:0.5;
         display: flex;
         justify-content: center;
@@ -568,7 +571,8 @@ footer small{
             border:1px solid #5D39FE;
             color:var(--white);
             background-color:#5D39FE;
-            width:fit-content;
+            width:65%;
+            justify-content: center;
             height: fit-content;
             padding:0.5rem 1rem;
             border-radius:100px;
@@ -590,9 +594,38 @@ footer small{
         }
     }
 
-    .delete-accountButton{
-        cursor: pointer;
+    .delete-accountButton {
+    background-color: var(--white);
+    border-radius: 55px;
+    border-width: 0;
+    box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px,rgba(45, 35, 66, 0.3) 0 7px 13px -3px,#D6D6E7 0 -3px 0 inset;
+    box-sizing: border-box;
+    color: #36395A;
+    cursor: pointer;
+    display: inline-flex;
+    font-family: "nunito";
+    padding:0.7rem;
+    width:65%;
+    justify-content: center;
+    line-height: 1;
+    transition: box-shadow .15s,transform .15s;
+    font-size: 1em;
     }
+
+    .delete-accountButton:focus {
+    box-shadow: #D6D6E7 0 0 0 1.5px inset, rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #D6D6E7 0 -3px 0 inset;
+    }
+
+    .delete-accountButton:hover {
+    box-shadow: rgba(45, 35, 66, 0.4) 0 4px 8px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #D6D6E7 0 -3px 0 inset;
+    transform: translateY(-2px);
+    }
+
+    .delete-accountButton:active {
+    box-shadow: #D6D6E7 0 3px 7px inset;
+    transform: translateY(2px);
+    }
+
     .alertContainer {
         display: none;
         position: fixed;

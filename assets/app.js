@@ -291,8 +291,6 @@ document.addEventListener('click', function(event) {
 
 
 // SIDE CART - CONTENT UPDATE
-// const cartSummary = document.querySelector('.cart-summary');
-// let htmlContent = "<h2>Votre panier</h2><a href='/cart'>Voir le panier</a>";
 
 const basketButton = document.querySelector('.fa-basket-shopping');
 basketButton.addEventListener('click',function(){

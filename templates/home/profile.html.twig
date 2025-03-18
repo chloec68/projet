@@ -3,7 +3,7 @@
 {% block title %}Votre compte{% endblock %}
 
 {% block body %}
-<h1 class="centered">Votre compte</h1>
+<h1 class="centered">Mon compte</h1>
     <main class="user-profile__main">
 
         <div class="alertContainer">
@@ -18,12 +18,13 @@
 
         <div id="side-container">
             <a href="{{ path('app_favorites') }}"><i class="fa-solid fa-heart"></i> Mes favoris</a>
+            <p class="delete-accountButton">Supprimer mon compte</p>
         </div>
 
         <div id="main-container">
             <h2>Informations du compte</h2>
             <p id="personal-info">Email : <span class="bold">{{user.email}}</span></p>
-            <p class="delete-accountButton">Supprimer mon compte</p>
+            
             <h2>Mes commandes passées</h2>
                 <div class="orders-list">
             {% if user.orders is not empty %}
