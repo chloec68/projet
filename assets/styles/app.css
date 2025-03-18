@@ -567,34 +567,41 @@ footer small{
         justify-content: center;
         align-items: center;
 
-        a{
-            border:1px solid #5D39FE;
-            color:var(--white);
-            background-color:#5D39FE;
+        .favorites-button{
+            background-color: #5D39FE;
+            border-radius: 55px;
+            border-width: 0;
+            box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px,rgba(45, 35, 66, 0.3) 0 7px 13px -3px,#452abc 0 -3px 0 inset;
+            box-sizing: border-box;
+            color: var(--white);
+            cursor: pointer;
+            display: inline-flex;
+            gap:1rem;
+            font-family: "nunito";
+            padding:0.7rem;
             width:65%;
             justify-content: center;
-            height: fit-content;
-            padding:0.5rem 1rem;
-            border-radius:100px;
-            display: flex;
-            gap:1rem;
-            align-items: center;
-            transition : 0.3s ease;
+            line-height: 1;
+            transition: box-shadow .15s,transform .15s;
         }
 
-        a:hover, a:focus{
-            -webkit-box-shadow: 0px 0px 25px 0px rgba(93,57,254,1);
-            -moz-box-shadow: 0px 0px 25px 0px rgba(93,57,254,1);
-            box-shadow: 0px 0px 25px 0px rgba(93,57,254,1);
+        .favorites-button:focus{
+            box-shadow: #15154c 0 0 0 1.5px inset, rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #15154c 0 -3px 0 inset;
+        }
+
+        .favorites-button:hover{
+            box-shadow: rgba(45, 35, 66, 0.4) 0 4px 8px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #452abc 0 -3px 0 inset;
+            transform: translateY(-2px);
+        }
+
+        .favorites-button:active{
+            box-shadow: #15154c 0 3px 7px inset;
+            transform: translateY(2px);
+        }
   
-        }
-
-        a:active{
-            transform:scale(0.8);
-        }
     }
 
-    .delete-accountButton {
+    .delete-accountButton,.cancelButton,.confirmButton {
     background-color: var(--white);
     border-radius: 55px;
     border-width: 0;
@@ -609,19 +616,18 @@ footer small{
     justify-content: center;
     line-height: 1;
     transition: box-shadow .15s,transform .15s;
-    font-size: 1em;
     }
 
-    .delete-accountButton:focus {
-    box-shadow: #D6D6E7 0 0 0 1.5px inset, rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #D6D6E7 0 -3px 0 inset;
+    .delete-accountButton:focus,.cancelButton:focus,.confirmButton:focus{
+        box-shadow: #D6D6E7 0 0 0 1.5px inset, rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #D6D6E7 0 -3px 0 inset;
     }
 
-    .delete-accountButton:hover {
+    .delete-accountButton:hover,.cancelButton:hover,.confirmButton:hover{
     box-shadow: rgba(45, 35, 66, 0.4) 0 4px 8px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #D6D6E7 0 -3px 0 inset;
     transform: translateY(-2px);
     }
 
-    .delete-accountButton:active {
+    .delete-accountButton:active,.cancelButton:active,.confirmButton:active {
     box-shadow: #D6D6E7 0 3px 7px inset;
     transform: translateY(2px);
     }
@@ -659,14 +665,14 @@ footer small{
         margin:1.5rem 0;
     }
 
-    .confirmButton, .cancelButton {
+    /* .confirmButton, .cancelButton {
         text-align:right;
         padding:0.5rem;
         border-radius:55px;
         transition:0.4s ease;
         box-shadow: rgba(57, 31, 91, 0.24) 0 2px 2px,rgba(182, 173, 185, 0.4) 0 8px 12px;
         border:1px solid var(--light-grey);
-    }
+    } */
 
     .confirmButton .fa-check{
         color:var(--green);
@@ -676,7 +682,7 @@ footer small{
         color:var(--red);
     }
 
-    .confirmButton:hover,.cancelButton:hover
+    /* .confirmButton:hover,.cancelButton:hover
     .confirmButton:focus,.cancelButton:hover {
         text-decoration: none;
         cursor: pointer;
@@ -700,7 +706,7 @@ footer small{
 
     .cancelButton:active,.confirmButton:active,.cancelButton:focus,.confirmButton:focus{
         padding:1rem;
-    }
+    } */
 
     
 
