@@ -26,7 +26,7 @@
           data: {
               labels: labels,  // ABCISSE 
               datasets: [{
-                  label: 'Total des ventes (quantité)',
+                  label: 'Quantité totale écoulée (tous produits confondus)',
                   data: monthlyProductData.map(monthData => 
                       Object.values(monthData).reduce((a, b) => a + b, 0) // Total vente par mois
                   ), // .map() permet de créer un tableau à partir d'un tableau existant en appliquant une fonction sur chaque élément du tableau
@@ -42,6 +42,10 @@
               responsive: true, //adaptation de la taille du graphique à la taille de la fenêtre ou conteneur parent 
               maintainAspectRatio: false,
               plugins:{
+                title: {
+                  display:true,
+                  text:"Quantité écoulée mensuellement"
+                },
                 subtitle: {
                   display:true,
                   text: 'Cliquez sur le mois concerné pour voir la quantité totale par produit'
@@ -62,7 +66,7 @@
                       // mise à jour de l'abcisse (nom produits) et de l'ordonnée (quantité) du graphique
                       salesChart.data.labels = productNames;
                       salesChart.data.datasets = [{
-                          label: 'Quantité vendue',
+                          label: 'Quantité écoulée par produit au cours du mois sélectionné',
                           data: productQuantities,
                           backgroundColor: 'rgba(75, 192, 192, 0.2)',
                           borderColor: 'rgba(75, 192, 192, 1)',
@@ -83,7 +87,7 @@
         data: {
           labels: labels,
           datasets: [{
-            label: 'CA mensuel',
+            label: 'CA',
             data: totalSalesData,
             borderWidth: 1,
             backgroundColor: 'rgba(75, 192, 192, 0.2)',
@@ -91,6 +95,12 @@
           }]
         },
         options: {
+          plugins:{
+            title: {
+              display:true,
+              text:"Chiffre d'affaire mensuel"
+            },
+          },
           maintainAspectRatio: false,
           responsive:true,
           scales: {
@@ -110,7 +120,7 @@
 
   <style>
     .center{
-      margin: auto;
+      margin: 6rem auto;
     }
   </style>
   </body>
