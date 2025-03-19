@@ -1,5 +1,8 @@
 
     {% block body %}
+    {% if totalPendingOrders is defined %}
+       <h1>{{totalPendingOrders}} commandes non retirées</h1>
+    {% endif %}
         {% if pendingOrders is defined and pendingOrders is not null%}
         <table>
             <tr>
@@ -28,10 +31,17 @@
 
     <style>
         table{
+            color: rgb(27, 25, 25);
             width:80%;
+            border-collapse: collapse;
+            margin: auto;
 
             td,th{
                 text-align: left;
+            }
+
+            td{
+                border-bottom: 1px solid grey;
             }
 
             td{

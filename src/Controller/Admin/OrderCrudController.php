@@ -90,12 +90,14 @@ class OrderCrudController extends AbstractCrudController
     #[Route('/admin/pendingOrders', name: 'admin_pendingOrders')]
     public function pendingOrders(OrderRepository $orderRepository):Response
     {   
+        //not collected
         $isCollected = 0;
         $pendingOrders = $orderRepository->findByIsCollected($isCollected);
-
+        $totalPendingOrders = count($pendingOrders);
 
         return $this->render('/admin/fields/pending-orders_list.html.twig',[
             'pendingOrders' => $pendingOrders,
+            'totalPendingOrders' => $totalPendingOrders
         ]);
     }
 
