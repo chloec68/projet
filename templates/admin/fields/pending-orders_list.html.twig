@@ -1,6 +1,6 @@
 
     {% block body %}
-        {% if pendingOrders is not null %}
+        {% if pendingOrders is defined and pendingOrders is not null%}
         <table>
             <tr>
                 <thead>

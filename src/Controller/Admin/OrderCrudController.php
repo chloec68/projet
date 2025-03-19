@@ -94,8 +94,9 @@ class OrderCrudController extends AbstractCrudController
         $pendingOrders = $orderRepository->findByIsCollected($isCollected);
 
 
-        return $this->render('/admin/fields/pending-orders_list.html.twig',
-        ['pendingOrders' => $pendingOrders]);
+        return $this->render('/admin/fields/pending-orders_list.html.twig',[
+            'pendingOrders' => $pendingOrders,
+        ]);
     }
 
 }

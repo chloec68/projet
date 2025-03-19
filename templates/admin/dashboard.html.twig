@@ -1,5 +1,7 @@
 {% extends '@EasyAdmin/layout.html.twig' %}
 
+
+
 {% block main %}
 
 <div class="actions-container">
@@ -18,9 +20,7 @@
 </div>
 </div>
 
-
-{# //Liens vers dernières commandes  #}
-{% include 'admin/fields/pending-orders.html.twig' with {'pendingOrders': pendingOrders} %}
+{% include 'admin/fields/pending-orders_list.html.twig' %}
 
 <style>
     .actions-container,.last-container{
