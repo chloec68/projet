@@ -8,6 +8,8 @@
         <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
 
         {% block stylesheets %}
+        <link rel="stylesheet" href="{{ asset('styles/app.css') }}">
+        <link rel="stylesheet" href="{{ asset('styles/darkmode.css') }}">
         {% endblock %}
 
         {% block cdn %}
@@ -19,7 +21,7 @@
 
         {% block javascripts %}
         <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js" defer></script>
-            {% block importmap %}{{ importmap('app') }} {% endblock %}
+        {% block importmap %}{{ importmap('app') }} {% endblock %}
         {% endblock %}
 
     </head>
@@ -34,6 +36,7 @@
                     <h1 id="logo-text">Brasserie indépendante</h1>
                     </div>
                     <div class="header__container-right">
+                        <i class="fa-regular fa-moon" id="darkModeButton"></i>
                         <i class="fa-solid fa-basket-shopping"></i>
                         {# <span type="number" class="nbItems"> {% if nbItems <= 1 %} {{nbItems}} article {% else %} {{nbItems}} articles {% endif %}</span> #}
                         {% if app.user %}
@@ -110,6 +113,14 @@
                 <small>La vente de boissons alcoliques est interdite aux mineurs de moins de 16 ans  -  L'abus d'alcool est dangereux pour la santé</small>
             </footer>    
         {% endblock %}
+
+        <script>
+            if (localStorage.getItem('dark-mode') === 'enabled') {
+                document.body.classList.add('dark-mode')
+                const button = document.getElementById("darkModeButton");
+                button.classList.replace('fa-moon','fa-lightbulb');
+              }
+        </script>
 
     </body>
 </html>

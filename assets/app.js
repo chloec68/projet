@@ -6,7 +6,30 @@
  * which should already be in your base.html.twig.
  */
 import './styles/app.css';
-// import Chart from 'chart.js/auto';
+
+// ************************************************************** DARK MODE *********************************************************************
+
+document.addEventListener('DOMContentLoaded', function() {  
+    const darkModeButton = document.getElementById("darkModeButton");
+
+    if (darkModeButton) {
+        darkModeButton.onclick = function() {
+          document.body.classList.toggle('dark-mode');
+
+            if (document.body.classList.contains("dark-mode")) {
+              localStorage.setItem("dark-mode", "enabled"); 
+            } else {
+              localStorage.setItem("dark-mode", "disabled"); 
+            }
+
+            if (darkModeButton.classList.contains('fa-moon')) {
+              darkModeButton.classList.replace('fa-moon','fa-lightbulb');
+            } else {
+            darkModeButton.classList.replace('fa-lightbulb','fa-moon');
+            }
+        }
+    }
+});
 
 
 // ************************************************************** SWIPER *********************************************************************** 
@@ -28,7 +51,8 @@ import './styles/app.css';
     }
   });
 
-  // ************************************************************** SCROLL UP BUTTON *********************************************************************** 
+  // ************************************************************** SCROLL UP BUTTON ************************************************************
+
   function buttonVisibility() {
     let button = document.querySelector(".top-button");
     if(button){
@@ -41,11 +65,11 @@ import './styles/app.css';
   }
   document.addEventListener('scroll', buttonVisibility);
 
-// ************************************************************** CART *********************************************************************** 
+// ************************************************************** CART RELATED ACTIONS ************************************************************************** 
 
-// PAGE PRODUCTS & DETAIL PRODUCT 
+//************************** */ ON PRODUCTS PAGE & DETAIL PRODUCT PAGE
 
-// INCREMENT QUANTITY (PRODUCTS + DETAIL PRODUCT)
+// INCREMENT QUANTITY ACTION
 
 const incrementButtons = document.querySelectorAll('.increment');
 incrementButtons.forEach(button => {
@@ -57,7 +81,7 @@ incrementButtons.forEach(button => {
   });
 }); 
 
-// DECREMENT QUANTITY (PRODUCTS + DETAIL)
+// DECREMENT QUANTITY ACTION
 
 const decrementButtons = document.querySelectorAll('.decrement');
 decrementButtons.forEach(button => {
@@ -73,7 +97,7 @@ decrementButtons.forEach(button => {
   });
 }); 
 
-// ADD TO CART (PRODUCTS + DETAIL)
+// ADD TO CART ACTION
 
 const alertBox = document.querySelector(".alertBox");
 let alertMessage = document.querySelector(".alertMessage");
@@ -125,9 +149,9 @@ let addToCartButtons = document.querySelectorAll(".add-to-cart");
 
 
 
-// PAGE PANIER
+//************************** */ ON CART PAGE 
 
-// INCREMENT QUANTITY (CART)
+// INCREMENT QUANTITY ACTION
 
 const incrementButtonsCart = document.querySelectorAll('.cart-increment');
 incrementButtonsCart.forEach(button => {
@@ -143,7 +167,7 @@ incrementButtonsCart.forEach(button => {
   });
 }); 
 
-// DECREMENT QUANTITY (CART)
+// DECREMENT QUANTITY ACTION
 const decrementButtonsCart = document.querySelectorAll('.cart-decrement');
 
 decrementButtonsCart.forEach(button => {
@@ -160,7 +184,7 @@ decrementButtonsCart.forEach(button => {
   });
 });
 
-// UPDATE TOTAL ITEMS (CART)
+// UPDATE TOTAL ITEMS 
 function updateCart(product,quantity,size){
 
   let nbItemsElements = document.querySelectorAll('.nbItems')
@@ -199,12 +223,12 @@ function updateCart(product,quantity,size){
   }
 
 
-// UPDATE TOTAL (CART)
+// UPDATE TOTAL 
 function updatePriceTotal(){
 
   let totalPrice = 0; 
   const cartItems = document.querySelectorAll('.cart-item');
-  if(cartItems.length>0){
+  if(cartItems && cartItems.length>0){
     cartItems.forEach(item => {
       let input = item.querySelector('input[cart-product]');
       let quantity = parseInt(input.value);
@@ -218,7 +242,7 @@ function updatePriceTotal(){
 
 }
 
-// UPDATE SUBTOTALS (CART)
+// UPDATE SUBTOTALS 
 function updateCartSubTotals(){
   const cartItems = document.querySelectorAll('.cart-item');
   let subTotal = 0; 
@@ -232,7 +256,7 @@ function updateCartSubTotals(){
   })
 }
 
- // DELETE ITEM (CART)
+ // DELETE ITEM
   const removeItemButton = document.querySelectorAll('.remove-item');
   removeItemButton.forEach(button => {
     button.addEventListener('click',function(){
@@ -246,7 +270,7 @@ function updateCartSubTotals(){
         })
         .then(response => response.json())
         .then(data => {
-          if(data.success){
+          if(data && data.success){
             let productTable = document.querySelector(`tr[cart-item="${product}"]`);
             let nbItemsElement = document.querySelector('.nbItems'); 
               if (productTable){
@@ -259,8 +283,8 @@ function updateCartSubTotals(){
               } else {
                   nbItemsElement.textContent = `${data.nbItems} articles`;
               }
-              productTable.remove();   
               updatePriceTotal();
+              productTable.remove();   
             }
           }else{
             console.error('erreur lors de la suppression');
@@ -291,10 +315,8 @@ document.addEventListener('click', function(event) {
 
 
 // SIDE CART - CONTENT UPDATE
-
 const basketButton = document.querySelector('.fa-basket-shopping');
 basketButton.addEventListener('click',function(){
-
   const url = '/cart/side-cart';
   fetch(url, {
     headers:{
@@ -304,10 +326,12 @@ basketButton.addEventListener('click',function(){
   .then(response => {
     return response.json();
   })
-  .then(data => {
+ 
+  .then(
+    data => {
     const cartSummary = document.querySelector('.cart-summary');
     let htmlContent = "<h2>Votre panier</h2><a href='/cart'>Voir le panier</a>";
-      if(data.length > 0){
+      if(data && data.length > 0){
         console.log(data);
         data.forEach(item => {
           htmlContent += 
@@ -332,7 +356,6 @@ basketButton.addEventListener('click',function(){
         })
         htmlContent += 
         '<p class="side-cart__nbItems centered">  Nombre d\'articles : '+ data[data.length-1].nbItems + '</p> <div class="total bold"><p>Total ttc :</p><p class="bold side-cart-total">' + (data[data.length-1].total).toFixed(2) + '€</p></div>';
-
       }else{
         htmlContent = "<h2>Votre panier</h2><a href='/cart'>Voir le panier</a> <p class='empty-sidecart'>Le panier est vide</p>";
       }
@@ -341,7 +364,7 @@ basketButton.addEventListener('click',function(){
 })
 
 
-//****************************************************************** FAVORITE ******************************************************************
+//****************************************************************** ADD/REMOVE TO/FROM FAVORITES **************************************************************
 
 let favoriteButtons = document.querySelectorAll('.fa-heart');
 favoriteButtons.forEach(element => {
@@ -384,7 +407,7 @@ favoriteButtons.forEach(element => {
   })
 });
 
-//****************************************************************** DELETE ACCOUNT ******************************************************************
+//****************************************************************** DELETE USER ACCOUNT ******************************************************************
 
 const alertContainer = document.querySelector(".alertContainer");
 const confirmMsg = document.querySelector(".alertMsg");
@@ -423,3 +446,6 @@ if(deleteButton){
     })
   })
 }
+
+
+
