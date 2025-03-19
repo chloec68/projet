@@ -1,0 +1,141 @@
+
+/* *********************************************** GENERAL ************************************************ */
+:root{
+    --main:#242426;
+    --blue:#2E5BFF;
+    --white:#FCFCFC;
+    --light-grey:#D9D9D9;
+    --ultra-light-grey:#f4f4f4;
+    --dark-grey:#424447;
+    --red:#fc5959;
+    --green:#5DE571;
+}
+
+.dark-mode p,.dark-mode h1,.dark-mode h2,.dark-mode h3,.dark-mode h4{
+    color:var(--white);
+}
+
+
+.dark-mode{
+    background-color: var(--main);
+}
+
+/* *********************************************** HOME PAGE ************************************************ */
+
+.dark-mode #home-wrapper{
+    h3{
+        color:var(--green);
+    }
+}
+
+.dark-mode .nav__container{
+    border:1px solid var(--green);
+}
+
+.dark-mode .newsletter__container{
+    background-color: var(--dark-grey);
+    border-radius:55px;
+    width:50%;
+    margin: auto;
+    border:1px solid var(--green);
+
+    .btn{
+        color:var(--main);
+    }
+}
+
+.dark-mode .newsletter__container p{
+    color:var(--green);
+}
+
+/* *********************************************** BEERS PAGE ************************************************ */
+
+.dark-mode .product-card{
+    border:1px solid var(--green);
+
+    .stock-info{
+        color:var(--white);
+    }
+
+    .plus,.minus{
+        background-color: var(--green);
+        border-color: var(--green);
+    }
+
+    .basket-btn{
+        border:1px solid var(--green);
+        box-shadow: var(--green) 0px 5px 15px;
+    }
+}
+
+.dark-mode .products__sidebar .search-label{
+    color:var(--white);
+}
+
+.dark-mode .reset-button{
+    border:1px solid var(--green);
+    color:var(--white);
+}
+
+/* *********************************************** BEER DETAIL ************************************************ */
+
+.dark-mode .pricing-card-section{
+    border-color: var(--green);
+}
+
+.dark-mode .btn-rounded:hover, .dark-mode .btn-rounded i:hover {
+    color:var(--main);
+}
+
+.dark-mode .basket-btn-green{
+    border:1px solid var(--green);
+    box-shadow: var(--green) 0px 5px 15px;
+}
+
+.dark-mode .unavailable{
+    color:#fc5959;
+    border: 1px solid var(--red);
+}
+
+/* *********************************************** SIDE CART ************************************************ */
+
+.dark-mode .cart-summary{
+    background-color: var(--main);
+    border:1px solid var(--green);
+
+    a{
+        border:1px solid var(--green);
+        box-shadow: var(--green) 0px 5px 15px;
+    }
+}
+
+/* *********************************************** ADD TO CART ALERT ************************************************ */
+
+.dark-mode .alertContent{
+    border:1px solid var(--green);
+    background-color: var(--main);
+}
+
+/* *********************************************** CART ************************************************ */
+
+.dark-mode .cart-page-wrapper .main-container{
+    color:var(--white);
+
+    table{
+        border-collapse: collapse;
+    }
+}
+
+.dark-mode .recap-section .basket-btn{
+    border:1px solid var(--green);
+}
+
+/* *********************************************** PAYMENT STEP 1 ************************************************ */
+
+.dark-mode .identificationForm-group label, .dark-mode .agreeTerms-group{
+    color:var(--white);
+}
+
+.dark-mode .identification-btn{
+    border:1px solid var(--green);
+}

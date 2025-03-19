@@ -64,11 +64,17 @@
             <div class="product-card">
                 <div class="card-top">
                     <p class="beer-price">{{product.productVATprice}} €</p>
-                    {% if app.user %} {% if product in favorites %} <p class="add-to-favorites"><i class="fa-solid fa-heart" data-product-favorite="{{product.id}}"></p></i> {% else %} <p class="add-to-favorites"><i class="fa-regular fa-heart" data-product-favorite="{{product.id}}"></i></p>{% endif %} {% endif %}
+                    {% if app.user %}
+                        {% if product in favorites %} <p class="add-to-favorites"><i class="fa-solid fa-heart" data-product-favorite="{{product.id}}"></p></i>
+                        {% else %} <p class="add-to-favorites"><i class="fa-regular fa-heart" data-product-favorite="{{product.id}}"></i></p>
+                        {% endif %}
+                    {% endif %}
                 </div>
                 {% for picture in product.pictures %}
                     {% if loop.first %}
-                    <div class="picture-container"> <a href="{{ path('detail_product',{id:product.id}) }}"><img src="{{ picture.pictureName }}" alt="photo de la face avant du produit"></a> </div>
+                    <div class="picture-container">
+                        <a href="{{ path('detail_product',{id:product.id}) }}"><img src="{{ picture.pictureName }}" alt="photo de la face avant du produit {{product.productName}}"></a>
+                    </div>
                     {% endif %}
                 {% endfor %}
 
