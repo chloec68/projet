@@ -4,6 +4,7 @@
 
 {% block main %}
 
+<h2>Ajouter</h2>
 <div class="actions-container">
 <a href="{{path('admin_product_new')}}" class="btn btn-primary"><i class="fa-solid fa-plus"></i> Nouveau produit</a>
 
@@ -12,12 +13,12 @@
 <a href="{{path('admin_newsletter_new')}}" class="btn btn-primary"><i class="fa-solid fa-plus"></i> Créer newsletter</a>
 
 </div>
-
+<h2>Commandes</h2>
 <div class="last-container">
-    <a href="{{path('admin_pendingOrders')}}" class="btn btn-info"> Commandes en cours</a>
-
-    <a href="{{path('admin_charts_products-chart')}}" class="btn btn-warning"><i class="fa fa-bar-chart"></i> Stats</a>
+    <a href="{{path('admin_pendingOrders')}}" class="btn btn-info"> Commandes non retirées</a>
 </div>
+<h2>Stats</h2>
+<a href="{{path('admin_charts_products-chart')}}" class="btn btn-warning"><i class="fa fa-bar-chart"></i> Stats</a>
 </div>
 
 {% include 'admin/fields/pending-orders_list.html.twig' %}
