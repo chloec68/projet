@@ -8,13 +8,13 @@
   </head>
 
   <body>
-    <div>
+    <div class="center">
       <canvas id="chartProducts" aria-label="Graphique qui montre la quantité de produits vendus durant chaque mois de l'année en cours" role="img">Your browser does not support the canvas element.</canvas>
     </div>
   
-    <div>
-        <canvas id="revenueChart" aria-label="Graphique qui montre le chiffre d'affaire de chaque mois" role="img">Your browser does not support the canvas element.</canvas>
-      </div>
+    <div class="center">
+      <canvas id="revenueChart" aria-label="Graphique qui montre le chiffre d'affaire de chaque mois" role="img">Your browser does not support the canvas element.</canvas>
+    </div>
 
     <script>
       const ctx1 = document.getElementById('chartProducts').getContext('2d');
@@ -41,6 +41,12 @@
           options: {
               responsive: true, //adaptation de la taille du graphique à la taille de la fenêtre ou conteneur parent 
               maintainAspectRatio: false,
+              plugins:{
+                subtitle: {
+                  display:true,
+                  text: 'Cliquez sur le mois concerné pour voir la quantité totale par produit'
+                }
+              },
               onClick: function(e) {
                   const activePoints = salesChart.getElementsAtEventForMode(e, 'nearest', { intersect: true }, true);
                   //récupération de l'élément le plus proche où l'utilisateur a été cliqué 
@@ -101,6 +107,12 @@
       revenueChart.canvas.parentNode.style.height = '300px';
       revenueChart.canvas.parentNode.style.width = '600px';
   </script>
+
+  <style>
+    .center{
+      margin: auto;
+    }
+  </style>
   </body>
 </html>
 
