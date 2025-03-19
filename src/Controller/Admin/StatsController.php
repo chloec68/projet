@@ -52,10 +52,9 @@ class StatsController extends AbstractController
     
             $yearlyProductSales[] = $monthlyProductSales;
             $monthlyProductData[] = $monthlyProductSales;
+           
         }
-
         //REVENUE 
-
         $totalSales = [];
         for($i = 0 ; $i<12 ; $i++){
             $monthlyTotal = $orderRepository->totalSalesByMonth($month[$i]);
