@@ -13,7 +13,7 @@
     </div>
   
     <div>
-        <canvas id="chartRevenue" aria-label="Graphique qui montre le chiffre d'affaire de chaque mois" role="img">Your browser does not support the canvas element.</canvas>
+        <canvas id="revenueChart" aria-label="Graphique qui montre le chiffre d'affaire de chaque mois" role="img">Your browser does not support the canvas element.</canvas>
       </div>
 
     <script>
@@ -40,6 +40,7 @@
           },
           options: {
               responsive: true, //adaptation de la taille du graphique à la taille de la fenêtre ou conteneur parent 
+              maintainAspectRatio: false,
               onClick: function(e) {
                   const activePoints = salesChart.getElementsAtEventForMode(e, 'nearest', { intersect: true }, true);
                   //récupération de l'élément le plus proche où l'utilisateur a été cliqué 
@@ -65,12 +66,13 @@
                       // Renvoie le graphique mis à jour 
                       salesChart.update();
                   }
-              }
+                }
           }
       });
       let totalSalesData = JSON.parse('{{ totalSales|json_encode|raw }}');
-      const ctx2 = document.getElementById('chartRevenue');
-      new Chart(ctx2, {
+      const revenueChart = document.getElementById('revenueChart').getContext('2d');
+     
+      new Chart(revenueChart, {
         type: 'line',
         data: {
           labels: labels,
@@ -83,6 +85,8 @@
           }]
         },
         options: {
+          maintainAspectRatio: false,
+          responsive:true,
           scales: {
             y: {
               beginAtZero: true
@@ -90,8 +94,13 @@
           }
         }
       });
+
+      salesChart.canvas.parentNode.style.height = '300px';
+      salesChart.canvas.parentNode.style.width = '600px';
+
+      revenueChart.canvas.parentNode.style.height = '300px';
+      revenueChart.canvas.parentNode.style.width = '600px';
   </script>
-    
   </body>
 </html>
 
