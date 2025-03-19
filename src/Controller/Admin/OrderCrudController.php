@@ -3,13 +3,18 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Order;
+use App\Repository\OrderRepository;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Attribute\Route;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
+use EasyCorp\Bundle\EasyAdminBundle\Attribute\AdminCrud;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
+use EasyCorp\Bundle\EasyAdminBundle\Attribute\AdminAction;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
@@ -79,6 +84,18 @@ class OrderCrudController extends AbstractCrudController
         return $crud    
             ->setPageTitle('index','Commande')
             ->setPageTitle('edit','Modifier la commande');
+    }
+
+
+    #[Route('/admin/pendingOrders', name: 'admin_pendingOrders')]
+    public function pendingOrders(OrderRepository $orderRepository):Response
+    {   
+        $isCollected = 0;
+        $pendingOrders = $orderRepository->findByIsCollected($isCollected);
+
+
+        return $this->render('/admin/fields/pending-orders_list.html.twig',
+        ['pendingOrders' => $pendingOrders]);
     }
 
 }

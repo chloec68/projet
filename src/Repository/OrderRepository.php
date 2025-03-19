@@ -38,4 +38,16 @@ class OrderRepository extends ServiceEntityRepository
 
         return $totalSales;
     }
+
+
+       public function findByIsCollected($isCollected): array
+       {
+           return $this->createQueryBuilder('o')
+               ->andWhere('o.orderIsCollected = :isCollected')
+               ->setParameter('isCollected', $isCollected)
+               ->orderBy('o.dateOfPlacement', 'ASC')
+               ->getQuery()
+               ->getResult()
+           ;
+       }
 }

@@ -1,0 +1,42 @@
+
+    {% block body %}
+        {% if pendingOrders is not null %}
+        <table>
+            <tr>
+                <thead>
+                    <th>Référence</th>
+                    <th>Date de placement</th>
+                    <th>Nom Client</th>
+                    <th>Contact client</th>
+                    <th>Point de retrait</th>
+                </thead>
+            </tr>
+            <tbody>
+            {% for pendingOrder in pendingOrders %}
+
+                <tr>
+                    <td>{{pendingOrder.orderReference}}</td>
+                    <td>{{pendingOrder.dateOfPlacement|date('d/m/Y')}}</td>
+                    <td>{{pendingOrder.orderUserFirstName}} {{pendingOrder.orderUserLastName}}</td>
+                    <td>{{pendingOrder.orderEmail}}</td>
+                    <td>{{pendingOrder.establishment.establishmentName}}</td>
+                </tr> 
+            {% endfor %}
+        {% endif %}
+        </tbody>
+    </table>
+
+    <style>
+        table{
+            width:80%;
+
+            td,th{
+                text-align: left;
+            }
+
+            td{
+                padding:0.5rem;
+            }
+        }
+    </style>
+    {% endblock body %}

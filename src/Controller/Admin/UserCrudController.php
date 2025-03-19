@@ -23,6 +23,7 @@ class UserCrudController extends AbstractCrudController
     public function configureActions(Actions $actions): Actions
     {
         return $actions
+        ->disable('delete')
 
         ->update(Crud::PAGE_INDEX, Action::NEW, function (Action $action) {
             return $action->setIcon('fa fa-plus')->setLabel("Nouvel utilisateur");
@@ -35,6 +36,7 @@ class UserCrudController extends AbstractCrudController
             TextField::new('email')->setLabel('Adresse Email'),
             TextField::new('password')->setLabel('Mot de passe'),
             BooleanField::new('isVerified')->setLabel('Email vérifié')->renderAsSwitch(true),
+            BooleanField::new('isDeleted')->setLabel('Compte supprimé')->renderAsSwitch(false),
             ArrayField::new('roles')
             ->setLabel('roles')
         ];
