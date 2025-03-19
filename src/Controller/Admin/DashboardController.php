@@ -60,6 +60,8 @@ class DashboardController extends AbstractDashboardController
         return parent::configureActions()
     
         ->add(Crud::PAGE_INDEX, Action::DETAIL);
+        
+
     }
 }
 

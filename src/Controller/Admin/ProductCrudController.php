@@ -22,16 +22,14 @@ class ProductCrudController extends AbstractCrudController
     }
 
     public function configureActions(Actions $actions): Actions
-    {
-        $statsAction = Action::new('stats','Stats')->linkToRoute('admin_charts_products-chart')->setIcon('fa fa-bar-chart')->addCssClass('btn btn-info')->createAsGlobalAction();
-
+    {    
+        $statsAction = Action::new('stats','Stats')->linkToRoute('admin_charts_products-chart')->setIcon('fa fa-bar-chart')->addCssClass('btn btn-warning')->createAsGlobalAction();
         return $actions
             ->disable('delete')
+            ->add(Crud::PAGE_INDEX, $statsAction)
             ->update(Crud::PAGE_INDEX, Action::NEW, function (Action $action) {
                 return $action->setIcon('fa fa-plus')->setLabel("Nouveau produit");
-            })
-        
-            ->add(Crud::PAGE_INDEX, $statsAction);
+            });
     }
     
     public function configureFields(string $pageName): iterable

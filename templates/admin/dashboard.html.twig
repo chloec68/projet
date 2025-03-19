@@ -2,16 +2,34 @@
 
 {% block main %}
 
-<div class=actions-container>
-<a href={{path('admin_product_new')}} class="btn btn-primary"><i class="fa-solid fa-plus"></i> Nouveau produit</a>
+<div class="actions-container">
+<a href="{{path('admin_product_new')}}" class="btn btn-primary"><i class="fa-solid fa-plus"></i> Nouveau produit</a>
 
-<a href={{path('admin_user_new')}} class="btn btn-primary"><i class="fa-solid fa-plus"></i> Nouvel utilisateur</a>
+<a href="{{path('admin_user_new')}}" class="btn btn-primary"><i class="fa-solid fa-plus"></i> Nouvel utilisateur</a>
 
-<a href={{path('admin_newsletter_new')}} class="btn btn-primary"><i class="fa-solid fa-plus"></i> Créer newsletter</a>
+<a href="{{path('admin_newsletter_new')}}" class="btn btn-primary"><i class="fa-solid fa-plus"></i> Créer newsletter</a>
+
 </div>
 
-{# //Liens vers dernières commandes  #}
+<div class="last-container">
+    <a href="{{path('admin_pendingOrders')}}" class="btn btn-info"> Commandes en cours</a>
 
+    <a href="{{path('admin_charts_products-chart')}}" class="btn btn-warning"><i class="fa fa-bar-chart"></i> Stats</a>
+</div>
+</div>
+
+
+{# //Liens vers dernières commandes  #}
+{% include 'admin/fields/pending-orders.html.twig' with {'pendingOrders': pendingOrders} %}
+
+<style>
+    .actions-container,.last-container{
+        display: flex;
+        gap:4rem;
+        justify-content: center;
+        margin:2rem 0 4rem 0;
+    }
+</style>
 
 {% endblock main %}
 
