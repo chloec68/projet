@@ -6,6 +6,7 @@ use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Karser\Recaptcha3Bundle\Form\Recaptcha3Type;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -61,16 +62,14 @@ class RegistrationFormType extends AbstractType
                     new NotBlank([
                         'message' => 'Veuillez saisir un mot de passe',
                     ]),
-                    // new Regex([
-                    //     'pattern' => '/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{12,}$/',
-                    //     'message' => 'password should be at lease 12 characters long and must contain at least a number, an upperase and a special character',
-                        
-                    // ]),
+                    new Regex([
+                        'pattern' => '/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{12,}$/',
+                        'message' => 'Le mot de passe doit contenir au moins 12 caractères, dont un chiffre, une majuscule et un caractère spécial',
+                    ]),
                     new Length([
-                        'min' => 3,
-                        'minMessage' => 'Your password should be at least {{ limit }} characters',
-                        // max length allowed by Symfony for security reasons
-                        'max' => 4096,
+                        // 'min' => 12,
+                        // 'minMessage' => 'Votre mot de passe doit contenir au moins {{ limit }} caractères',
+                        'max' => 4096,    // max length allowed by Symfony for security reasons
                     ]),
                 ],
             ])
