@@ -24,6 +24,7 @@
     box-sizing: border-box;
     margin:0;
     padding:0;
+    cursor: url('/img/cursor.cur') 16 16, auto;
 }
 
 body {
@@ -32,7 +33,6 @@ body {
     min-height: 100vh;
     padding-bottom:500px;
     font-family: "Bebas Neue", serif;
-    cursor: url('/img/cursor.cur') 16 16, auto;
 }
 
 .btn:hover{
@@ -63,6 +63,7 @@ h3{
 
 a{
     text-decoration: none;
+    cursor: pointer;
 }
 
 .centered{
@@ -84,7 +85,6 @@ a{
     display: flex;
     gap:4em;
     align-items:end;
-    
     padding:0 5rem 1rem 0; 
 }
 
@@ -92,13 +92,15 @@ a{
     color:var(--white);
     font-size:1.5em;
     margin-right:1rem;
+    align-items: baseline;
 }
 
 .header__container-right a:visited, .header__container-right a{
     color:var(--white);
-    font-size:1.2em;
+    font-size:1.1em;
     display: flex;
     align-items: baseline;
+    
 }
 
 .header__container-right a:hover,.header__container-right i:hover{
