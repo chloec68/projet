@@ -31,26 +31,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-
-// ************************************************************** SWIPER *********************************************************************** 
-
-  var swiper = new Swiper(".mySwiper", {
-    observer: true,
-    observeParents: true,
-    slidesPerView: 3,
-    spaceBetween: 10,
-    centeredSlides: true,
-    grabCursor:true,
-    effect:'slide',
-    loop:true,
-    speed:600,
-    navigation: {
-      nextEl: ".swiper-button-next",
-      prevEl: ".swiper-button-prev",
-      lazy:true,
-    }
-  });
-
   // ************************************************************** SCROLL UP BUTTON ************************************************************
 
   function buttonVisibility() {

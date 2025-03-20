@@ -14,53 +14,59 @@
             <h2 id="permanent-title">les permanentes</h2>
             <h3>disponibles toute l'année</h3>
 
-        <!-- Slider main container -->
-            <div class="swiper mySwiper">
-                <!-- Additional required wrapper -->
-                <div class="swiper-wrapper">
-                <!-- Slides -->
+            <div class="carousel">
                 {% for product in permanent %}
                     {% for picture in product.pictures %}
                         {% if loop.first %}
-                            <div class="swiper-slide"><img src="{{picture.pictureName}}" alt=""></div>
+                            <div class="group">
+                                <a href="{{ path('detail_product',{'id':product.id})}}"><img class="card" src="{{picture.pictureName}}" alt="{{product.productName}}"></a>
+                            </div>
                         {% endif %}
                     {% endfor %}            
                 {% endfor %}
-                </div>  
-
-                <!-- If we need navigation buttons -->
-                <div class="swiper-button-prev"></div>
-                <div class="swiper-button-next"></div>
-            </div>
+            
+                {% for product in permanent %}
+                    {% for picture in product.pictures %}
+                        {% if loop.first %}
+                            <div aria-hidden class="group">
+                            <a href="{{ path('detail_product',{'id':product.id})}}"><img class="card" src="{{picture.pictureName}}" alt="{{product.productName}}"></a>
+                            </div>
+                        {% endif %}
+                    {% endfor %}            
+                {% endfor %}
+             </div>
 
             <div class="seeAll-link__container"> <a href="{{ path('app_beers') }}" class="seeAll-link">tout voir<img id="icone-doubleArrowRight" src="/icones/doubleArrowRight.svg" alt="" loading="lazy"></a></div>
 
         </section>
 
-    <section id="ephemeral-section">
-        <h2 id="ephemeral-title">les éphémères</h2>
-        <h3>disponibles jusqu’à épuisement du stock</h3>
+        <section id="ephemeral-section">
+            <h2 id="ephemeral-title">les éphémères</h2>
+            <h3>disponibles jusqu’à épuisement du stock</h3>
 
-    <!-- Slider main container -->
-        <div class="swiper mySwiper">
-            <!-- Additional required wrapper -->
-            <div class="swiper-wrapper">
-            <!-- Slides -->
-            {% for product in ephemeral %}
-                {% for picture in product.pictures %}
-                    {% if loop.first %}
-                        <div class="swiper-slide"><img src="{{picture.pictureName}}" alt="" loading="lazy"></div>
-                    {% endif %}
-                {% endfor %}            
-            {% endfor %}
-        </div>  
-
-            <!-- If we need navigation buttons -->
-            <div class="swiper-button-prev"></div>
-            <div class="swiper-button-next"></div>
-        </div>
-        <div class="seeAll-link__container"> <a href="{{ path('app_beers') }}" class="seeAll-link">tout voir<img id="icone-doubleArrowRight" src="/icones/doubleArrowRight.svg" alt=""></a></div>
-    </section>
+            <div class="carousel">
+                {% for product in ephemeral %}
+                    {% for picture in product.pictures %}
+                        {% if loop.first %}
+                            <div class="group">
+                                <a href="{{ path('detail_product',{'id':product.id})}}"><img class="card" src="{{picture.pictureName}}" alt="{{product.productName}}"></a>
+                            </div>
+                        {% endif %}
+                    {% endfor %}            
+                {% endfor %}
+            
+                {% for product in permanent %}
+                    {% for picture in product.pictures %}
+                        {% if loop.first %}
+                            <div aria-hidden class="group">
+                            <a href="{{ path('detail_product',{'id':product.id})}}"><img class="card" src="{{picture.pictureName}}" alt="{{product.productName}}"></a>
+                            </div>
+                        {% endif %}
+                    {% endfor %}            
+                {% endfor %}
+             </div>
+            <div class="seeAll-link__container"> <a href="{{ path('app_beers') }}" class="seeAll-link">tout voir<img id="icone-doubleArrowRight" src="/icones/doubleArrowRight.svg" alt=""></a></div>
+        </section>
 
 </div>
 
