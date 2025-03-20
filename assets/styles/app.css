@@ -457,6 +457,14 @@ footer small{
     gap:0.5rem;
     margin-top:2rem;
     font-size:1.5em;
+
+    a{
+        color:var(--blue);
+    }
+
+    a:active, a:focus{
+        color:var(--green);
+    }
 }
 
 .registration-form label,.login-form label{
