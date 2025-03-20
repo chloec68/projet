@@ -38,10 +38,11 @@
                         <i class="fa-solid fa-basket-shopping"></i>
                         {# <span type="number" class="nbItems"> {% if nbItems <= 1 %} {{nbItems}} article {% else %} {{nbItems}} articles {% endif %}</span> #}
                         {% if app.user %}
-                        <a href="{{path('app_user')}}"><i class="fa-solid fa-user"></i>{{ app.user.userIdentifier }}</a>
+                        <a href="{{path('app_user')}}"><i class="fa-regular fa-user"></i>{{ app.user.userIdentifier }}</a>
+                        <a href="{{ path('app_favorites') }}"><i class="fa-brands fa-gratipay"></i>Mes favoris</a>
                         <a href=" {{ path('app_logout') }}">Déconnexion</i></a>
                         {% else %}
-                        <a href=" {{ path('app_register') }} "><i class="fa-solid fa-user"></i></a>
+                        <a href=" {{ path('app_login') }} "><i class="fa-solid fa-user"></i></a>
                         {% endif %}
                     </div>
                 </div>
