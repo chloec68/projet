@@ -369,32 +369,55 @@ footer small{
     text-align: center;
 }
 
-/* ************************* SWIPER ************************* */
+/* ************************* INFINITE LOOP ************************* */
 
-.swiper {
-    width: 80%;
-    height: 60vh;
-    margin: 2rem auto 2rem auto;
-  }
-
-   .swiper-slide {
-    text-align: center;
-    font-size: 18px;
-    background: #fff;
+.carousel {
+    margin: 0 auto;
+    padding: 6rem 0;
+    max-width: 90%;
+    overflow: hidden;
     display: flex;
+    align-items: center;
+
+    > * { 
+        flex: 1 0 35%;
+      }
+
+    &:hover .group {
+        animation-play-state: paused;
+      }
+}
+
+.card {
+    width: 100%;
+    color: white;
+    border-radius: 2px;
+    box-shadow: rgba(0, 0, 0, 10%) 5px 5px 20px 0;
+    padding: 0.2rem;
+    font-size: xx-large;
     justify-content: center;
     align-items: center;
+    min-height: 200px;
+    background: #4300da;
+    background: #5d34f2;
+    background: #7958ff;
+}
+
+.group {
+    display: flex;
+    /* Add padding to the right to create a gap between the last and first card. */
+    padding-right: 1rem;
+    will-change: transform;
+    animation: scrolling 15s linear infinite;
   }
 
-  .swiper-slide img {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  .swiper-button-next,.swiper-button-prev{
-    color:var(--green);
+  @keyframes scrolling {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-100%);
+    }
   }
 
 
