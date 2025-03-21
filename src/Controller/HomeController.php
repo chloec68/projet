@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Recipient;
 use App\Form\RecipientFormType;
-use App\Service\NewsletterMailer;
+use App\Service\Mailer;
 use App\Repository\UserRepository;
 use App\Repository\OrderRepository;
 use App\Service\VATpriceCalculator;
@@ -29,7 +29,7 @@ final class HomeController extends AbstractController
 
     #[Route('/home', name: 'app_home')]
     #[Route('/home/newsletterSubscription', name:'newsletter-subscription')]
-    public function index(ProductRepository $productRepository,RecipientRepository $recipientRepository,NewsletterRepository $newsletterRepository,EntityManagerInterface $entityManager, Request $request, NewsletterMailer $mailer): Response
+    public function index(ProductRepository $productRepository,RecipientRepository $recipientRepository,NewsletterRepository $newsletterRepository,EntityManagerInterface $entityManager, Request $request): Response
     {   
         $recipient = new Recipient();
         $newsletterForm = $this->createForm(RecipientFormType::class,$recipient);
@@ -74,7 +74,7 @@ final class HomeController extends AbstractController
     }
 
     #[Route('/newsletter/send/{idNewsletter}', name:'send-newsletter')]
-    public function sendNewsletter(NewsletterMailer $mailer, RecipientRepository $recipientRepository, NewsletterRepository $newsletterRepository, int $idNewsletter )
+    public function sendNewsletter(Mailer $mailer, RecipientRepository $recipientRepository, NewsletterRepository $newsletterRepository, int $idNewsletter )
     {
         $recipients = $recipientRepository->findAll();
         $newsletter = $newsletterRepository->find($idNewsletter);
