@@ -19,7 +19,7 @@ class PickUpPointFormType extends AbstractType{
             'class' => Establishment::class,
             'choice_label' => 'establishmentName',
             'label' => false,
-            'required' => false,
+            'required' => true,
             'placeholder' => false,
             'expanded' => true, 
             'multiple' => false,

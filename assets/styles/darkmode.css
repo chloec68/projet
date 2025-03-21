@@ -9,6 +9,7 @@
     --dark-grey:#424447;
     --red:#fc5959;
     --green:#5DE571;
+    
 }
 
 .dark-mode p,.dark-mode h1,.dark-mode h2,.dark-mode h3,.dark-mode h4{
@@ -32,7 +33,7 @@
 }
 
 .dark-mode .newsletter__container{
-    background-color: var(--dark-grey);
+    background-color: #4a4b4d;
     border-radius:55px;
     width:50%;
     margin: auto;
@@ -47,6 +48,37 @@
     color:var(--green);
 }
 
+/* *********************************************** LOGIN PAGE ************************************************ */
+.dark-mode .login-page label{
+    color:var(--white);
+}
+
+.dark-mode .login-page a{
+    color:var(--white);
+    font-family: 'nunito';
+}
+
+.dark-mode .login-page .register-login-btn{
+    border: var(--green) 1px solid;
+    color:var(--green);
+}
+
+.dark-mode .login-page .register-login-btn:hover{
+    background-color: var(--green);
+    color: var(--main);
+}
+
+/* *********************************************** REGISTER PAGE ************************************************ */
+.dark-mode .registration-page{
+    label{
+        color:white;
+    }
+
+    .register-login-btn{
+        border: 1px solid var(--green);
+    }
+}
+
 /* *********************************************** BEERS PAGE ************************************************ */
 
 .dark-mode .product-card{
@@ -54,6 +86,11 @@
 
     .stock-info{
         color:var(--white);
+    }
+
+    .beer-price{
+        background-color: var(--green);
+        color:var(--main);
     }
 
     .plus,.minus{
@@ -76,6 +113,10 @@
     color:var(--white);
 }
 
+.dark-mode .search-btn{
+    border:1px solid var(--green);
+}
+
 /* *********************************************** BEER DETAIL ************************************************ */
 
 .dark-mode .pricing-card-section{
@@ -94,6 +135,10 @@
 .dark-mode .unavailable{
     color:#fc5959;
     border: 1px solid var(--red);
+}
+
+.dark-mode .price-tag p{
+    color:var(--main);
 }
 
 /* *********************************************** SIDE CART ************************************************ */
@@ -137,4 +182,48 @@
 
 .dark-mode .identification-btn{
     border:1px solid var(--green);
+}
+
+/* *********************************************** PAYMENT STEP 2 ************************************************ */
+.dark-mode .choose-btn{
+    color:var(--main);
+}
+
+.dark-mode #pick_up_point_form label{
+    color:var(--green);
+}
+
+/* *********************************************** PAYMENT STEP 3 ************************************************ */
+
+.dark-mode #recap-table th, .dark-mode #recap-table .total-recap, .dark-mode .total-recap-amount{
+    color:var(--white);
+}
+
+.dark-mode .recap-wrapper .choose-btn{
+    background-color:var(--green);
+    color: var(--main);
+}
+
+.dark-mode .recap-wrapper .choose-btn:hover{
+    border:var(--green) 1px solid;
+    color:var(--white);
+    background-color: var(--main);
+}
+
+/* *********************************************** PAYMENT SUCCESS ************************************************ */
+.dark-mode .success-page__wrapper a{
+    color:var(--white);
+}
+
+/* *********************************************** PAYMENT CANCEL ************************************************ */
+
+.dark-mode .cancel-page__wrapper {
+    .basket-btn{
+        color:var(--green);
+        border: 1px solid var(--green);
+    }
+
+    .basket-btn:hover{
+        box-shadow: var(--green) 0 4px 12px;
+    }
 }
