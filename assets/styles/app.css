@@ -186,12 +186,19 @@ footer{
     gap:0.8em;
     align-items: flex-start;
 
-    span{
+    a{
         transition:0.5s ease;
+        font-family: "archivo narrow", serif;
+        font-size:1em;
+        color:var(--white);
     }
 
-    span:hover{
+    a:hover{
         transform:scale(1.3);
+    }
+
+    a:focus, a:active{
+        color:var(--white);
     }
 }
 
@@ -200,11 +207,6 @@ footer{
     font-size:1.1em;
     letter-spacing:0.5px;
 
-}
-
-.footer__wrapper-container span{
-    font-family: "archivo narrow", serif;
-    font-size:1em;
 }
 
 .icons-container{
@@ -279,13 +281,14 @@ footer small{
     padding:0.5rem 0.5rem 0.4rem 0.5rem;
     background-color: var(--green);
     border-radius: 5px;
-    color:var(--white);
+    color:var(--main);
     border:none;
     transition:0.3s ease-out;
 }
 
 .newsletter__container button:hover,.newsletter__container button:focus{
     box-shadow: var(--green) 0px 7px 29px 0px;
+    color:var(--main);
 }
 
 .newsletter__container button:active{
@@ -471,6 +474,7 @@ footer small{
     border-radius:5px;
     border:none;
     margin:2em auto 0 auto;
+    transition:0.4s ease;
 }
 
 .registration-terms{
@@ -537,6 +541,14 @@ footer small{
     flex-direction: column;
 }
 
+.login-page a{
+    color:var(--main);
+    font-family: 'nunito';
+}
+
+.login-page a:focus,.login-page a:active{
+    color:var(--blue);
+}
 
 /* **************************************************************** USER PROFILE ************************************************************ */
 
@@ -896,6 +908,7 @@ footer small{
     img{
        height:25vh;
        border-radius: 20px;
+       cursor: pointer;
     }
 }
 
@@ -951,7 +964,7 @@ footer small{
     font-size:1.3em;
     text-align: left;
     width: fit-content;
-    background-color: var(--green);
+    background-color: #28632e;
     padding:1rem 0.3rem;
     margin:0 0 0.5rem 2rem;
     color:var(--white);
@@ -979,7 +992,7 @@ footer small{
 
 /* ************************* QUANTITY INPUT ************************* */
 
-/* ===> cf:supra  CART / QTY INPUT */
+/* ===> cf: infra : CART / QTY INPUT */
 
 /* ************************* SIDEBAR ************************* */
 
@@ -1134,6 +1147,7 @@ footer small{
   height: 100%;
   text-align: center;
   transition: 0.4s ease;
+  cursor: pointer;
 }
 
 .quantity button:hover {
@@ -1567,6 +1581,10 @@ border-radius: 50px;
     display:flex;
     gap:2rem;
     align-content:space-between;
+
+    .agreeTerms-group input{
+        cursor:pointer;
+    }
 }
 
 .id-label{
@@ -1806,6 +1824,12 @@ border-radius: 50px;
 
         .large{
             font-size:1.3em;
+        }
+
+        .total-recap-amount{
+            font-family:'anton sc';
+            font-weight:400;
+            font-size:1.8em;
         }
     }
 

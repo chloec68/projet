@@ -6,6 +6,7 @@
         <meta name="description" content="{{ meta_description ?? 'Site vitrine et de vente en ligne de la brasserie colmarienne Sainte-Cru' }}">
         <title>{% block title %}Welcome{% endblock %}</title>
         <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
+        {# <link rel="preload" as="image" href="http://localhost/public/img/steCruDark.webp  media="(min-width: 768px)" /> #}
 
         {% block stylesheets %}
         <link rel="stylesheet" href="{{ asset('styles/app.css') }}">
@@ -18,7 +19,6 @@
         {% endblock %}
 
         {% block javascripts %}
-        <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js" defer></script>
         {% block importmap %}{{ importmap('app') }} {% endblock %}
         {% endblock %}
 
@@ -86,27 +86,27 @@
                 <div class="footer__wrapper-main-container">
                     <div class="footer__wrapper-container">
                         <span id="contact">Nous contacter</span>
-                        <span>+33 3 89 00 00 00</span>
-                        <span>contact@ste-cru.com</span>
+                        <a href="#">+33 3 89 00 00 00</a>
+                        <a href="#">contact@ste-cru.com</a>
                     </div>
                     <div class="footer__wrapper-container">
                         <span id="find">Infos pratiques</span>
-                        <span>Nous trouver</span>
-                        <span>Horaires d'ouverture</span>
+                        <a href="#">Nous trouver</a>
+                        <a href="#">Horaires d'ouverture</a>
 
                     </div>
                     <div class="footer__wrapper-container">
                         <span id="follow">Suivez nous</span>
                         <div class="icons-container">
-                            <i class="fa-brands fa-instagram"></i>
-                            <i class="fa-brands fa-facebook"></i>
+                            <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                            <a href="#"><i class="fa-brands fa-facebook"></i></a>
                         </div>
                     </div>
                     <div class="footer__wrapper-container">
                         <span id="about">a propos</span>
-                        <span>CGV</span>
-                        <span>Mentions légales</span>
-                        <span>Politique de confidentialité</span>
+                        <a href="#">CGV</a>
+                        <a href="#">Mentions légales</a>
+                        <a href="#">Politique de confidentialité</a>
                     </div>
                 </div>
                 <small>La vente de boissons alcoliques est interdite aux mineurs de moins de 16 ans  -  L'abus d'alcool est dangereux pour la santé</small>
