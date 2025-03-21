@@ -403,9 +403,7 @@ footer small{
     justify-content: center;
     align-items: center;
     min-height: 200px;
-    background: #4300da;
     background: #5d34f2;
-    background: #7958ff;
     cursor: pointer;
 }
 
@@ -753,7 +751,7 @@ footer small{
     .cancelButton:active,.confirmButton:active,.cancelButton:focus,.confirmButton:focus{
         padding:1rem;
     } */
-
+    
     
 
     .alertMsg{
@@ -763,7 +761,118 @@ footer small{
         font-size:1.5em;
         font-weight:600;
     }
+/* **************************************************************** USER FAVORITES VIEW ************************************************************ */
+.favorites-wrapper{
+    text-align:center;
+    box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
+    width:80%;
+    margin: auto;
+    background-color: var(--white);
+    padding:2rem 0rem;
+    border-radius: 6px;
 
+    h1{
+        font-size:4em;
+        width:fit-content;
+        margin:auto;
+        padding:2rem;
+        color: var(--main);
+    }
+}
+
+.favorites-wrapper::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url('/img/black-hearts.jpg');
+    background-size: cover;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    animation: scroll-vertical 25s linear infinite;
+    z-index: -1;
+}
+
+@keyframes scroll-vertical {
+    0% {
+        background-position: 0 0;
+      }
+      50% {
+        background-position: 0 50%;
+    }
+      100% {
+        background-position: 0 0;
+      }
+}
+
+.favorites-container{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap:3rem;
+}
+
+.favorite-card{
+    width:25%;
+    height:fit-content;
+    border:1px solid black;
+    border-radius:2px;
+    background-color: var(--white);
+
+    img{
+        height:30vh;
+        border-radius:40px;
+        cursor: pointer;
+    }
+
+    .banner{
+        background-color:var(--main);
+        color:var(--white);
+        font-size:2em;
+        position:relative;
+        top:0;
+        width:100%;
+        margin-bottom:1rem;
+    }
+
+    .pricing{
+        font-size:1.5em;
+        background-color: #28632e;
+        color:var(--white);
+        border-radius:100px;
+        width:fit-content;
+        margin: auto;
+        padding:0.5rem 0.8rem;
+    }
+}
+
+.favorites-container{
+    .add-to-cart{
+        padding:0.3rem 1rem;
+        border:var(--main);
+        color:var(--white);
+        background-color: var(--main);
+        border-radius:4px;
+        font-size:1.5em;
+        font-family: 'bebas neue';
+        margin:0.2em auto 0.2em auto;
+        width:fit-content;
+        transition:0.2s ease;
+    }
+
+    .add-to-cart:hover{
+        box-shadow: var(--dark-grey) 0 8px 15px;
+        transform: translateY(-2px);
+        background-color:var(--green);
+    }
+
+    .add-to-cart:active, .add-to-cart:focus{
+        box-shadow: none;
+        transform: translateY(0);
+    }
+}
 /* **************************************************************** ORDER VIEW ************************************************************ */
 
 .order__main{
@@ -861,6 +970,11 @@ footer small{
 .closeAlert {
     color:var(--main);
     text-align:right;
+    cursor: pointer;
+
+    i{
+        cursor: pointer;
+    }
 }
 
 .closeAlert:hover,
