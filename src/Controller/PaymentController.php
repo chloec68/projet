@@ -7,6 +7,7 @@ use Stripe\Stripe;
 use Dompdf\Options;
 use App\Entity\Bill;
 use App\Entity\Order;
+use App\Service\Mailer;
 use App\Entity\OrderProduct;
 use Stripe\Checkout\Session;
 use App\Entity\Establishment;
@@ -282,7 +283,7 @@ class PaymentController extends AbstractController
          }
 
         #[Route('/payment/checkout/bill', name:'app_payment-checkout-bill')]
-        public function billGenerator(SessionInterface $session, OrderRepository $orderRepository, EstablishmentRepository $establishmentRepository, VATpriceCalculator $priceCalculator):Response
+        public function billGenerator(SessionInterface $session, OrderRepository $orderRepository, EstablishmentRepository $establishmentRepository, VATpriceCalculator $priceCalculator, Mailer $mailer):Response
         {   
             //récupération de l'id de la commmande
             $orderId = $session->get('orderId'); 
@@ -316,7 +317,7 @@ class PaymentController extends AbstractController
 
             //date de retrait (J+1)
             $pickUpTime = new \DateTime();
-            $pickUpTime->modify('+1 day');
+            $pickUpTime->modify('+2 days');
             $pickUpTime->format('dd.mm.Y');
 
             $options = new Options();
@@ -343,6 +344,12 @@ class PaymentController extends AbstractController
             //rend PDF
             $dompdf->render();
             //envoie PDF au navigateur en générant une réponse manuellement 
+
+            //envoie email confirmation 
+            $orderReference = $order->getOrderReference();
+            $emailAddress = $order->getOrderEmail();
+            $pickUpPoint = $order->getEstablishment()->getEstablishmentName();
+            $mailer->sendOrderConfirmation($emailAddress,$pickUpTime,$orderReference,$pickUpPoint);
 
             return new Response(
                 $dompdf->output(), //le contenu PDF généré 
