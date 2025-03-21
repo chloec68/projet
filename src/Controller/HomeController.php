@@ -20,7 +20,13 @@ use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 final class HomeController extends AbstractController
-{
+{   
+    #[Route('/',name: 'root')]
+    public function redirectToHome(): Response
+    {
+        return $this->redirectToRoute('app_home');
+    }
+
     #[Route('/home', name: 'app_home')]
     #[Route('/home/newsletterSubscription', name:'newsletter-subscription')]
     public function index(ProductRepository $productRepository,RecipientRepository $recipientRepository,NewsletterRepository $newsletterRepository,EntityManagerInterface $entityManager, Request $request, NewsletterMailer $mailer): Response
