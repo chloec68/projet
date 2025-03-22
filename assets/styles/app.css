@@ -300,6 +300,26 @@ footer small{
     text-align: center;
 }
 
+#home-wrapper h2{
+    font-size: 5em;
+}
+
+#home-wrapper h3{
+    color: #28632e;
+    font-size:2em;
+    padding:1rem;
+}
+
+.title-container{
+    padding-bottom:2rem;
+    display: flex;
+    gap:1rem;
+    align-items: center;
+}
+#logo2{
+    width:8%;
+}
+
 .top-button{
     display: none;
     position: fixed;
@@ -374,11 +394,10 @@ footer small{
     text-align: center;
 }
 
-/* ************************* INFINITE LOOP ************************* */
+/* ************************* CAROUSEL ************************* */
 
 .carousel {
     margin: 0 auto;
-    padding: 6rem 0;
     max-width: 90%;
     overflow: hidden;
     display: flex;
@@ -1005,7 +1024,6 @@ footer small{
     width:28%;
     height: fit-content;
     border: solid 1px rgb(240, 239, 239);
-    /* box-shadow: rgba(110, 110, 110, 0.24) 0px 3px 12px; */
     box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
     font-size:1.3em;
     overflow: hidden;

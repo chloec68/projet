@@ -11,9 +11,11 @@
     <div class="parallax"><p>Brasserie locale et artisanale, La brasserie Sainte Cru est née à Sainte-Croix-en-Plaine en 2012. Installée à Colmar depuis 2013, nous brassons désormais une <strong>gamme permanente disponible toute l’année</strong> et une <strong>gamme éphémère renouvelée chaque mois</strong>, disponible jusqu’à épuisement du stock</p></div>
 
         <section id="permanent-section">
-            <h2 id="permanent-title">les permanentes</h2>
+            <div class="title-container">
+                <h2>les permanentes</h2>
+                <img id="logo2" src="/logo/Logo-2.webp" alt="Logo de la Brasserie Sainte Cru">
+            </div>
             <h3>disponibles toute l'année</h3>
-
             <div class="carousel">
                 {% for product in permanent %}
                     {% for picture in product.pictures %}
@@ -41,7 +43,10 @@
         </section>
 
         <section id="ephemeral-section">
-            <h2 id="ephemeral-title">les éphémères</h2>
+            <div class="title-container">
+                <h2>les éphémères</h2>
+                <img id="logo2" src="/logo/Logo-2.webp" alt="Logo de la Brasserie Sainte Cru">
+            </div>
             <h3>disponibles jusqu’à épuisement du stock</h3>
 
             <div class="carousel">
