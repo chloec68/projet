@@ -27,7 +27,7 @@ security:
                 lifetime: 604800
                 path: /
             form_login:
-                login_path: app_login
+                login_path: app_login’
                 check_path: app_login
                 default_target_path: app_home
                 enable_csrf: true
@@ -53,7 +53,7 @@ security:
     # Note: Only the *first* access control that matches will be used
     access_control:
         - { path: ^/admin, roles: ROLE_ADMIN }
-        - { path: ^/profile, roles: ROLE_USER }
+        - { path: ^/profile, roles: IS_AUTHENTICATED_FULLY }
 
 when@test:
     security:
