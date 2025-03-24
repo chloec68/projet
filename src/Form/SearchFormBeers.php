@@ -14,35 +14,32 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class SearchFormBeers extends AbstractType
 {
-
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('name', TextType::class,[
-                'label' => false, //on ne veut pas de label
-                'required' => false, //on n'est pas obligé de faire une recherhe 
+            ->add('name', TextType::class,[ //ajout d'un champ de type texte
+                'label' => false, //ne pas ajouter de label
+                'required' => false, //le champ ne doit pas obligatoirement être rempli 
                 'attr' => [
-                    'placeholder' => 'Rechercher'
+                    'placeholder' => 'Rechercher' //indication du texte de remplacement
                 ]
                 ])
-            
-            ->add('type', EntityType::class, [
-                'class' => Type::class,
-                'choice_label' => 'typeName',
-                'label' => false,
-                'required' => false,
-                'expanded' => true, //sinon on obtient une liste déroulante
-                'multiple' => false, 
-                'placeholder' => false,
+            ->add('type', EntityType::class, [ //le champ EntityType permet de lier un champ à une entité 
+                'class' => Type::class, //la classe Type représente une entité de la base de données 
+                'choice_label' => 'typeName', //propriété de l'entité à afficher 
+                'label' => false, // ne pas ajouter de label
+                'required' => false, // le champ ne doit pas obligatoirement contenir une baleur 
+                'expanded' => true, // affichage sous forme de boutons (et non pas sous forme de liste déroulante)
+                'multiple' => false, // pas de choix multiple possible
+                'placeholder' => false, // pas d'indication de texte de remplacement 
             ])
-            
-            ->add('color', ChoiceType::class, [
-                'label' => false,
-                'required' => false,
-                'placeholder' => false,
-                'expanded' => true, //sinon on obtient une liste déroulante
-                'multiple' => false, 
-                'choices' => [
+            ->add('color', ChoiceType::class, [ //champ de formulaire qui permet à l'utilisateur de choisir parmi une liste prédéfinie
+                'label' => false, //ne pas afficher de label
+                'required' => false, //le champs n'est pas obligatoire 
+                'placeholder' => false, // pas d'indication de texte de remplacement 
+                'expanded' => true, //pour obtenir des boutous (pas de liste déroulante)
+                'multiple' => false, //pas de choix multiple possible 
+                'choices' => [ //la liste de valeurs parmi lesquelles l'utilisatuer peut choisir 
                     'Blonde' => 'blonde',
                     'Blanche' => 'blanche',
                     'Ambrée' => 'ambree',
@@ -51,19 +48,17 @@ class SearchFormBeers extends AbstractType
                     'Rouge' => 'rouge'
                 ],
             ])
-
-            ->add('isPermanent', ChoiceType::class, [
-                'label' => false,
-                'required' => false,
-                'placeholder' => false,
+            ->add('isPermanent', ChoiceType::class, [ //champ de formulaire qui permet à l'utilisateur de choisir parmi une liste prédéfinie
+                'label' => false, //ne pas afficher de label
+                'required' => false, //le champs n'est pas obligatoire 
+                'placeholder' => false,// pas d'indication de texte de remplacement 
                 'expanded' => true, //sinon on obtient une liste déroulante
-                'multiple' => false, 
-                'choices' => [
+                'multiple' => false, //pas de choix multiple possible 
+                'choices' => [ //la liste de valeurs parmi lesquelles l'utilisatuer peut choisir 
                     'Permanente' => true,
                     'Ephémère' => false,
                 ],
             ])
-
             ->add('chercher', SubmitType::class, [
                 'attr'=>[
                     'class' => 'search-btn btn'
@@ -75,15 +70,15 @@ class SearchFormBeers extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => SearchDataBeers::class,
-            'method' => 'GET', // pour que l'utilisateur puisse partager ses recherches 
-            'csrf_protection' => false // "pour ne pas avoir de problème de cross-scripting"
+            'data_class' => SearchDataBeers::class, //spécifie la classe à laquelle les données soumises doivent être liées 
+            'method' => 'GET', // permet de rendre les données visibles dans l'URL, pour que l'utilisateur puisse partager ses recherches 
+            'csrf_protection' => false // désactivation de la protection csrf automatique des formulaire car le formulaire ne modifie pas de données 
         ]);
     }
 
-    public function getBlockPrefix() // pour garder une URL la plus propre possible
-    {
-        return '';
-    }
+    // public function getBlockPrefix() // pour garder une URL la plus propre possible
+    // {
+    //     return '';
+    // }
 
 }

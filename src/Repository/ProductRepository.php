@@ -44,48 +44,50 @@ class ProductRepository extends ServiceEntityRepository
 
     //SEARCH BAR (BEERS)
     public function searchProductBeer(SearchDataBeers $searchData):array
-    {
+    {   
+        //Récupération des différents critères de recherche depuis l'objet SearchDataBeers et assignation de leur valeur à une variable 
         $type = $searchData->getType();    
         $color = $searchData->getColor();  
         $name = $searchData->getName();
         $isPermanent = $searchData->getIsPermanent();   
         $category = $searchData->getCategory();
-
+        //Création d'un QueryBuilder pour contruire une requête DQL 
         $result = $this->createQueryBuilder('p')
-            ->andWhere('p.category = :idCategory')   
-            ->setParameter('idCategory', $category);
+            //La requête comprend une première condition : la catégorie à laquelle le produit appartient
+            ->andWhere('p.category = :idCategory') // filtre les produits selon leur catégorie 
+            ->setParameter('idCategory', $category); // assigne la valeur de la variable $category au paramètre :idCategory
 
-        if (!empty($type)){
+        //La requête comprend des conditions "optionnelles" :
+        if (!empty($type)){ // Si le type est spécifié, 
             $result = $result
-                ->andWhere('p.type = :type')
-                ->setParameter('type', $type);
+                ->andWhere('p.type = :type') //filtre les produits par type 
+                ->setParameter('type', $type); // assigne la valeur de la variable $type au paramètre :type
         }
 
-        if(!empty($color)){
+        if(!empty($color)){ // Si la couleur est spécifiée, 
             $result = $result
-                ->andWhere('p.productColor = :productColor')
-                ->setParameter('productColor', $color);
+                ->andWhere('p.productColor = :productColor') //filtre les produits par couleur
+                ->setParameter('productColor', $color); // assigne la valeur de la variable $color au paramètre :productColor
         }
 
-        if(!empty($name)){
+        if(!empty($name)){ // Si la dénomination est spécifiée,
             $result = $result
-                ->andWhere('p.productName LIKE :productName')
-                ->setParameter('productName', '%' . $name . '%');
+                ->andWhere('p.productName LIKE :productName') //filtre les produits par nom
+                ->setParameter('productName', '%' . $name . '%'); // assigne la valeur de la variable $name au paramètre :productName
         }
 
-        if(isset($isPermanent) ){
+        if(isset($isPermanent) ){ // Si la gamme est spécifiée,
             $result = $result
-                ->andWhere('p.isPermanent = :isPermanent')
-                ->setParameter('isPermanent', $isPermanent);
+                ->andWhere('p.isPermanent = :isPermanent') //filtre les produits par gamme
+                ->setParameter('isPermanent', $isPermanent); // assigne la valeur de la variable $isPermanent au paramètre :isPermanent
         }
 
         $result = $result
-            ->orderBy('p.productName','ASC')
-            ->getQuery()
-            ->getResult();
+            ->orderBy('p.productName','ASC') // trie les résultat par nom dans l'ordre croissant (alphabétique)
+            ->getQuery() // crée la requête DQL 
+            ->getResult(); // exécute la requête et récupère les résultats (sous forme d'un tableau d'objets)
         
-        return $result;
-        
+        return $result; // retourne le tableau de résultat 
     }
 
     // FIND PERMANENT/EPHEMERAL BEERS (DISPLAY ON HOME PAGE + METHOD USED IN HOME CONTROLLER)
