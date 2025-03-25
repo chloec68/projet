@@ -83,9 +83,10 @@ a{
 
 .header__container-right{
     display: flex;
-    gap:4em;
+    gap:5em;
     align-items:end;
-    padding:0 5rem 1rem 0; 
+    padding:0 6rem 1rem 0; 
+    width:60%;
 }
 
 .header__container-right i{
@@ -93,6 +94,7 @@ a{
     font-size:1.5em;
     margin-right:1rem;
     align-items: baseline;
+    align-self: center;
 }
 
 .header__container-right a:visited, .header__container-right a{
@@ -100,7 +102,7 @@ a{
     font-size:1.1em;
     display: flex;
     align-items: baseline;
-    
+    flex-direction: column;
 }
 
 .header__container-right a:hover,.header__container-right i:hover{
@@ -127,6 +129,11 @@ a{
 #home-link{
     width: 10%;
 }
+
+.dark-mode__p{
+    color: var(--white);
+}
+
 /* #nbItems{
     color:var(--white);
     font-family:"roboto condensed";
@@ -315,6 +322,7 @@ footer small{
     display: flex;
     gap:1rem;
     align-items: center;
+    justify-content: center;
 }
 #logo2{
     width:8%;
@@ -372,33 +380,55 @@ footer small{
 }
 
 /* ************************* PARALLAX ************************* */
-.parallax{
+.parallax,.parallax2{
     background-attachment: fixed; /* Fixe l'image pendant le scroll */
     background-size: cover; /* L'image prendra 100% de l'espace, quitte à la crop */
     background-position:bottom; /* Centre la position de l'image */
     background-repeat: no-repeat; /* Empêche l'image de se répéter en fonction de la taille d'écran */
+}
+
+.parallax{
     background-image: url("/img/stecruDark.webp");
     background-position-y: -60px;
     min-height: 40vh; /* On fixe une grande hauteur pour voir plus facilement le scroll */
+
+    p{
+        color:var(--white);
+        font-size:2em;
+        font-weight: 200;
+        width:50%;
+        margin:auto;
+        font-family: "Roboto Condensed", serif;
+        padding:3rem;
+        line-height: 2em;
+        text-align: center;
+    }
 }
 
-.parallax p{
-    color:var(--white);
-    font-size:1.3em;
-    font-weight: 200;
-    width:50%;
-    margin:auto;
-    font-family: "Roboto Condensed", serif;
-    padding:3rem;
-    line-height: 2em;
-    text-align: center;
+.parallax2{
+    background-image: url("/img/brasserie-resized.webp");
+    background-position-y: -50px;
+    min-height: 50vh; /* On fixe une grande hauteur pour voir plus facilement le scroll */
+
+    p{
+        color:var(--white);
+        font-size:2em;
+        font-weight: 400;
+        width:50%;
+        margin:auto;
+        font-family: "Roboto Condensed", serif;
+        padding:3rem;
+        line-height: 2em;
+        text-align: center;
+    }
 }
+
 
 /* ************************* CAROUSEL ************************* */
 
 .carousel {
     margin: 0 auto;
-    max-width: 90%;
+    max-width: 95%;
     overflow: hidden;
     display: flex;
     align-items: center;
@@ -432,6 +462,7 @@ footer small{
     padding-right: 1rem;
     will-change: transform;
     animation: scrolling 15s linear infinite;
+    animation-iteration-count: infinite;
   }
 
   @keyframes scrolling {
@@ -844,6 +875,7 @@ footer small{
         height:30vh;
         border-radius:40px;
         cursor: pointer;
+        width: auto;
     }
 
     .banner{
@@ -952,10 +984,15 @@ footer small{
     }
 }
 
-/* **************************************************************** PRODUCTS/BEERS ************************************************************ */
+/* **************************************************************** PRODUCTS/BEERS/GOODIES ************************************************************ */
 .products__page-wrapper{
     display: flex;
     padding:0 3rem 0 3rem;
+}
+
+#no-result{
+    font-size: 2em;
+    padding-top:6em;
 }
 
 /* ************************* CUSTOM ALERT() ************************* */
@@ -1127,7 +1164,7 @@ footer small{
 
 /* ===> cf: infra : CART / QTY INPUT */
 
-/* ************************* SIDEBAR ************************* */
+/* ************************* SIDEBAR & FILTER ************************* */
 
 .products__sidebar{
     display: block;
@@ -1162,6 +1199,7 @@ footer small{
 .search-label{
     font-family: "Nunito", serif;
     font-size:0.8em;
+    cursor: pointer;
 }
 
 .radio-button__container{
@@ -1170,6 +1208,14 @@ footer small{
     flex-direction: column;
     font-size:1.4em;
     margin:0.3rem 0 0.3rem 0;
+
+    input{
+        cursor: pointer;
+    }
+}
+
+.radio-button-group{
+    cursor: pointer;
 }
 
 .search-btn{
@@ -1183,6 +1229,7 @@ footer small{
     border:none;
     font-family:'Bebas Neue','serif';
     transition:0.4s ease;
+    cursor: pointer;
 }
 
 .reset-button{
@@ -1699,7 +1746,7 @@ border-radius: 50px;
 }
 
 
-/* **************************************************************** PAYMENT STEP 1: IDENTIFICATION ************************************************************ */
+/* **************************************************************** PAYMENT STEP 1: COORDONNEES ************************************************************ */
 
 
 .identification-page{

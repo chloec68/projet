@@ -69,6 +69,7 @@ final class AuthentifiedUserController extends AbstractController
        return $this->render('home/favorites.html.twig', [
            'favorites' => $favorites,
            'vatPricesArray'=> $vatPricesArray,
+           'meta_description' => 'Mes produits favoris'
        ]);
    }
 
