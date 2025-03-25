@@ -187,8 +187,10 @@ class PaymentController extends AbstractController
             //AJOUT PRODUITS 
             // récupération du tableau panier enregistré en session et itération dans le tableau associatif
             $cart = $session->get('cart');
-            //initialisation du total 
-            $total = 0;
+            //initialisation du total TTC 
+            $totalVAT = 0;
+            //initialisation du total HT
+            $totalNoVAT=0;
             if($cart){
                 foreach ($cart as $id => $quantity) {
                     // récupération des objets produit en fonction de l'id contenu dans le tableau associatif panier 
@@ -200,6 +202,11 @@ class PaymentController extends AbstractController
                     $product->setProductStock($updatedStock);
                     $entityManager->persist($product);
                     $entityManager->flush();
+
+                    //CALCUL TOTAL HT 
+                    $priceNoVAT = $product->getProductPrice();
+                    $subTotalNoVAT = $priceNoVAT * $quantity;
+                    $totalNoVAT += $subTotalNoVAT; 
     
                     // création d'un nouvel objet OrderProduct
                     $orderProduct = new OrderProduct();
@@ -212,12 +219,12 @@ class PaymentController extends AbstractController
                     $orderProduct->setProductPrice($price);
                     // ajout de chaque produit et de la quantité (valeur) associée à la commande
                     $order->addOrderProduct($orderProduct);
-                    // calcul du total
-                    $total += ($price * $quantity);
+                    // CALCUL TOTAL TTC
+                    $totalVAT += ($price * $quantity);
                 }
             }
             //ajout du total TTC à la commande
-            $order->setOrderTotal($total);
+            $order->setOrderTotal($totalVAT);
 
             // idem 
             $appUser = $security->getUser();
@@ -248,29 +255,12 @@ class PaymentController extends AbstractController
             //ajout référence à la facture
             $bill -> setBillReferenceNumber($billReferenceNumber);
             // ajout du prix total TTC 
-            $bill->setBillTotalVat($total);  
+            $bill->setBillTotalVat($totalVAT);  
+            // ajout total HT
+            $bill->setBillTotalBeforeVat($totalNoVAT);
             // ajout de la date à la facture
             $bill->setBillDate(new \DateTime()); 
-
-            //récupération de la collection d'objets Produit de la commande
-            $orderproducts = $order->getOrderProducts();
-    
-            //initialisation du prix total HT
-            $noVatPriceTotal = 0;
-            //pour chaque produit
-            foreach ($orderproducts as $orderproduct) {
-                // récupérer le prix HT de chaque produit
-                $priceNoVat = $orderproduct->getProductPrice();
-                // récupérer la quantité associée à chaque produit 
-                $quantity = $orderProduct->getQuantity();
-                // calculer sous-total  
-                $subTotal = $quantity * $priceNoVat;
-                // additionner chaque prix HT et les ajouter au total
-                $noVatPriceTotal += $subTotal;
-            }
-            // $noVatPriceTotalformatted = number_format($noVatPriceTotal,2,'.',' ');
-            $bill->setBillTotalBeforeVat($noVatPriceTotal);
-
+   
             $bill->setAppOrder($order);
 
             $entityManager->persist($bill);
