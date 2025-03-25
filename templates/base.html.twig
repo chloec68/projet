@@ -38,7 +38,7 @@
                         {{ app.session.get('nbItems') }} article {% elseif  app.session.get('nbItems') > 1 %}  {{ app.session.get('nbItems') }} articles {% else %} Pas d'article {% endif %} </p></div>
                         {% if app.user %}
                         <a href="{{ path('app_favorites') }}" class="favorite__link"><i class="fa-brands fa-gratipay"></i>Mes favoris</a>
-                        <a href="{{path('app_user')}}" class="user__link"><i class="fa-regular fa-user"></i>{{ app.user.userIdentifier }}</a>
+                        <a href="{{path('app_user')}}" class="user__link"><i class="fa-regular fa-user"></i>Mon compte</a>
                         <a href=" {{ path('app_logout') }}" class="logout__link">Déconnexion</i></a>
                         {% else %}
                         <a href=" {{ path('app_login') }} " class="user__link"><i class="fa-solid fa-user"></i><p>Connexion</p></a>
@@ -96,8 +96,8 @@
                     <div class="footer__wrapper-container">
                         <span id="follow">Suivez nous</span>
                         <div class="icons-container">
-                            <a href="#"><i class="fa-brands fa-instagram"></i></a>
-                            <a href="#"><i class="fa-brands fa-facebook"></i></a>
+                            <a href="https://www.instagram.com/brasserie_sainte_cru/" target="blank"><i class="fa-brands fa-instagram"></i></a>
+                            <a href="https://www.facebook.com/BrasserieSainteCru" target="blank"><i class="fa-brands fa-facebook"></i></a>
                         </div>
                     </div>
                     <div class="footer__wrapper-container">
