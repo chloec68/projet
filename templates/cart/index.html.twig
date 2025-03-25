@@ -57,10 +57,16 @@
                 {% endif %}
                
                 <div class="price-container">
-                    <p>total ttc:</p><p class="total-price">{{total}} €</p>
+                    <p>total ttc:</p>
+                    <p class="total-price">{{total}} €</p>
                 </div>
+                <p class="grey-paragraph centered">TVA incluse</p>
                 <a href={{ path('app_payment-identification') }}><button class="btn basket-btn">Payer</button></a>
                 <p class="grey-paragraph centered">Paiement 100% sécurisé</p>
+                <div class="payment-methods">
+                    <img src="/img/paymentMethods/american-express.png" alt="logo du moyen de payment american express"><img src="/img/paymentMethods/mastercard.png" alt="logo du moyen de paiement mastercard"><img src="/img/paymentMethods/visa.png" alt="logo do moyen de payment carte visa" ><img src="/img/paymentMethods/google-pay.png" alt="logo du moyen de payment google pay" >
+                </div>
+                <p class="grey-paragraph centered">Nous acceptons les cartes de crédit et de débit.</p>
             </section>
         {% else %}
             <div class="emptyCart__container"><p class="emptyCart">Le panier est vide</p><a class="redirection-link" href="{{ path('app_beers') }}">nos bières <i class="fa-solid fa-circle-arrow-right"></i></a></div>
