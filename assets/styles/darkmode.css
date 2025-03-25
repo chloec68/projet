@@ -80,7 +80,14 @@
 }
 
 /* *********************************************** BEERS PAGE ************************************************ */
+.dark-mode .banner{
+    border-bottom: 2px solid var(--green);
+    border-top: 2px solid var(--green);
 
+     > :first-child{
+        color:var(--white);
+    }
+}
 .dark-mode .product-card{
     border:1px solid var(--green);
 
@@ -225,5 +232,32 @@
 
     .basket-btn:hover{
         box-shadow: var(--green) 0 4px 12px;
+    }
+}
+
+
+/* *********************************************** FAVORITES ************************************************ */
+.dark-mode .favorites-wrapper::before{
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url('/img/blue-hearts-wallpaper.jpg');
+    background-size: cover;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    z-index: -1;
+} 
+.dark-mode .favorites-wrapper{
+    background-color:rgb(24, 23, 23);
+
+    h1, .banner{
+        color: var(--white);
+    }
+
+    .favorite-card{
+        border:1px solid var(--green);
     }
 }
