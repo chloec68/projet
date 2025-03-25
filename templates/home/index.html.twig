@@ -17,27 +17,39 @@
             </div>
             <h3>disponibles toute l'année</h3>
             <div class="carousel">
-                {% for product in permanent %}
-                    {% for picture in product.pictures %}
-                        {% if loop.first %}
-                            <div class="group">
-                                <a href="{{ path('detail_product',{'id':product.id})}}"><img class="card" src="{{picture.pictureName}}" alt="{{product.productName}}"></a>
-                            </div>
-                        {% endif %}
-                    {% endfor %}            
-                {% endfor %}
-            
-                {% for product in permanent %}
-                    {% for picture in product.pictures %}
-                        {% if loop.first %}
-                            <div aria-hidden class="group">
-                            <a href="{{ path('detail_product',{'id':product.id})}}"><img class="card" src="{{picture.pictureName}}" alt="{{product.productName}}"></a>
-                            </div>
-                        {% endif %}
-                    {% endfor %}            
-                {% endfor %}
-             </div>
-
+                <div class="group">
+                    {% for product in permanent %}
+                        {% for picture in product.pictures %}
+                            {% if loop.first %}
+                                <div class="card">
+                                    <a href="{{ path('detail_product',{'id':product.id})}}">
+                                        <img src="{{picture.pictureName}}" alt="{{product.productName}}">
+                                        <div class="overlay">
+                                            <div class="overlay-text">{{product.productName}}</div>
+                                        </div>
+                                    </a>
+                                </div>
+                            {% endif %}
+                        {% endfor %}            
+                    {% endfor %}
+                </div>
+                <div aria-hidden class="group"> 
+                    {% for product in permanent %}
+                        {% for picture in product.pictures %}
+                            {% if loop.first %}
+                                <div class="card">
+                                    <a href="{{ path('detail_product',{'id':product.id})}}">
+                                        <img src="{{picture.pictureName}}" alt="{{product.productName}}">
+                                        <div class="overlay">
+                                            <div class="overlay-text">{{product.productName}}</div>
+                                        </div>
+                                    </a>
+                                </div>
+                            {% endif %}
+                        {% endfor %}            
+                    {% endfor %}
+                </div> 
+            </div>
             <div class="seeAll-link__container"> <a href="{{ path('app_beers') }}" class="seeAll-link">tout voir<img id="icone-doubleArrowRight" src="/icones/doubleArrowRight.svg" alt="" loading="lazy"></a></div>
         </section>
 
@@ -51,29 +63,42 @@
             <h3>disponibles jusqu’à épuisement du stock</h3>
 
             <div class="carousel">
-                {% for product in ephemeral %}
-                    {% for picture in product.pictures %}
-                        {% if loop.first %}
-                            <div class="group">
-                                <a href="{{ path('detail_product',{'id':product.id})}}"><img class="card" src="{{picture.pictureName}}" alt="{{product.productName}}"></a>
-                            </div>
-                        {% endif %}
-                    {% endfor %}            
-                {% endfor %}
-            
-                {% for product in permanent %}
-                    {% for picture in product.pictures %}
-                        {% if loop.first %}
-                            <div aria-hidden class="group">
-                            <a href="{{ path('detail_product',{'id':product.id})}}"><img class="card" src="{{picture.pictureName}}" alt="{{product.productName}}"></a>
-                            </div>
-                        {% endif %}
-                    {% endfor %}            
-                {% endfor %}
-             </div>
+                <div class="group">
+                    {% for product in ephemeral %}
+                        {% for picture in product.pictures %}
+                            {% if loop.first %}
+                                    <div class="card">
+                                        <a href="{{ path('detail_product',{'id':product.id})}}">
+                                            <img src="{{picture.pictureName}}" alt="{{product.productName}}">
+                                            <div class="overlay">
+                                                <div class="overlay-text">{{product.productName}}</div>
+                                            </div>
+                                        </a>
+                                    </div>
+                            {% endif %}
+                        {% endfor %}            
+                    {% endfor %}
+                </div>
+                <div aria-hidden class="group"> 
+                    {% for product in ephemeral %}
+                        {% for picture in product.pictures %}
+                            {% if loop.first %}
+                                <div class="card">
+                                    <a href="{{ path('detail_product',{'id':product.id})}}">
+                                        <img src="{{picture.pictureName}}" alt="{{product.productName}}">
+                                        <div class="overlay">
+                                            <div class="overlay-text">{{product.productName}}</div>
+                                        </div>
+                                    </a>
+                                </div>
+                            {% endif %}
+                        {% endfor %}            
+                    {% endfor %}
+                </div> 
+            </div>
+
             <div class="seeAll-link__container"> <a href="{{ path('app_beers') }}" class="seeAll-link">tout voir<img id="icone-doubleArrowRight" src="/icones/doubleArrowRight.svg" alt=""></a></div>
         </section>
-
 </div>
 
 
