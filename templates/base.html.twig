@@ -111,12 +111,21 @@
             </footer>    
         {% endblock %}
 
+        {# DARK MODE SCRIPT (CONTINUATION) #}
         <script>
             if (localStorage.getItem('dark-mode') === 'enabled') {
                 document.body.classList.add('dark-mode')
-                const button = document.getElementById("darkModeButton");
-                button.classList.replace('fa-moon','fa-lightbulb');
-              }
+                const text = document.getElementById("darkModeText");  
+                const icon =  document.getElementById("darkModeIcon");
+                icon.classList.replace('fa-moon','fa-lightbulb');
+                darkModeText.textContent = "Light Mode";
+                const logo2 = document.querySelectorAll('#logo2'); 
+                if(logo2){  
+                    logo2.forEach(logo => {
+                        logo.src = "/logo/logo-1.webp"
+                    });
+                }
+            }
         </script>
 
     </body>
