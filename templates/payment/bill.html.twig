@@ -24,7 +24,21 @@
 
         {% for orderProduct in order.orderProducts %}
 
-        <tr><td class="grey capitalize">{{orderProduct.appProduct.productName}} - {% if orderProduct.appProduct.productVolume is not null %}{{orderProduct.appProduct.productVolume}}{% else %}{{orderProduct.appProduct.size.sizeName}}{% endif %}</td> - <td class="centered grey">{{orderProduct.appProduct.productPrice}} €</td> <td class="centered grey">{{orderProduct.quantity}}</td><td class="centered">{{orderProduct.appProduct.vat.vatRate * 100}} %</td><td class="right grey"> {{subTotals[orderProduct.appProduct.id]}} €</td></tr>
+        <tr>
+            <td class="grey capitalize">{{orderProduct.appProduct.productName}} - 
+                {% if orderProduct.appProduct.productVolume is not null %}
+                    {{orderProduct.appProduct.productVolume}}
+                {% else %}
+                    {{orderProduct.appProduct.size.sizeName}}
+                {% endif %}
+            </td> -
+            <td class="centered grey">
+                {{orderProduct.appProduct.productPrice}} €
+            </td>
+            <td class="centered grey">{{orderProduct.quantity}}</td>
+            <td class="centered">{{orderProduct.appProduct.vat.vatRate * 100}} %</td>
+            <td class="right grey"> {{subTotals[orderProduct.appProduct.id]}} €</td>
+        </tr>
         {% endfor %}
   
 

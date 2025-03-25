@@ -162,16 +162,16 @@ class PaymentController extends AbstractController
         }
 
         #[Route('/payment/checkout/success', name:'app_payment-checkout-success')]
-        public function success(EstablishmentRepository $establishmentRepository, SessionInterface $session, Security $security, EntityManagerInterface $entityManager, ProductRepository $productRepository):Response
+        public function success(EstablishmentRepository $establishmentRepository, SessionInterface $session, Security $security, EntityManagerInterface $entityManager, ProductRepository $productRepository, VATPriceCalculator $priceCalculator):Response
         {   
-            //COMMANDE
+            //**************************COMMANDE
             //création d'un nouvel objet commande 
             $order = new Order;
-            //ajout d'un objet DateTime - à vérifier 
+            //AJOUT DATE 
             $order->setDateOfPlacement(new \DateTime());
-            //ajout d'une référence
+            //AJOUT REFERENCE
             $order->setOrderReference(uniqid('stecru-e'));
-         
+            //AJOUT COORDONNES 
             // récupération du tableau de données d'identification en session
             $identificationData = $session->get('identificationData');
             // récupération de la clé prénom utilisateur et de sa valeur
@@ -183,36 +183,42 @@ class PaymentController extends AbstractController
             $order->setOrderUserLastName($orderLastName);
             $orderEmail = $identificationData['orderEmail'];
             $order->setOrderEmail($orderEmail);  
-   
-            //récupération du total du panier enregistré en session + ajout à la commande
-            $total= $session->get('total');
-            $order->setOrderTotal($total);
             
+            //AJOUT PRODUITS 
             // récupération du tableau panier enregistré en session et itération dans le tableau associatif
             $cart = $session->get('cart');
-            foreach ($cart as $id => $quantity) {
-                // récupération des objets produit en fonction de l'id contenu dans le tableau associatif panier 
-                $product = $productRepository->find($id);
-
-                // mise à jour du stock 
-                $stock = $product->getProductStock();
-                $updatedStock = $stock - $quantity;
-                $product->setProductStock($updatedStock);
-                $entityManager->persist($product);
-                $entityManager->flush();
-
-                // création d'un nouvel objet OrderProduct
-                $orderProduct = new OrderProduct();
-                // ajout du produit à OrderProduct
-                $orderProduct->setAppProduct($product);
-                // ajout de la quantity 
-                $orderProduct->setQuantity($quantity);
-                //ajout du prix au jour de la commande
-                $price = $product->getProductPrice();      
-                $orderProduct->setProductPrice($price);
-                // ajout de chaque produit et de la quantité (valeur) associée à la commande
-                $order->addOrderProduct($orderProduct);
+            //initialisation du total 
+            $total = 0;
+            if($cart){
+                foreach ($cart as $id => $quantity) {
+                    // récupération des objets produit en fonction de l'id contenu dans le tableau associatif panier 
+                    $product = $productRepository->find($id);
+    
+                    // MISE A JOUR DU STOCK 
+                    $stock = $product->getProductStock();
+                    $updatedStock = $stock - $quantity;
+                    $product->setProductStock($updatedStock);
+                    $entityManager->persist($product);
+                    $entityManager->flush();
+    
+                    // création d'un nouvel objet OrderProduct
+                    $orderProduct = new OrderProduct();
+                    // ajout du produit à OrderProduct
+                    $orderProduct->setAppProduct($product);
+                    // ajout de la quantity 
+                    $orderProduct->setQuantity($quantity);
+                    //ajout du prix au jour de la commande
+                    $price = $priceCalculator->vatPrice($product);      
+                    $orderProduct->setProductPrice($price);
+                    // ajout de chaque produit et de la quantité (valeur) associée à la commande
+                    $order->addOrderProduct($orderProduct);
+                    // calcul du total
+                    $total += ($price * $quantity);
+                }
             }
+            //ajout du total TTC à la commande
+            $order->setOrderTotal($total);
+
             // idem 
             $appUser = $security->getUser();
             if(isset($appUser)){
@@ -249,7 +255,7 @@ class PaymentController extends AbstractController
             //récupération de la collection d'objets Produit de la commande
             $orderproducts = $order->getOrderProducts();
     
-            //initialisation du prix total en dehors de la boucle pour qu'il ne soit pas reset à 0 à chaque tour de boucle
+            //initialisation du prix total HT
             $noVatPriceTotal = 0;
             //pour chaque produit
             foreach ($orderproducts as $orderproduct) {
@@ -262,8 +268,8 @@ class PaymentController extends AbstractController
                 // additionner chaque prix HT et les ajouter au total
                 $noVatPriceTotal += $subTotal;
             }
-            $noVatPriceTotalformatted = number_format($noVatPriceTotal,2,'.',' ');
-            $bill->setBillTotalBeforeVat($noVatPriceTotalformatted);
+            // $noVatPriceTotalformatted = number_format($noVatPriceTotal,2,'.',' ');
+            $bill->setBillTotalBeforeVat($noVatPriceTotal);
 
             $bill->setAppOrder($order);
 
@@ -271,9 +277,13 @@ class PaymentController extends AbstractController
             $entityManager->flush();
 
             // REINITILISATION DU PANIER 
-
             if($session->has('cart')){
                 $session->remove('cart');
+            }
+
+            // REINITIALISATION DU NMBRE D'ITEMS 
+            if($session->has('nbItems')){
+                $session->remove('nbItems');
             }
            
             return $this->render('/payment/success.html.twig', [
@@ -294,8 +304,6 @@ class PaymentController extends AbstractController
             $seller = $establishmentRepository->find($id);
             // récupération des produits liés à la commande 
             $orderproducts = $order->getOrderProducts();
-            //initialisation du total HT
-            $totalNoVat = 0;
             //initialisation d'un tableau pour stocker les sous-totaux
             $subTotals = [];
             //initialisation du nombre total d'articles
@@ -309,11 +317,12 @@ class PaymentController extends AbstractController
                 //addition des quantités pour obtenir nombre total d'articles
                 $nbItems += $quantity;
             }
+
             //calcul de la TVA : 
             $bill = $order->getBill();
             $totalNoVat = $bill->getBillTotalBeforeVat();
-            $total = $order->getOrderTotal();
-            $vat = $total - $totalNoVat;
+            $totalVAT = $order->getOrderTotal();
+            $vat = $totalVAT - $totalNoVat;
 
             //date de retrait (J+1)
             $pickUpTime = new \DateTime();
