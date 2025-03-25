@@ -290,12 +290,12 @@ function updateCartSubTotals(){
                   nbItemsElement.textContent = `${data.nbItems} articles`;
                   cartHeader.textContent = `${data.nbItems} articles`;
               }
-              updatePriceTotal();
               productTable.remove();   
             }
           }else{
             console.error('erreur lors de la suppression');
           }
+          updatePriceTotal();
         })
         .catch(error => console.error('Erreur:', error));
     });

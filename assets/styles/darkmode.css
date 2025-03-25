@@ -222,6 +222,10 @@
     color:var(--white);
 }
 
+.dark-mode .confirmed{
+    color:var(--white);
+}
+
 /* *********************************************** PAYMENT CANCEL ************************************************ */
 
 .dark-mode .cancel-page__wrapper {
