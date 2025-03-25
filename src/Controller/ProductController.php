@@ -102,7 +102,8 @@ final class ProductController extends AbstractController
         $product->setProductVATprice($VATprice);
         return $this->render('/product/detail-product.html.twig',[
             'product'=>$product,
-            'VATprice' =>$VATprice
+            'VATprice' =>$VATprice,
+            'meta_description'=>$product->getProductName()
         ]);
     }
 
