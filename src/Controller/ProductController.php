@@ -51,7 +51,8 @@ final class ProductController extends AbstractController
         return $this->render('product/goodies.html.twig', [
             'products'=>$products,
             'form'=>$form,
-            'favorites'=>$favorites
+            'favorites'=>$favorites,
+            'meta_description'=>'Merchandising'
         ]);
     }
 
@@ -88,7 +89,8 @@ final class ProductController extends AbstractController
         return $this->render('product/beers.html.twig', [
             'products'=>$products,
             'form'=>$form,
-            'favorites'=>$favorites
+            'favorites'=>$favorites,
+            'meta_description'=>'Nos bières'
         ]);
     }
 
