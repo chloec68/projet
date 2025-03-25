@@ -29,25 +29,25 @@
             {% block header%}
                 <div class="header__wrapper">
                     <div class="header__container-left">
-                    <a href="{{path('app_home')}}" id="home-link"><img id="logo" src="/logo/logo-1.webp" alt="Logo de la brasserie Sainte Cru reprenant la croix blanche du blason de la commune alsacienne de Sainte-Croix-En-Plaine"></a>
-                    <h1 id="logo-text">Brasserie indépendante</h1>
+                    <a href="{{path('app_home')}}"><img id="logo" src="/logo/logo-1.webp" alt="Logo de la brasserie Sainte Cru reprenant la croix blanche du blason de la commune alsacienne de Sainte-Croix-En-Plaine"><h1 id="logo-text">Brasserie indépendante</h1></a>
                     </div>
                     <div class="header__container-right">
-                        <div class="dark-mode__p"><i class="fa-regular fa-moon" id="darkModeButton"></i><span>Dark Mode</span></div>
-                        <i class="fa-solid fa-basket-shopping"><span class="nbItems"></span></i>
+                        <div class="dark-mode__container" id="darkModeButton"><i class="fa-regular fa-moon" id="darkModeIcon"></i><p id="darkModeText">Dark Mode</p></div>
+                        <div class="cart__container"><i class="fa-solid fa-basket-shopping"></i><p id="nbItems">{% if app.session.get('nbItems') == 1 %}
+                            
+                        {{ app.session.get('nbItems') }} article {% elseif  app.session.get('nbItems') > 1 %}  {{ app.session.get('nbItems') }} articles {% else %} Pas d'article {% endif %} </p></div>
                         {% if app.user %}
-                        <a href="{{path('app_user')}}"><i class="fa-regular fa-user"></i>{{ app.user.userIdentifier }}</a>
-                        <a href="{{ path('app_favorites') }}"><i class="fa-brands fa-gratipay"></i>Mes favoris</a>
-                        <a href=" {{ path('app_logout') }}">Déconnexion</i></a>
+                        <a href="{{ path('app_favorites') }}" class="favorite__link"><i class="fa-brands fa-gratipay"></i>Mes favoris</a>
+                        <a href="{{path('app_user')}}" class="user__link"><i class="fa-regular fa-user"></i>{{ app.user.userIdentifier }}</a>
+                        <a href=" {{ path('app_logout') }}" class="logout__link">Déconnexion</i></a>
                         {% else %}
-                        <a href=" {{ path('app_login') }} "><i class="fa-solid fa-user"></i></a>
+                        <a href=" {{ path('app_login') }} " class="user__link"><i class="fa-solid fa-user"></i><p>Connexion</p></a>
                         {% endif %}
                     </div>
                 </div>
                 <nav>
                     {% block nav %}
                         <div class="nav__container">
-                            <a class="nav__container-a" href=" {{ path('app_home') }}">Accueil</a>
                             <a class="nav__container-a">taproom</a>
                             <a class="nav__container-a" href=" {{ path('app_beers') }}">nos bières</a>
                             <a class="nav__container-a" href=" {{ path('app_goodies')}}">goodies</a>

@@ -11,8 +11,10 @@ import './styles/app.css';
 
 document.addEventListener('DOMContentLoaded', function() {  
     const darkModeButton = document.getElementById("darkModeButton");
+    const darkModeText = document.getElementById("darkModeText");  
+    const darkModeIcon =  document.getElementById("darkModeIcon");  
 
-    if (darkModeButton) {
+    if (darkModeButton && darkModeText && darkModeIcon) {
         darkModeButton.onclick = function() {
           document.body.classList.toggle('dark-mode');
 
@@ -22,14 +24,18 @@ document.addEventListener('DOMContentLoaded', function() {
               localStorage.setItem("dark-mode", "disabled"); 
             }
 
-            if (darkModeButton.classList.contains('fa-moon')) {
-              darkModeButton.classList.replace('fa-moon','fa-lightbulb');
-            } else {
-            darkModeButton.classList.replace('fa-lightbulb','fa-moon');
-            }
+            if (document.body.classList.contains("dark-mode")) {
+              darkModeIcon.classList.replace('fa-moon', 'fa-lightbulb');
+              darkModeText.textContent = "Light Mode";
+          } else {
+            darkModeIcon.classList.replace('fa-lightbulb', 'fa-moon');
+              darkModeText.textContent = "Dark Mode";
+          }
         }
+        
     }
 });
+
 
   // ************************************************************** SCROLL UP BUTTON ************************************************************
 
@@ -46,7 +52,7 @@ document.addEventListener('DOMContentLoaded', function() {
   document.addEventListener('scroll', buttonVisibility);
 
 // ************************************************************** CART RELATED ACTIONS ************************************************************************** 
-
+const cartHeader = document.getElementById('nbItems');
 //************************** */ ON PRODUCTS PAGE & DETAIL PRODUCT PAGE
 
 // INCREMENT QUANTITY ACTION
@@ -167,7 +173,8 @@ decrementButtonsCart.forEach(button => {
 // UPDATE TOTAL ITEMS 
 function updateCart(product,quantity,size){
 
-  let nbItemsElements = document.querySelectorAll('.nbItems')
+  const nbItemsElements = document.querySelectorAll('.nbItems');
+  
 
   fetch('/cart/add/{id}',{
     method : 'POST',
@@ -184,10 +191,18 @@ function updateCart(product,quantity,size){
   .then(response => response.json())
 
     .then(data => {
+      if(data.nbItems > 1){
+        cartHeader.textContent = `${data.nbItems} articles`;
+      }else if(data.nbItems == 1){
+        cartHeader.textContent = `${data.nbItems} article`;
+      }else{
+        cartHeader.textContent = "Pas d'article";
+      }
+      
       nbItemsElements.forEach(nbItemsElement => {
         if(data.nbItems < 1){
           const cart = document.querySelector('.main-container');
-          cart.innerHTML = '<div class="emptyCart__container"><p class="emptyCart">Le panier est vide</p><a class="redirection-link" href="/product/beers">nos bières <i class="fa-solid fa-circle-arrow-right"></i></a></div>'
+          cart.innerHTML = '<div class="emptyCart__container"><p class="emptyCart">Le panier est vide</p><a class="redirection-link" href="/product/beers">nos bières <i class="fa-solid fa-circle-arrow-right"></i></a></div>';
         }
         else if(data.nbItems == 1){
           nbItemsElement.textContent = data.nbItems + " article";
@@ -201,7 +216,6 @@ function updateCart(product,quantity,size){
       console.error('Erreur',error);
     });
   }
-
 
 // UPDATE TOTAL 
 function updatePriceTotal(){
@@ -256,12 +270,15 @@ function updateCartSubTotals(){
               if (productTable){
                 if(data.nbItems < 1){
                   const cart = document.querySelector('.main-container');
-                  cart.innerHTML = '<div class="emptyCart__container"><p class="emptyCart">Le panier est vide</p><a class="redirection-link" href="/product/beers">nos bières <i class="fa-solid fa-circle-arrow-right"></i></a></div>'
+                  cart.innerHTML = '<div class="emptyCart__container"><p class="emptyCart">Le panier est vide</p><a class="redirection-link" href="/product/beers">nos bières <i class="fa-solid fa-circle-arrow-right"></i></a></div>';
+                  cartHeader.textContent = "Pas d'article";
                 }
                 else if (data.nbItems == 1) {
                   nbItemsElement.textContent = `${data.nbItems} article`;
+                  cartHeader.textContent = `${data.nbItems} article`;
               } else {
                   nbItemsElement.textContent = `${data.nbItems} articles`;
+                  cartHeader.textContent = `${data.nbItems} articles`;
               }
               updatePriceTotal();
               productTable.remove();   
@@ -278,7 +295,7 @@ function updateCartSubTotals(){
 
 // SIDE CART - DISPLAY / TOGGLE  
 const sideCart = document.querySelector('.cart-summary'); 
-const cartIcon = document.querySelector('.fa-basket-shopping');
+const cartIcon = document.querySelector('.cart__container');
 
 cartIcon.addEventListener('click', function() {
   sideCart.classList.toggle('visible');
@@ -295,7 +312,7 @@ document.addEventListener('click', function(event) {
 
 
 // SIDE CART - CONTENT UPDATE
-const basketButton = document.querySelector('.fa-basket-shopping');
+const basketButton = document.querySelector('.cart__container');
 basketButton.addEventListener('click',function(){
   const url = '/cart/side-cart';
   fetch(url, {
