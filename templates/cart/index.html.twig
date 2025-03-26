@@ -26,10 +26,13 @@
                     <tr class="cart-item" cart-item="{{item.product.id}}" >
                         {% for picture in item.product.pictures %}
                             {% if loop.first %}
-                        <td><img class="product-pic" src="{{picture.pictureName}}" alt="photo de la face avant de produit"></td>
+                                <td>
+                                    <img class="product-pic" src="{{picture.pictureName}}" alt="photo de la face avant de produit">
+                                </td>
                             {% endif %}
                         {% endfor %}
-                        <td>{{item.product.productName}} - {% if item.product.type is not null %}{{item.product.type.typeName}}{% endif %} - {{item.product.productVolume}}</td>
+                         
+                        <td>{{item.product.productName}} - {% if item.product.type is not null %}{{item.product.type.typeName}}{% else %}{{item.product.productColor}}{% endif %} - {% if item.product.productVolume is not null %}{{item.product.productVolume}}{% endif %}</td>
                         <td class="product-price">{{item.product.productVATprice}} €</td>
                         <td>
                             <div class="wrapper">
