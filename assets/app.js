@@ -110,8 +110,17 @@ let addToCartButtons = document.querySelectorAll(".add-to-cart");
           let product = button.getAttribute('data-product');
           let quantity = document.querySelector(`input[data-product="${product}"]`).value;
 
-          // let sizeButton = document.querySelector(`button[product-size]`);
-          // let size = sizeButton ? sizeButton.getAttribute('product-size') : null;
+          let size = null;
+          let sizeSelected = document.querySelector(`input[product-size="${product}"]:checked`);
+          
+          if(document.querySelector(`input[product-size="${product}"]:not(checked)`) && !sizeSelected) {
+            alert('sélectionne une taille');
+            return;
+          }
+
+          if (sizeSelected) {
+            size = sizeSelected.value;
+          }
       
           if(alertBox && alertMessage && closeAlert){
             if(quantity > 1){
@@ -127,11 +136,9 @@ let addToCartButtons = document.querySelectorAll(".add-to-cart");
             closeAlert.addEventListener('click',function(){
               alertBox.style.display = "none";
             })
-      
           }
           if (parseInt(quantity) > 0) {
-            updateCart(product,quantity); 
-            // ,size
+            updateCart(product,quantity,size); 
           }
         });
       });
@@ -185,7 +192,6 @@ function updateCart(product,quantity,size){
 
   const nbItemsElements = document.querySelectorAll('.nbItems');
   
-
   fetch('/cart/add/{id}',{
     method : 'POST',
     headers :{
@@ -346,7 +352,9 @@ basketButton.addEventListener('click',function(){
                 <div class="item-containers">
                     <div class="item-container">
                       <img class="product-pic" src="${item.picture}" alt="Photo du produit">
-                      <p><span class="productName">${item.productName} -</span> <span>${item.type ? item.type : item.color} -</span> <span>${item.volume ? item.volume : item.size}</span> </p>
+                      <p><span class="productName">${item.productName} -</span>
+                      <span>${item.type ? item.type : item.color} -</span>
+                      <span>${item.volume ? item.volume : item.size}</span> </p>
                     </div>
                     <div class="item-container middle">
                       <div class="counter">

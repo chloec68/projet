@@ -78,10 +78,13 @@ class CartController extends AbstractController
        public function add(Request $request, SessionInterface $session): JsonResponse
        {
            $data = json_decode($request->getContent(),true);
-   
+
            $product = $data['product'];
            $quantity = $data['quantity']; 
-        //    $size = $data['size'];
+            if(isset($size)){
+                $size = $data['size'];
+            }
+            
             $cart = $session->get('cart',[]);
    
            if(empty($cart[$product])){
@@ -119,7 +122,6 @@ class CartController extends AbstractController
     public function retrieveCart(SessionInterface $session, ProductRepository $productRepository, VATpriceCalculator $VATpriceCalculator): JsonResponse
     {
         $cart = $session->get('cart');
-        // $cartData = $session->get('cartData');
         $data = [];
         $nbItems = 0;
         $total = 0;
@@ -132,23 +134,26 @@ class CartController extends AbstractController
                 $nbItems += $quantity;
                 $subTotal = $VATpriceCalculator->vatPriceSubTotal($product,$quantity);
                 $total += $subTotal;
-                $pictures = [];
-                foreach ($product->getPictures() as $picture){
-                    $pictures[] = $picture->getPictureName();
 
-                    if(isset($picture)){
-                        $picture = $pictures[0];
-                    }else{
-                        $picture = "";
+                $picturesArray = [];
+                $picture = "";
+                if(($product->getPictures() !== null)){
+                    foreach($product->getPictures() as $picture){
+                        $picturesArray[] = $picture->getPictureName();
+                        $picture = $picturesArray[0];
                     }
+                }else{
+                    $picture = "";
                 }
 
-                // $size = $product->getSize();
-                // if (isset($size)){
-                //     $size = $size->getSizeName();
-                // }else{
-                //     $size="";
-                // }
+                $sizes = $product->getSizes();
+                if (isset($sizes)){
+                    foreach($sizes as $size){
+                        $size = $size->getSizeName();
+                    }
+                }else{
+                    $size="";
+                }
 
                 $type = $product->getType();
                 if(isset($type)){
@@ -173,7 +178,7 @@ class CartController extends AbstractController
                     'type' => $type,
                     'color' => $product->getProductColor(),
                     'volume' => $volume,
-                    // 'size' => $size,
+                    'size' => $size,
                     'total' => $total,
                     'nbItems' => $nbItems
                 ];
