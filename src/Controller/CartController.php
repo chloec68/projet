@@ -2,6 +2,7 @@
 namespace App\Controller;
 
 use App\Entity\Product;
+use App\Repository\SizeRepository;
 use App\Service\VATpriceCalculator;
 use App\Repository\ProductRepository;
 use Symfony\Component\HttpFoundation\Request;
@@ -28,11 +29,16 @@ class CartController extends AbstractController
         $nbItems=0;
         $quantity = 0;
 
-        foreach($cart as $id=>$quantity){
+        foreach($cart as $id=>$quantity){ 
             $product = $productRepository->find($id);
+
             if ($product !== null){
+
+                //Calcul prix TTC 
                 $VATprice = $VATpriceCalculator->VATprice($product);
                 $product->setProductVATprice($VATprice);
+
+                //Récuparation des photos, ajout à l'array
                 $pictures = [];
                 foreach ($product->getPictures() as $picture){
                     $pictures[] = $picture->getPictureName();
@@ -59,7 +65,6 @@ class CartController extends AbstractController
             }
         }
         $session->set('cartData',$data); // je set les data en session pour les rendre accessible partout dans l'application et pas seulement dans la vue du panier
-        // $session->set('priceTotal',$formattedTotal);
         $session->set('nbItems',$nbItems);
 
         return $this->render('cart/index.html.twig',[       
@@ -72,33 +77,46 @@ class CartController extends AbstractController
             ]);
     }
 
+
        // ADD ITEM TO CART  
 
        #[Route('/cart/add/{id}', name:'app_cart-add')]
-       public function add(Request $request, SessionInterface $session): JsonResponse
+       public function add(Request $request, SessionInterface $session, SizeRepository $sizeRepository): JsonResponse
        {
            $data = json_decode($request->getContent(),true);
-
-           $product = $data['product'];
-           $quantity = $data['quantity']; 
-            if(isset($size)){
-                $size = $data['size'];
-            }
-            
-            $cart = $session->get('cart',[]);
-   
-           if(empty($cart[$product])){
-               $cart[$product] = $quantity;
-           }else{
-               $cart[$product] += $quantity; 
-           }
            
-           $session->set('cart',$cart);
-   
-           $nbItems = array_sum($cart); // array_sum() => native PHP function that returns the sum of VALUES in an array
-           $session->set('nbItems',$nbItems);
-   
-           return new JsonResponse(['success' => true,'nbItems'=>$nbItems,'cart' => $cart]);
+           if($data){
+                $product = $data['product'];
+                $quantity = $data['quantity']; 
+
+                if(isset($size)){
+                    $sizeId = $data['size'];
+                    $size = $sizeRepository->find($sizeId);
+        
+                    $sizeName = $session->get('size',[]);
+                    $sizeName[$product->getId()] = $size->getSizeName();
+                    $session->set('size',$sizeName);
+                    }
+
+                    $cart = $session->get('cart',[]);
+        
+                if(empty($cart[$product])){
+                    $cart[$product] = $quantity;
+                    
+                }else{
+                    $cart[$product] += $quantity; 
+                }
+                
+                $session->set('cart',$cart);
+        
+                $nbItems = array_sum($cart); // array_sum() => native PHP function that returns the sum of VALUES in an array
+                $session->set('nbItems',$nbItems);
+
+                return new JsonResponse(['success' => true,'nbItems'=>$nbItems]);
+           }
+         
+           return new JsonResponse(['success' => false]);
+         
        }
 
     // REMOVE AN ITEM FROM CART 
@@ -146,15 +164,6 @@ class CartController extends AbstractController
                     $picture = "";
                 }
 
-                $sizes = $product->getSizes();
-                if (isset($sizes)){
-                    foreach($sizes as $size){
-                        $size = $size->getSizeName();
-                    }
-                }else{
-                    $size="";
-                }
-
                 $type = $product->getType();
                 if(isset($type)){
                     $type = $type->getTypeName();
@@ -168,6 +177,10 @@ class CartController extends AbstractController
                 }else{
                     $volume="";
                 }
+
+                $sizeName = $session->get('size', []);
+                $size = isset($sizeName[$id]) ? $sizeName[$id] : '';
+                dd($session->get('size'));
 
                 $data[]=[
                     'productId' => $product->getId(),

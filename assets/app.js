@@ -192,7 +192,7 @@ function updateCart(product,quantity,size){
 
   const nbItemsElements = document.querySelectorAll('.nbItems');
   
-  fetch('/cart/add/{id}',{
+  fetch(`/cart/add/${product}`,{
     method : 'POST',
     headers :{
         'Content-Type':'application/json'
