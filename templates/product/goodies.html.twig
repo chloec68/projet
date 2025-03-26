@@ -62,27 +62,40 @@
     <section class="products__container">
         {% for product in products %}
             <div class="product-card">
-                {% if app.user %} {% if product in favorites %} <p class="add-to-favorites"><i class="fa-solid fa-heart" data-product-favorite="{{product.id}}"></p></i> {% else %} <p class="add-to-favorites"><i class="fa-regular fa-heart" data-product-favorite="{{product.id}}"></i></p>{% endif %} {% endif %}
-                {% for picture in product.pictures %}
-                    {% if loop.first %}
-                    <a href="{{ path('detail_product',{id:product.id}) }}"><div class="picture-container"> <img src="{{ picture.pictureName }}" alt="photo de la face avant du produit"> </div></a>
+                {% if app.user %}
+                    {% if product in favorites %}
+                        <p class="add-to-favorites"><i class="fa-solid fa-heart" data-product-favorite="{{product.id}}"></p></i>
+                    {% else %}
+                        <p class="add-to-favorites"><i class="fa-regular fa-heart" data-product-favorite="{{product.id}}"></i></p>
                     {% endif %}
-                {% endfor %}
+                {% endif %}
+
+            {% for picture in product.pictures %}
+                {% if loop.first %}
+                    <a href="{{ path('detail_product',{id:product.id}) }}"><div class="picture-container"> <img src="{{ picture.pictureName }}" alt="photo de la face avant du produit"> </div></a>
+                {% endif %}
+            {% endfor %}
 
                 <h3 class="centered">{{product.productName}}</h3> 
-                {% if product.productStock > 10 %}<div class="stock-info"><div class="green-dot"></div>en stock</div>{% else %} <div class="stock-info"><div class="red-dot"></div>indisponible</div>{% endif %}
-                <p class="centered">{{product.productColor}} </p>
+                {% if product.productStock > 10 %}
+                    <div class="stock-info">
+                        <div class="green-dot"></div>en stock
+                    </div>
+                {% else %}
+                    <div class="stock-info"><div class="red-dot"></div>indisponible</div>
+                {% endif %}
+                    <p class="centered">{{product.productColor}}</p>
                 {% if product.sizes is not null %}
                 <span>Taille</span>
-                {% for size in product.sizes %}
-                <button product-size{{size.id}}>{{size.sizeName}}</button>
-                {% endfor %}
+                    {% for size in product.sizes %}
+                        <input value="{{size.id}}" type="radio" product-size="{{product.id}}" name="size{{product.id}}">{{size.sizeName}}</input>
+                    {% endfor %}
                 {% endif %}
                 <p class="centered">{{product.productVATprice}} €</p>
                 <div class="wrapper">
                     <div class="quantity">
                         <button class="minus decrement" data-product="{{product.id}}" aria-label="Decrease">&minus;</button>
-                        <input type="number" class="input-box" value="1" min="0" data-product="{{ product.id }}">
+                            <input type="number" class="input-box" value="1" min="0" data-product="{{ product.id }}">
                         <button class="plus increment" data-product="{{product.id}}" aria-label="Increase">&plus;</button>
                     </div>
                 </div>
