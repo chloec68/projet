@@ -68,6 +68,7 @@ class RegistrationController extends AbstractController
 
         return $this->render('registration/register.html.twig', [
             'registrationForm' => $form,
+            'meta_description' => "Créer un compte"
         ]);
     }
 
