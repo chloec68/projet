@@ -283,7 +283,7 @@ class PaymentController extends AbstractController
          }
 
         #[Route('/payment/checkout/bill', name:'app_payment-checkout-bill')]
-        public function billGenerator(SessionInterface $session, OrderRepository $orderRepository, EstablishmentRepository $establishmentRepository, VATpriceCalculator $priceCalculator, Mailer $mailer, KernelInterface $kernel):Response
+        public function billGenerator(EntityManager $entityManager, SessionInterface $session, OrderRepository $orderRepository, EstablishmentRepository $establishmentRepository, VATpriceCalculator $priceCalculator, Mailer $mailer, KernelInterface $kernel):Response
         {   
             //récupération de l'id de la commmande
             $orderId = $session->get('orderId'); 
@@ -356,11 +356,21 @@ class PaymentController extends AbstractController
             //écris le fichier dans le dossier public
             $publicDirectory = $kernel->getProjectDir() . '/public/bills/';
             // Genere un nom de fichier unique avec n° référence de la facture et id de l'utilisateur
-            $userId = $order->getAppUser()->getId();
-            $billReference = $order->getBill()->getBillReferenceNumber();
-            $pdfFilepath = $publicDirectory . '/bill_' . '_user' . $userId .'.pdf';
-            //écris le fichier dans le chemin voulu 
-            file_put_contents($pdfFilepath,$output);
+            $appUser = $order->getAppUser();
+            if(!empty($appUser)){
+                $appUserId = $appUser->getId();
+                if(!empty($appUserId)){
+                    $pdfFilepath = $publicDirectory . '/bill_' . 'user' . $appUserId .'.pdf';
+                    //ajoute le chemin à Bill
+                    $bill->setBillPath($pdfFilepath);
+                    //prépare à stocker en bdd 
+                    $entityManager->persist($bill);
+                    // stocke en bdd 
+                    $entityManager->flush();
+                    //écris le fichier dans le chemin voulu 
+                    file_put_contents($pdfFilepath,$output);
+                }
+            }
 
             return new Response(
                 $dompdf->output(), //le contenu PDF généré 

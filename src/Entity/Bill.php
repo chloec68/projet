@@ -30,6 +30,9 @@ class Bill
     #[ORM\JoinColumn(nullable: false)]
     private ?Order $appOrder = null;
 
+    #[ORM\Column(length: 100, nullable: true)]
+    private ?string $billPath = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -92,6 +95,18 @@ class Bill
     public function setAppOrder(Order $appOrder): static
     {
         $this->appOrder = $appOrder;
+
+        return $this;
+    }
+
+    public function getBillPath(): ?string
+    {
+        return $this->billPath;
+    }
+
+    public function setBillPath(?string $billPath): static
+    {
+        $this->billPath = $billPath;
 
         return $this;
     }
