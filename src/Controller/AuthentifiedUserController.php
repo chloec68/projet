@@ -9,6 +9,7 @@ use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -16,13 +17,33 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 final class AuthentifiedUserController extends AbstractController
 {
    // USER PROFILE
+   // USER PROFILE > VIEW BILLS 
+   #[Route('/profile/bills', name:'user_bills')]
    #[Route('/profile', name: 'app_user')]
-   public function userProfile(Security $security):Response
-   {   
-       $user = $security->getUser();
+   public function userProfile(Security $security, KernelInterface $kernel):Response
+   {    
+        //récupère l'utilisateur en session pour pouvoir récupérer ses infos dans la vue 
+        $user = $security->getUser();
+
+        //VOIR LES FACTURES 
+        //récupère l'utilisateur en session 
+        $userId = $security->getUser()->getId();
+        //construction du chemin du fichier 
+        $billsDirectory = $kernel->getProjectDir() . '/public/bills/';
+        //Retourne un tableau de fichier et dossier, issus de directory. 
+        $bills = scandir($billsDirectory); 
+        //Filtre les fichiers pour récupérer les factures de l'utilisateur 
+        $userBills = array_filter($bills,function($file) use ($userId){
+            return strpos($file, '_user' . $userId) !== false && pathinfo($file, PATHINFO_EXTENSION) === 'pdf';
+        });
+        // si factures non trouvées
+        if (empty($userBills)) {
+            throw $this->createNotFoundException('No bills found for this user.');
+        }
  
        return $this->render('home/profile.html.twig', [
            'user' => $user,
+           'userBills' => $userBills,
            'meta_description' => 'Bienvenue sur votre profil utilisateur'
        ]);
    }
@@ -99,8 +120,27 @@ final class AuthentifiedUserController extends AbstractController
             return newJsonResponse(['success'=>false]);
         }   
    }
+
+
+// USER PROFILE > VIEW BILL 
+   #[Route('/profile/bills')]
+    public function viewBill(Security $security, KernelInterface $kernel):Response
+    {   
+        //récupère l'utilisateur en session 
+        $userId = $security->getUser()->getId();
+        //construction du chemin du fichier 
+        $filePath = $kernel->getProjectDir() . '/public/bills/bill_' . '_user' . $userId .'.pdf';
+        //si le fichier n'est pas trouvé 
+        if (!file_exists($filePath)){
+            throw $this->createNotFoundException('File not found');
+        }
+
+        //retourne le fichier au navigateur 
+        // return new Response(file_get_contents($filePath),200,[
+        //     'Content-Type' => 'application/pdf', //informe le navigateur que le contenu est un fichier PDF
+        //     'Content-Disposition' => 'inline; filename="facture_sainte-cru"', //suggère un nom pour quand l'utilisateur décide de le télécharger
+        // ]);
+        
+    }
+
 }
-
-
-// JsonResponse::HTTP_UNAUTHORIZED
-// JsonResponse::HTTP_INTERNAL_SERVER_ERROR
