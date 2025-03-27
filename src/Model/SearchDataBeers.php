@@ -9,7 +9,7 @@ class SearchDataBeers //création de la classe SearchDataBeers
     private $type = null; //attribut privé "type" renseignant le type du produit 
     private ?string $color = null; //attribut privé "color" étant une chaîne de caractères et renseignant la couleur du produit 
     private ?bool $isPermanent = null; //attribut privé "isPermanent" étant un booléen et renseignant la gamme du produit 
-    private ?int $category = null; //attribut privé "categpry" étant un entier et renseignant la catégorie du produit 
+    private ?int $category = null; //attribut privé "category" étant un entier et renseignant la catégorie du produit 
 
     // Getters and Setters : méthodes publiques permettant d'accéder (accesseurs) aux attributs privés de l'objet et de les modifier (mutateur)
     public function getName(): ?string // déclaration de l'accesseur getName 
