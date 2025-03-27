@@ -38,7 +38,7 @@ final class AuthentifiedUserController extends AbstractController
             foreach($userOrders as $userOrder){
                 //je récupère la facture
                 $bill = $userOrder->getBill();
-                // si le chemin de la facture n'est pas nul
+                // si la facture n'est pas nulle et que le chemin de la facture n'est pas nul
                 if(!empty($bill) && $bill->getBillpath() !== null){
                          // j'ajoute chaque facture au tableau 
                 $userBills[] = $bill;
