@@ -24,30 +24,34 @@ final class ProductController extends AbstractController
     #[Route('/product/goodies', name: 'app_goodies')]
     public function allGoodies(ProductRepository $productRepository, Request $request, VATpriceCalculator $VATpriceCalculator, Security $security): Response
     {   
+        //AFFICHAGE DES PRODUITS 
         $idCategory = 2;
         $isDeleted = false;
         $products = $productRepository->findGoodies($idCategory,$isDeleted,[],['productName'=>'ASC']);
-
+        //calcul prix TTC (pour l'affichage)
         foreach ($products as $product) {
             $VATprice = number_format($VATpriceCalculator->VATprice($product),2,'.','');
             $product->setProductVATprice($VATprice);
         }
+        //FILTRE DE RECHERCHE 
+        $searchData = new SearchDataGoodies(); //création d'une instance de la classe SearchDataBeers 
+                                                //cette instance va contenir les critères de recherche 
+        $form = $this->createForm(SearchFormGoodies::class,$searchData); //création d'un formulaire à partir de la classe SearchFormBeers
+                                                                        //association du formulaire à l'objet searchData créé précédemment
+        $form->handleRequest($request); //traitement de la requête HTTP => associe les données de la requête au formulaire
 
-        $searchData = new SearchDataGoodies();
-        $form = $this->createForm(SearchFormGoodies::class,$searchData);
-        $form->handleRequest($request);
-
-        if($form->isSubmitted() && $form->isValid()){
-            $searchData->setCategory(2);
-            $products = $productRepository->searchProductGoodie($searchData);
+        if($form->isSubmitted() && $form->isValid()){ //si le formulaire est soumis et est valide
+            $searchData->setCategory(2); //définition de la catégorie de produits concernés par la recherche 
+                                        //en base de données, la catégorie "goodies" a l'identifiant 2
+            $products = $productRepository->searchProductGoodie($searchData);//appelle de la méthode du repository pour lui passer les données de recherche
         }
-
-        $user = $security->getUser();
-        $favorites = "";
-        if($user){
-            $favorites = $user->getFavoriteProducts();
+        //FAVORIS 
+        $user = $security->getUser(); // récupération de l'utilisateur en session
+        $favorites = "";    // initialisation de la variables $favorites 
+        if($user){  // si $user est définie
+            $favorites = $user->getFavoriteProducts(); //récupére les produits favoris de l'utilisateur 
         }
-
+        //rend la vue et passe les paramètres nécessaires, c'est à dire le formulaire 
         return $this->render('product/goodies.html.twig', [
             'products'=>$products,
             'form'=>$form,
