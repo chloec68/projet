@@ -35,6 +35,21 @@
                     <p class="centered">Vous n'avez pas de commande</p>
             {% endif %}
                 </div>
+
+                
+    <h2>Mes factures</h2>
+    {% for userBill in userBills %}
+    {% if userBill %}
+    <a href="{{ asset('bills/' ~ 'bill_user' ~ user.id ~ '.pdf') }}" target="_blank">
+        Voir ma facture 
+    </a>
+    {% else %}
+    <p>No bill found for this user.</p>
+{% endif %}
+    {% endfor %}
+  
+
+
         </div>
     </main>
 

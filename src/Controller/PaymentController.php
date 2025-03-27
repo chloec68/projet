@@ -22,6 +22,7 @@ use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -29,7 +30,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class PaymentController extends AbstractController
 {
-
       #[Route('/payment/identification', name:'app_payment-identification')]
     public function identification(Request $request, SessionInterface $session): Response
     {   
@@ -283,7 +283,7 @@ class PaymentController extends AbstractController
          }
 
         #[Route('/payment/checkout/bill', name:'app_payment-checkout-bill')]
-        public function billGenerator(SessionInterface $session, OrderRepository $orderRepository, EstablishmentRepository $establishmentRepository, VATpriceCalculator $priceCalculator, Mailer $mailer):Response
+        public function billGenerator(SessionInterface $session, OrderRepository $orderRepository, EstablishmentRepository $establishmentRepository, VATpriceCalculator $priceCalculator, Mailer $mailer, KernelInterface $kernel):Response
         {   
             //récupération de l'id de la commmande
             $orderId = $session->get('orderId'); 
@@ -319,12 +319,19 @@ class PaymentController extends AbstractController
             $pickUpTime->modify('+2 days');
             $pickUpTime->format('dd.mm.Y');
 
+             //envoie email confirmation 
+             $orderReference = $order->getOrderReference();
+             $emailAddress = $order->getOrderEmail();
+             $pickUpPoint = $order->getEstablishment()->getEstablishmentName();
+             $mailer->sendOrderConfirmation($emailAddress,$pickUpTime,$orderReference,$pickUpPoint);
+
+            //configuration de Dompdf
             $options = new Options();
             $options->set('defaultFont', 'helvetica');
-            //création d'une instance de Dompf()
+            //création d'une instance de Dompf() avec les options
             $dompdf = new Dompdf($options);
   
-            //envoie du contenu HTML à la vue 
+            //récupère le contenu HTML rendu dans le fichier twig et les variables passées  
             $html = $this->renderView('/payment/bill.html.twig',[
                 'order' => $order,
                 'seller' => $seller,
@@ -340,15 +347,20 @@ class PaymentController extends AbstractController
             $dompdf->loadHtml($html);
             //configuration format et orientation page
             $dompdf->setPaper('A4', 'portrait');
-            //rend PDF
+            //rend le HTML en PDF
             $dompdf->render();
             //envoie PDF au navigateur en générant une réponse manuellement 
 
-            //envoie email confirmation 
-            $orderReference = $order->getOrderReference();
-            $emailAddress = $order->getOrderEmail();
-            $pickUpPoint = $order->getEstablishment()->getEstablishmentName();
-            $mailer->sendOrderConfirmation($emailAddress,$pickUpTime,$orderReference,$pickUpPoint);
+            //stocke les data binaires du PDF 
+            $output = $dompdf->output();
+            //écris le fichier dans le dossier public
+            $publicDirectory = $kernel->getProjectDir() . '/public/bills/';
+            // Genere un nom de fichier unique avec n° référence de la facture et id de l'utilisateur
+            $userId = $order->getAppUser()->getId();
+            $billReference = $order->getBill()->getBillReferenceNumber();
+            $pdfFilepath = $publicDirectory . '/bill_' . '_user' . $userId .'.pdf';
+            //écris le fichier dans le chemin voulu 
+            file_put_contents($pdfFilepath,$output);
 
             return new Response(
                 $dompdf->output(), //le contenu PDF généré 
