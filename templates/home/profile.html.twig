@@ -38,16 +38,15 @@
 
                 
     <h2>Mes factures</h2>
-    {% for userBill in userBills %}
-    {% if userBill %}
-    <a href="{{ asset('bills/' ~ 'bill_user' ~ user.id ~ '.pdf') }}" target="_blank">
-        Voir ma facture 
-    </a>
+    {% if userBills %}
+        {% for userBill in userBills %}
+            <a href="{{ asset('bills/' ~ 'bill_user' ~ user.id ~ '.pdf') }}" target="_blank">
+                Voir ma facture 
+            </a>
+        {% endfor %}
     {% else %}
-    <p>No bill found for this user.</p>
-{% endif %}
-    {% endfor %}
-  
+        <p>No bill found for this user.</p>
+    {% endif %}
 
 
         </div>
