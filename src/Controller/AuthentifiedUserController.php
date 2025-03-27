@@ -28,17 +28,22 @@ final class AuthentifiedUserController extends AbstractController
         //VOIR LES FACTURES 
         //récupère l'utilisateur en session 
         $userId = $security->getUser()->getId();
-        //construction du chemin du fichier 
-        $billsDirectory = $kernel->getProjectDir() . '/public/bills/';
-        //Retourne un tableau de fichier et dossier, issus de directory. 
-        $bills = scandir($billsDirectory); 
-        //Filtre les fichiers pour récupérer les factures de l'utilisateur 
-        $userBills = array_filter($bills,function($file) use ($userId){
-            return strpos($file, '_user' . $userId) !== false && pathinfo($file, PATHINFO_EXTENSION) === 'pdf';
-        });
-        // si factures non trouvées
-        if (empty($userBills)) {
-            throw $this->createNotFoundException('No bills found for this user.');
+        //récupère les commandes de l'utilisateur
+        $userOrders = $user->getOrders(); 
+        //si la variable $userOrders n'est pas falsy
+        if(!empty($userOrders)){
+            // j'initialise un tableau vide 
+            $userBills = [];
+            //pour chaque commande 
+            foreach($userOrders as $userOrder){
+                //je récupère la facture
+                $bill = $userOrder->getBill();
+                // si le chemin de la facture n'est pas nul
+                if(!empty($bill) && $bill->getBillpath() !== null){
+                         // j'ajoute chaque facture au tableau 
+                $userBills[] = $bill;
+                }
+            }
         }
  
        return $this->render('home/profile.html.twig', [
