@@ -50,9 +50,6 @@ class Product
     #[ORM\JoinColumn(nullable: false)]
     private ?Category $category = null;
 
-    #[ORM\ManyToMany(targetEntity: Size::class, inversedBy: 'products')]
-    private Collection $sizes;
-
     #[ORM\ManyToOne(inversedBy: 'products')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Vat $vat = null;
@@ -77,6 +74,9 @@ class Product
     */
     #[ORM\OneToMany(targetEntity: OrderProduct::class, mappedBy: 'appProduct')]
     private Collection $orderProducts;
+
+    #[ORM\ManyToOne(inversedBy: 'relation')]
+    private ?Size $size = null;
 
 
     public function __construct()
@@ -238,26 +238,6 @@ class Product
         return $this;
     }
 
-    public function getSizes(): Collection
-    {
-        return $this->sizes;
-    }
-
-    public function addSize(Size $size):self
-    {
-        if (!$this->sizes->contains($size)){
-            $this->sizes[] = $size;
-        }
-
-        return $this;
-    }
-
-    public function removeSize(Size $size):self
-    {
-        $this->sizes->removeElement($size);
-        return $this;
-    }
-
     public function getVat(): ?Vat
     {
         return $this->vat;
@@ -344,5 +324,17 @@ class Product
     public function __toString(): string
     {
         return $this->getProductName();
+    }
+
+    public function getSize(): ?Size
+    {
+        return $this->size;
+    }
+
+    public function setSize(?Size $size): static
+    {
+        $this->size = $size;
+
+        return $this;
     }
 }

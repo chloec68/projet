@@ -84,13 +84,12 @@
                 {% else %}
                     <div class="stock-info"><div class="red-dot"></div>indisponible</div>
                 {% endif %}
-                    <p class="centered">{{product.productColor}}</p>
-                {% if product.sizes is not null %}
+                    <p class="centered">{{product.productGender}}</p>
+                    <p class="centered">Taille {{product.size.sizeName}} - {{product.productColor}}</p>
+                {# {% if product.size is not null %}
                 <span>Taille</span>
-                    {% for size in product.sizes %}
-                        <input value="{{size.id}}" type="radio" product-size="{{product.id}}" name="size{{product.id}}">{{size.sizeName}}</input>
-                    {% endfor %}
-                {% endif %}
+                        <input value="{{product.size}}" type="radio" product-size="{{product.id}}" name="size{{product.id}}">{{size.sizeName}}</input>
+                {% endif %} #}
                 <p class="centered">{{product.productVATprice}} €</p>
                 <div class="wrapper">
                     <div class="quantity">

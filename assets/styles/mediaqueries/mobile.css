@@ -1,0 +1,131 @@
+/* ************************************************* MEDIA QUERIES : MOBILE ************************************************* */
+
+@media screen and (max-width: 640px){
+
+    /* ***************TO TOP BUTTON********** */
+        .top-button{
+            display: none;
+        }
+
+    /***************** BURGER MENU *************/
+   
+    nav{
+        display: none;
+        width:100%;
+    }
+
+    header{
+        .header__wrapper{
+            padding:0;
+        }
+
+        .header__container-right{
+            display: none;
+        }
+
+        .header__container-left{
+
+            #logo{
+                width:30%;
+            }
+
+            a{
+                display: block;
+                width:50%;
+                text-align: left;
+                margin-left: 4vh;
+            }
+        }
+    }
+
+    #home-wrapper{
+
+        .parallax{
+
+            height:fit-content;
+
+            p{
+                font-size: 1em;
+            }
+        }
+    }
+
+
+
+
+    /* #topPageLinks{
+        min-height:280px;
+    }
+
+    .navbar{
+        position: absolute; 
+        min-width: 100%;
+        height:55vh;
+        background-color:#64d5ed;
+        opacity:0.96;
+        display: none;
+        margin:0px;
+    }
+
+    #topNav{
+        z-index:100;
+    }
+
+    .mainLinks a{
+        display: block;
+        text-align: center;
+        padding: 10px;
+    } */
+
+        /************BURGER MENU (ICON) SPAN = LINES -> CROSS ***********/
+    
+        .burger {
+            width: 32px;
+            z-index: 20;
+            position:absolute;
+            top:3vh;
+            right:1vh;
+        }
+        
+        .burger span {
+            width: 100%;
+            height: 4px;
+            background-color: rgb(255, 255, 255);
+            border-radius: 12px;
+            display: block;
+            transition: 0.5s ease-in-out;
+        }
+        
+        .burger span::before,
+        .burger span::after {
+            content: "";
+            width: 100%;
+            background-color: rgb(255, 255, 255);
+            display: block;
+            transition: all 0.5s ease-in-out;
+            border-radius: 12px;
+            height: 4px;
+        }
+        
+        .burger span::before {
+            transform: translateY(-10px);
+        
+        }
+        
+        .burger span::after {
+            transform: translateY(10px);
+            margin-top: -4px;
+        }
+        
+        .burger.active span {
+            background-color: transparent;
+        }
+        
+        .burger.active span::before {
+            transform: rotateZ(45deg) translateY(0);
+        }
+        
+        .burger.active span::after {
+            transform: rotateZ(-45deg) translateY(0);
+        }
+}
