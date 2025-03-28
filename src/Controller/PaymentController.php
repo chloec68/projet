@@ -283,7 +283,7 @@ class PaymentController extends AbstractController
          }
 
         #[Route('/payment/checkout/bill', name:'app_payment-checkout-bill')]
-        public function billGenerator(EntityManager $entityManager, SessionInterface $session, OrderRepository $orderRepository, EstablishmentRepository $establishmentRepository, VATpriceCalculator $priceCalculator, Mailer $mailer, KernelInterface $kernel):Response
+        public function billGenerator(EntityManagerInterface $entityManager, SessionInterface $session, OrderRepository $orderRepository, EstablishmentRepository $establishmentRepository, VATpriceCalculator $priceCalculator, Mailer $mailer, KernelInterface $kernel):Response
         {   
             //récupération de l'id de la commmande
             $orderId = $session->get('orderId'); 
@@ -349,20 +349,27 @@ class PaymentController extends AbstractController
             $dompdf->setPaper('A4', 'portrait');
             //rend le HTML en PDF
             $dompdf->render();
-            //envoie PDF au navigateur en générant une réponse manuellement 
+            
 
             //stocke les data binaires du PDF 
             $output = $dompdf->output();
             //écris le fichier dans le dossier public
             $publicDirectory = $kernel->getProjectDir() . '/public/bills/';
+            //si le dossier n'existe pas, le créer
+            if(!file_exists($publicDirectory)){
+                mkdir($publicDirectory,0777,true);
+            }
             // Genere un nom de fichier unique avec n° référence de la facture et id de l'utilisateur
             $appUser = $order->getAppUser();
             if(!empty($appUser)){
                 $appUserId = $appUser->getId();
+                $billDate = date_format($bill->getBillDate(),'d-m-Y');
+                $billReference = $bill->getBillReferenceNumber();
                 if(!empty($appUserId)){
-                    $pdfFilepath = $publicDirectory . '/bill_' . 'user' . $appUserId .'.pdf';
+                    $pdfFilepath = $publicDirectory . 'bill_' . $billDate . '_' . $billReference  . '_user' . $appUserId .'.pdf';
+                    $pdfRelativeFilePath = "bills\bill_" . $billDate . "_" . $billReference . "_user" . $appUserId .".pdf";
                     //ajoute le chemin à Bill
-                    $bill->setBillPath($pdfFilepath);
+                    $bill->setBillPath($pdfRelativeFilePath);
                     //prépare à stocker en bdd 
                     $entityManager->persist($bill);
                     // stocke en bdd 
@@ -372,6 +379,7 @@ class PaymentController extends AbstractController
                 }
             }
 
+            //envoie PDF au navigateur en générant une réponse manuellement 
             return new Response(
                 $dompdf->output(), //le contenu PDF généré 
                 200, //Code de statut HTTP (OK)

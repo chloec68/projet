@@ -29,31 +29,29 @@
                 <div class="orders-list">
             {% if user.orders is not empty %}
                 {% for order in user.orders %}
-                    <p>Commande du {{ order.dateOfPlacement|date('d-m-Y') }} <a href="{{ path('app_order',{id:order.id}) }}"><i class="fa-regular fa-circle-right"></i></a></p>
+                    <p>Commande du {{ order.dateOfPlacement|date('d-m-Y') }} <a href="{{ path('app_order',{id:order.id}) }}"><i class="fa-solid fa-eye"></i></a></p>
                 {% endfor %}
             {% else %}
                     <p class="centered">Vous n'avez pas de commande</p>
             {% endif %}
                 </div>
 
-                
     <h2>Mes factures</h2>
     {% if userBills is not null %}
+        <div class="bills-list">
         {% for userBill in userBills %}
             {% if userBill.billPath is not null %}
-                <a href="{{ asset('bills/' ~ userBill.billPath) }}" target="_blank">
-                    Voir ma facture 
-                </a>
+                    <a href="{{ asset(userBill.billPath) }}" target="_blank">
+                        Facture du {{userBill.billDate|date('d-m-Y')}} <i class="fa-solid fa-eye"></i>
+                    </a>
             {% endif %}
         {% endfor %}
+        </div>
     {% else %}
-        <p>No bill found for this user.</p>
+        <p>Vous n'avez pas de facture</p>
     {% endif %}
-
-
         </div>
     </main>
-
 
 {% endblock %}
 
