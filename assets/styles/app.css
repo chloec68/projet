@@ -1707,6 +1707,8 @@ border-radius: 50px;
    .recap-section{
     flex-grow:1;
     min-width:25%;
+    border:1px solid var(--light-grey);
+    border-radius: 6px;
    }
 
    .nbItems{
