@@ -12,8 +12,12 @@
 </div>
 
 <a href="#header"><img class="top-button" src="/icones/arrow.webp" alt=""></a>
-<div class="products__page-wrapper">
 
+<div class="banner">
+    <div>Nous n'effectuons pas de livraison : retirez vos produits au point de retrait de votre choix</div>
+</div>
+
+<div class="products__page-wrapper">
     <section class="products__sidebar">
         {{ form_start(form,{'attr': {'class': 'search-form'}}) }}
         <div class="sidebar-container">
@@ -85,11 +89,11 @@
                     <div class="stock-info"><div class="red-dot"></div>indisponible</div>
                 {% endif %}
                     <p class="centered">{{product.productGender}}</p>
-                    <p class="centered">Taille {{product.size.sizeName}} - {{product.productColor}}</p>
-                {# {% if product.size is not null %}
-                <span>Taille</span>
-                        <input value="{{product.size}}" type="radio" product-size="{{product.id}}" name="size{{product.id}}">{{size.sizeName}}</input>
-                {% endif %} #}
+                    <p class="centered">{% if product.size is not null %}Taille {{product.size.sizeName}} - {% endif %}{{product.productColor}}</p>
+                
+
+                        
+                
                 <p class="centered">{{product.productVATprice}} €</p>
                 <div class="wrapper">
                     <div class="quantity">

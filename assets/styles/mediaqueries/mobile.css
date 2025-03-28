@@ -7,13 +7,8 @@
             display: none;
         }
 
-    /***************** BURGER MENU *************/
+    /***************** BASE + HOME PAGE *************/
    
-    nav{
-        display: none;
-        width:100%;
-    }
-
     header{
         .header__wrapper{
             padding:0;
@@ -26,16 +21,22 @@
         .header__container-left{
 
             #logo{
-                width:30%;
+                width:40%;
             }
 
             a{
                 display: block;
-                width:50%;
+                width:40%;
                 text-align: left;
                 margin-left: 4vh;
             }
         }
+
+        nav{
+            display: none;
+            width:100%;
+        }
+    
     }
 
     #home-wrapper{
@@ -49,33 +50,6 @@
             }
         }
     }
-
-
-
-
-    /* #topPageLinks{
-        min-height:280px;
-    }
-
-    .navbar{
-        position: absolute; 
-        min-width: 100%;
-        height:55vh;
-        background-color:#64d5ed;
-        opacity:0.96;
-        display: none;
-        margin:0px;
-    }
-
-    #topNav{
-        z-index:100;
-    }
-
-    .mainLinks a{
-        display: block;
-        text-align: center;
-        padding: 10px;
-    } */
 
         /************BURGER MENU (ICON) SPAN = LINES -> CROSS ***********/
     
