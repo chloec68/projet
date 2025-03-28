@@ -1,59 +1,19 @@
 /* ************************************************* MEDIA QUERIES : MOBILE ************************************************* */
 
-@media screen and (max-width: 640px){
+@media screen and (max-width: 768px){
 
+    *{
+        box-sizing: border-box;
+       }
+    
     /* ***************TO TOP BUTTON********** */
         .top-button{
             display: none;
         }
-
-    /***************** BASE + HOME PAGE *************/
-   
-    header{
-        .header__wrapper{
-            padding:0;
-        }
-
-        .header__container-right{
-            display: none;
-        }
-
-        .header__container-left{
-
-            #logo{
-                width:40%;
-            }
-
-            a{
-                display: block;
-                width:40%;
-                text-align: left;
-                margin-left: 4vh;
-            }
-        }
-
-        nav{
-            display: none;
-            width:100%;
-        }
     
-    }
-
-    #home-wrapper{
-
-        .parallax{
-
-            height:fit-content;
-
-            p{
-                font-size: 1em;
-            }
-        }
-    }
-
-        /************BURGER MENU (ICON) SPAN = LINES -> CROSS ***********/
+    /************BURGER MENU (ICON) SPAN = LINES -> CROSS ***********/
     
-        .burger {
+          .burger {
             width: 32px;
             z-index: 20;
             position:absolute;
@@ -102,4 +62,149 @@
         .burger.active span::after {
             transform: rotateZ(-45deg) translateY(0);
         }
+
+
+    /***************** BASE + HOME PAGE *************/
+
+    header{
+        max-width: 100%;
+        margin:0 0 10vh 0;
+
+        .header__wrapper{
+            padding:0;
+        }
+
+        .header__container-right{
+            display: none;
+        }
+
+        .header__container-left{
+
+            #logo{
+                width:30%;
+            }
+
+            a{
+                display: block;
+                width:40%;
+                text-align: left;
+                margin: 1vh 0 1vh 2vh;
+            }
+        }
+
+        .nav{
+            width:100%;
+            display: none;
+            position:absolute;
+            top:0;
+            margin:0;
+            z-index: 20;
+
+            .nav__container{
+                width: 100%;
+                position:absolute;
+                top:0;
+                margin:0;
+                padding:5vh 10vh;
+                display: flex;
+                flex-direction: column;
+
+                a{
+                    display: block;
+                    margin: auto;
+                    padding:2vh;
+                }
+
+                .cart,.user-account{
+                    display: block;
+                }
+            }
+        }
+    
+    }
+
+    #home-wrapper{
+        max-width: 100%;
+
+        .parallax, .parallax2{
+            margin:2vh 0 0 0 ;
+            /* background-attachment: scroll; */
+
+            p{
+                font-size: 1em;
+                width:80%;
+            }
+        }
+        #permanent-section, #ephemeral-section{
+            margin:0;
+
+            .title-container{
+                padding:10vh 0 0 0;
+
+                h2{
+                    font-size: 2em !important;
+                }
+            }
+            h3{
+                font-size: 1.5em;
+            }
+
+            .carousel{
+                .group{
+                    animation:scrolling 30s linear infinite;
+                }
+            }
+
+            .seeAll-link{
+                font-size: 1.5em;
+            }
+        }
+    }
+
+    footer{
+        max-width: 100%;
+
+        .newsletter__container{
+            display: block;
+
+            p{
+                display: block;
+            }
+
+            form{
+                width: 100%;
+                display: flex;
+                justify-content: center;
+            }
+        }
+
+        .footer__wrapper-main-container{
+            margin:0;
+            padding:0;
+            font-size: 1em;
+
+            .footer__wrapper-container{
+                display: block;
+                margin: 3vh auto;
+
+                span{
+                    display: block;
+                    font-family: "bebas neue" !important;
+                    font-weight: 600;
+                }
+
+                a{
+                    display: block;
+                    padding:1vh 1vh
+                }
+
+                .icons-container{
+                    gap:0.3rem;
+                }
+            }
+
+        }
+    }
+
+  
 }

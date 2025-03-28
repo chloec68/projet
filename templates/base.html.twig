@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="description" content="{{ meta_description }}">
         <title>{% block title %}Welcome{% endblock %}</title>
         <link rel="icon" href="/logo/Logo-2.webp">
-        {# <link rel="preload" as="image" href="http://localhost/public/img/steCruDark.webp  media="(min-width: 768px)" /> #}
+        {# <link rel="preload" fetchpriority="high" as="image" href="/public/img/steCruDark.webp" type="image/webp" media="(min-width: 768px)> #}
 
         {% block stylesheets %}
         <link rel="stylesheet" href="{{ asset('styles/app.css') }}">
@@ -18,13 +18,15 @@
 
         {% block cdn %}
         {# FONT AWESOME CDN #}
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        {# <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" /> #}
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" media="print" onload="this.media='all'" />
+
         {% endblock %}
 
     </head>
 
     <body>
-        <header id="header">
+        <header>
             {% block header%}
                 <div class="header__wrapper">
                     <!-- ***************************** HEADER LEFT -->
@@ -62,13 +64,15 @@
                     </div>
                 </div>
                 <!-- ***************************** NAVBAR -->
-                <nav>
+                <nav class="nav">
                     {% block nav %}
                         <div class="nav__container">
                             <a class="nav__container-a">taproom</a>
                             <a class="nav__container-a" href=" {{ path('app_beers') }}">nos bières</a>
                             <a class="nav__container-a" href=" {{ path('app_goodies')}}">goodies</a>
                             <a class="nav__container-a">la brasserie</a>
+                            <a class="nav__container-a cart" href=" {{ path('app_cart')}}">panier</a>
+                            <a class="nav__container-a user-account" href=" {{ path('app_user')}}">mon compte</a>
                         </div>
                     {% endblock %}
                 </nav>

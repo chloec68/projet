@@ -1,8 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Fredoka:wght@300..700&family=Istok+Web:ital,wght@0,400;0,700;1,400;1,700&family=Quicksand:wght@300..700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Anton+SC&family=Bebas+Neue&family=Fredoka:wght@300..700&family=Istok+Web:ital,wght@0,400;0,700;1,400;1,700&family=Quicksand:wght@300..700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Archivo+Narrow:ital,wght@0,400..700;1,400..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Anton+SC&family=Archivo+Narrow:ital,wght@0,400..700;1,400..700&family=Bebas+Neue&family=Fredoka:wght@300..700&family=Istok+Web:ital,wght@0,400;0,700;1,400;1,700&family=Quicksand:wght@300..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Anton+SC&display=swap');
+
 
 /* **************************************************************** GENERAL ************************************************************ */
 
@@ -159,7 +160,7 @@ a{
 }
 
 #logo{
-    width:15%;
+    width:8%;
     cursor: pointer;
 }
 
@@ -183,6 +184,10 @@ a{
     display: flex;
     justify-content: space-around;
     border-radius:5px;
+
+    .cart,.user-account{
+        display: none;
+    }
 }
 
 .nav__container-a{
@@ -360,7 +365,8 @@ footer small{
     justify-content: center;
 }
 #logo2{
-    width:8%;
+    width:90px;
+    height:90px;
 }
 
 .top-button{
@@ -407,6 +413,11 @@ footer small{
     text-decoration: none;
     font-size: 1.8em;
     color:var(--main);
+
+    img{
+        width:57px;
+        height: 57px;
+    }
 }
 
 .seeAll-link:hover{
@@ -420,42 +431,27 @@ footer small{
     background-size: cover; /* L'image prendra 100% de l'espace, quitte à la crop */
     background-position:bottom; /* Centre la position de l'image */
     background-repeat: no-repeat; /* Empêche l'image de se répéter en fonction de la taille d'écran */
+
+    p{
+        color:var(--white);
+        font-size:1.6em;
+        width:60%;
+        margin:auto;
+        font-family: "Roboto Condensed", serif;
+        padding:4rem;
+        line-height: 2em;
+        text-align: center;
+    }
 }
 
 .parallax{
     background-image: url("/img/stecruDark.webp");
     background-position-y: -60px;
-    min-height: 40vh; /* On fixe une grande hauteur pour voir plus facilement le scroll */
-
-    p{
-        color:var(--white);
-        font-size:1.8em;
-        font-weight: 200;
-        width:80%;
-        margin:auto;
-        font-family: "Roboto Condensed", serif;
-        padding:3rem;
-        line-height: 2em;
-        text-align: center;
-    }
 }
 
 .parallax2{
     background-image: url("/img/brasserie-resized.webp");
     background-position-y: -50px;
-    min-height: 50vh; /* On fixe une grande hauteur pour voir plus facilement le scroll */
-
-    p{
-        color:var(--white);
-        font-size:1.8em;
-        font-weight: 400;
-        width:60%;
-        margin:auto;
-        font-family: "Roboto Condensed", serif;
-        padding:3rem;
-        line-height: 2em;
-        text-align: center;
-    }
 }
 
 
