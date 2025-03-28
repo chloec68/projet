@@ -703,13 +703,12 @@ footer small{
             transition:0.3s ease;
             cursor: pointer;
         }
+        a:hover,i:hover,a:focus,i:focus,a:active,i:active{
+            color: var(--green);
+        }
 
         .delete-accountButton a:hover,.favorites-button a:hover, i:hover, .delete-accountButton a:focus,.favorites-button a:focus,i:focus{
             transform:scale(1.2);
-        }
-
-        a:active,i:active{
-            transform:scale(0.8);
         }
     }
 
@@ -719,6 +718,19 @@ footer small{
         gap:1rem;
         margin:2rem 0 1rem 0;
         padding:2rem;
+    }
+
+    .bills-links{
+        display: flex;
+        flex-direction:column;
+        gap:0.4rem;
+
+        a{
+            font-weight: 700;
+            text-decoration: underline;
+            color: var(--main);
+        }
+        
     }
 
     #personal-info{
