@@ -9,7 +9,7 @@ if(burger){
    
   // Display burger menu
   window.burgerMenuMobile = function burgerMenuMobile(){
-    const nav = document.querySelector('.nav__container');
+    const nav = document.querySelector('.nav');
         if(nav.style.display === "block"){
             nav.style.display = "none";
         } else {

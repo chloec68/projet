@@ -7,3 +7,4 @@ import './js/cart.js';
 import './js/side-cart.js';
 import './js/favorites.js';
 import './js/userAccount.js';
+import './js/burgerMenu.js';
