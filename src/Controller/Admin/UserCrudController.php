@@ -25,9 +25,7 @@ class UserCrudController extends AbstractCrudController
         return $actions
         ->disable('delete')
 
-        ->update(Crud::PAGE_INDEX, Action::NEW, function (Action $action) {
-            return $action->setIcon('fa fa-plus')->setLabel("Nouvel utilisateur");
-        });
+        ->disable('new');
     }
 
     public function configureFields(string $pageName): iterable

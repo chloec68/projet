@@ -60,4 +60,14 @@ class OrderRepository extends ServiceEntityRepository
                ->getResult()
            ;
         }
+
+      //   public function findByDate($date): array
+      //   {
+      //    return $this->createQueryBuilder('o')
+      //    ->andWhere('o.dateOfPlacement = :date')
+      //    ->setParameter('date',$date)
+      //    ->orderBy('o.dateOfPlacement','ASC')
+      //    ->getQuert()
+      //    ->getResults();
+      //   }
 }

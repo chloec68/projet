@@ -109,18 +109,6 @@ let addToCartButtons = document.querySelectorAll(".add-to-cart");
         button.addEventListener('click', function() {
           let product = button.getAttribute('data-product');
           let quantity = document.querySelector(`input[data-product="${product}"]`).value;
-
-          let size = null;
-          let sizeSelected = document.querySelector(`input[product-size="${product}"]:checked`);
-          
-          if(document.querySelector(`input[product-size="${product}"]:not(checked)`) && !sizeSelected) {
-            alert('sélectionne une taille');
-            return;
-          }
-
-          if (sizeSelected) {
-            size = sizeSelected.value;
-          }
       
           if(alertBox && alertMessage && closeAlert){
             if(quantity > 1){
@@ -138,7 +126,7 @@ let addToCartButtons = document.querySelectorAll(".add-to-cart");
             })
           }
           if (parseInt(quantity) > 0) {
-            updateCart(product,quantity,size); 
+            updateCart(product,quantity); 
           }
         });
       });
@@ -188,7 +176,7 @@ decrementButtonsCart.forEach(button => {
 });
 
 // UPDATE TOTAL ITEMS 
-function updateCart(product,quantity,size){
+function updateCart(product,quantity){
 
   const nbItemsElements = document.querySelectorAll('.nbItems');
   
@@ -345,7 +333,6 @@ basketButton.addEventListener('click',function(){
     const cartSummary = document.querySelector('.cart-summary');
     let htmlContent = "<h2>Votre panier</h2><a href='/cart'>Voir le panier</a>";
       if(data && data.length > 0){
-        console.log(data);
         data.forEach(item => {
           htmlContent += 
             `<article class="sideCart-item side-cart-product">
@@ -353,7 +340,7 @@ basketButton.addEventListener('click',function(){
                     <div class="item-container">
                       <img class="product-pic" src="${item.picture}" alt="Photo du produit">
                       <p><span class="productName">${item.productName} -</span>
-                      <span>${item.type ? item.type : item.color} -</span>
+                      <span>${item.type ? item.type : item.gender} -</span>
                       <span>${item.volume ? item.volume : item.size}</span> </p>
                     </div>
                     <div class="item-container middle">
@@ -462,5 +449,26 @@ if(deleteButton){
   })
 }
 
+//****************************************************************** BURGER MENU ******************************************************************
 
+//Transform burger menu from lines to cross 
+const burger = document.querySelector('.burger');
+if(burger){
+  burger.addEventListener('click', () => {
+    burger.classList.toggle('active');
+  });
+}
 
+   
+  // Display burger menu
+  window.burgerMenuMobile = function burgerMenuMobile(){
+    const nav = document.querySelector('.nav__container');
+        if(nav.style.display === "block"){
+            nav.style.display = "none";
+        } else {
+            nav.style.display = "block";
+        }
+  }     
+
+    
+      

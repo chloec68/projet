@@ -15,13 +15,13 @@ class Size
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 10, nullable: true)]
+    #[ORM\Column(length: 10)]
     private ?string $sizeName = null;
 
     /**
      * @var Collection<int, Product>
      */
-    #[ORM\OneToMany(targetEntity: Product::class, mappedBy: 'sizes')]
+    #[ORM\OneToMany(targetEntity: Product::class, mappedBy: 'size')]
     private Collection $products;
 
     public function __construct()
@@ -39,7 +39,7 @@ class Size
         return $this->sizeName;
     }
 
-    public function setSizeName(?string $sizeName): static
+    public function setSizeName(string $sizeName): static
     {
         $this->sizeName = $sizeName;
 
@@ -75,5 +75,4 @@ class Size
 
         return $this;
     }
-
 }

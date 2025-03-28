@@ -89,16 +89,7 @@ class CartController extends AbstractController
                 $product = $data['product'];
                 $quantity = $data['quantity']; 
 
-                if(isset($size)){
-                    $sizeId = $data['size'];
-                    $size = $sizeRepository->find($sizeId);
-        
-                    $sizeName = $session->get('size',[]);
-                    $sizeName[$product->getId()] = $size->getSizeName();
-                    $session->set('size',$sizeName);
-                    }
-
-                    $cart = $session->get('cart',[]);
+                $cart = $session->get('cart',[]);
         
                 if(empty($cart[$product])){
                     $cart[$product] = $quantity;
@@ -165,23 +156,35 @@ class CartController extends AbstractController
                 }
 
                 $type = $product->getType();
-                if(isset($type)){
+                if(!empty($type)){
                     $type = $type->getTypeName();
                 }else{
                     $type ="";
                 }
 
                 $volume = $product->getProductVolume();
-                if(isset($volume)){
+                if(!empty($volume)){
                     $volume;
                 }else{
                     $volume="";
                 }
 
-                $sizeName = $session->get('size', []);
-                $size = isset($sizeName[$id]) ? $sizeName[$id] : '';
-                dd($session->get('size'));
-
+                $size="";
+                $productSize = $product->getSize();
+                if(!empty($productSize)){
+                    $sizeName = $productSize->getSizeName();
+                    if(!empty($sizeName)){
+                        $size=$sizeName;
+                    }
+                }
+                
+                $gender = $product->getProductGender();
+                if(!empty($gender)){
+                    $gender;
+                }else{
+                    $gender="";
+                }
+           
                 $data[]=[
                     'productId' => $product->getId(),
                     'productName'=>$product->getProductName(),
@@ -192,6 +195,7 @@ class CartController extends AbstractController
                     'color' => $product->getProductColor(),
                     'volume' => $volume,
                     'size' => $size,
+                    'gender'=>$gender,
                     'total' => $total,
                     'nbItems' => $nbItems
                 ];
