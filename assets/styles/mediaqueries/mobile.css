@@ -86,7 +86,7 @@
 
             a{
                 display: block;
-                width:40%;
+                width:50%;
                 text-align: left;
                 margin: 1vh 0 1vh 2vh;
             }
@@ -166,6 +166,7 @@
 
         .newsletter__container{
             display: block;
+            background-image: none !important;
 
             p{
                 display: block;
@@ -205,6 +206,55 @@
 
         }
     }
+/***************** PRODUCTS PAGE *************/
+.banner > :first-child{
+    padding : 0.4em !important;
+    animation: none !important;
+    display: block !important;
+    letter-spacing: 0 !important;
+    white-space: normal !important;
+}
+.products__page-wrapper{
+    padding: 0 !important;
+    display: block !important;
+}
+.products__sidebar{
+    position: relative !important;
+    width: 90% !important;
+    padding: 0 !important;
+    display: block !important;
+    margin: auto !important;
+    border: none !important;
+}
 
-  
+.search-form{
+    width: fit-content !important;
+    margin:0 !important;
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    grid-template-rows: 1fr 1fr !important;
+    gap: 2rem;
+    justify-content: center;
+}
+
+.sidebar__container{
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-evenly !important;
+    font-size: 1.2em !important;
+}
+  .products__container{
+    width: 100% !important;
+    display: flex;
+    justify-content: center !important;
+    flex-direction: column;
+  }
+
+  .product-card{
+    font-size: 1em !important;
+    width: 80% !important;
+    margin: auto !important;
+    display: block !important;
+  }
+
 }
