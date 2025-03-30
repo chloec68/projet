@@ -66,12 +66,18 @@ final class ProductController extends AbstractController
     #[Route('/product/beers/search', name:'app_beers_search')]
     public function allBeers(ProductRepository $productRepository, Request $request,VATpriceCalculator $VATpriceCalculator, Security $security): Response
     {   
+        // j'indique l'id de la catégorie des bières 
         $idCategory=1;
+        // je ne souhaite pas récupérer les produits "supprimés
         $isDeleted = false;
+        // je récupère un tableau de produits non supprimés et appartenant à la catégorie des bières 
+        // que j'ordonne selon leur nom dans l'ordre alphabétique 
         $products = $productRepository->findBeers($idCategory,$isDeleted,[],['productName'=>'ASC']);
-
+        // pour chaque produit contenu dans le tableau de produits 
         foreach ($products as $product) {
+            // je détermine leur prix TTC en faisant appel à la méthode VATprice() du service injecté
             $VATprice = number_format($VATpriceCalculator->VATprice($product),2,'.','');
+            // j'affecte le prix TTC à l'objet produit 
             $product->setProductVATprice($VATprice);
         }
 

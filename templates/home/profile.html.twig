@@ -18,7 +18,7 @@
 
         <section id="side-container">
             <a href="{{ path('app_favorites') }}" class="favorites-button"><i class="fa-solid fa-heart"></i> Mes favoris</a>
-            <p class="delete-accountButton">Supprimer mon compte</p>
+            <p class="delete-accountButton"><i class="fa-solid fa-user-slash"></i> Supprimer mon compte</p>
         </section>
 
         <section id="main-container">
@@ -37,21 +37,21 @@
                 </div>
 
             <h2>Mes factures</h2>
-            {% if userBills is not null %}
-                <div class="bills-list">
-                {% for userBill in userBills %}
-                    {% if userBill.billPath is not null %}
-                        <div class="bills-links">
-                        Facture du {{userBill.billDate|date('d-m-Y')}}
-                            <a href="{{ asset(userBill.billPath) }}" target="_blank"><i class="fa-solid fa-eye"></i> Voir</a>
-                            <a href="{{ asset(userBill.billPath) }}" download><i class="fa-solid fa-file-arrow-down"></i> Télécharger</a>
-                        </div>
-                    {% endif %}
-                {% endfor %}
-                </div>
-            {% else %}
-                <p>Vous n'avez pas de facture</p>
-            {% endif %}
+            <div class="bills-list">
+                {% if userBills is not empty %}
+                    {% for userBill in userBills %}
+                        {% if userBill.billPath is not null %}
+                            <div class="bills-links">
+                            Facture du {{userBill.billDate|date('d-m-Y')}}
+                                <a href="{{ asset(userBill.billPath) }}" target="_blank"><i class="fa-solid fa-eye"></i> Voir</a>
+                                <a href="{{ asset(userBill.billPath) }}" download><i class="fa-solid fa-file-arrow-down"></i> Télécharger</a>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                {% else %}
+                    <p class="centered">Vous n'avez pas de facture</p>
+                {% endif %}
+            </div>
         </section>
     </main>
 
