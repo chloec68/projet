@@ -2,9 +2,9 @@
 
 namespace App\Controller;
 
+use App\Service\Mailer;
 use App\Entity\Recipient;
 use App\Form\RecipientFormType;
-use App\Service\Mailer;
 use App\Repository\UserRepository;
 use App\Repository\OrderRepository;
 use App\Service\VATpriceCalculator;
@@ -59,17 +59,26 @@ final class HomeController extends AbstractController
         ]);
     }
 
-    #[Route('/home/newsletterUnsubscription/{recipientEmail}', name:'newsletter-unsubscribe')]
+    #[Route('/home/newsletter-unsubscribe/{recipientEmail}', name:'newsletter-unsubscribe')]
     public function newsletterUnsubscribed(RecipientRepository $recipientRepository,EntityManagerInterface $entityManager, string $recipientEmail)
-    {
+    {   
+        // je récupère l'adresse email à partir de l'objet destinataire passé en argument 
+        // en appelant la méthode findByEmail du RecipientRepository
         $recipient = $recipientRepository->findByEmail($recipientEmail);
-        if($recipient){
+        // si la variable $recipient n'est pas falsy
+        if(!empty($recipient)){
+            // je supprime l'objet destinataire de la table en base de données 
             $entityManager->remove($recipient);
             $entityManager->flush();
+        }else{
+            // si la variable recipient est falsy, j'ajoute un message flash en session 
+            $this->addFlash('error','Utilisateur non trouvé - la désinscription a échoué');
+            // et redirige vers la page d'accueil (où j'affiche les messages)
+            return $this->redirectToRoute('app_home');
         }
-
-        return $this->render('newsletter/unsubscribed.html.twig',[
-            'controllerName' => 'Controller'
+        // la méthode rend la vue unsubscribed.html.twig 
+        return $this->render('/newsletter/unsubscribed.html.twig',[
+            'meta_description' => "Désinscription réussie de notre newsletter. Vous ne recevrez plus d'emails."
         ]);
     }
 

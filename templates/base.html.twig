@@ -91,6 +91,14 @@
         <!-- *****************************SIDE CART -->
         <div class="cart-summary"><h2>Votre panier</h2><a href='/cart'>Voir le panier</a></div>
 
+        <!-- ***************************** FLASH MESSAGES -->
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success centered"><i class="fa-solid fa-bell"></i> {{ message }}</div>
+        {% endfor %}
+        {% for message in app.flashes('error') %}
+            <div class="alert alert-error centered"><i class="fa-solid fa-bell"></i> {{ message }}</div>
+        {% endfor %}
+
         <!-- *****************************BODY -->
         {% block body %}{% endblock %}     
 
@@ -99,6 +107,7 @@
             <footer class="centered">
                 {% if newsletterForm is defined %}
                 <div class="newsletter__container">
+                    <!-- *****************************FLASH MESSAGES -->
                     {% for message in app.flashes('success') %}
                         <div class="alert alert-success">{{ message }}</div>
                     {% endfor %}

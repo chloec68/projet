@@ -160,7 +160,7 @@ a{
 }
 
 #logo{
-    width:8%;
+    width:18%;
     cursor: pointer;
 }
 
@@ -207,6 +207,62 @@ a{
 .nav__container-a:active{
     transform:scale(0.8);
 }
+/* ************************* FLASH MESSAGES ************************* */
+
+.alert {
+    font-size:1.5em;
+    width: fit-content;
+    padding:1rem;
+    border-radius: 6px;
+    margin: 0 auto 2rem auto;
+}
+
+.alert-error{
+    box-shadow: var(--red) 0px 7px 10px 0px;
+
+
+    i{
+        color:var(--red);
+        animation: ring 4s .7s ease-in-out; 
+        display:block;
+    }
+}
+.alert-success{
+    box-shadow: var(--green) 0px 7px 10px 0px;
+
+    i{
+        color:var(--green);
+        animation: ring 4s .7s ease-in-out; 
+        display:block;
+    }
+}
+
+@keyframes ring {
+    0% { transform: rotate(0); }
+    1% { transform: rotate(30deg); }
+    3% { transform: rotate(-28deg); }
+    5% { transform: rotate(34deg); }
+    7% { transform: rotate(-32deg); }
+    9% { transform: rotate(30deg); }
+    11% { transform: rotate(-28deg); }
+    13% { transform: rotate(26deg); }
+    15% { transform: rotate(-24deg); }
+    17% { transform: rotate(22deg); }
+    19% { transform: rotate(-20deg); }
+    21% { transform: rotate(18deg); }
+    23% { transform: rotate(-16deg); }
+    25% { transform: rotate(14deg); }
+    27% { transform: rotate(-12deg); }
+    29% { transform: rotate(10deg); }
+    31% { transform: rotate(-8deg); }
+    33% { transform: rotate(6deg); }
+    35% { transform: rotate(-4deg); }
+    37% { transform: rotate(2deg); }
+    39% { transform: rotate(-1deg); }
+    41% { transform: rotate(1deg); }
+    43% { transform: rotate(0); }
+    100% { transform: rotate(0); }
+  }
 
 /* ************************* FOOTER ************************* */
 
