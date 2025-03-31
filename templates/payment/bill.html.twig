@@ -1,5 +1,7 @@
-
-<h1 class="wide centered">{{seller.establishmentName}}</h1>
+<h1 class="wide centered">SAS {{seller.establishmentName}}</h1>
+<p class="centered">{{seller.establishmentAddress}}<br>
+{{seller.establishmentPostCode}} {{seller.establishmentCity}}<br>
+siret:	751 460 742 00024</p>
 <div class="horizontal-line"></div>
 
 <p class="centered"> <span class="wide bold">Merci {{order.orderUserFirstName}},</span>
@@ -54,8 +56,13 @@
 
 
 <style>
+
+
 *{
     font-family:'helvetica';
+}
+h1{
+    font-size: 1.5em !important;
 }
 h2{
     margin-top:3rem;
@@ -97,7 +104,7 @@ h2{
 }
 
 .wide{
-    font-size:2em;
+    font-size:1.3em;
 }
 
 .half-wide{
@@ -109,7 +116,7 @@ h2{
     margin:auto;
     border-radius:3px;
     padding:0.3rem;
-    border:solid 2px rgb(173, 255, 173);
+    border:solid 2px rgb(57, 120, 57);
     text-align: center;
     font-weight: 700;
 }

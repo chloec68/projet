@@ -350,7 +350,6 @@ class PaymentController extends AbstractController
             //rend le HTML en PDF
             $dompdf->render();
             
-
             //stocke les data binaires du PDF 
             $output = $dompdf->output();
             //écris le fichier dans le dossier public
