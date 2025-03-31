@@ -239,7 +239,46 @@
     }
 }
 
+/* *********************************************** USER PROFILE ************************************************ */
 
+.dark-mode .user-profile__main{
+    h2{
+        border:1px solid var(--green);
+    }
+
+    .alertContainer{
+        .a-content{
+            .alertMsg{
+                color:var(--main);
+            }
+
+            .confirmButton, .cancelButton{
+                color:var(--main);
+            }
+        }
+    }
+
+    #main-container{
+        .bills-links, .bills-links a, .bills-links a i{
+            color:var(--white);
+        }
+
+        .bills-links a:hover, .bills-links a:focus,.bills-links a:active{
+            color: var(--green);
+        }
+    }
+
+    #side-container{
+
+        .delete-accountButton{
+            color:var(--main);
+
+            i{
+                color: var(--main);
+            }
+        }
+    }
+}
 /* *********************************************** FAVORITES ************************************************ */
 .dark-mode .favorites-wrapper::before{
     content: '';
