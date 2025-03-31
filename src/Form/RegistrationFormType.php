@@ -62,13 +62,13 @@ class RegistrationFormType extends AbstractType
                     new NotBlank([
                         'message' => 'Veuillez saisir un mot de passe',
                     ]),
-                    new Regex([
-                        'pattern' => '/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{12,}$/',
-                        'message' => 'Le mot de passe doit contenir au moins 12 caractères, dont un chiffre, une majuscule et un caractère spécial',
-                    ]),
+                    // new Regex([
+                    //     'pattern' => '/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{12,}$/',
+                    //     'message' => 'Le mot de passe doit contenir au moins 12 caractères, dont un chiffre, une majuscule et un caractère spécial',
+                    // ]),
                     new Length([
-                        // 'min' => 12,
-                        // 'minMessage' => 'Votre mot de passe doit contenir au moins {{ limit }} caractères',
+                        'min' => 3,
+                        'minMessage' => 'Votre mot de passe doit contenir au moins {{ limit }} caractères',
                         'max' => 4096,    // max length allowed by Symfony for security reasons
                     ]),
                 ],

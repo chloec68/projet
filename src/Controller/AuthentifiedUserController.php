@@ -101,28 +101,31 @@ final class AuthentifiedUserController extends AbstractController
 
    //USER PROFILE > DELETE ACCOUNT
    #[Route('/profile/delete-account',name:'delete-account')]
-   public function deleteAccount(Security $security,EntityManagerInterface $entityManager, Session $session ): JsonResponse
+   public function deleteAccount(Security $security,EntityManagerInterface $entityManager, Session $session ): Response
    {
         $user = $security->getUser();
-        if(!$user){
-            return newJsonResponse(['success'=>false]);
+        if(empty($user)){ // si aucun utilisateur n'est trouvé en session 
+            $this->addFlash('error', 'Utilisateur non trouvé.'); // message d'erreur 
+            return $this->redirectToRoute('app_home'); // redirection vers page d'accueil
         }
         try{
-            $email = $user->getEmail();
-            $hashedEmail = hash('sha256',$email);
-            $password = $user->getPassword();
-            $rehashedPassword = password_hash(bin2hex(random_bytes(16)),PASSWORD_DEFAULT);
-            $user->setEmail($hashedEmail);
-            $user->setRoles(["ROLE_DELETED"]);
-            $entityManager->persist($user);
-            $entityManager->flush();
-            $session = new Session();
-            $session->invalidate();
-
-            return new JsonResponse(['success' => true]);
+            $email = $user->getEmail(); // je récupère l'email de l'utilisateur 
+            $salt = bin2hex(random_bytes(16)); // je génère un sel pour éviter d'obtenir un hache identique
+            $hashedEmail = hash('sha256',$email . $salt); // je hache l'adresse email 
+            $password = $user->getPassword(); // je récupère le mot de passe 
+            $rehashedPassword = password_hash(bin2hex(random_bytes(16)),PASSWORD_DEFAULT); // je re-hache le mot de passe
+            $user->setEmail($hashedEmail); // je remplace l'adresse email par l'adresse hachée et donc anonymisée
+            $user->setRoles(["ROLE_DELETED"]); // je remplace le rôle initial par "rôle supprimé"
+            $entityManager->persist($user); // je persiste l'utilisateur 
+            $entityManager->flush(); // j'enregistre le changement en base de données 
+            // $session = new Session(); 
+            $session->invalidate(); // j'invalide la session 
+            $this->addFlash('success', 'Votre compte a été supprimé avec succès'); // message de succès
+            return $this->redirectToRoute('app_home'); // redirection vers page d'accueil
 
         }catch (\Exception $e){
-            return newJsonResponse(['success'=>false]);
+            $this->addFlash('error', 'Une erreur est survenue lors de la suppression de votre compte.'); // message d'erreur
+            return $this->redirectToRoute('app_home'); // redirection vers page d'accueil
         }   
    }
 
