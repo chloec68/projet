@@ -35,12 +35,13 @@ const alertBox = document.querySelector(".alertBox");
 let alertMessage = document.querySelector(".alertMessage");
 const closeAlert = document.querySelector(".closeAlert");
 const successMsg = document.getElementById("success-msg");
-let addToCartButtons = document.querySelectorAll(".add-to-cart");
+const addToCartButtons = document.querySelectorAll(".add-to-cart");
 // const stockElements = document.querySelectorAll('.stock-info');
 
 // stockElements.forEach(element => {
 //   let stockQuantity = parseInt(element.getAttribute('data-stock'));
 //     if (stockQuantity > 10){
+    if(addToCartButtons){
       addToCartButtons.forEach(button => {
         button.addEventListener('click', function() {
           let product = button.getAttribute('data-product');
@@ -66,6 +67,8 @@ let addToCartButtons = document.querySelectorAll(".add-to-cart");
           }
         });
       });
+    }
+
   // }else{
   //   addToCartButtons.forEach(button => {
   //       button.disabled = true;
@@ -116,28 +119,34 @@ function updateCart(product,quantity){
 
   const nbItemsElements = document.querySelectorAll('.nbItems');
   
-  fetch(`/cart/add/${product}`,{
+  // envoie une requête AJAX de type POST
+  fetch(`/cart/update/${product}`,{
+    // définis la méthode HTTP utilisée (POST)
     method : 'POST',
+    // définis les en-tête -> indique le format des données envoyées 
     headers :{
         'Content-Type':'application/json'
     } ,
+    // définis le corps de la requête 
     body: JSON.stringify({
+      //le corps de la requête contient les variables product et quantity 
       product:product,
       quantity:quantity,
     })
   })
-
+  //récupère la réponse JSON
   .then(response => response.json())
-
+    //lorsque la réponsr JSON est disponible, on traite les données contenues dans la réponse
     .then(data => {
+      // si la valeur du nombre d'articles est strictement supérieur à 1
       if(data.nbItems > 1){
+        //MISE A JOUR DES ELEMENTS TEXTUELS (relatifs au nombre d'articles)
         cartHeader.textContent = `${data.nbItems} articles`;
       }else if(data.nbItems == 1){
         cartHeader.textContent = `${data.nbItems} article`;
       }else{
         cartHeader.textContent = "Pas d'article";
       }
-      
       nbItemsElements.forEach(nbItemsElement => {
         if(data.nbItems < 1){
           const cart = document.querySelector('.main-container');
@@ -158,21 +167,22 @@ function updateCart(product,quantity){
 
 // UPDATE TOTAL 
 function updatePriceTotal(){
-
   let totalPrice = 0; 
   const cartItems = document.querySelectorAll('.cart-item');
+  const totalPriceElement = document.querySelector('.total-price');
   if(cartItems && cartItems.length>0){
     cartItems.forEach(item => {
       let input = item.querySelector('input[cart-product]');
       let quantity = parseInt(input.value);
       let price = parseFloat(item.querySelector('.product-price').textContent);
       totalPrice += price*quantity;
-      document.querySelector('.total-price').textContent = totalPrice.toFixed(2) + " €";
+      totalPriceElement.textContent = totalPrice.toFixed(2) + " €";
       })
   }else{
-    document.querySelector('.total-price').textContent = "0 €";
+    if(totalPriceElement){
+      document.querySelector('.total-price').textContent = "0 €";
+    }
   }
-
 }
 
 // UPDATE SUBTOTALS 

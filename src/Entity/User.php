@@ -59,6 +59,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->favoriteProducts = new ArrayCollection();
         $this->orders = new ArrayCollection();
         $this->roles = array('ROLE_USER');
+        // initialisation de la propriété rôles dans le constructur 
+        // avec un tableau contenant directement une valeur 
+        // afin d'ajouter ce rôle de manière persistante à la propriété de l'utilisateur
     }
 
     public function getId(): ?int
@@ -97,6 +100,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         $roles = $this->roles;
         // guarantee every user at least has ROLE_USER
+        // seulement lorsque la méthode get est appelée /!\ 
+        // ce n'est pas un ajout permanent /!\
         // $roles[] = 'ROLE_USER';
 
         return array_unique($roles);

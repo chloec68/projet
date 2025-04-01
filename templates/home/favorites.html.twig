@@ -4,30 +4,37 @@
 
 {% block body %}
 
-<div class="favorites-wrapper">  
-    <h1>Mes favoris</h1>  
-    <div class="favorites-container">
-    {% for favorite in favorites %}
-        <div class="favorite-card">
-            <p class="banner">{{favorite.productName}}</p>
-            {% for picture in favorite.pictures %}
-                {% if loop.first %}
-            <a href="{{path('detail_product',{id:favorite.id})}}"><img src="{{picture.pictureName}}" alt="{{favorite.productName}}"></a>
-                {% endif %}
-            {% endfor %}
+    <div class="favorites-wrapper">  
+        <h1>Mes favoris</h1>  
+        {% if favorites is not empty %}
+        <div class="favorites-container">
+            {% for favorite in favorites %}
+                <div class="favorite-card">
+                    <p class="banner">{{favorite.productName}}</p>
+                    {% for picture in favorite.pictures %}
+                        {% if loop.first %}
+                    <a href="{{path('detail_product',{id:favorite.id})}}"><img src="{{picture.pictureName}}" alt="{{favorite.productName}}"></a>
+                        {% endif %}
+                    {% endfor %}
+                    
+                    <p class="pricing">{{vatPricesArray[favorite.id]}} €</p>
+                            <div class="qty-container">
+                                <button class="qty-btn-minus btn-rounded decrement" type="button" data-product="{{favorite.id}}"><i class="fa-solid fa-minus"></i></button>
+                                <input type="text" name="qty" value="1" min="0" class="input-qty input-rounded qty-input" data-product="{{ favorite.id }}">
+                                <button class="qty-btn-plus btn-rounded increment" type="button" data-product="{{favorite.id}}"><i class="fa-solid fa-plus"></i></button>
+                            </div>
+                        <button data-product="{{favorite.id}}" type="submit"class=" btn add-to-cart">Ajouter au panier</button>
+                </div>
             
-            <p class="pricing">{{vatPricesArray[favorite.id]}} €</p>
-                    <div class="qty-container">
-                        <button class="qty-btn-minus btn-rounded decrement" type="button" data-product="{{favorite.id}}"><i class="fa-solid fa-minus"></i></button>
-                        <input type="text" name="qty" value="1" min="0" class="input-qty input-rounded qty-input" data-product="{{ favorite.id }}">
-                        <button class="qty-btn-plus btn-rounded increment" type="button" data-product="{{favorite.id}}"><i class="fa-solid fa-plus"></i></button>
-                    </div>
-                <button data-product="{{favorite.id}}" type="submit"class=" btn add-to-cart">Ajouter au panier</button>
+            {% endfor %}
         </div>
-    {% endfor %}
+        {% else %}
+        <div class="empty-favorites__container">
+            <p id="empty-favorites-list__paragraph">Votre liste des favoris est vide.</p>
+            <a id="empty-favorites-list__link" href=" {{ path('app_beers') }} ">Ajouter des favoris</a>
+        </div>
+        {% endif %}
     </div>
-  
-</div>
 
 {% endblock %}
 

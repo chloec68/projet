@@ -81,14 +81,22 @@ final class AuthentifiedUserController extends AbstractController
    // USER PROFILE > FAVORITES 
    #[Route('/profile/favorites', name:'app_favorites')]
    public function showFavorites(Security $security, VATpriceCalculator $priceCalculator)
-   {
+   {    
+        //récupère l'utilisateur en session 
         $user = $security->getUser();
+        //initialisation d'un tableau vide 
         $vatPricesArray=[];
-       if($user){
+        //si un user est enregistré en session 
+       if(!empty($user)){
+            // récupère les favoris de l'utilisateur 
            $favorites = $user->getFavoriteProducts();
+           // pour chaque favori 
            foreach($favorites as $favorite){
+            // calcul du prix TTC via le service dédié
             $vatPrice = $priceCalculator->vatPrice($favorite);
-            $vatPricesArray[$favorite->getId()]=$vatPrice;
+            // ajout du prix TTC au tableau associatif ayant pour clé l'identifiant du favori concerné 
+            // et pour valeur son prix TTC
+            $vatPricesArray[$favorite->getId()] = $vatPrice;
            }
        }
 

@@ -1026,6 +1026,29 @@ footer small{
         transform: translateY(0);
     }
 }
+
+.empty-favorites__container{
+
+    display: block;
+
+    #empty-favorites-list__paragraph{
+        font-family: 'nunito';
+        font-size:1.5em;
+        margin-bottom: 3rem;
+    }
+
+    #empty-favorites-list__link{
+        font-size:1.5em;
+        color:var(--main);
+        text-decoration: underline;
+        text-underline-offset: 0.4em;
+        cursor: pointer;
+    }
+
+    #empty-favorites-list__link:hover,#empty-favorites-list__link:focus,#empty-favorites-list__link:active{
+        color: var(--green);
+    }
+}
 /* **************************************************************** ORDER VIEW ************************************************************ */
 
 .order__main{

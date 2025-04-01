@@ -80,34 +80,47 @@ class CartController extends AbstractController
 
        // ADD ITEM TO CART  
 
-       #[Route('/cart/add/{id}', name:'app_cart-add')]
-       public function add(Request $request, SessionInterface $session, SizeRepository $sizeRepository): JsonResponse
-       {
+       #[Route('/cart/update/{id}', name:'app_cart-update')]
+       public function updateCart(Request $request, SessionInterface $session, SizeRepository $sizeRepository): JsonResponse
+       {   
+            // Récupération des données envoyées par la requête AJAX
+            // récupération du contenu de la requête (getContent()) et conversion en tableau PHP (json_decode())
            $data = json_decode($request->getContent(),true);
-           
-           if($data){
-                $product = $data['product'];
-                $quantity = $data['quantity']; 
-
-                $cart = $session->get('cart',[]);
-        
-                if(empty($cart[$product])){
-                    $cart[$product] = $quantity;
-                    
-                }else{
-                    $cart[$product] += $quantity; 
+           // si des données ont été reçues 
+           if(!empty($data)){
+                // si le tableau de données contient bien les clés attendues 
+                if(isset($data['product']) && isset($data['quantity']))
+                {   
+                    // récupération des informations et assignation aux variables respectives
+                    $product = $data['product'];
+                    $quantity = $data['quantity']; 
+                    // récupération du panier en session 
+                    $cart = $session->get('cart',[]);
+                    // si le produit récupéré n'est pas dans le panier 
+                    if(empty($cart[$product])){
+                        // ajouté le produit au panier avec la quantité spécifiée
+                        $cart[$product] = $quantity;
+                        
+                    }else{
+                        // si le produit existe déjà, on modifie juste la quantité 
+                        $cart[$product] += $quantity; 
+                    }
+                    // enregistre le panier en session
+                    $session->set('cart',$cart);
+                    // compte la nombre d'articles présents
+                    // array_sum() est une fonction PHP native qui retourne la somme des valeurs d'un array
+                    $nbItems = array_sum($cart);
+                    // ajout du nombre d'articles à la session pour les rendre disponibles
+                    $session->set('nbItems',$nbItems);
+                    // retourne une réponse au format Json 
+                    // qui est un tableau associatif comportant une clé indiquant la réussite de l'exécution du code
+                    // et une clé indiquant le nombre d'articles dans le panier mis à jour 
+                    return new JsonResponse(['success' => true,'nbItems'=>$nbItems]);
                 }
-                
-                $session->set('cart',$cart);
-        
-                $nbItems = array_sum($cart); // array_sum() => native PHP function that returns the sum of VALUES in an array
-                $session->set('nbItems',$nbItems);
-
-                return new JsonResponse(['success' => true,'nbItems'=>$nbItems]);
+  
            }
-         
+           // en cas d'échec de l'exécution du code, renvoie une réponse Json indiquant l'échec
            return new JsonResponse(['success' => false]);
-         
        }
 
     // REMOVE AN ITEM FROM CART 
