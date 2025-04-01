@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-final class AuthentifiedUserController extends AbstractController
+final class AuthenticatedUserController extends AbstractController
 {
    // USER PROFILE
    // USER PROFILE > VIEW BILLS 
