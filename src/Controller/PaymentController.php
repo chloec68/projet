@@ -127,37 +127,45 @@ class PaymentController extends AbstractController
 
     
     #[Route('/payment/checkout', name:'app_payment-checkout')]
-    public function checkout(SessionInterface $session, ProductRepository $productRepository, VATpriceCalculator $priceCalculator)
+    public function checkout(SessionInterface $session, ProductRepository $productRepository,
+    VATpriceCalculator $priceCalculator)
     {   
-        $cart = $session->get('cart');
-        $total = $session->get('total');
-
-        $identificationData = $session->get('identificationData');
-        $userEmail = $identificationData['orderEmail'];
+        $cart = $session->get('cart'); // récupération du panier enregistré en session 
+        $total = $session->get('total'); // récupération du total TTC enregisté en session 
+        $identificationData = $session->get('identificationData'); // récupération des données utilisateurs 
+        $userEmail = $identificationData['orderEmail']; // récupération de l'email à partir des données utilisateurs
         
+        // configuration de la clé secrète pour l'API qui permet d'effectuer les paiements
+        // la clé est récupérée dans la variable d'environnement définie dans .env
         Stripe::setApiKey($_ENV['STRIPE_SECRET_KEY']);
-
+        // définition de l'URL du domaine utilisé pour redirections après paiement 
         $YOUR_DOMAIN = 'http://127.0.0.1:8000';
 
-        $checkout_session = Session::create([
-            'payment_method_types' => ['card'],
-            'line_items' => [
+        $checkout_session = Session::create([ //création session Checkout
+            'payment_method_types' => ['card'], //définition méthodes de paiement autorisés (cb uniquement)
+            'line_items' => [ //définition des articles de la commande : ici un seul article représente l'ensemble
+            // du panier pour plus de simplicité 
                 [
-                    'price_data' => [
-                        'currency' => 'eur',
+                    'price_data' => [ //définition de la devise utilisée pour le paiement
+                        'currency' => 'eur', //paiement en euros
                         'product_data' => [
-                            'name' => 'Commande',  // Nom générique
+                            'name' => 'Commande',  // nom générique de la commande
                         ],
-                        'unit_amount' => $total * 100,  // Montant en cents (exemple pour 5.00 EUR => 500)
+                        'unit_amount' => $total * 100,  // montant total de la commande
+                        // le montant total est multiplié par 100 car doit être exprimé en centimes
                     ],
-                    'quantity' => 1,  // quantité de 1 car un seul montant (total)
+                    'quantity' => 1,  // quantité de l'article
+                    // ici quantité de 1 car la commande est représenté par un seul article
                 ],
             ],
-            'customer_email'=> $userEmail,
-            'mode' => 'payment',
-            'success_url' => $YOUR_DOMAIN . '/payment/checkout/success',
-            'cancel_url' => $YOUR_DOMAIN . '/payment/checkout/cancel',
+            'customer_email'=> $userEmail, //email de l'utilisateur pour préremplir champ email de la page de paiement
+            'mode' => 'payment', //paiement unique 
+            'success_url' => $YOUR_DOMAIN . '/payment/checkout/success', //URL de la page de succès 
+            'cancel_url' => $YOUR_DOMAIN . '/payment/checkout/cancel', //URL de la page d'échec
             ]);
+            //une fois la session de paiement créée avec Stripe,
+            // l'utilisateur est redirigé vers la page de paiement Stripe
+            // la méthode 'url' de la session Stripe contient l'URL où l'utilisateur peut compléter le paiement.
             return new RedirectResponse($checkout_session->url);
         }
 

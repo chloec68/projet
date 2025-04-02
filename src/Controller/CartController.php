@@ -141,7 +141,8 @@ class CartController extends AbstractController
 
 
     #[Route('cart/side-cart', name:'app_side-cart')]
-    public function retrieveCart(SessionInterface $session, ProductRepository $productRepository, VATpriceCalculator $VATpriceCalculator): JsonResponse
+    public function retrieveCart(SessionInterface $session, ProductRepository $productRepository,
+    VATpriceCalculator $VATpriceCalculator): JsonResponse
     {
         $cart = $session->get('cart');
         $data = [];
