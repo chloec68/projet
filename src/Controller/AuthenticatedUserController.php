@@ -80,7 +80,8 @@ final class AuthenticatedUserController extends AbstractController
 
    // USER PROFILE > FAVORITES 
    #[Route('/profile/favorites', name:'app_favorites')]
-   public function showFavorites(Security $security, VATpriceCalculator $priceCalculator)
+   public function showFavorites(Security $security,
+   VATpriceCalculator $priceCalculator)
    {    
         //récupère l'utilisateur en session 
         $user = $security->getUser();
