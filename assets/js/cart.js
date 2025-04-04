@@ -36,47 +36,87 @@ let alertMessage = document.querySelector(".alertMessage");
 const closeAlert = document.querySelector(".closeAlert");
 const successMsg = document.getElementById("success-msg");
 const addToCartButtons = document.querySelectorAll(".add-to-cart");
-// const stockElements = document.querySelectorAll('.stock-info');
+const stockElements = document.querySelectorAll('.stock-info');
 
 // stockElements.forEach(element => {
 //   let stockQuantity = parseInt(element.getAttribute('data-stock'));
 //     if (stockQuantity > 10){
-    if(addToCartButtons){
-      addToCartButtons.forEach(button => {
-        button.addEventListener('click', function() {
-          let product = button.getAttribute('data-product');
-          let quantity = document.querySelector(`input[data-product="${product}"]`).value;
-      
-          if(alertBox && alertMessage && closeAlert){
-            if(quantity > 1){
-              alertMessage.innerHTML = "Produits ajoutés au panier";
-              alertBox.style.display = "block";
-            }else if(quantity == 1) {
-              alertMessage.innerHTML = "Produit ajouté au panier";
-              alertBox.style.display = "block";
-            }else{
-              alertBox.style.display = "none";
-            }
+//       if(addToCartButtons){
+//         addToCartButtons.forEach(button => {
+//           button.addEventListener('click', function() {
+//             let product = button.getAttribute('data-product');
+//             let quantity = document.querySelector(`input[data-product="${product}"]`).value;
         
-            closeAlert.addEventListener('click',function(){
-              alertBox.style.display = "none";
-            })
-          }
-          if (parseInt(quantity) > 0) {
-            updateCart(product,quantity); 
-          }
-        });
-      });
-    }
-
-  // }else{
-  //   addToCartButtons.forEach(button => {
-  //       button.disabled = true;
-  //   })
-   
-  // }
+//             if(alertBox && alertMessage && closeAlert){
+//               if(quantity > 1){
+//                 alertMessage.innerHTML = "Produits ajoutés au panier";
+//                 alertBox.style.display = "block";
+//               }else if(quantity == 1) {
+//                 alertMessage.innerHTML = "Produit ajouté au panier";
+//                 alertBox.style.display = "block";
+//               }else{
+//                 alertBox.style.display = "none";
+//               }
+          
+//               closeAlert.addEventListener('click',function(){
+//                 alertBox.style.display = "none";
+//               })
+//             }
+//             if (parseInt(quantity) > 0) {
+//               updateCart(product,quantity); 
+//             }
+//           });
+//         });
+//       }
+//   }else{
+//     addToCartButtons.forEach(button => {
+//         button.disabled = true;
+//     })
+//   }
 // });
 
+stockElements.forEach(element => {
+  let stockQuantity = parseInt(element.getAttribute('data-stock'));
+  let product = element.getAttribute('data-product'); // récupère le produit associé à l'élément de stock
+  let addToCartButton = document.querySelector(`.add-to-cart[data-product="${product}"]`);  // récupère bouton associé à ce produit spécifique
+
+  if (stockQuantity <= 10) {
+    if (addToCartButton) {
+      addToCartButton.disabled = true;
+      addToCartButton.style.backgroundColor = "grey";
+    }
+  } else {
+    if (addToCartButton) {
+      addToCartButton.disabled = false;
+    }
+  }
+
+  if (addToCartButton) {
+    addToCartButton.addEventListener('click', function() {
+      let quantity = document.querySelector(`input[data-product="${product}"]`).value;
+      
+      if (alertBox && alertMessage && closeAlert) {
+        if (quantity > 1) {
+          alertMessage.innerHTML = "Produits ajoutés au panier";
+          alertBox.style.display = "block";
+        } else if (quantity == 1) {
+          alertMessage.innerHTML = "Produit ajouté au panier";
+          alertBox.style.display = "block";
+        } else {
+          alertBox.style.display = "none";
+        }
+        
+        closeAlert.addEventListener('click', function() {
+          alertBox.style.display = "none";
+        });
+      }
+
+      if (parseInt(quantity) > 0) {
+        updateCart(product, quantity); 
+      }
+    });
+  }
+});
 
 
 //************************** */ ON CART PAGE 

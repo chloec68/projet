@@ -85,7 +85,7 @@
 
                     <h3 class="centered">{{product.productName}}</h3> 
                     <p class="centered">{{product.type.typeName}} | {{product.productAlcoholLevel}} | {{product.productVolume}}</p>
-                    <div class="stock-info" data-stock="{{product.productStock}}">{% if product.productStock > 10 %}<div class="green-dot"></div>en stock{% else %} <div class="red-dot"></div>indisponible{% endif %}</div>
+                    <div class="stock-info" data-product="{{product.id}}" data-stock="{{product.productStock}}">{% if product.productStock > 10 %}<div class="green-dot"></div>en stock{% else %} <div class="red-dot"></div>indisponible{% endif %}</div>
                     <div class="wrapper">
                         <div class="quantity">
                             <button class="minus decrement" data-product="{{product.id}}" aria-label="Decrease">&minus;</button>
