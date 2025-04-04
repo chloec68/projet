@@ -22,11 +22,10 @@ class RegistrationFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-        ->add('captcha', Recaptcha3Type::class, [
-            'constraints' => new Recaptcha3(),
-            'action_name' => 'register',
-            // 'script_nonce_csp' => $nonceCSP, //optionnel //The script_nonce_csp parameter is optional. You must use the same nonce as in your Content-Security Policy header.
-            'locale' => 'fr',
+        ->add('captcha', Recaptcha3Type::class, [ //ajout d'un champ 'captcha' au formulaire 
+            'constraints' => new Recaptcha3(),    //ajout d'une contrainte de validation 
+            'action_name' => 'register',          //spécification du nom d'action de l'utilisateur
+            'locale' => 'fr',           //langue d'affichage des messages de reCaptcha 
         ])
             ->add('email', EmailType::class, [
                 'attr'=> [
