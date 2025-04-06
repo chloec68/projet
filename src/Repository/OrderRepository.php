@@ -39,7 +39,6 @@ class OrderRepository extends ServiceEntityRepository
         return $totalSales;
     }
 
-
        public function findByIsCollected($isCollected): array
        {            
 

@@ -153,28 +153,24 @@ class ProductRepository extends ServiceEntityRepository
 
        public function salesByMonth($dateOfPlacement) {
 
-        $year = $dateOfPlacement->format('Y');  //Extrait l'année de $dateOfPlacement
-        $month = $dateOfPlacement->format('m'); //Extrait le mois de $dateOfPlacement
-        $startDate = new \DateTime("$year-$month-01 00:00:00");
-        $endDate = clone $startDate;
-        $endDate->modify('last day of this month 23:59:59'); // Relative Date Modifier => la chaîne de caractères 'last day of this month' est une instruction
-        // PHP 
+        $year = $dateOfPlacement->format('Y');  //extrait l'année de $dateOfPlacement
+        $month = $dateOfPlacement->format('m'); //extrait le mois de $dateOfPlacement
+        $startDate = new \DateTime("$year-$month-01 00:00:00"); //définis un objet DataTime représentant le 1er jour du mois 
+        $endDate = clone $startDate; //duplication de l'objet préalablement créé; 
+        $endDate->modify('last day of this month 23:59:59'); //je modifie l'objet pour qu'il corresponde au dernier mois de l'année
+        // "relative Date Modifier" => la chaîne de caractères 'last day of this month' est une instruction
 
-        return $this->createQueryBuilder('p')
-            ->select('p.productName','op.quantity')
-            ->innerJoin('p.orderProducts', 'op')  
-            ->innerJoin('op.appOrder', 'o')  
-            ->andWhere('o.dateOfPlacement BETWEEN :startDate AND :endDate')
-            ->setParameter('startDate', $startDate)
-            ->setParameter('endDate', $endDate)
-            ->orderBy('p.productName', 'ASC')
+        return $this->createQueryBuilder('p') //création d'un QueryBuilder pour construire une requête DQL
+            ->select('p.productName','op.quantity') //récupère les champs productName et quantity de la table Product
+            ->innerJoin('p.orderProducts', 'op') //jointure avec l'entité OrderProduct 
+            ->innerJoin('op.appOrder', 'o')   //jointure avec l'entité AppOrder
+            // jointures effectuées pour ne récupérer que les produits qui ont été intégrés dans une commande
+            ->andWhere('o.dateOfPlacement BETWEEN :startDate AND :endDate') //ajout de la condition permettant de sélectionner 
+            //les produits faisant partie d'une commande entre ces deux dates
+            ->setParameter('startDate', $startDate) // définition valeurs paramètre de la requête 
+            ->setParameter('endDate', $endDate) 
+            ->orderBy('p.productName', 'ASC') //trie les produits dans l'ordre alphabétique par leur nom
             ->getQuery()
             ->getResult();
     }
-
-            // SELECT product.product_name,order_product.quantity FROM product 
-            // INNER JOIN order_product ON product.id = order_product.app_product_id
-            // INNER JOIN `order` ON order_product.app_order_id = `order`.id
-            // WHERE product.category_id = 1 AND CONCAT(YEAR(`order`.date_of_placement),'-',MONTH(`order`.date_of_placement)) = '2025-3'
-
 }

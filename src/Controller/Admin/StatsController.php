@@ -32,7 +32,6 @@ class StatsController extends AbstractController
 
         //PRODUCTS
    
-        $yearlyProductSales = [];
         $monthlyProductData = [];  
     
         for ($i = 0; $i < 12; $i++) {
@@ -49,8 +48,6 @@ class StatsController extends AbstractController
                     $monthlyProductSales[$productName] = $quantity;
                 }
             }
-    
-            $yearlyProductSales[] = $monthlyProductSales;
             $monthlyProductData[] = $monthlyProductSales;
            
         }

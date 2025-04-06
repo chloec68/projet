@@ -18,8 +18,12 @@
 
     <script>
       const ctx1 = document.getElementById('chartProducts').getContext('2d');
-      let labels = JSON.parse('{{ labels|json_encode|raw }}');
-      let monthlyProductData = JSON.parse('{{ monthlyProductData|json_encode|raw }}');  // Pass the monthly data
+
+      let labels = JSON.parse('{{ labels|json_encode|escape("js") }}'); //le filtre escape() de Twig garantit que les données sont échappées et que 
+      // la styntaxe JavaScript reste valide ; 
+      let monthlyProductData = JSON.parse('{{ monthlyProductData|json_encode|escape("js") }}');
+      //JSON.parse() analyse une chaîne de caractères JSON et construit la valeur JS 
+
 
       const salesChart = new Chart(ctx1, {
           type: 'bar',

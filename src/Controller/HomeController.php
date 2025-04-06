@@ -83,13 +83,14 @@ final class HomeController extends AbstractController
     }
 
     #[Route('/newsletter/send/{idNewsletter}', name:'send-newsletter')]
-    public function sendNewsletter(Mailer $mailer, RecipientRepository $recipientRepository, NewsletterRepository $newsletterRepository, int $idNewsletter )
+    public function sendNewsletter(Mailer $mailer, RecipientRepository $recipientRepository,
+    NewsletterRepository $newsletterRepository, int $idNewsletter )
     {
         $recipients = $recipientRepository->findAll();
         $newsletter = $newsletterRepository->find($idNewsletter);
         $newsletterContent = $newsletter->getNewsletterContent();
 
-        if($recipients){
+        if(!empty($recipients)){
             foreach($recipients as $recipient){
                 $recipientEmail = $recipient->getRecipientEmail();
                 $mailer->sendNewsletter($recipientEmail,$newsletterContent);
