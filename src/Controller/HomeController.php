@@ -85,18 +85,24 @@ final class HomeController extends AbstractController
     #[Route('/newsletter/send/{idNewsletter}', name:'send-newsletter')]
     public function sendNewsletter(Mailer $mailer, RecipientRepository $recipientRepository,
     NewsletterRepository $newsletterRepository, int $idNewsletter )
-    {
+    {   
+        // récupère tous les destinataires
         $recipients = $recipientRepository->findAll();
+        // récupère l'objet newsletter à partir de l'id passé en param
         $newsletter = $newsletterRepository->find($idNewsletter);
+        // récupère le contenu de la newsletter
         $newsletterContent = $newsletter->getNewsletterContent();
-
+        // si de destinataires sont trouvés
         if(!empty($recipients)){
+            // pour chaque destinataire
             foreach($recipients as $recipient){
+                // récupère l'email 
                 $recipientEmail = $recipient->getRecipientEmail();
+                // et envoie la newsletter
                 $mailer->sendNewsletter($recipientEmail,$newsletterContent);
             }
         }
-
+        // redirection sur page principale du panneau administrateur
         return $this->redirectToRoute('admin_newsletter_index');
     }
 

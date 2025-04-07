@@ -21,21 +21,27 @@ class NewsletterCrudController extends AbstractCrudController
 
     public function configureActions(Actions $actions): Actions
     {   
-
+        // création de l'action "send" avec le label associé "envoyer"
+        // assignation de l'action à la variable $sendNewsletterAction
         $sendNewsletterAction = Action::new('send','Envoyer')
+        // lie l'action à la route "send-newsletter" (méthode du HomeController)
+        // 
         ->linkToRoute('send-newsletter', function ($newsletter) {
             return [
                 'idNewsletter' => $newsletter->getId()
             ];
         })
+        //ajout de l'icône
         ->setIcon('fa fa-paper-plane')
+        //ajour classe CSS
         ->addCssClass('btn btn-info');
-
+        // retourne l'objet Actions modifié 
         return $actions
+        //ajoute de l'action à la page index du panneau admin
         ->add(Crud::PAGE_INDEX, $sendNewsletterAction)
-
+        //désactive l'action modifier de la page index
         ->disable('edit')
-
+        //modifie l'îcone et le libellé de l'action "créer"
         ->update(Crud::PAGE_INDEX, Action::NEW, function (Action $action) {
             return $action->setIcon('fa fa-plus')->setLabel("Créer Newsletter");
         });
