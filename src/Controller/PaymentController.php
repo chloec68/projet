@@ -392,7 +392,7 @@ class PaymentController extends AbstractController
                 200, //Code de statut HTTP (OK)
                 [   //définition manuelle des entêtes HTTP 
                     'Content-Type' => 'application/pdf', 
-                    'Content-Disposition' => 'inline; filename="facture.pdf"'//attachment pour forcer le téléchargement
+                    'Content-Disposition' => 'attachment; filename="facture.pdf"'//attachment pour forcer le téléchargement
                 ]
             );
 
