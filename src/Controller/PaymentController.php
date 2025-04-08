@@ -398,7 +398,7 @@ class PaymentController extends AbstractController
 
             //si j'utilise stream() qui envoie le pdf généré j'ai une erreur de chargement du PDF 
             // $dompdf->stream('facture.pdf', [
-            //     'Attachment' => 0 // Affiche le PDF dans la visionneuse sans téléchargement
+            //     'Attachment' => false // Affiche le PDF dans la visionneuse sans téléchargement
             // ]);
         } 
 
