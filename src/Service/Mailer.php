@@ -43,7 +43,7 @@ class Mailer
         ->to($emailAddress)
         ->subject('Votre commande '. $orderReference . ' est confirmée!')
         ->locale('fr')
-        ->html('<p>Votre commmande est confirmée et pourra être retirée à partir du</p><strong>' . $pickUpTime->format('d/m/Y') .'</strong><p> aux horaires d\'ouverture de votre point de retrait :<p><strong>' . $pickUpPoint . '</strong>');
+        ->html('<p>Votre commmande est confirmée et pourra être retirée à partir du</p><strong>' . $pickUpTime->format('d/m/Y') . '</strong><p> aux horaires d\'ouverture de votre point de retrait :<p><strong>' . $pickUpPoint . '</strong>');
 
         $this->mailerInterface->send($confirmationEmail);
     }

@@ -62,7 +62,7 @@ final class HomeController extends AbstractController
     #[Route('/home/newsletter-unsubscribe/{recipientEmail}', name:'newsletter-unsubscribe')]
     public function newsletterUnsubscribed(RecipientRepository $recipientRepository,EntityManagerInterface $entityManager, string $recipientEmail)
     {   
-        // je récupère l'adresse email à partir de l'objet destinataire passé en argument 
+        // je récupère l'objet destinataire à partir de l'adresse mail passée en argument 
         // en appelant la méthode findByEmail du RecipientRepository
         $recipient = $recipientRepository->findByEmail($recipientEmail);
         // si la variable $recipient n'est pas falsy

@@ -322,7 +322,7 @@ class PaymentController extends AbstractController
             $totalVAT = $order->getOrderTotal();
             $vat = $totalVAT - $totalNoVat;
 
-            //date de retrait (J+1)
+            //date de retrait (J+2)
             $pickUpTime = new \DateTime();
             $pickUpTime->modify('+2 days');
             $pickUpTime->format('dd.mm.Y');
@@ -339,7 +339,7 @@ class PaymentController extends AbstractController
             //création d'une instance de Dompf() avec les options
             $dompdf = new Dompdf($options);
   
-            //récupère le contenu HTML rendu dans le fichier twig et les variables passées  
+            // contenu HTML rendu dans le fichier twig et les variables passées  
             $html = $this->renderView('/payment/bill.html.twig',[
                 'order' => $order,
                 'seller' => $seller,
