@@ -17,13 +17,13 @@
             <div class="flip">
                 {% for picture in product.pictures %}
                     {% if loop.first %}
-                    <div class="front" style="background-image:url({{ picture.pictureName}})">
+                    <div class="front" style="background-image:url('{{ picture.pictureName}}')">
                         <p>Bière {{product.productColor}}</p>
                     </div>
                     {% endif %}
 
                 {% if loop.last %}
-                    <div class="back" style="background-image:url({{picture.pictureName}})">
+                    <div class="back" style="background-image:url('{{picture.pictureName}}')">
                 {% endif %}
                     </div>
                 {% endfor %}
