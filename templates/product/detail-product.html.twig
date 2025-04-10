@@ -17,7 +17,7 @@
             <div class="flip">
                 {% for picture in product.pictures %}
                     {% if loop.first %}
-                    <div class="front" style="background-image:url({{ picture.pictureName }})">
+                    <div class="front" style="background-image:url({{ picture.pictureName}})">
                         <p>Bière {{product.productColor}}</p>
                     </div>
                     {% endif %}
@@ -34,9 +34,9 @@
             <div class="price-tag"><p>{{product.productVATPrice}} €</p></div>
             <h1 class="centered">{{product.productName}}</h1>
             {% if product.productStock > 10 %}
-            <div class="stock-status available">En stock</div>
+            <div class="stock-info stock-status available " data-product="{{product.id}}" data-stock="{{product.productStock}}">En stock</div>
         {% else %}
-            <div class="stock-status unavailable">Indisponible</div>
+            <div class="stock-info stock-status unavailable " data-product="{{product.id}}" data-stock="{{product.productStock}}">Indisponible</div>
         {% endif %}
             
         <div class="description">
