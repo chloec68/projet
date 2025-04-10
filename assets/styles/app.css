@@ -516,7 +516,7 @@ footer small{
   .carousel {
     margin: 0 auto;
     padding: 1em 0;
-    /* max-width: 90%; */
+    max-width: 50%;
     overflow: hidden;
     display: flex;
 
@@ -590,7 +590,7 @@ footer small{
     gap: 20px;
     padding-right: 20px;
     /* will-change: transform; */
-    animation: scrolling 15s linear infinite;
+    animation: scrolling 20s linear infinite;
   }
 
   @keyframes scrolling {
