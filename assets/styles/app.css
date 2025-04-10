@@ -438,6 +438,7 @@ footer small{
     opacity:95%;
     background-color:var(--green);
     transition:0.3s ease;
+    cursor: pointer;
 }
 
 .top-button:hover, .top-button:focus{

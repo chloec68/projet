@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="description" content="{{ meta_description }}">
+        <meta name="description" content="{{ meta_description|default('Brasserie Sainte Cru') }}">
         <title>{% block title %}Welcome{% endblock %}</title>
         <link rel="icon" href="/logo/Logo-2.webp">
         {# <link rel="preload" fetchpriority="high" as="image" href="/public/img/steCruDark.webp" type="image/webp" media="(min-width: 768px)> #}

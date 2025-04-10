@@ -25,7 +25,7 @@ class RegistrationFormType extends AbstractType
         ->add('captcha', Recaptcha3Type::class, [ //ajout d'un champ 'captcha' au formulaire 
             'constraints' => new Recaptcha3(),    //ajout d'une contrainte de validation 
             'action_name' => 'register',          //spécification du nom d'action de l'utilisateur
-            'locale' => 'fr',           //langue d'affichage des messages de reCaptcha 
+            'locale' => 'fr',                      //langue d'affichage des messages de reCaptcha 
         ])
             ->add('email', EmailType::class, [
                 'attr'=> [
@@ -66,9 +66,7 @@ class RegistrationFormType extends AbstractType
                         'message' => 'Le mot de passe doit contenir au moins 12 caractères, dont un chiffre, une majuscule et un caractère spécial',
                     ]),
                     new Length([
-                        'min' => 3,
-                        'minMessage' => 'Votre mot de passe doit contenir au moins {{ limit }} caractères',
-                        'max' => 4096,    // max length allowed by Symfony for security reasons
+                        'max' => 4096,   
                     ]),
                 ],
             ])
