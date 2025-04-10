@@ -35,9 +35,10 @@
 .dark-mode .newsletter__container{
     background-color: #4a4b4d;
     border-radius:55px;
-    width:50%;
+    width:35%;
     margin: auto;
     border:1px solid var(--green);
+
 
     .btn{
         color:var(--main);
@@ -47,7 +48,6 @@
 .dark-mode .newsletter__container p{
     color:var(--green);
 }
-
 /* *********************************************** LOGIN PAGE ************************************************ */
 .dark-mode .login-page label{
     color:var(--white);

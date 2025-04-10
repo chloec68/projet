@@ -122,6 +122,10 @@
         }
     
     }
+    
+    .top-button{
+        display: none !important;
+    }
 
     #home-wrapper{
         max-width: 100%;
@@ -167,7 +171,10 @@
         .newsletter__container{
             display: block;
             background-image: none !important;
-
+            height:fit-content;
+            padding:0.5rem;
+            width: 90% !important;
+     
             p{
                 display: block;
             }
