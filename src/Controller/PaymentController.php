@@ -321,6 +321,7 @@ class PaymentController extends AbstractController
             $totalNoVat = $bill->getBillTotalBeforeVat();
             $totalVAT = $order->getOrderTotal();
             $vat = $totalVAT - $totalNoVat;
+            $formattedVat = number_format($vat,2,'.','');
 
             //date de retrait (J+2)
             $pickUpTime = new \DateTime();
@@ -343,6 +344,7 @@ class PaymentController extends AbstractController
             $html = $this->renderView('/payment/bill.html.twig',[
                 'order' => $order,
                 'seller' => $seller,
+                'formattedVat' => $formattedVat,
                 'vat' => $vat,
                 'pickUpTime'=>$pickUpTime,
                 'subTotals'=>$subTotals,
