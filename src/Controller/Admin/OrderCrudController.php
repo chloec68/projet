@@ -68,7 +68,7 @@ class OrderCrudController extends AbstractCrudController
                 'by_reference' => false,
             ]),
             
-            AssociationField::new('orderProduct','Produit(s)')
+            AssociationField::new('orderProducts','Produit(s)')
             ->setTemplatePath('admin/fields/products_list.html.twig')
             ->onlyOnDetail()
             ->setFormTypeOptions([

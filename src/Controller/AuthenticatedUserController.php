@@ -125,6 +125,7 @@ final class AuthenticatedUserController extends AbstractController
             $newPassword = password_hash(bin2hex(random_bytes(16)),PASSWORD_DEFAULT); // je crée un nouveau mot de passe
             $user->setPassword($newPassword);
             $user->setRoles(["ROLE_DELETED"]); // je remplace le rôle initial par "rôle supprimé"
+            $user->setIsDeleted(true);
             $entityManager->persist($user); // je persiste l'utilisateur 
             $entityManager->flush(); // j'enregistre le changement en base de données 
             $session->invalidate(); // j'invalide la session 
