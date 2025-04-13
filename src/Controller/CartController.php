@@ -115,12 +115,14 @@ class CartController extends AbstractController
                     // retourne une réponse au format Json 
                     // qui est un tableau associatif comportant une clé indiquant la réussite de l'exécution du code
                     // et une clé indiquant le nombre d'articles dans le panier mis à jour 
-                    return new JsonResponse(['success' => true,'nbItems'=>$nbItems]);
+                    return new JsonResponse(["success" => true,'nbItems'=>$nbItems]);
                 }
   
+           }else{
+                return new JsonResponse(["success"]);
            }
            // en cas d'échec de l'exécution du code, renvoie une réponse Json indiquant l'échec
-           return new JsonResponse(['success' => false]);
+           return new JsonResponse(["success" => false]);
        }
 
     // REMOVE AN ITEM FROM CART 
@@ -150,71 +152,74 @@ class CartController extends AbstractController
         $total = 0;
         $subTotal = 0;
 
-        foreach ($cart as $id => $quantity) {
-            $product = $productRepository->find($id);
-            if($product){
-                $VATprice = number_format($VATpriceCalculator->VATprice($product),2,'.','');
-                $nbItems += $quantity;
-                $subTotal = $VATpriceCalculator->vatPriceSubTotal($product,$quantity);
-                $total += $subTotal;
-
-                $picturesArray = [];
-                $picture = "";
-                if(($product->getPictures() !== null)){
-                    foreach($product->getPictures() as $picture){
-                        $picturesArray[] = $picture->getPictureName();
-                        $picture = $picturesArray[0];
-                    }
-                }else{
+        if(!empty($cart)){
+            foreach ($cart as $id => $quantity) {
+                $product = $productRepository->find($id);
+                if($product){
+                    $VATprice = number_format($VATpriceCalculator->VATprice($product),2,'.','');
+                    $nbItems += $quantity;
+                    $subTotal = $VATpriceCalculator->vatPriceSubTotal($product,$quantity);
+                    $total += $subTotal;
+    
+                    $picturesArray = [];
                     $picture = "";
-                }
-
-                $type = $product->getType();
-                if(!empty($type)){
-                    $type = $type->getTypeName();
-                }else{
-                    $type ="";
-                }
-
-                $volume = $product->getProductVolume();
-                if(!empty($volume)){
-                    $volume;
-                }else{
-                    $volume="";
-                }
-
-                $size="";
-                $productSize = $product->getSize();
-                if(!empty($productSize)){
-                    $sizeName = $productSize->getSizeName();
-                    if(!empty($sizeName)){
-                        $size=$sizeName;
+                    if(($product->getPictures() !== null)){
+                        foreach($product->getPictures() as $picture){
+                            $picturesArray[] = $picture->getPictureName();
+                            $picture = $picturesArray[0];
+                        }
+                    }else{
+                        $picture = "";
                     }
+    
+                    $type = $product->getType();
+                    if(!empty($type)){
+                        $type = $type->getTypeName();
+                    }else{
+                        $type ="";
+                    }
+    
+                    $volume = $product->getProductVolume();
+                    if(!empty($volume)){
+                        $volume;
+                    }else{
+                        $volume="";
+                    }
+    
+                    $size="";
+                    $productSize = $product->getSize();
+                    if(!empty($productSize)){
+                        $sizeName = $productSize->getSizeName();
+                        if(!empty($sizeName)){
+                            $size=$sizeName;
+                        }
+                    }
+                    
+                    $gender = $product->getProductGender();
+                    if(!empty($gender)){
+                        $gender;
+                    }else{
+                        $gender="";
+                    }
+               
+                    $data[]=[
+                        'productId' => $product->getId(),
+                        'productName'=>$product->getProductName(),
+                        'VATprice'=> $VATprice,
+                        'picture' => $picture,
+                        'quantity'=>$quantity,
+                        'type' => $type,
+                        'color' => $product->getProductColor(),
+                        'volume' => $volume,
+                        'size' => $size,
+                        'gender'=>$gender,
+                        'total' => $total,
+                        'nbItems' => $nbItems
+                    ];
                 }
-                
-                $gender = $product->getProductGender();
-                if(!empty($gender)){
-                    $gender;
-                }else{
-                    $gender="";
-                }
-           
-                $data[]=[
-                    'productId' => $product->getId(),
-                    'productName'=>$product->getProductName(),
-                    'VATprice'=> $VATprice,
-                    'picture' => $picture,
-                    'quantity'=>$quantity,
-                    'type' => $type,
-                    'color' => $product->getProductColor(),
-                    'volume' => $volume,
-                    'size' => $size,
-                    'gender'=>$gender,
-                    'total' => $total,
-                    'nbItems' => $nbItems
-                ];
             }
         }
+
         return $this->json($data);
     }
 

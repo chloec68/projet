@@ -31,9 +31,11 @@ basketButton.addEventListener('click',function(){
  
   .then(
     data => {
+      console.log(data)
     const cartSummary = document.querySelector('.cart-summary');
     let htmlContent = "<h2>Votre panier</h2><a href='/cart'>Voir le panier</a>";
       if(data && data.length > 0){
+
         data.forEach(item => {
           htmlContent += 
             `<article class="sideCart-item side-cart-product">
