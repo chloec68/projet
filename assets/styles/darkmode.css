@@ -35,7 +35,7 @@
 .dark-mode .newsletter__container{
     background-color: #4a4b4d;
     border-radius:55px;
-    width:35%;
+    width:50%;
     margin: auto;
     border:1px solid var(--green);
 
@@ -43,6 +43,10 @@
     .btn{
         color:var(--main);
     }
+}
+
+.dark-mode #recipient_form_recipientEmail{
+    cursor: pointer;
 }
 
 .dark-mode .newsletter__container p{
@@ -66,6 +70,15 @@
 .dark-mode .login-page .register-login-btn:hover{
     background-color: var(--green);
     color: var(--main);
+}
+
+.dark-mode .seeAll-link{
+    color:var(--white);
+    cursor: pointer;
+}
+
+.dark-mode #icone-doubleArrowRight{
+    display: none;
 }
 
 /* *********************************************** REGISTER PAGE ************************************************ */

@@ -13,7 +13,7 @@
     </div>
 </div>
 
-<a href="#header"><img class="top-button" src="/icones/arrow.webp" alt=""></a>
+<a href="#header"><img class="top-button" src="/icones/arrow.webp" onclick="topFunction()" alt="Image représentant un cercle vert contenant une flèche blanche permettant de remonter en haut de page"></a>
 
 <div class="banner">
     <p>Nous n'effectuons pas de livraison : retirez vos produits au point de retrait de votre choix</p>
@@ -101,6 +101,14 @@
         {% endif %}
     </section>
 </div>
+
+<script>
+    function topFunction() {
+        document.body.scrollTop = 0; // For Safari
+        document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+      } 
+</script>
+
 
 {% endblock %}
 
