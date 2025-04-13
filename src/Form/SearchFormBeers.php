@@ -72,13 +72,7 @@ class SearchFormBeers extends AbstractType
         $resolver->setDefaults([
             'data_class' => SearchDataBeers::class, //spécifie la classe à laquelle les données soumises doivent être liées 
             'method' => 'GET', // permet de rendre les données visibles dans l'URL, pour que l'utilisateur puisse partager ses recherches 
-            'csrf_protection' => false // désactivation de la protection csrf automatique des formulaire car le formulaire ne modifie pas de données 
         ]);
     }
-
-    // public function getBlockPrefix() // pour garder une URL la plus propre possible
-    // {
-    //     return '';
-    // }
 
 }
