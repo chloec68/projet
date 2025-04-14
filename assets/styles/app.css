@@ -217,21 +217,11 @@ a{
     margin: 0 auto 2rem auto;
 }
 
-.alert-error{
-    box-shadow: var(--red) 0px 7px 10px 0px;
-
-
-    i{
-        color:var(--red);
-        animation: ring 4s .7s ease-in-out; 
-        display:block;
-    }
-}
-.alert-success{
-    box-shadow: var(--green) 0px 7px 10px 0px;
+.alert-error,.alert-success{
+    box-shadow: 0 4px 12px rgba(220, 38, 38, 0.4);
 
     i{
-        color:var(--green);
+        color:var(--main);
         animation: ring 4s .7s ease-in-out; 
         display:block;
     }
@@ -1120,6 +1110,10 @@ footer small{
     padding-top:6em;
 }
 
+#beers-title{
+    display: none;
+    text-align: center;
+}
 /* ************************* BANNER ************************* */
 
 .banner{

@@ -81,7 +81,11 @@
         .header__container-left{
 
             #logo{
-                width:30%;
+                width:60%;
+            }
+
+            #logo-text{
+                display: block;
             }
 
             a{
@@ -120,7 +124,6 @@
                 }
             }
         }
-    
     }
     
     .top-button{
@@ -172,8 +175,8 @@
             display: block;
             background-image: none !important;
             height:fit-content;
-            padding:0.5rem;
-            width: 90% !important;
+            padding:2rem;
+            width: 100% !important;
      
             p{
                 display: block;
@@ -214,34 +217,44 @@
         }
     }
 /***************** PRODUCTS PAGE *************/
+#beers-title{
+    display: block !important;
+}
 .banner > :first-child{
     padding : 0.4em !important;
     animation: none !important;
     display: block !important;
     letter-spacing: 0 !important;
     white-space: normal !important;
+    font-size: 0.8em !important;
 }
 .products__page-wrapper{
     padding: 0 !important;
     display: block !important;
 }
 .products__sidebar{
-    position: relative !important;
+    /* position: relative !important;
     width: 90% !important;
     padding: 0 !important;
     display: block !important;
     margin: auto !important;
-    border: none !important;
+    border: none !important; */
+    display: none;
 }
 
 .search-form{
-    width: fit-content !important;
+    /* width: fit-content !important;
     margin:0 !important;
     display: grid !important;
     grid-template-columns: 1fr 1fr !important;
     grid-template-rows: 1fr 1fr !important;
     gap: 2rem;
-    justify-content: center;
+    justify-content: center; */
+    display: none;
+}
+
+.reset-button{
+    display: none !important;
 }
 
 .sidebar__container{
@@ -264,4 +277,30 @@
     display: block !important;
   }
 
+}
+
+
+/**************************** PANIER */
+.cart-page-wrapper{
+    padding: 0 !important;
+    .main-container{
+        display: block;
+        padding: 0 !important;
+    }
+
+    table, thead, tbody, th, td, tr { 
+        display: block; 
+    }
+
+    	
+	td:before { 
+		/* Now like a table header */
+		position: absolute !important;
+		/* Top/left values mimic padding */
+		top: 6px;
+		left: 6px;
+		width: 45%; 
+		padding-right: 10px; 
+		white-space: nowrap;
+	}
 }

@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="description" content="{{ meta_description|default('Brasserie Sainte Cru') }}">
+        <meta name="description" content="{{ meta_description|default('Site officiel de la Brasserie Sainte Cru') }}">
         <title>{% block title %}Welcome{% endblock %}</title>
         <link rel="icon" href="/logo/Logo-2.webp">
         {# <link rel="preload" fetchpriority="high" as="image" href="/public/img/steCruDark.webp" type="image/webp" media="(min-width: 768px)> #}
@@ -13,14 +13,12 @@
         <link rel="stylesheet" href="{{ asset('styles/darkmode.css') }}">
         <link rel="stylesheet" href="{{ asset('styles/mediaqueries/mobile.css') }}">
         <link rel="stylesheet" href="{{ asset('styles/mediaqueries/tablet.css') }}">
-
         {% endblock %}
 
         {% block cdn %}
         {# FONT AWESOME CDN #}
         {# <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" /> #}
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" media="print" onload="this.media='all'" />
-
         {% endblock %}
 
     </head>
