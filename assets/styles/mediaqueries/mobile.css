@@ -213,94 +213,203 @@
                     gap:0.3rem;
                 }
             }
-
         }
     }
 /***************** PRODUCTS PAGE *************/
-#beers-title{
-    display: block !important;
-}
-.banner > :first-child{
-    padding : 0.4em !important;
-    animation: none !important;
-    display: block !important;
-    letter-spacing: 0 !important;
-    white-space: normal !important;
-    font-size: 0.8em !important;
-}
-.products__page-wrapper{
-    padding: 0 !important;
-    display: block !important;
-}
-.products__sidebar{
-    /* position: relative !important;
-    width: 90% !important;
-    padding: 0 !important;
-    display: block !important;
-    margin: auto !important;
-    border: none !important; */
-    display: none;
-}
-
-.search-form{
-    /* width: fit-content !important;
-    margin:0 !important;
-    display: grid !important;
-    grid-template-columns: 1fr 1fr !important;
-    grid-template-rows: 1fr 1fr !important;
-    gap: 2rem;
-    justify-content: center; */
-    display: none;
-}
-
-.reset-button{
-    display: none !important;
-}
-
-.sidebar__container{
-    display: flex !important;
-    flex-direction: column !important;
-    justify-content: space-evenly !important;
-    font-size: 1.2em !important;
-}
-  .products__container{
-    width: 100% !important;
-    display: flex;
-    justify-content: center !important;
-    flex-direction: column;
-  }
-
-  .product-card{
-    font-size: 1em !important;
-    width: 80% !important;
-    margin: auto !important;
-    display: block !important;
-  }
-
-}
-
-
-/**************************** PANIER */
-.cart-page-wrapper{
-    padding: 0 !important;
-    .main-container{
-        display: block;
+    #beers-title{
+        display: block !important;
+    }
+    .banner > :first-child{
+        padding : 0.4em !important;
+        animation: none !important;
+        display: block !important;
+        letter-spacing: 0 !important;
+        white-space: normal !important;
+        font-size: 0.8em !important;
+    }
+    .products__page-wrapper{
         padding: 0 !important;
+        display: block !important;
+    }
+    .products__sidebar{
+        /* position: relative !important;
+        width: 90% !important;
+        padding: 0 !important;
+        display: block !important;
+        margin: auto !important;
+        border: none !important; */
+        display: none;
     }
 
-    table, thead, tbody, th, td, tr { 
-        display: block; 
+    .search-form{
+        /* width: fit-content !important;
+        margin:0 !important;
+        display: grid !important;
+        grid-template-columns: 1fr 1fr !important;
+        grid-template-rows: 1fr 1fr !important;
+        gap: 2rem;
+        justify-content: center; */
+        display: none;
     }
 
-    	
-	td:before { 
-		/* Now like a table header */
-		position: absolute !important;
-		/* Top/left values mimic padding */
-		top: 6px;
-		left: 6px;
-		width: 45%; 
-		padding-right: 10px; 
-		white-space: nowrap;
-	}
+    .reset-button{
+        display: none !important;
+    }
+
+    .sidebar__container{
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: space-evenly !important;
+        font-size: 1.2em !important;
+    }
+    .products__container{
+        width: 100% !important;
+        display: flex;
+        justify-content: center !important;
+        flex-direction: column;
+    }
+
+    .product-card{
+        font-size: 1em !important;
+        width: 80% !important;
+        margin: auto !important;
+        display: block !important;
+    }
+
+/**************************** CART */
+    .cart-page-wrapper{
+        padding: 0 !important;
+        
+        .main-container{
+            padding: 0 !important;
+            display: block;
+        }
+
+        thead{
+            display: none;
+        }
+
+        td{
+            padding:0.2rem !important;
+        }
+    }
+
+/**************************** PAYMENT STEP 1 (INFO) */
+    .identification-page{
+        padding:0.3rem !important;
+
+        h2{
+            font-size: 1.8em;
+        }
+    }
+
+    .idenification-form,.groups-wrapper{
+        display: block !important;
+    }
+
+    .agreeTerms-group{
+        margin:0 !important;
+    }
+
+/**************************** PAYMENT STEP 2 (PICK UP) */
+    .pickUpPage-page{
+        padding:0.3rem !important;
+
+        h1{
+            font-size: 1.8em;
+        }
+
+        h4{
+            font-size: 1.5em !important;
+        }
+    }    
+    .options-container{
+        display: block !important;
+        margin:0 !important;
+    }
+
+    .option-container{
+        width: 100% !important;
+        margin: 1rem auto;
+
+        h2{
+            font-size: 1.8em;
+            text-align: center;
+        }
+
+        h3{
+            display: none;
+        }
+
+        table{
+            width:100% !important;
+            margin:0 !important;
+
+            th{
+                display: none;
+            }
+        }
+    }
+
+    #pick_up_point_form_establishmentName{
+        margin: 0.5rem !important;
+        label{
+            font-size: 1.3em !important;
+        }
+    }
+
+    .choose-btn{
+        margin:1rem auto !important;
+    }
+/**************************** PAYMENT STEP 3 (RECAP) */
+    .recap-wrapper{
+        padding:0.3rem !important;
+
+        .choose-btn{
+            width: auto;
+        }
+    }
+
+    #recap-table{
+        width: 100% !important;
+
+        td{
+            width: auto !important;
+            padding:0.3rem !important;
+        }
+
+        th{
+            font-size: 1.2em !important;
+        }
+
+        .total-recap,.total-recap-amount{
+            font-size: 1.2em !important;
+        }
+    }
+
+/**************************** PAYMENT SUCCESS */
+    .success-container{
+        font-size:1.5em !important;
+        padding: 1rem 2rem !important;
+        justify-content: center !important;
+
+        img{
+            width:25% !important;
+        }
+    }
+  
+    .confirmed{
+        font-size: 1.2em !important;
+        text-align: center;
+    }
+
+/**************************** PAYMENT SUCCESS */
+    .login-page{
+        padding:0.3rem !important;
+        display: block !important;
+    }
+
+    #login__login-section{
+        padding:0.3rem !important;
+    }
 }

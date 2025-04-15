@@ -2182,7 +2182,6 @@ border-radius: 50px;
 
     .sucess-page__wrapper,.cancel-page__wrapper{
         padding:1rem;
-        background-position-y: -30px;
 
         span{
             cursor: pointer;
