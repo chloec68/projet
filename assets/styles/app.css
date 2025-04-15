@@ -967,6 +967,7 @@ footer small{
         border-radius:40px;
         cursor: pointer;
         width: auto;
+        overflow: hidden !important;
     }
 
     .banner{
