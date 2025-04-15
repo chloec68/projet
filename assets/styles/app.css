@@ -962,6 +962,10 @@ footer small{
     border-radius:2px;
     background-color: var(--white);
 
+    .stock-info{
+        font-size: 1em;
+    }
+
     img{
         height:30vh;
         border-radius:40px;
