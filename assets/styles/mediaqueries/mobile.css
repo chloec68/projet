@@ -403,13 +403,72 @@
         text-align: center;
     }
 
-/**************************** PAYMENT SUCCESS */
-    .login-page{
+/**************************** LOGIN / REGISTRATION PAGES */
+    .login-page, .registration-page{
         padding:0.3rem !important;
         display: block !important;
+
+        .vertical-line{
+            display: none;
+        }
+    }
+
+    .title{
+        font-weight: 400;
+    }
+
+    .login-title{
+        font-size: 2em;
     }
 
     #login__login-section{
         padding:0.3rem !important;
+
+        a{
+            margin:1rem !important;
+        }
+
+        form{
+            .register-login-btn{
+                margin:0.5rem auto;
+            }
+        }
+    }
+
+    .login-section{
+        margin: 0 auto 2rem auto;
+        width:90%;
+        text-align:center;
+
+        .register-login-btn{
+            margin:0.5em auto;
+        }
+
+        h3{
+            font-weight: 400 !important;
+        }
+    }
+
+    .registration-section{
+        padding:0 !important;
+
+        h2{
+            font-size: 2em !important;
+            text-align: center !important;
+        }
+
+        input{
+            width: 100%;
+        }
+
+        #registration_form_agreeTerms{
+            width:auto !important;
+        }
+    }
+
+    .registration-form{
+        .register-login-btn{
+            margin: 1.5rem auto !important;
+        }
     }
 }
