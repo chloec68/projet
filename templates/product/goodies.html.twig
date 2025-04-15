@@ -82,7 +82,7 @@
 
                 <h3 class="centered">{{product.productName}}</h3> 
                 {% if product.productStock > 10 %}
-                    <div class="stock-info">
+                    <div class="stock-info" data-stock="{{product.productStock}}" data-product="{{product.id}}">
                         <div class="green-dot"></div>en stock
                     </div>
                 {% else %}
