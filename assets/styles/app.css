@@ -2315,9 +2315,24 @@ border-radius: 50px;
 
     form{
         font-size:1.5em;
+        display: flex;
+        flex-direction: column;
+        width:fit-content;
+        padding:2rem;
+        gap:2rem;
 
         input{
-            padding: 0.2rem;
+            padding: 0.5rem;
+            width:60%;
+            margin-left:1rem;
+        }
+
+        button{
+            width:20%;
+        }
+
+        small{
+            font-family: 'nunito';
         }
     }
 }

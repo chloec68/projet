@@ -512,4 +512,22 @@
             margin:0.5rem auto;
         }
     }
+
+   /**************************** RESET PASSWORD REQUEST PAGE */
+
+    .reset-password__main{
+        padding:0.3rem !important;
+
+        form{
+            padding:0.3rem !important;
+
+            input{
+                width:80% !important;
+            }
+            button{
+                width:fit-content !important;
+                padding: 0.5rem !important;
+            }
+        }
+    }
 }
