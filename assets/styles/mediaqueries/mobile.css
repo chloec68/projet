@@ -471,4 +471,43 @@
             margin: 1.5rem auto !important;
         }
     }
+
+    /**************************** USER ACCOUNT PAGE */
+
+    .user-profile__main{
+        padding:0.3rem !important;
+        display: flex !important;
+        flex-direction: column;
+    }
+    #side-container{
+        display: flex;
+        flex-direction: column;
+        gap:1rem;
+        padding:1rem;
+        order:2;
+    }
+
+    #main-container{
+        padding:0.3rem;
+        order:1;
+
+        h2{
+            margin: auto;
+        }
+
+        .orders-list{
+            grid-template-columns: 1fr 1fr 1fr;
+            margin:0.5rem auto;
+        }
+
+        .bills-links{
+            flex-direction: row;
+        }
+
+        .bills-list{
+            display: flex;
+            justify-content: space-between;
+            margin:0.5rem auto;
+        }
+    }
 }
