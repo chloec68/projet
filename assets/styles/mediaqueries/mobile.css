@@ -499,11 +499,12 @@
         }
         .orders-list{
             grid-template-columns: 1fr 1fr 1fr;
-            margin:0.5rem auto;
+            margin:2rem 1rem;
         }
 
         .bills-links{
             flex-direction: row;
+            margin:2rem 1rem;
         }
 
         .bills-list{
@@ -529,5 +530,21 @@
                 padding: 0.5rem !important;
             }
         }
+    }
+
+    /**************************** FAVORITES PAGE */
+
+    .favorites-wrapper{
+        width:100% !important;
+    }
+
+    .favorites-container{
+        display: block !important;
+    }
+
+    .favorite-card{
+        width: 90% !important;
+        margin: 1rem auto;
+        border:var(--main) solid 2px !important;
     }
 }
