@@ -494,7 +494,9 @@
         h2{
             margin: auto;
         }
-
+        .personal-info{
+            margin:2rem;
+        }
         .orders-list{
             grid-template-columns: 1fr 1fr 1fr;
             margin:0.5rem auto;

@@ -25,7 +25,8 @@
 
         <section id="main-container">
             <h2>Informations du compte</h2>
-            <p id="personal-info">Email : <span class="bold">{{user.email}}</span></p>
+            <p class="personal-info">Email : <span class="bold">{{user.email}}</span></p>
+            <p class="personal-info"><a href="{{path('app_forgot_password_request')}}"> Réinitialiser mon mot de passe </a></p>
             
             <h2>Mes commandes passées</h2>
                 <div class="orders-list">
