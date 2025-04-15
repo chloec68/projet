@@ -18,14 +18,13 @@
                 {% for picture in product.pictures %}
                     {% if loop.first %}
                     <div class="front" style="background-image:url('{{ picture.pictureName}}')">
-                        <p>Bière {{product.productColor}}</p>
                     </div>
                     {% endif %}
 
                 {% if loop.last %}
-                    <div class="back" style="background-image:url('{{picture.pictureName}}')">
+                    <div class="back" style="background-image:url('{{picture.pictureName}}')"></div>
                 {% endif %}
-                    </div>
+                    
                 {% endfor %}
             </div>
         </section>
@@ -41,9 +40,20 @@
             
         <div class="description">
             <p id="product-description">{{product.productDescription}}</p>
-            <p class="row"><span>Volume d'alcool</span><span class="bold">{{product.productAlcoholLevel}}</span></p>
-            <p class="row"><span>Couleur</span><span class="bold">{{product.productColor}}</span></p>
-            <p class="row"><span>Type</span><span class="bold">{{product.type.typeName}}</span></p>
+            {% if product.productAlcoholLevel is not null %}
+                <p class="row"><span>Volume d'alcool</span><span class="bold">{{product.productAlcoholLevel}}</span></p>
+                {% else %}
+                <p class="row"><span>Taille</span><span class="bold">{{product.size.sizeName}}</span></p>
+            {% endif %}
+            {% if product.productColor %}
+                <p class="row"><span>Couleur</span><span class="bold">{{product.productColor}}</span></p>
+            {% endif %}
+            {% if product.type is not null %}
+                <p class="row"><span>Type</span><span class="bold">{{product.type.typeName}}</span></p>
+                {% else %}
+                <p class="row"><span>Type</span><span class="bold">{{product.productGender}}</span></p>
+            {% endif %}
+            
         </div>
             
             <div class="qty-wrapper">
