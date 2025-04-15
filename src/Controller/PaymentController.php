@@ -363,10 +363,10 @@ class PaymentController extends AbstractController
             //stocke les data binaires du PDF 
             $output = $dompdf->output();
             //écris le fichier dans le dossier public
-            $publicDirectory = $kernel->getProjectDir() . '/public/bills/';
+            $directory = $kernel->getProjectDir() . '/assets/bills/';
             //si le dossier n'existe pas, le créer
-            if(!file_exists($publicDirectory)){
-                mkdir($publicDirectory,0777,true);
+            if(!file_exists($directory)){
+                mkdir($directory,0777,true);
             }
             // Genere un nom de fichier unique avec n° référence de la facture et id de l'utilisateur
             $appUser = $order->getAppUser();
@@ -375,7 +375,7 @@ class PaymentController extends AbstractController
                 $billDate = date_format($bill->getBillDate(),'d-m-Y');
                 $billReference = $bill->getBillReferenceNumber();
                 if(!empty($appUserId)){
-                    $pdfFilepath = $publicDirectory . 'bill_' . $billDate . '_' . $billReference  . '_user' . $appUserId .'.pdf';
+                    $pdfFilepath = $directory . 'bill_' . $billDate . '_' . $billReference  . '_user' . $appUserId .'.pdf';
                     $pdfRelativeFilePath = "bills\bill_" . $billDate . "_" . $billReference . "_user" . $appUserId .".pdf";
                     //ajoute le chemin à Bill
                     $bill->setBillPath($pdfRelativeFilePath);
