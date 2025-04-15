@@ -71,7 +71,10 @@
                 <p class="grey-paragraph centered">Nous acceptons les cartes de crédit et de débit.</p>
             </section>
         {% else %}
-            <div class="emptyCart__container"><p class="emptyCart">Le panier est vide</p><a class="redirection-link" href="{{ path('app_beers') }}">nos bières <i class="fa-solid fa-circle-arrow-right"></i></a></div>
+            <div class="emptyCart__container">
+                <p class="emptyCart">Le panier est vide</p>
+                <a class="redirection-link" href="{{ path('app_beers') }}">nos bières <i class="fa-solid fa-circle-arrow-right"></i></a>
+            </div>
             
         {% endif %}  
     </div>

@@ -64,47 +64,51 @@
     </section>
 
     <section class="products__container">
-        {% for product in products %}
-            <div class="product-card">
-                {% if app.user %}
-                    {% if product in favorites %}
-                        <p class="add-to-favorites"><i class="fa-solid fa-heart" data-product-favorite="{{product.id}}"></p></i>
-                    {% else %}
-                        <p class="add-to-favorites"><i class="fa-regular fa-heart" data-product-favorite="{{product.id}}"></i></p>
+        {% if products %}
+            {% for product in products %}
+                <div class="product-card">
+                    {% if app.user %}
+                        {% if product in favorites %}
+                            <p class="add-to-favorites"><i class="fa-solid fa-heart" data-product-favorite="{{product.id}}"></p></i>
+                        {% else %}
+                            <p class="add-to-favorites"><i class="fa-regular fa-heart" data-product-favorite="{{product.id}}"></i></p>
+                        {% endif %}
                     {% endif %}
-                {% endif %}
 
-            {% for picture in product.pictures %}
-                {% if loop.first %}
-                    <a href="{{ path('detail_product',{id:product.id}) }}"><div class="picture-container"> <img src="{{ picture.pictureName }}" alt="photo de la face avant du produit"> </div></a>
-                {% endif %}
-            {% endfor %}
+                {% for picture in product.pictures %}
+                    {% if loop.first %}
+                        <a href="{{ path('detail_product',{id:product.id}) }}"><div class="picture-container"> <img src="{{ picture.pictureName }}" alt="photo de la face avant du produit"> </div></a>
+                    {% endif %}
+                {% endfor %}
 
-                <h3 class="centered">{{product.productName}}</h3> 
-                {% if product.productStock > 10 %}
-                    <div class="stock-info" data-stock="{{product.productStock}}" data-product="{{product.id}}">
-                        <div class="green-dot"></div>en stock
+                    <h3 class="centered">{{product.productName}}</h3> 
+                    {% if product.productStock > 10 %}
+                        <div class="stock-info" data-stock="{{product.productStock}}" data-product="{{product.id}}">
+                            <div class="green-dot"></div>en stock
+                        </div>
+                    {% else %}
+                        <div class="stock-info"><div class="red-dot"></div>indisponible</div>
+                    {% endif %}
+                        <p class="centered">{{product.productGender}}</p>
+                        <p class="centered">{% if product.size is not null %}Taille {{product.size.sizeName}} - {% endif %}{{product.productColor}}</p>
+                    
+
+                            
+                    
+                    <p class="centered">{{product.productVATprice}} €</p>
+                    <div class="wrapper">
+                        <div class="quantity">
+                            <button class="minus decrement" data-product="{{product.id}}" aria-label="Decrease">&minus;</button>
+                                <input type="number" class="input-box" value="1" min="0" data-product="{{ product.id }}">
+                            <button class="plus increment" data-product="{{product.id}}" aria-label="Increase">&plus;</button>
+                        </div>
                     </div>
-                {% else %}
-                    <div class="stock-info"><div class="red-dot"></div>indisponible</div>
-                {% endif %}
-                    <p class="centered">{{product.productGender}}</p>
-                    <p class="centered">{% if product.size is not null %}Taille {{product.size.sizeName}} - {% endif %}{{product.productColor}}</p>
-                
-
-                        
-                
-                <p class="centered">{{product.productVATprice}} €</p>
-                <div class="wrapper">
-                    <div class="quantity">
-                        <button class="minus decrement" data-product="{{product.id}}" aria-label="Decrease">&minus;</button>
-                            <input type="number" class="input-box" value="1" min="0" data-product="{{ product.id }}">
-                        <button class="plus increment" data-product="{{product.id}}" aria-label="Increase">&plus;</button>
-                    </div>
+                <button class="btn basket-btn add-to-cart" data-product="{{product.id}}" type="submit">Ajouter au panier</button>
                 </div>
-               <button class="btn basket-btn add-to-cart" data-product="{{product.id}}" type="submit">Ajouter au panier</button>
-            </div>
-        {% endfor %}
+            {% endfor %}
+            {% else %}
+            <p id="no-result">Aucun résultat</p>
+        {% endif %}
     </section>
 </div>
 
