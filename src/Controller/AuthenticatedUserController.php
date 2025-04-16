@@ -157,7 +157,6 @@ final class AuthenticatedUserController extends AbstractController
         //     'Content-Type' => 'application/pdf', //informe le navigateur que le contenu est un fichier PDF
         //     'Content-Disposition' => 'inline; filename="facture_sainte-cru"', //suggère un nom pour quand l'utilisateur décide de le télécharger
         // ]);
-        
     }
 
 }
