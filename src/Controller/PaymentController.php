@@ -363,7 +363,7 @@ class PaymentController extends AbstractController
             //stocke les data binaires du PDF 
             $output = $dompdf->output();
             //écris le fichier dans le dossier public
-            $directory = $kernel->getProjectDir() . '/assets/bills/';
+            $directory = $kernel->getProjectDir() . '/public/bills/';
             //si le dossier n'existe pas, le créer
             if(!file_exists($directory)){
                 mkdir($directory,0777,true);
