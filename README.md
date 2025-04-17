@@ -1,3 +1,6 @@
+
+![project](https://github.com/user-attachments/assets/0a3e6701-f771-40e0-aa54-73de6d2d61bc)
+
 # 🧾 Documentation technique du projet – Brasserie Artisanale
 
 ## 📌 Présentation générale
